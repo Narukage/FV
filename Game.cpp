@@ -1,6 +1,5 @@
 #include "Game.h"
 
-
 Game::Game(): window(sf::VideoMode(800,600),"Summoners"){
    
 }
@@ -13,6 +12,8 @@ void Game::inicializar(){
     
     window.setFramerateLimit(60);
     window.setVerticalSyncEnabled(true);
+    
+    tablero = new Tablero();
 
 }
 
