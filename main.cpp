@@ -1,25 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   main.cpp
- * Author: naru
- *
- * Created on 26 de febrero de 2018, 17:52
- */
-
-#include <cstdlib>
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include "Game.h"
 
 using namespace std;
 
-/*
- * 
- */
-int main(int argc, char** argv) {
+int main() {
 
+    Game *p = new Game();
+
+    p->run();
+    
+    delete p;
     return 0;
 }
-
