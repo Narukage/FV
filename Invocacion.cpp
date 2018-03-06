@@ -22,9 +22,9 @@ Invocacion::Invocacion(const Invocacion& orig) {
 Invocacion::~Invocacion() {
 }
 
-Invocacion::setPosicion(int x, int y){
-    Invocacion.pos_x=x;
-    Invocacion.pos_y=y;
-    //pos_x=x;
-    //pos_y=y;
+void Invocacion::setPosicion(int x, int y){
+    //Invocacion.pos_x=x;
+    //Invocacion.pos_y=y;
+    pos_x=x;
+    pos_y=y;
 }
