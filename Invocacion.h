@@ -19,8 +19,10 @@ public:
     Invocacion();
     Invocacion(const Invocacion& orig);
     virtual ~Invocacion();
+    void setPosicion(int x, int y);
 private:
-
+    int pos_x;
+    int pos_y;
 };
 
 #endif /* INVOCACION_H */
