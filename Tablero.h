@@ -13,6 +13,9 @@ class Tablero{
             bool free;
             int coordX;
             int coordY;
+            bool spawn1; //spawn permitted commander1
+            bool spawn2; //spawn permitted commander2
+            
         };
         
        boardInfo board[HEIGHT][WIDTH]; //board matrix with information about what it contains
