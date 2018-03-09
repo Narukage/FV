@@ -13,8 +13,8 @@ void Game::inicializar(){
     window.setFramerateLimit(60);
     window.setVerticalSyncEnabled(true);
     
+    invocacion = new Invocacion();
     tablero = new Tablero();
-
 }
 
 void Game::eventos(){
@@ -28,17 +28,29 @@ void Game::eventos(){
                         if(evento.key.code==sf::Keyboard::Escape){
                             isPlay = false;
                         }
+                        
+                    case sf::Event::MouseButtonPressed:
+                        if(evento.mouseButton.button==sf::Mouse::Left){
+                            coord = sf::Mouse::getPosition(window);
+                            presionado=true;
+                            std::cout << coord.x << std::endl;
+                            std::cout << coord.y << std::endl;
+                        }
                 }
     }
 }
 
 void Game::update(){
-    
+    if(presionado){
+        tablero->addUnit(/*coord.x*/1,/*coord.y*/5,invocacion,1);
+        presionado=false;
+    }
 }
 
 void Game::render(){
     
     window.clear(sf::Color::Black);
+    tablero->drawMap(window);
     window.display();
 }
 

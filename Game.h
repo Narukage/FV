@@ -2,7 +2,9 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include "Invocacion.h"
 #include "Tablero.h"
+
 
 
 class Game{
@@ -12,6 +14,9 @@ private:
     sf::Event evento;      
     bool isPlay = true;
     Tablero* tablero;
+    Invocacion* invocacion;
+    sf::Vector2i coord;
+    bool presionado = false;
        
 private:
     void inicializar();
