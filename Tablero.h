@@ -3,8 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "Invocacion.h"
-#define WIDTH 20
-#define HEIGHT 10
+#define WIDTH 12
+#define HEIGHT 8
 
 
 using namespace std;
@@ -26,6 +26,7 @@ class Tablero{
        boardInfo board[WIDTH][HEIGHT]; //board matrix with information about what it contains
        sf::Texture textura;
        sf::Texture textura2;
+       sf::Texture textura3;
               
     public:
         Tablero();

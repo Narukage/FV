@@ -42,7 +42,7 @@ void Game::eventos(){
 
 void Game::update(){
     if(presionado){
-        tablero->addUnit(/*coord.x*/1,/*coord.y*/5,invocacion,1);
+        tablero->addUnit(coord.x,coord.y,invocacion,1);
         presionado=false;
     }
 }

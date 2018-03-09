@@ -12,7 +12,11 @@ Tablero::Tablero(){
         }
     }
     
-    if(!textura2.loadFromFile("/home/naru/Escritorio/Pac-Man_sprite.png")){
+    if(!textura2.loadFromFile("/home/naru/Escritorio/bloque2.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        }
+    
+    if(!textura3.loadFromFile("/home/naru/Escritorio/bloque3.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
     
@@ -20,19 +24,14 @@ Tablero::Tablero(){
 
 bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
     
-    /*posx=posx/HEIGHT;
-    posy=posy/WIDTH;*/
-    
-    //Convert posx and posy from pixel values to matrix values
-    
-    std::cout << "posx: " << posx << std::endl;
-    std::cout << "posy: " << posy << std::endl;
+//Conversion from pixel to matrix values
+    posx=(posx-100)/50;
+    posy=(posy-80)/50;
     
     if(spawn==1){
         if(((posx>=0 && posx<3)&& (posy>=0 && posy<10))&& isFree(posx,posy)){
             board[posx][posy].free=false;
             board[posx][posy].unit=unit;
-            board[posx][posy].sprite.setTexture(textura2);
             return true; 
         }
     }
@@ -40,7 +39,6 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
         if(((posx>WIDTH-4 && posx<WIDTH-1)&& (posy>=0 && posy<HEIGHT-1))&& isFree(posx,posy)){
           board[posx][posy].free=false;
             board[posx][posy].unit=unit;
-            board[posx][posy].sprite.setTexture(textura2);
             return true;  
         }
     }
@@ -52,7 +50,6 @@ bool Tablero::moveToPos(int posx, int posy, Invocacion* unit){
        board[posx][posy].free=false;
        board[posx][posy].unit=unit;
        removeUnit(unit->getX(),unit->getY(),unit);
-       board[posx][posy].sprite.setTexture(textura2);
        return true;
    }else{
        return false;
@@ -81,12 +78,24 @@ void Tablero::drawMap(sf::RenderWindow& window){
     
    for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
-          board[i][j].sprite.setTexture(textura);
-          board[i][j].sprite.setPosition((i*50),(j*50));
-          board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
-          if(board[i][j].free){
-            window.draw(board[i][j].sprite);
-          }
+            if(i<WIDTH/2){
+                if(board[i][j].free){
+                    board[i][j].sprite.setTexture(textura);
+                }else{
+                 board[i][j].sprite.setTexture(textura3);   
+                }
+                board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
+                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
+            }else{
+                if(board[i][j].free){
+                board[i][j].sprite.setTexture(textura2);
+                }else{
+                 board[i][j].sprite.setTexture(textura3);   
+                }
+                board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
+                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
+            }
+          window.draw(board[i][j].sprite);
         }
     }         
 }
