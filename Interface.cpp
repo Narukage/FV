@@ -44,38 +44,127 @@ void Interface::drawLife(int life, int commander, sf::RenderWindow& window){
     }
 }
 
+sf::Text Interface::drawLifeNumb(int life, int commander){
+    if(commander==1){
+        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+                std::cout << "Fuente no aplicada" <<std::endl;
+            }
+
+            std::stringstream ss;
+            ss << life;
+            vida.setString(ss.str().c_str());
+            vida.setColor(sf::Color::White);
+            vida.setFont(font);
+            vida.setScale(0.7,0.7);
+            vida.setPosition(350,1);
+            return vida;
+    }else{
+        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+                std::cout << "Fuente no aplicada" <<std::endl;
+            }
+
+            std::stringstream ss;
+            ss << life;
+            vida.setString(ss.str().c_str());
+            vida.setColor(sf::Color::White);
+            vida.setFont(font);
+            vida.setScale(0.7,0.7);
+            vida.setPosition(412,1);
+            return vida;
+    }
+}
+
+sf::Text Interface::drawManaNumb(float mana, int commander){
+    if(commander==1){
+        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+                std::cout << "Fuente no aplicada" <<std::endl;
+            }
+
+            std::stringstream ss;
+            ss << mana;
+            mananumb.setString(ss.str().c_str());
+            mananumb.setColor(sf::Color::White);
+            mananumb.setFont(font);
+            mananumb.setScale(0.8,0.8);
+            mananumb.setPosition(193,37);
+            return mananumb;
+    }else{
+        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+                std::cout << "Fuente no aplicada" <<std::endl;
+            }
+
+            std::stringstream ss;
+            ss << mana;
+            mananumb.setString(ss.str().c_str());
+            mananumb.setColor(sf::Color::White);
+            mananumb.setFont(font);
+            mananumb.setPosition(620,37);
+            return mananumb;
+    }
+}
+
+sf::Text Interface::drawManaRest(float manarest, int commander){
+    if(commander==1){
+        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+                    std::cout << "Fuente no aplicada" <<std::endl;
+                }
+
+                std::stringstream ss;
+                ss << manarest;
+                manar.setString(ss.str().c_str());
+                manar.setColor(sf::Color::White);
+                manar.setFont(font);
+                manar.setScale(0.8,0.8);
+                manar.setPosition(158,37);
+                return manar;
+    }else{
+        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+                    std::cout << "Fuente no aplicada" <<std::endl;
+                }
+
+                std::stringstream ss;
+                ss << manarest;
+                manar.setString(ss.str().c_str());
+                manar.setColor(sf::Color::White);
+                manar.setFont(font);
+                manar.setPosition(585,37);
+                return manar;
+    }
+}
+
+sf::Text Interface::drawBarra(int commander){
+    if(commander==1){
+        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+                        std::cout << "Fuente no aplicada" <<std::endl;
+                    }
+       barra.setFont(font);
+       barra.setPosition(182,37);
+       barra.setScale(0.8,0.8);
+       barra.setString("/");
+       return barra;
+    }else{
+        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+                        std::cout << "Fuente no aplicada" <<std::endl;
+                    }
+       barra.setFont(font);
+       barra.setPosition(609,37);
+       barra.setString("/");
+       return barra;
+    }
+}
+
 void Interface::drawMana(float mana, int commander, sf::RenderWindow& window){
     if(commander==1){
         coco.setFillColor(sf::Color::Blue);
         coco.setRadius(mana*2);
         coco.setPosition(110,37);
-        
-    if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
-        std::cout << "Fuente no aplicada" <<std::endl;
-    }
-   
-        std::stringstream ss;
-        ss << mana;
-        texto.setString(ss.str().c_str());
-        texto.setColor(sf::Color::White);
-        texto.setFont(font);
-        texto.setPosition(110,37);
-        
+       
         window.draw(coco);
-        window.draw(texto);
     }else{
         coco.setFillColor(sf::Color::Blue);
         coco.setRadius(mana*2);
         coco.setPosition(655,37);
-        
-        std::stringstream ss;
-        ss << mana;
-        texto.setString(ss.str().c_str());
-        texto.setColor(sf::Color::White);
-        texto.setFont(font);
-        texto.setPosition(655,37);
-        
+
         window.draw(coco);
-        window.draw(texto);
     }
 }

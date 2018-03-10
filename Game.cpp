@@ -58,8 +58,16 @@ void Game::render(){
     window.draw(player2->getRetrato());
     interface->drawLife(player->getLife(),1,window);
     interface->drawLife(player2->getLife(),2,window);
+    window.draw(interface->drawLifeNumb(player->getLife(),1));
+    window.draw(interface->drawLifeNumb(player2->getLife(),2));
     interface->drawMana(player->getMana(),1,window);
     interface->drawMana(player2->getMana(),2,window);
+    window.draw(interface->drawManaRest(player->getManaRest(),1));
+    window.draw(interface->drawManaRest(player2->getManaRest(),2));
+    window.draw(interface->drawBarra(1));
+    window.draw(interface->drawBarra(2));
+    window.draw(interface->drawManaNumb(player->getMana(),1));
+    window.draw(interface->drawManaNumb(player2->getMana(),2));
     window.display();
 }
 

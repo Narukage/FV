@@ -8,6 +8,7 @@ class Player{
     private:
         int vida;
         float mana;
+        float manarest;
         sf::Texture textura;
         sf::Texture textura2;
         sf::Sprite retrato;
@@ -20,5 +21,6 @@ class Player{
         int getLife(){ return vida; };
         int getMana(){ return mana; };
         sf::Sprite getRetrato(){ return retrato; };
+        float getManaRest(){ return manarest; };
 };
 

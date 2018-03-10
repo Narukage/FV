@@ -12,7 +12,10 @@ class Interface{
         sf::Sprite sprite;
         sf::Sprite sprite2;
         sf::CircleShape coco;
-        sf::Text texto;
+        sf::Text vida;
+        sf::Text mananumb;
+        sf::Text manar;
+        sf::Text barra;
         sf::Font font;
         
     public:
@@ -20,4 +23,8 @@ class Interface{
         ~Interface();
        void drawLife(int life, int commander, sf::RenderWindow& window);
        void drawMana(float mana, int commander, sf::RenderWindow& window);
+       sf::Text drawManaNumb(float mana, int commander);
+       sf::Text drawLifeNumb(int life, int commander);
+       sf::Text drawManaRest(float manarest, int commander);
+       sf::Text drawBarra(int commander);
 };

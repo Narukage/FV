@@ -3,6 +3,7 @@
 Player::Player(int commander){
     vida=100;
     mana=10;
+    manarest=10;
     
     if(commander==1){
         if(!textura.loadFromFile("/home/naru/Escritorio/retrato1.png")){
