@@ -19,7 +19,8 @@ Tablero::Tablero(){
     if(!textura3.loadFromFile("/home/naru/Escritorio/bloque3.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
-    
+    board[0][3].free=false; //commander 1
+    board[11][3].free=false; //commander 2
 }
 
 bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){

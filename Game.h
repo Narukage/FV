@@ -4,6 +4,8 @@
 #include <SFML/Audio.hpp>
 #include "Invocacion.h"
 #include "Tablero.h"
+#include "Player.h"
+#include "Interface.h"
 
 
 
@@ -15,6 +17,9 @@ private:
     bool isPlay = true;
     Tablero* tablero;
     Invocacion* invocacion;
+    Player* player;
+    Player* player2;
+    Interface* interface;
     sf::Vector2i coord;
     bool presionado = false;
        

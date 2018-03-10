@@ -15,6 +15,9 @@ void Game::inicializar(){
     
     invocacion = new Invocacion();
     tablero = new Tablero();
+    player = new Player(1);
+    player2 = new Player(2);
+    interface = new Interface();
 }
 
 void Game::eventos(){
@@ -51,6 +54,12 @@ void Game::render(){
     
     window.clear(sf::Color::Black);
     tablero->drawMap(window);
+    window.draw(player->getRetrato());
+    window.draw(player2->getRetrato());
+    interface->drawLife(player->getLife(),1,window);
+    interface->drawLife(player2->getLife(),2,window);
+    interface->drawMana(player->getMana(),1,window);
+    interface->drawMana(player2->getMana(),2,window);
     window.display();
 }
 
