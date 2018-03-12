@@ -13,7 +13,7 @@ void Game::inicializar(){
     window.setFramerateLimit(60);
     window.setVerticalSyncEnabled(true);
     
-    invocacion = new Invocacion();
+   //invocacion = new Invocacion();
     tablero = new Tablero();
     player = new Player(1);
     player2 = new Player(2);

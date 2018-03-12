@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/Baraja.o \
 	${OBJECTDIR}/Game.o \
 	${OBJECTDIR}/Interface.o \
 	${OBJECTDIR}/Invocacion.o \
@@ -67,32 +68,37 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/summoners: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/summoners ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/Game.o: Game.cpp 
+${OBJECTDIR}/Baraja.o: Baraja.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Baraja.o Baraja.cpp
+
+${OBJECTDIR}/Game.o: Game.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Game.o Game.cpp
 
-${OBJECTDIR}/Interface.o: Interface.cpp 
+${OBJECTDIR}/Interface.o: Interface.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Interface.o Interface.cpp
 
-${OBJECTDIR}/Invocacion.o: Invocacion.cpp 
+${OBJECTDIR}/Invocacion.o: Invocacion.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Invocacion.o Invocacion.cpp
 
-${OBJECTDIR}/Player.o: Player.cpp 
+${OBJECTDIR}/Player.o: Player.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Player.o Player.cpp
 
-${OBJECTDIR}/Tablero.o: Tablero.cpp 
+${OBJECTDIR}/Tablero.o: Tablero.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tablero.o Tablero.cpp
 
-${OBJECTDIR}/main.o: main.cpp 
+${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
@@ -103,7 +109,6 @@ ${OBJECTDIR}/main.o: main.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/summoners
 
 # Subprojects
 .clean-subprojects:

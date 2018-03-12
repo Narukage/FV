@@ -2,7 +2,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include "Invocacion.h"
+#include "Player.h"
 #define WIDTH 12
 #define HEIGHT 8
 

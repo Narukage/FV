@@ -4,14 +4,18 @@ Player::Player(int commander){
     vida=100;
     mana=10;
     manarest=10;
-    
+    actual=Baraja();
     if(commander==1){
-        if(!textura.loadFromFile("/home/naru/Escritorio/retrato1.png")){
+         vida=180;
+        comandante=Invocacion("P",0,5,vida,true);
+        if(!textura.loadFromFile("/home/delegacioneps/Summoners/assets/HUD/retrato1.png")){
                std::cout<<"Textura no aplicada"<<std::endl;
             }
         retrato.setPosition(0,0);
     }else{
-        if(!textura.loadFromFile("/home/naru/Escritorio/retrato2.png")){
+         vida=100;
+        comandante=Invocacion("E",0,8,vida,true);
+        if(!textura.loadFromFile("/home/delegacioneps/Summoners/assets/HUD/retrato2.png")){
                std::cout<<"Textura no aplicada"<<std::endl;
             }
         retrato.setPosition(700,0);
@@ -19,6 +23,8 @@ Player::Player(int commander){
     
    retrato.setTexture(textura);
 }
-
+Invocacion Player::Mostrar_mano(){
+    //Llamar al array mano y pasarle invocacion por invocacion a tablero, posicion fija
+}
 Player::~Player(){
 }

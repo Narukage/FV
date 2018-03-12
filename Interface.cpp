@@ -10,10 +10,10 @@ Interface::~Interface(){
 
 void Interface::drawLife(int life, int commander, sf::RenderWindow& window){
     if(commander==1){
-        if(!textura.loadFromFile("/home/naru/Escritorio/vida.png")){
+        if(!textura.loadFromFile("/home/delegacioneps/Summoners/assets/HUD/vida.png")){
                std::cout<<"Textura no aplicada"<<std::endl;
             }
-        if(!textura2.loadFromFile("/home/naru/Escritorio/life.png")){
+        if(!textura2.loadFromFile("/home/delegacioneps/Summoners/assets/HUD/life.png")){
                std::cout<<"Textura no aplicada"<<std::endl;
             }
         sprite.setTexture(textura);
@@ -28,7 +28,7 @@ void Interface::drawLife(int life, int commander, sf::RenderWindow& window){
             window.draw(sprite);
         }
     }else{
-        if(!textura.loadFromFile("/home/naru/Escritorio/vida.png")){
+        if(!textura.loadFromFile("/home/delegacioneps/Summoners/assets/HUD/vida.png")){
                std::cout<<"Textura no aplicada"<<std::endl;
             }
         sprite.setTexture(textura);

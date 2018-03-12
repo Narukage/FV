@@ -12,11 +12,11 @@ Tablero::Tablero(){
         }
     }
     
-    if(!textura2.loadFromFile("/home/naru/Escritorio/bloque2.png")){
+    if(!textura2.loadFromFile("/home/delegacioneps/Summoners/assets/Sprites/bloque2.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
     
-    if(!textura3.loadFromFile("/home/naru/Escritorio/bloque3.png")){
+    if(!textura3.loadFromFile("/home/delegacioneps/Summoners/assets/Sprites/bloque3.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
     board[0][3].free=false; //commander 1
@@ -73,7 +73,7 @@ void Tablero::resetMap(){
 
 void Tablero::drawMap(sf::RenderWindow& window){
         
-    if(!textura.loadFromFile("/home/naru/Escritorio/150px-SokobanWallDepictionDrawing.png")){
+    if(!textura.loadFromFile("/home/delegacioneps/Summoners/assets/Sprites/150px-SokobanWallDepictionDrawing.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
     
