@@ -5,6 +5,7 @@ Player::Player(int commander){
     mana=10;
     manarest=10;
     actual=Baraja();
+    
     if(commander==1){
          vida=180;
         comandante=Invocacion("P",0,5,vida,true);
@@ -23,8 +24,17 @@ Player::Player(int commander){
     
    retrato.setTexture(textura);
 }
-Invocacion Player::Mostrar_mano(){
+void Player::Mostrar_mano(sf::RenderWindow& window){
     //Llamar al array mano y pasarle invocacion por invocacion a tablero, posicion fija
+    mano=actual.getMano();
+    for(int i=0;i<4;i++){
+        /*mano[i]->getSprite().setPosition(200,500);
+        window.draw(mano[i]->getSprite());*/
+        //no me deja acceder a invocacion de cada posicion del array
+    }
+    
+        
 }
+
 Player::~Player(){
 }

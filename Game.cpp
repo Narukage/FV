@@ -68,6 +68,7 @@ void Game::render(){
     window.draw(interface->drawBarra(2));
     window.draw(interface->drawManaNumb(player->getMana(),1));
     window.draw(interface->drawManaNumb(player2->getMana(),2));
+    player->Mostrar_mano(window);
     window.display();
 }
 

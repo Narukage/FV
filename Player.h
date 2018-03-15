@@ -13,9 +13,12 @@ class Player{
         float manarest; // int mana restante, nunca tenemos 4,5 de mana.
         sf::Texture textura;
         sf::Texture textura2;
+        sf::Texture textura3;
         sf::Sprite retrato;
         Baraja actual;
+        Invocacion* mano;
         Invocacion comandante;
+        sf::Sprite carta;
         
     public:
         Player(int commander);
@@ -24,6 +27,7 @@ class Player{
         void setMana(int x){ mana=x; };
         int getLife(){ return vida; };
         int getMana(){ return mana; };
+        void Mostrar_mano(sf::RenderWindow& window);
         sf::Sprite getRetrato(){ return retrato; };
         float getManaRest(){ return manarest; };
 };

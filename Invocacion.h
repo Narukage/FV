@@ -14,6 +14,7 @@ class Invocacion{
         string nombre;
         bool comandante=false;
         sf::Texture textura;
+        sf::Sprite carta;
         
     public:
         Invocacion();
@@ -24,4 +25,5 @@ class Invocacion{
         void setPosicion(int x, int y);
         int getX(){ return pos_x; };
         int getY(){ return pos_y; };
+        sf::Sprite getSprite(){ return carta; };
 };
