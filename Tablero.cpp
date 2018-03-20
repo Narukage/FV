@@ -56,6 +56,14 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
         if(((posx>=0 && posx<3)&& (posy>=0 && posy<10))&& isFree(posx,posy)){
             board[posx][posy].free=false;
             board[posx][posy].unit=unit;
+            board[posx][posy].coordX=posx;
+            board[posx][posy].coordY=posy;
+            for(int i=0;i<5;i++){
+                
+            }
+            /*Arreglar la fila puto 1 de mierda que hay bug y me cago en la ostia
+             y en la madre que lo pario me muero, controlar que no se meta mas uno, comprobarlo*/
+            //unit[0].setPosicion(posx,posy);
             return true; 
         }
     }
@@ -125,13 +133,23 @@ void Tablero::drawMap(sf::RenderWindow& window){
     }  
 }
 
-bool Tablero::esCarta(int posx, int posy){
-    if(true){ //si estoy clickando una carta
-        return true;
-    }else{
-        return false;
-    }
+Invocacion* Tablero::esCarta(int posx, int posy){
     
+    if((posx>150 && posx<650)&&(posy>480 && posy<600)){
+        posx = (posx-150)/100;
+        posy = (posy-480)/146;
+    }
+    Invocacion* mano = player1->getMano();
+    Invocacion* mano2 = new Invocacion();
+    for(int i=0; i<5;i++){
+        std::cout << "posx: " << posx << std::endl;
+        std::cout << "getjugar: " << mano[i].getJugar() << std::endl;
+        if(mano[i].getJugar()==posx){ //si estoy clickando una carta
+            mano2=&mano[i];
+            return mano2;
+        }
+    }
+    return NULL;
 }
 
 bool Tablero::isFree(int posx, int posy){

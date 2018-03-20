@@ -49,7 +49,18 @@ void Game::eventos(){
 
 void Game::update(){
     if(presionado){
-        tablero->addUnit(coord.x,coord.y,invocacion,1);
+        Invocacion* inv = new Invocacion();
+        
+        if((inv=tablero->esCarta(coord.x,coord.y))!=NULL){
+            std::cout << "AY QUE ES UNA CARTA" << std::endl;
+            cartaseleccionada=true;
+        }
+        
+        if(cartaseleccionada){
+            if(tablero->addUnit(coord.x,coord.y,inv,1)){
+                cartaseleccionada=false;
+            }
+        }
          /*Pseudocodiguito, segun llegueis con vuestra parte vais rellenando, paz y buen rollito
     //if(cartaseleccionada){ //si hemos seleccionado antes una carta //invocacion
         if(presionado && board[posx][posy].free){ //la posicion de inv. esta vacia

@@ -16,6 +16,7 @@ class Tablero{
         
         struct boardInfo {
             Invocacion* unit;
+           
             bool free;
             int coordX;
             int coordY;
@@ -58,7 +59,7 @@ class Tablero{
         bool moveToPos(int posx, int posy, Invocacion* unit); //returns true if unit is moved succesfully
         bool removeUnit(int posx, int posy, Invocacion* unit); //returns true if unit is removed succesfully
         bool cartaCogida(int posx, int posy);
-        bool esCarta(int posx, int posy);
+        Invocacion* esCarta(int posx, int posy);
         void resetMap();
         void drawMap(sf::RenderWindow& window);
         

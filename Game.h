@@ -22,6 +22,7 @@ private:
     Interface* interface;
     sf::Vector2i coord;
     bool presionado = false;
+    bool cartaseleccionada = false;
        
 private:
     void inicializar();

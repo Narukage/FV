@@ -48,14 +48,16 @@ Player::Player(int commander){
     
     /*if(!textura3.loadFromFile("assets/Sprites/carta.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
-        } 
-    
-    for(int j=0;j<5;j++){
-         mano[j]=invo[j];
-        carta.setTexture(textura3);
-        mano[j].setCarta(carta);
-        mano[j].setJugar(j);
-    }*/
+        } */
+    if(commander==1){
+        for(int j=0;j<5;j++){
+             mano[j]=invo[j];
+            //carta.setTexture(textura3);
+            //mano[j].setCarta(carta);
+            mano[j].setJugar(j);
+            std::cout << "mano[j].setJugar: " << mano[j].getJugar() << std::endl;
+        }
+    }
    retrato.setTexture(textura);
    
 }
