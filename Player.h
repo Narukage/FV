@@ -2,7 +2,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Invocacion.h"
-#include "Tablero.h"
 
 using namespace std;
 
@@ -19,6 +18,7 @@ class Player{
         Invocacion mano[5]; 
         Invocacion invo[19];
         Invocacion comandante;
+        Invocacion* com = new Invocacion();
         sf::Sprite carta;
         
 
@@ -32,5 +32,6 @@ class Player{
         void Mostrar_mano(sf::RenderWindow& window);
         sf::Sprite getRetrato(){ return retrato; };
         float getManaRest(){ return manarest; };
+        Invocacion* getUnit(){ com=&comandante; return com; };
 };
 

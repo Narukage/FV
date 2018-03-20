@@ -11,6 +11,7 @@ class Invocacion{
         int coste;
         int vida;
         int ataque;
+        int jugarla=0;
         string nombre;
         int comandante=1;
         sf::Texture textura;
@@ -27,4 +28,5 @@ class Invocacion{
         int getX(){ return pos_x; };
         int getY(){ return pos_y; };
         sf::Sprite getSprite(){ return carta; };
+        void setJugar(int jugar){this->jugarla=jugar;};
 };

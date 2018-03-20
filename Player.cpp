@@ -7,7 +7,7 @@ Player::Player(int commander){
 
     
     if(commander==1){
-         vida=180;
+         vida=100;
         comandante=Invocacion("P",0,5,vida,1);
         if(!textura.loadFromFile("assets/HUD/retrato1.png")){
                std::cout<<"Textura no aplicada"<<std::endl;
@@ -45,32 +45,19 @@ Player::Player(int commander){
     invo[17]=Invocacion("y",3,3,2,commander);
     invo[18]=Invocacion("Z",2,2,1,commander);
     invo[19]=Invocacion("g",5,4,5,commander);
-    for(int j=0;j<5;j++){
-         mano[j]=invo[j];
-    }
-   retrato.setTexture(textura);
-   
-}
-void Player::Mostrar_mano(sf::RenderWindow& window){
-    //Llamar al array mano y pasarle invocacion por invocacion a tablero, posicion fij
-    /*if(!textura.loadFromFile("assets/Sprites/bloque2.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        }
-        
-        carta.setTexture(textura);*/
-    for(int i=0;i<5;i++){
-        if(!textura3.loadFromFile("assets/Sprites/bloque2.png")){
+    
+    /*if(!textura3.loadFromFile("assets/Sprites/carta.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         } 
-        carta.setTexture(textura3);
-        mano[i].setCarta(carta);
-        carta.setPosition((100*i)+100,500);
-        carta.setScale(sf::Vector2f(0.3,0.3));
-        window.draw(carta);
-        
-    }
     
-        
+    for(int j=0;j<5;j++){
+         mano[j]=invo[j];
+        carta.setTexture(textura3);
+        mano[j].setCarta(carta);
+        mano[j].setJugar(j);
+    }*/
+   retrato.setTexture(textura);
+   
 }
 
 Player::~Player(){
