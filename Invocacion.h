@@ -12,17 +12,18 @@ class Invocacion{
         int vida;
         int ataque;
         string nombre;
-        bool comandante=false;
+        int comandante=1;
         sf::Texture textura;
         sf::Sprite carta;
         
     public:
         Invocacion();
-        Invocacion(string nombre,int coste,int vida,int ataque,bool comandante);
+        Invocacion(string nombre,int coste,int vida,int ataque,int comandante);
         ~Invocacion();
         
         void moveToPos(int posx, int posy/*Tablero& tablero*/);
         void setPosicion(int x, int y);
+        void setCarta(sf::Sprite carta){this->carta=carta;};
         int getX(){ return pos_x; };
         int getY(){ return pos_y; };
         sf::Sprite getSprite(){ return carta; };

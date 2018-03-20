@@ -15,8 +15,6 @@ private:
     sf::Event evento;      
     bool isPlay = true;
     Tablero* tablero;
-    Tablero* tablero2;
-    Tablero& tableroref = *Tablero::Instance();
     Invocacion* invocacion;
     Player* player;
     Player* player2;

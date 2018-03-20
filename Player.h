@@ -21,6 +21,7 @@ class Player{
         Invocacion comandante;
         sf::Sprite carta;
         
+
     public:
         Player(int commander);
         ~Player();
