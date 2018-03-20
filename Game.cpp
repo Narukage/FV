@@ -14,7 +14,9 @@ void Game::inicializar(){
     window.setVerticalSyncEnabled(true);
     
    //invocacion = new Invocacion();
-    tablero = new Tablero();
+    tablero = Tablero::Instance();
+    tablero2 = tablero->Instance();
+    Tablero& tableroref = * Tablero::Instance();
     player = new Player(1);
     player2 = new Player(2);
     interface = new Interface();
@@ -33,8 +35,7 @@ void Game::eventos(){
                         if(evento.key.code==sf::Keyboard::Escape){
                             isPlay = false;
                         }
-                        
-                       
+
                     case sf::Event::MouseButtonPressed:
                         if(evento.mouseButton.button==sf::Mouse::Left){
                             coord = sf::Mouse::getPosition(window);

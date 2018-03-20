@@ -15,6 +15,7 @@ private:
     sf::Event evento;      
     bool isPlay = true;
     Tablero* tablero;
+    Tablero* tablero2;
     Invocacion* invocacion;
     Player* player;
     Player* player2;

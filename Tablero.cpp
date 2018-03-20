@@ -33,9 +33,10 @@ Tablero::Tablero(){
 
 bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
     //cambiar posx y posy por matx y maty
+    if((posx>100 && posx<700)&&(posy>80 && posy<475)){
     posx = (posx-100)/50;
     posy = (posy-80)/50;
-    
+    }
     if(spawn==1){
         if(((posx>=0 && posx<3)&& (posy>=0 && posy<10))&& isFree(posx,posy)){
             board[posx][posy].free=false;

@@ -15,7 +15,7 @@ class Player{
         sf::Texture textura2;
         sf::Texture textura3;
         sf::Sprite retrato;
-       // int soy = 1;
+  
         Invocacion mano[5]; 
         Invocacion invo[19];
         Invocacion comandante;
