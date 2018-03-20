@@ -13,8 +13,8 @@ void Game::inicializar(){
     window.setFramerateLimit(60);
     window.setVerticalSyncEnabled(true);
     
-   //invocacion = new Invocacion();
-    tablero = new Tablero();
+    tablero = Tablero::Instance();
+    tablero2 = tablero->Instance();
     player = new Player(1);
     player2 = new Player(2);
     interface = new Interface();
@@ -44,11 +44,17 @@ void Game::eventos(){
 }
 
 void Game::update(){
-    if(presionado){
+    //if(cartacogida==true){ //hemos clicado una carta //queremos invocar tropa
+        //if((tablero(cood.x,cood.y).isfree) && presionado){
         tablero->addUnit(coord.x,coord.y,invocacion,1);
         presionado=false;
+        //}else{
+        //presionado=false;
+    //}else{ //no hemos clickado una carta //queremos mover tropa
+        //if(!tablero(cood.x,cood.y).isfree && presionado){
+        //posiciones adyacentes
+    //}
     }
-}
 
 void Game::render(){
     

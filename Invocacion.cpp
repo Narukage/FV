@@ -17,7 +17,7 @@ Invocacion::Invocacion(string nombre,int coste,int ataque,int vida,bool comandan
         this->ataque = ataque;
         this->vida = vida;
         this->comandante=comandante;
-        if(!textura.loadFromFile("/home/delegacioneps/Summoners/assets/Sprites/carta.png")){
+        if(!textura.loadFromFile("assets/Sprites/bloque2.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
         

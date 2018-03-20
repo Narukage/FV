@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "Baraja.h"
+#include "Invocacion.h"
 #include "Tablero.h"
 
 using namespace std;
@@ -15,8 +15,9 @@ class Player{
         sf::Texture textura2;
         sf::Texture textura3;
         sf::Sprite retrato;
-        Baraja actual;
-        Invocacion* mano;
+       // int soy = 1;
+        Invocacion mano[5]; 
+        Invocacion invo[19];
         Invocacion comandante;
         sf::Sprite carta;
         

@@ -4,7 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>Baraja.h</itemPath>
       <itemPath>Game.h</itemPath>
       <itemPath>Interface.h</itemPath>
       <itemPath>Invocacion.h</itemPath>
@@ -18,7 +17,6 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>Baraja.cpp</itemPath>
       <itemPath>Game.cpp</itemPath>
       <itemPath>Interface.cpp</itemPath>
       <itemPath>Invocacion.cpp</itemPath>
@@ -65,10 +63,6 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="Baraja.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Baraja.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
@@ -112,10 +106,6 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="Baraja.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Baraja.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">

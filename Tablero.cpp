@@ -1,9 +1,17 @@
 #include "Tablero.h"
 
+Tablero* Tablero::pinstance = 0;
+    
+Tablero* Tablero::Instance(){
+    if(pinstance==0){
+        pinstance = new Tablero;
+    }
+    return pinstance;
+}
+
 Tablero::Tablero(){
     
     //filling board matrix with free positions
-    
     for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
             board[i][j].free=true;
@@ -12,11 +20,11 @@ Tablero::Tablero(){
         }
     }
     
-    if(!textura2.loadFromFile("/home/delegacioneps/Summoners/assets/Sprites/bloque2.png")){
+    if(!textura2.loadFromFile("assets/Sprites/bloque2.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
     
-    if(!textura3.loadFromFile("/home/delegacioneps/Summoners/assets/Sprites/bloque3.png")){
+    if(!textura3.loadFromFile("assets/Sprites/bloque3.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
     board[0][3].free=false; //commander 1
@@ -24,10 +32,9 @@ Tablero::Tablero(){
 }
 
 bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
-    
-//Conversion from pixel to matrix values
-    posx=(posx-100)/50;
-    posy=(posy-80)/50;
+    //cambiar posx y posy por matx y maty
+    posx = (posx-100)/50;
+    posy = (posy-80)/50;
     
     if(spawn==1){
         if(((posx>=0 && posx<3)&& (posy>=0 && posy<10))&& isFree(posx,posy)){
@@ -46,6 +53,7 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
     return false;
 }
 
+
 bool Tablero::moveToPos(int posx, int posy, Invocacion* unit){
    if(((posx<10 && posx>=0) && (posy<20 && posy>=0)) && board[posx][posy].free){
        board[posx][posy].free=false;
@@ -55,6 +63,10 @@ bool Tablero::moveToPos(int posx, int posy, Invocacion* unit){
    }else{
        return false;
    }        
+}
+
+bool Tablero::cartaCogida(int posx, int posy){
+    
 }
         
 bool Tablero::removeUnit(int posx, int posy, Invocacion* unit){
@@ -73,7 +85,7 @@ void Tablero::resetMap(){
 
 void Tablero::drawMap(sf::RenderWindow& window){
         
-    if(!textura.loadFromFile("/home/delegacioneps/Summoners/assets/Sprites/150px-SokobanWallDepictionDrawing.png")){
+    if(!textura.loadFromFile("assets/Sprites/150px-SokobanWallDepictionDrawing.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
     
