@@ -20,15 +20,30 @@ Tablero::Tablero(){
         }
     }
     
-    if(!textura2.loadFromFile("assets/Sprites/bloque2.png")){
+    player1 = new Player(1);
+    player2 = new Player(2);
+    
+    
+    if(!texturabloquerojo.loadFromFile("assets/Sprites/bloque2.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
     
-    if(!textura3.loadFromFile("assets/Sprites/bloque3.png")){
+    if(!texturabloqueverde.loadFromFile("assets/Sprites/bloque3.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
     board[0][3].free=false; //commander 1
+    board[0][3].coordX=0;
+    board[0][3].coordY=3;
+    board[0][3].spawn1=true;
+    board[0][3].spawn2=false;
+    board[0][3].unit=player1->getUnit();
+            
     board[11][3].free=false; //commander 2
+    board[11][3].coordX=11;
+    board[11][3].coordY=3;
+    board[11][3].spawn1=false;
+    board[11][3].spawn2=true;
+    board[11][3].unit=player2->getUnit();
 }
 
 bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
@@ -41,6 +56,14 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
         if(((posx>=0 && posx<3)&& (posy>=0 && posy<10))&& isFree(posx,posy)){
             board[posx][posy].free=false;
             board[posx][posy].unit=unit;
+            board[posx][posy].coordX=posx;
+            board[posx][posy].coordY=posy;
+            for(int i=0;i<5;i++){
+                
+            }
+            /*Arreglar la fila puto 1 de mierda que hay bug y me cago en la ostia
+             y en la madre que lo pario me muero, controlar que no se meta mas uno, comprobarlo*/
+            //unit[0].setPosicion(posx,posy);
             return true; 
         }
     }
@@ -65,10 +88,6 @@ bool Tablero::moveToPos(int posx, int posy, Invocacion* unit){
        return false;
    }        
 }
-
-bool Tablero::cartaCogida(int posx, int posy){
-    
-}
         
 bool Tablero::removeUnit(int posx, int posy, Invocacion* unit){
     board[posx][posy].free=true;
@@ -86,7 +105,7 @@ void Tablero::resetMap(){
 
 void Tablero::drawMap(sf::RenderWindow& window){
         
-    if(!textura.loadFromFile("assets/Sprites/150px-SokobanWallDepictionDrawing.png")){
+    if(!texturabloqueazul.loadFromFile("assets/Sprites/150px-SokobanWallDepictionDrawing.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
     
@@ -94,33 +113,235 @@ void Tablero::drawMap(sf::RenderWindow& window){
         for(int j=0;j<HEIGHT;j++){
             if(i<WIDTH/2){
                 if(board[i][j].free){
-                    board[i][j].sprite.setTexture(textura);
+                    board[i][j].sprite.setTexture(texturabloqueazul);
                 }else{
-                 board[i][j].sprite.setTexture(textura3);   
+                 board[i][j].sprite.setTexture(texturabloqueverde);   
                 }
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
             }else{
                 if(board[i][j].free){
-                board[i][j].sprite.setTexture(textura2);
+                board[i][j].sprite.setTexture(texturabloquerojo);
                 }else{
-                 board[i][j].sprite.setTexture(textura3);   
+                 board[i][j].sprite.setTexture(texturabloqueverde);   
                 }
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
             }
           window.draw(board[i][j].sprite);
         }
-    }         
+    }  
 }
 
-bool Tablero::esCarta(int posx, int posy){
+Invocacion* Tablero::esCarta(int posx, int posy){
     
-    
+    if((posx>150 && posx<650)&&(posy>480 && posy<600)){
+        posx = (posx-150)/100;
+        posy = (posy-480)/146;
+    }
+    Invocacion* mano = player1->getMano();
+    Invocacion* mano2 = new Invocacion();
+    for(int i=0; i<5;i++){
+        std::cout << "posx: " << posx << std::endl;
+        std::cout << "getjugar: " << mano[i].getJugar() << std::endl;
+        if(mano[i].getJugar()==posx){ //si estoy clickando una carta
+            mano2=&mano[i];
+            return mano2;
+        }
+    }
+    return NULL;
 }
 
 bool Tablero::isFree(int posx, int posy){
     posx = (posx-100)/50;
     posy = (posy-80)/50;
     return board[posx][posy].free;
+}
+
+/*DIBUJADO DE PLAYER*/
+void Tablero::Mostrar_mano(sf::RenderWindow& window){
+    for(int i=0;i<5;i++){
+        if(!texturacarta.loadFromFile("assets/Sprites/carta.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        } 
+        carta.setTexture(texturacarta);
+        //mano[i].setCarta(carta);
+        carta.setPosition((i*100)+150,480);
+        window.draw(carta);
+        //mano[i].setJugar(i);
+        
+    }
+    
+        
+}
+
+void Tablero::drawLife(int commander, sf::RenderWindow& window){
+    if(commander==1){
+        if(!texturavida.loadFromFile("assets/HUD/vida.png")){
+               std::cout<<"Textura no aplicada"<<std::endl;
+            }
+        if(!texturalife.loadFromFile("assets/HUD/life.png")){
+               std::cout<<"Textura no aplicada"<<std::endl;
+            }
+        sprite.setTexture(texturavida);
+        sprite2.setTexture(texturalife);
+        sprite2.setPosition(100,5);
+        sprite2.setScale(0.5,0.5);
+        window.draw(sprite2);
+                
+        for(int i=0;i<player1->getLife();i++){
+            sprite.setPosition((i*2)+135,10);
+            sprite.setScale(2,2);
+            window.draw(sprite);
+        }
+    }else{
+        if(!texturavida.loadFromFile("assets/HUD/vida.png")){
+               std::cout<<"Textura no aplicada"<<std::endl;
+            }
+        sprite.setTexture(texturavida);
+        sprite2.setTexture(texturalife);
+        sprite2.setPosition(670,5);
+        sprite2.setScale(0.5,0.5);
+        window.draw(sprite2);
+        
+        for(int i=0;i<player2->getLife();i++){
+            sprite.setPosition((i*2)+455,10);
+            window.draw(sprite);
+        }
+    }
+}
+
+sf::Text Tablero::drawLifeNumb(int commander){
+    if(commander==1){
+        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+                std::cout << "Fuente no aplicada" <<std::endl;
+            }
+        int life = player1->getLife();
+            std::stringstream ss;
+            ss << life;
+            vida.setString(ss.str().c_str());
+            vida.setColor(sf::Color::White);
+            vida.setFont(font);
+            vida.setScale(0.7,0.7);
+            vida.setPosition(350,1);
+            return vida;
+    }else{
+        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+                std::cout << "Fuente no aplicada" <<std::endl;
+            }
+        int life = player2->getLife();
+            std::stringstream ss;
+            ss << life;
+            vida.setString(ss.str().c_str());
+            vida.setColor(sf::Color::White);
+            vida.setFont(font);
+            vida.setScale(0.7,0.7);
+            vida.setPosition(412,1);
+            return vida;
+    }
+}
+
+sf::Text Tablero::drawManaNumb(int commander){
+    if(commander==1){
+        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+                std::cout << "Fuente no aplicada" <<std::endl;
+            }
+        int mana = player1->getMana();
+            std::stringstream ss;
+            ss << mana;
+            mananumb.setString(ss.str().c_str());
+            mananumb.setColor(sf::Color::White);
+            mananumb.setFont(font);
+            mananumb.setScale(0.8,0.8);
+            mananumb.setPosition(193,37);
+            return mananumb;
+    }else{
+        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+                std::cout << "Fuente no aplicada" <<std::endl;
+            }
+        int mana = player2->getMana();
+            std::stringstream ss;
+            ss << mana;
+            mananumb.setString(ss.str().c_str());
+            mananumb.setColor(sf::Color::White);
+            mananumb.setFont(font);
+            mananumb.setPosition(620,37);
+            return mananumb;
+    }
+}
+
+sf::Text Tablero::drawManaRest(int commander){
+    if(commander==1){
+        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+                    std::cout << "Fuente no aplicada" <<std::endl;
+                }
+        int manarest = player1->getManaRest();
+                std::stringstream ss;
+                ss << manarest;
+                manar.setString(ss.str().c_str());
+                manar.setColor(sf::Color::White);
+                manar.setFont(font);
+                manar.setScale(0.8,0.8);
+                manar.setPosition(158,37);
+                return manar;
+    }else{
+        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+                    std::cout << "Fuente no aplicada" <<std::endl;
+                }
+        int manarest = player2->getManaRest();
+                std::stringstream ss;
+                ss << manarest;
+                manar.setString(ss.str().c_str());
+                manar.setColor(sf::Color::White);
+                manar.setFont(font);
+                manar.setPosition(585,37);
+                return manar;
+    }
+}
+
+sf::Text Tablero::drawBarra(int commander){
+    if(commander==1){
+        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+                        std::cout << "Fuente no aplicada" <<std::endl;
+                    }
+       barra.setFont(font);
+       barra.setPosition(182,37);
+       barra.setScale(0.8,0.8);
+       barra.setString("/");
+       return barra;
+    }else{
+        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+                        std::cout << "Fuente no aplicada" <<std::endl;
+                    }
+       barra.setFont(font);
+       barra.setPosition(609,37);
+       barra.setString("/");
+       return barra;
+    }
+}
+
+void Tablero::drawMana(int commander, sf::RenderWindow& window){
+    if(commander==1){
+        int mana = player1->getMana();
+        coco.setFillColor(sf::Color::Blue);
+        coco.setRadius(mana*2);
+        coco.setPosition(110,37);
+       
+        window.draw(coco);
+    }else{
+        int mana = player2->getMana();
+        coco.setFillColor(sf::Color::Blue);
+        coco.setRadius(mana*2);
+        coco.setPosition(655,37);
+
+        window.draw(coco);
+    }
+}
+
+void Tablero::drawRetrato(int commander, sf::RenderWindow& window){
+    if(commander==1){
+        window.draw(player1->getRetrato());
+    }else{
+        window.draw(player2->getRetrato());
+    }
 }

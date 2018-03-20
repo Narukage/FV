@@ -45,26 +45,21 @@ Player::Player(int commander){
     invo[17]=Invocacion("y",3,3,2,commander);
     invo[18]=Invocacion("Z",2,2,1,commander);
     invo[19]=Invocacion("g",5,4,5,commander);
-    for(int j=0;j<5;j++){
-         mano[j]=invo[j];
+    
+    /*if(!textura3.loadFromFile("assets/Sprites/carta.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        } */
+    if(commander==1){
+        for(int j=0;j<5;j++){
+             mano[j]=invo[j];
+            //carta.setTexture(textura3);
+            //mano[j].setCarta(carta);
+            mano[j].setJugar(j);
+            std::cout << "mano[j].setJugar: " << mano[j].getJugar() << std::endl;
+        }
     }
    retrato.setTexture(textura);
    
-}
-void Player::Mostrar_mano(sf::RenderWindow& window){
-    for(int i=0;i<5;i++){
-        if(!textura3.loadFromFile("assets/Sprites/carta.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        } 
-        carta.setTexture(textura3);
-        mano[i].setCarta(carta);
-        carta.setPosition((i*100)+150,480);
-        window.draw(carta);
-        mano[i].setJugar(i);
-        
-    }
-    
-        
 }
 
 Player::~Player(){

@@ -17,8 +17,8 @@ void Game::inicializar(){
     tablero = Tablero::Instance();
     tablero2 = tablero->Instance();
     Tablero& tableroref = * Tablero::Instance();
-    player = new Player(1);
-    player2 = new Player(2);
+    /*player = new Player(1);
+    player2 = new Player(2);*/
     interface = new Interface();
 }
 
@@ -49,18 +49,28 @@ void Game::eventos(){
 
 void Game::update(){
     if(presionado){
-        //tablero->addUnit(coord.x,coord.y,invocacion,1);
-         /*Pseudocodiguito, segun llegueis con vuestra parte vais rellenando, paz y buen rollito
-    //if(cartaseleccionada){
-        if(presionado && board[posx][posy].free){
-            board[posx][posy].addUnit;
-     *      presionado=false;
+        Invocacion* inv = new Invocacion();
+        
+        if((inv=tablero->esCarta(coord.x,coord.y))!=NULL){
+            std::cout << "AY QUE ES UNA CARTA" << std::endl;
+            cartaseleccionada=true;
         }
-        if(presionado && !board[posx][posy].free){
-            presionado=false;
+        
+        if(cartaseleccionada){
+            if(tablero->addUnit(coord.x,coord.y,inv,1)){
+                cartaseleccionada=false;
+            }
+        }
+         /*Pseudocodiguito, segun llegueis con vuestra parte vais rellenando, paz y buen rollito
+    //if(cartaseleccionada){ //si hemos seleccionado antes una carta //invocacion
+        if(presionado && board[posx][posy].free){ //la posicion de inv. esta vacia
+            board[posx][posy].addUnit; //añadir unidad
+     *      presionado=false;
+        }else //posicion ocupada
+          presionado=false;  //no hace nada
         }
      }
-     * if(!cartaseleccionada){
+     * if(!cartaseleccionada){ //si no he seleccionado una carta antes //movimiento
        if(presionado && tablero->isFree(coord.x,coord.y)){
            
        }
@@ -77,21 +87,22 @@ void Game::render(){
     
     window.clear(sf::Color::Black);
     tablero->drawMap(window);
-    window.draw(player->getRetrato());
-    window.draw(player2->getRetrato());
-    interface->drawLife(player->getLife(),1,window);
-    interface->drawLife(player2->getLife(),2,window);
-    window.draw(interface->drawLifeNumb(player->getLife(),1));
-    window.draw(interface->drawLifeNumb(player2->getLife(),2));
-    interface->drawMana(player->getMana(),1,window);
-    interface->drawMana(player2->getMana(),2,window);
-    window.draw(interface->drawManaRest(player->getManaRest(),1));
-    window.draw(interface->drawManaRest(player2->getManaRest(),2));
-    window.draw(interface->drawBarra(1));
-    window.draw(interface->drawBarra(2));
-    window.draw(interface->drawManaNumb(player->getMana(),1));
-    window.draw(interface->drawManaNumb(player2->getMana(),2));
-    player->Mostrar_mano(window);
+    tablero->drawLife(1,window);
+    window.draw(tablero->drawLifeNumb(1));
+    tablero->drawLife(2,window);
+    window.draw(tablero->drawLifeNumb(2));
+    tablero->drawMana(1,window);
+    window.draw(tablero->drawManaNumb(1));
+    window.draw(tablero->drawManaRest(1));
+    window.draw(tablero->drawBarra(1));
+    tablero->drawMana(2,window);
+    window.draw(tablero->drawManaNumb(2));
+    window.draw(tablero->drawManaRest(2));
+    window.draw(tablero->drawBarra(2));
+    tablero->drawRetrato(1,window);
+    tablero->drawRetrato(2,window);
+    tablero->Mostrar_mano(window);
+ 
     window.display();
 }
 
