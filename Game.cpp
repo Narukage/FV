@@ -49,7 +49,26 @@ void Game::eventos(){
 
 void Game::update(){
     if(presionado){
+        //tablero->addUnit(coord.x,coord.y,invocacion,1);
+         /*Pseudocodiguito, segun llegueis con vuestra parte vais rellenando, paz y buen rollito
+    //if(cartaseleccionada){
+        if(presionado && board[posx][posy].free){
+            board[posx][posy].addUnit;
+     *      presionado=false;
+        }
+        if(presionado && !board[posx][posy].free){
+            presionado=false;
+        }
+     }
+     * if(!cartaseleccionada){
+       if(presionado && tablero->isFree(coord.x,coord.y)){
+           
+       }
+      }
+    if(presionado && ){
         tablero->addUnit(coord.x,coord.y,invocacion,1);
+        presionado=false;
+    }*/
         presionado=false;
     }
 }

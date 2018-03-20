@@ -45,9 +45,10 @@ class Tablero{
         bool moveToPos(int posx, int posy, Invocacion* unit); //returns true if unit is moved succesfully
         bool removeUnit(int posx, int posy, Invocacion* unit); //returns true if unit is removed succesfully
         bool cartaCogida(int posx, int posy);
+        bool esCarta(int posx, int posy);
         void resetMap();
         void drawMap(sf::RenderWindow& window);
         
         //GETTERS & SETTERS
-        bool isFree(int posx, int posy){ return board[posx][posy].free; };
+        bool isFree(int posx, int posy);
 };

@@ -2,7 +2,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Invocacion.h"
-#include "Tablero.h"
 
 using namespace std;
 

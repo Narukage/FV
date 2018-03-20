@@ -113,3 +113,14 @@ void Tablero::drawMap(sf::RenderWindow& window){
         }
     }         
 }
+
+bool Tablero::esCarta(int posx, int posy){
+    
+    
+}
+
+bool Tablero::isFree(int posx, int posy){
+    posx = (posx-100)/50;
+    posy = (posy-80)/50;
+    return board[posx][posy].free;
+}
