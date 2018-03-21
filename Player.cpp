@@ -66,6 +66,18 @@ Player::Player(int commander){
       invo[contador]=Invocacion("Ahtuh",4,4,2,commander);
       contador++;
     break;
+    case(8):
+      invo[contador]=Invocacion("Blemiax",8,7,8,commander);
+      contador++;
+    break;
+    case(9):
+      invo[contador]=Invocacion("Shanx",6,3,6,commander);
+      contador++;
+    break;
+    case(10):
+      invo[contador]=Invocacion("Azathothx",10,12,12,commander);
+      contador++;
+    break;
     
   }
   
