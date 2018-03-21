@@ -1,5 +1,7 @@
 #include "Player.h"
 
+
+
 Player::Player(int commander){
     vida=100;
     mana=10;
@@ -25,7 +27,51 @@ Player::Player(int commander){
     for(int i=0;i<19;i++){
         invo[i]=Invocacion();
     }
-    invo[0]=Invocacion("C",1,1,1,commander);
+    
+     ifstream fin;
+  fin.open("baraja.txt");
+  while(!fin.eof()){
+  int id;
+  int contador=0;
+  
+ 
+  fin >> id;
+  cout << id << endl;
+  switch(id){
+    case(1):
+      invo[contador]=Invocacion("C",1,1,1,commander);
+      contador++;
+    break;
+    case(2):
+      invo[contador]=Invocacion("Y",3,3,2,commander);
+      contador++;
+    break;
+    case(3):
+      invo[contador]=Invocacion("Z",2,2,1,commander);
+      contador++;
+    break;
+    case(4):
+      invo[contador]=Invocacion("G",5,4,4,commander);
+      contador++;
+    break;
+    case(5):
+      invo[contador]=Invocacion("C",1,1,1,commander);
+      contador++;
+    break;
+    case(6):
+      invo[contador]=Invocacion("C",1,1,1,commander);
+      contador++;
+    break;
+    case(7):
+      invo[contador]=Invocacion("C",1,1,1,commander);
+      contador++;
+    break;
+    
+  }
+  
+  }
+  fin.close();
+    /*invo[0]=Invocacion("C",1,1,1,commander);
     invo[1]=Invocacion("y",3,3,2,commander);
     invo[2]=Invocacion("Z",2,2,1,commander);
     invo[3]=Invocacion("g",5,4,5,commander);
@@ -45,6 +91,8 @@ Player::Player(int commander){
     invo[17]=Invocacion("y",3,3,2,commander);
     invo[18]=Invocacion("Z",2,2,1,commander);
     invo[19]=Invocacion("g",5,4,5,commander);
+    */
+    
     
     /*if(!textura3.loadFromFile("assets/Sprites/carta.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
