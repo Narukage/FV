@@ -46,11 +46,82 @@ Tablero::Tablero(){
     board[11][3].unit=player2->getUnit();
 }
 
+void Tablero::ReiniciarAdy(){
+    for(int i=0;i<WIDTH;i++){
+        for(int j=0;j<HEIGHT;j++){
+            if(board[i][j].alcanzable==1){
+                board[i][j].alcanzable=0;
+            }
+        }
+    }
+}
+
+void Tablero::Adyacentes(int posx, int posy){
+    //Mover este calculo a una funcion para que no se repita
+    posx = (posx-100)/50;
+    posy = (posy-80)/50;
+    
+    std::cout << posx << std::endl;
+    std::cout << posy << std::endl;
+    
+    //esquina superior izq -- iluminar
+    if(posx==0 && posy==0){
+        board[posx+1][posy].alcanzable=1;
+        board[posx][posy-1].alcanzable=1;
+    }
+    //esquina superior dcha -- iluminar
+    /*if(){
+        board[posx-1][posy].sprite.setTexture(texturabloqueverde);
+        board[posx][posy-1].sprite.setTexture(texturabloqueverde);
+    }
+    //esquina inferior izq -- iluminar
+    if(){
+        board[posx+1][posy].sprite.setTexture(texturabloqueverde);
+        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
+    }
+    //esquina inferior dcha -- iluminar
+    if(){
+        board[posx-1][posy].sprite.setTexture(texturabloqueverde);
+        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
+    }*/
+    //arriba -- iluminar
+    if(posy==0 && (posx!=0 && posx!=9)){
+        board[posx-1][posy].alcanzable=1;
+        board[posx+1][posy].alcanzable=1;
+        board[posx][posy+1].alcanzable=1;
+    }
+    //abajo -- iluminar
+    /*if(){
+        board[posx-1][posy].sprite.setTexture(texturabloqueverde);
+        board[posx+1][posy].sprite.setTexture(texturabloqueverde);
+        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
+    }
+    //izq -- iluminar
+    if(){
+        board[posx+1][posy].sprite.setTexture(texturabloqueverde);
+        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
+        board[posx][posy-1].sprite.setTexture(texturabloqueverde);
+    }
+    //dcha -- iluminar
+    if(){
+        board[posx-1][posy].sprite.setTexture(texturabloqueverde);
+        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
+        board[posx][posy-1].sprite.setTexture(texturabloqueverde);
+    }*/
+    //centro -- iluminar
+    if((posx>0 && posx<10)&& (posy>0 && posy<7)){
+        board[posx-1][posy].alcanzable=1;
+        board[posx+1][posy].alcanzable=1;
+        board[posx][posy-1].alcanzable=1;
+        board[posx][posy+1].alcanzable=1;
+    }
+}
+
 bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
     //cambiar posx y posy por matx y maty
     if((posx>100 && posx<700)&&(posy>80 && posy<475)){
-    posx = (posx-100)/50;
-    posy = (posy-80)/50;
+        posx = (posx-100)/50;
+        posy = (posy-80)/50;
     }
     if(spawn==1){
         if(((posx>=0 && posx<3)&& (posy>=0 && posy<10))&& isFree(posx,posy)){
@@ -58,20 +129,21 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
             board[posx][posy].unit=unit;
             board[posx][posy].coordX=posx;
             board[posx][posy].coordY=posy;
-            for(int i=0;i<5;i++){
-                
-            }
             /*Arreglar la fila puto 1 de mierda que hay bug y me cago en la ostia
              y en la madre que lo pario me muero, controlar que no se meta mas uno, comprobarlo*/
-            //unit[0].setPosicion(posx,posy);
+            /*Arreglado hijo de puta*/
+            unit->setPosicion(posx,posy);
             return true; 
         }
     }
     if(spawn==2){
         if(((posx>WIDTH-4 && posx<WIDTH-1)&& (posy>=0 && posy<HEIGHT-1))&& isFree(posx,posy)){
           board[posx][posy].free=false;
-            board[posx][posy].unit=unit;
-            return true;  
+          board[posx][posy].unit=unit;
+          board[posx][posy].coordX=posx;
+          board[posx][posy].coordY=posy;
+          unit->setPosicion(posx,posy);
+          return true;  
         }
     }
     return false;
@@ -94,6 +166,14 @@ bool Tablero::removeUnit(int posx, int posy, Invocacion* unit){
     board[posx][posy].unit=NULL;
 }
 
+Invocacion* Tablero::unitIn(int posx, int posy){
+    if(!isFree(posx,posy)){
+        posx = (posx-100)/50;
+        posy = (posy-80)/50;
+        return board[posx][posy].unit;
+    }
+}
+
 void Tablero::resetMap(){
    for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
@@ -101,6 +181,19 @@ void Tablero::resetMap(){
             board[i][j].unit=NULL;
         }
     }         
+}
+
+void Tablero::drawAdyacentes(sf::RenderWindow& window){
+    for(int i=0;i<WIDTH;i++){
+        for(int j=0;j<HEIGHT;j++){
+            if(board[i][j].alcanzable==1){
+                board[i][j].sprite.setTexture(texturabloqueverde);
+                board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
+                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
+                window.draw(board[i][j].sprite);
+            }
+        }
+    }
 }
 
 void Tablero::drawMap(sf::RenderWindow& window){
@@ -120,8 +213,11 @@ void Tablero::drawMap(sf::RenderWindow& window){
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
             }else{
-                if(board[i][j].free){
+                if(board[i][j].free){    
                 board[i][j].sprite.setTexture(texturabloquerojo);
+                if(board[i][j].alcanzable==1){
+                        board[i][j].sprite.setTexture(texturabloqueverde);
+                    }
                 }else{
                  board[i][j].sprite.setTexture(texturabloqueverde);   
                 }
@@ -130,12 +226,13 @@ void Tablero::drawMap(sf::RenderWindow& window){
             }
           window.draw(board[i][j].sprite);
         }
-    }  
+    }
 }
 
 Invocacion* Tablero::esCarta(int posx, int posy){
     
     if((posx>150 && posx<650)&&(posy>480 && posy<600)){
+        //Crear funcion para que no se repita este calculo
         posx = (posx-150)/100;
         posy = (posy-480)/146;
     }

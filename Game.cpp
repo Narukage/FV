@@ -1,3 +1,5 @@
+#include <valarray>
+
 #include "Game.h"
 
 Game::Game(): window(sf::VideoMode(800,600),"Summoners"){
@@ -20,6 +22,7 @@ void Game::inicializar(){
     /*player = new Player(1);
     player2 = new Player(2);*/
     interface = new Interface();
+    inv = new Invocacion();
 }
 
 void Game::eventos(){
@@ -48,37 +51,27 @@ void Game::eventos(){
 }
 
 void Game::update(){
+    
     if(presionado){
-        Invocacion* inv = new Invocacion();
-        
-        if((inv=tablero->esCarta(coord.x,coord.y))!=NULL){
+        if(tablero->esCarta(coord.x,coord.y)!=NULL){
+            inv=tablero->esCarta(coord.x,coord.y);
             std::cout << "AY QUE ES UNA CARTA" << std::endl;
             cartaseleccionada=true;
         }
         
-        if(cartaseleccionada){
+        if(cartaseleccionada){ //queremos invocar en tablero
             if(tablero->addUnit(coord.x,coord.y,inv,1)){
                 cartaseleccionada=false;
             }
+        }else{ //queremos mover unidad en tablero
+            if(!tablero->isFree(coord.x,coord.y)){ //si la posicion que clickamos contiene una unidad
+                std::cout << "Invocacionnnn" << std::endl;
+                tablero->Adyacentes(coord.x,coord.y);
+                //tablero.movetopos
+            }else{
+                tablero->ReiniciarAdy();
+            }
         }
-         /*Pseudocodiguito, segun llegueis con vuestra parte vais rellenando, paz y buen rollito
-    //if(cartaseleccionada){ //si hemos seleccionado antes una carta //invocacion
-        if(presionado && board[posx][posy].free){ //la posicion de inv. esta vacia
-            board[posx][posy].addUnit; //añadir unidad
-     *      presionado=false;
-        }else //posicion ocupada
-          presionado=false;  //no hace nada
-        }
-     }
-     * if(!cartaseleccionada){ //si no he seleccionado una carta antes //movimiento
-       if(presionado && tablero->isFree(coord.x,coord.y)){
-           
-       }
-      }
-    if(presionado && ){
-        tablero->addUnit(coord.x,coord.y,invocacion,1);
-        presionado=false;
-    }*/
         presionado=false;
     }
 }
@@ -87,6 +80,7 @@ void Game::render(){
     
     window.clear(sf::Color::Black);
     tablero->drawMap(window);
+    tablero->drawAdyacentes(window);
     tablero->drawLife(1,window);
     window.draw(tablero->drawLifeNumb(1));
     tablero->drawLife(2,window);
