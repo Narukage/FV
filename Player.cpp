@@ -28,7 +28,7 @@ Player::Player(int commander){
         invo[i]=Invocacion();
     }
     
-     ifstream fin;
+  ifstream fin;
   fin.open("baraja.txt");
   while(!fin.eof()){
   int id;
@@ -39,31 +39,31 @@ Player::Player(int commander){
   cout << id << endl;
   switch(id){
     case(1):
-      invo[contador]=Invocacion("C",1,1,1,commander);
+      invo[contador]=Invocacion("Cthughax",1,1,1,commander);
       contador++;
     break;
     case(2):
-      invo[contador]=Invocacion("Y",3,3,2,commander);
+      invo[contador]=Invocacion("Yigx",3,3,2,commander);
       contador++;
     break;
     case(3):
-      invo[contador]=Invocacion("Z",2,2,1,commander);
+      invo[contador]=Invocacion("Zoogx",2,2,1,commander);
       contador++;
     break;
     case(4):
-      invo[contador]=Invocacion("G",5,4,4,commander);
+      invo[contador]=Invocacion("Gugox",5,4,4,commander);
       contador++;
     break;
     case(5):
-      invo[contador]=Invocacion("C",1,1,1,commander);
+      invo[contador]=Invocacion("Bokrugs",4,1,4,commander);
       contador++;
     break;
     case(6):
-      invo[contador]=Invocacion("C",1,1,1,commander);
+      invo[contador]=Invocacion("Orrys",7,7,2,commander);
       contador++;
     break;
     case(7):
-      invo[contador]=Invocacion("C",1,1,1,commander);
+      invo[contador]=Invocacion("Ahtuh",4,4,2,commander);
       contador++;
     break;
     
