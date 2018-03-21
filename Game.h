@@ -16,13 +16,15 @@ private:
     bool isPlay = true;
     Tablero* tablero;
     Tablero* tablero2;
-    Tablero& tableroref = *Tablero::Instance();
     Invocacion* invocacion;
     Player* player;
     Player* player2;
+            
     Interface* interface;
     sf::Vector2i coord;
     bool presionado = false;
+    bool cartaseleccionada = false;
+    Invocacion* inv;
        
 private:
     void inicializar();

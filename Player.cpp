@@ -1,5 +1,7 @@
 #include "Player.h"
 
+
+
 Player::Player(int commander){
     vida=100;
     mana=10;
@@ -7,15 +9,15 @@ Player::Player(int commander){
 
     
     if(commander==1){
-         vida=180;
-        comandante=Invocacion("P",0,5,vida,true);
+         vida=100;
+        comandante=Invocacion("P",0,5,vida,1);
         if(!textura.loadFromFile("assets/HUD/retrato1.png")){
                std::cout<<"Textura no aplicada"<<std::endl;
             }
         retrato.setPosition(0,0);
     }else{
          vida=100;
-        comandante=Invocacion("E",0,8,vida,true);
+       comandante=Invocacion("E",0,8,vida,2);
         if(!textura.loadFromFile("assets/HUD/retrato2.png")){
                std::cout<<"Textura no aplicada"<<std::endl;
             }
@@ -23,44 +25,111 @@ Player::Player(int commander){
     }
    // string s="s";
     for(int i=0;i<19;i++){
-        invo[i]=Invocacion();
-    }
-    invo[0]=Invocacion("C",1,1,1,false);
-    invo[1]=Invocacion("y",3,3,2,false);
-    invo[2]=Invocacion("Z",2,2,1,false);
-    invo[3]=Invocacion("g",5,4,5,false);
-    invo[4]=Invocacion("C",1,1,1,false);
-    invo[5]=Invocacion("y",3,3,2,false);
-    invo[6]=Invocacion("Z",2,2,1,false);
-    invo[7]=Invocacion("g",5,4,5,false);
-    invo[8]=Invocacion("C",1,1,1,false);
-    invo[9]=Invocacion("y",3,3,2,false);
-    invo[10]=Invocacion("Z",2,2,1,false);
-    invo[11]=Invocacion("g",5,4,5,false);
-    invo[12]=Invocacion("C",1,1,1,false);
-    invo[13]=Invocacion("y",3,3,2,false);
-    invo[14]=Invocacion("Z",2,2,1,false);
-    invo[15]=Invocacion("g",5,4,5,false);
-    invo[16]=Invocacion("C",1,1,1,false);
-    invo[17]=Invocacion("y",3,3,2,false);
-    invo[18]=Invocacion("Z",2,2,1,false);
-    invo[19]=Invocacion("g",5,4,5,false);
-    for(int j=0;j<5;j++){
-         mano[j]=invo[j];
+        invo=new Invocacion[i];
     }
     
+  ifstream fin;
+  fin.open("baraja.txt");
+  while(!fin.eof()){
+  int id;
+  int contador=0;
+  
+ 
+  fin >> id;
+  cout << id << endl;
+  switch(id){
+    case(1):
+      invo[contador]=Invocacion("Cthughax",1,1,1,commander);
+      contador++;
+    break;
+    case(2):
+      invo[contador]=Invocacion("Yigx",3,3,2,commander);
+      contador++;
+    break;
+    case(3):
+      invo[contador]=Invocacion("Zoogx",2,2,1,commander);
+      contador++;
+    break;
+    case(4):
+      invo[contador]=Invocacion("Gugox",5,4,4,commander);
+      contador++;
+    break;
+    case(5):
+      invo[contador]=Invocacion("Bokrugs",4,1,4,commander);
+      contador++;
+    break;
+    case(6):
+      invo[contador]=Invocacion("Orrys",7,7,2,commander);
+      contador++;
+    break;
+    case(7):
+      invo[contador]=Invocacion("Ahtuh",4,4,2,commander);
+      contador++;
+    break;
+    case(8):
+      invo[contador]=Invocacion("Blemiax",8,7,8,commander);
+      contador++;
+    break;
+    case(9):
+      invo[contador]=Invocacion("Shanx",6,3,6,commander);
+      contador++;
+    break;
+    case(10):
+      invo[contador]=Invocacion("Azathothx",10,12,12,commander);
+      contador++;
+    break;
+    
+  }
+  
+  }
+  fin.close();
+    /*invo[0]=Invocacion("C",1,1,1,commander);
+    invo[1]=Invocacion("y",3,3,2,commander);
+    invo[2]=Invocacion("Z",2,2,1,commander);
+    invo[3]=Invocacion("g",5,4,5,commander);
+    invo[4]=Invocacion("C",1,1,1,commander);
+    invo[5]=Invocacion("y",3,3,2,commander);
+    invo[6]=Invocacion("Z",2,2,1,commander);
+    invo[7]=Invocacion("g",5,4,5,commander);
+    invo[8]=Invocacion("C",1,1,1,commander);
+    invo[9]=Invocacion("y",3,3,2,commander);
+    invo[10]=Invocacion("Z",2,2,1,commander);
+    invo[11]=Invocacion("g",5,4,5,commander);
+    invo[12]=Invocacion("C",1,1,1,commander);
+    invo[13]=Invocacion("y",3,3,2,commander);
+    invo[14]=Invocacion("Z",2,2,1,commander);
+    invo[15]=Invocacion("g",5,4,5,commander);
+    invo[16]=Invocacion("C",1,1,1,commander);
+    invo[17]=Invocacion("y",3,3,2,commander);
+    invo[18]=Invocacion("Z",2,2,1,commander);
+    invo[19]=Invocacion("g",5,4,5,commander);
+    */
+    
+    
+    /*if(!textura3.loadFromFile("assets/Sprites/carta.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        } */
+    if(commander==1){
+        for(int j=0;j<5;j++){
+             mano[j]=invo[j];
+            //carta.setTexture(textura3);
+            //mano[j].setCarta(carta);
+            mano[j].setJugar(j);;
+            std::cout << "mano[j].setJugar: " << mano[j].getJugar() << std::endl;
+        }
+    }
    retrato.setTexture(textura);
+   
 }
-void Player::Mostrar_mano(sf::RenderWindow& window){
-    //Llamar al array mano y pasarle invocacion por invocacion a tablero, posicion fija
-    /*for(int i=0;i<5;i++){
-        mano[i].getSprite().setPosition((50*i)+200,500);
-        window.draw(mano[i].getSprite());
-        //no me deja acceder a invocacion de cada posicion del array
-    }*/
-    
-        
+bool Player::RellenarJugadas(Invocacion jugada){
+    for(int i=0;i<19;i++){
+        if(jugadas[i].getExisto()==false){
+            jugadas[i].setExisto();
+            jugadas[i]=jugada;
+            return true;
+        }
+    }
+    return false;
 }
-
 Player::~Player(){
 }

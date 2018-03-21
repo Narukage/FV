@@ -11,18 +11,19 @@ Invocacion::Invocacion() {
     comandante=false;
 
 }
-Invocacion::Invocacion(string nombre,int coste,int ataque,int vida,bool comandante) {
+Invocacion::Invocacion(string nombre,int coste,int ataque,int vida,int comandante) {
         this->nombre = nombre;
         this->coste = coste;
         this->ataque = ataque;
         this->vida = vida;
         this->comandante=comandante;
+        
         if(!textura.loadFromFile("assets/Sprites/bloque2.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
-        
         carta.setTexture(textura);
-    
+        
+   
 }
 
 void Invocacion::moveToPos(int posx, int posy/*, Tablero& tablero*/){
