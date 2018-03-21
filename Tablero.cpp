@@ -143,6 +143,13 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
           board[posx][posy].coordX=posx;
           board[posx][posy].coordY=posy;
           unit->setPosicion(posx,posy);
+          Invocacion invoc =  Invocacion();
+          invoc=unit[0];
+          if(player1->RellenarJugadas(invoc)){
+              std::cout<<"Hola funciono"<<endl;
+              /*Borrar unidad de la mano
+               y setear antes su posicion*/
+          }
           return true;  
         }
     }

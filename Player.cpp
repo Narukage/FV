@@ -25,7 +25,7 @@ Player::Player(int commander){
     }
    // string s="s";
     for(int i=0;i<19;i++){
-        invo[i]=Invocacion();
+        invo=new Invocacion[i];
     }
     
   ifstream fin;
@@ -114,13 +114,22 @@ Player::Player(int commander){
              mano[j]=invo[j];
             //carta.setTexture(textura3);
             //mano[j].setCarta(carta);
-            mano[j].setJugar(j);
+            mano[j].setJugar(j);;
             std::cout << "mano[j].setJugar: " << mano[j].getJugar() << std::endl;
         }
     }
    retrato.setTexture(textura);
    
 }
-
+bool Player::RellenarJugadas(Invocacion jugada){
+    for(int i=0;i<19;i++){
+        if(jugadas[i].getExisto()==false){
+            jugadas[i].setExisto();
+            jugadas[i]=jugada;
+            return true;
+        }
+    }
+    return false;
+}
 Player::~Player(){
 }

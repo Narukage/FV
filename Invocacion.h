@@ -13,6 +13,7 @@ class Invocacion{
         int ataque;
         int jugarla=0; //posicion en la mano
         string nombre;
+        bool existo=false;
         int comandante=1;
         sf::Texture textura;
         sf::Sprite carta;
@@ -30,4 +31,6 @@ class Invocacion{
         sf::Sprite getSprite(){ return carta; };
         void setJugar(int jugar){this->jugarla=jugar;};
         int getJugar(){return jugarla;};
+        void setExisto(){existo=true;};
+        bool getExisto(){return existo;};
 };

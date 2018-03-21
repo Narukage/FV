@@ -19,6 +19,7 @@ private:
     Invocacion* invocacion;
     Player* player;
     Player* player2;
+            
     Interface* interface;
     sf::Vector2i coord;
     bool presionado = false;
