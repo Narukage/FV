@@ -57,7 +57,7 @@ class Tablero{
         static Tablero* Instance();
         ~Tablero();
         bool addUnit(int posx, int posy, Invocacion* unit, int spawn); //return true if adds a unit at the location succesfully
-        bool moveToPos(int posx, int posy, Invocacion* unit); //returns true if unit is moved succesfully
+        bool moveToPos(int fromx, int fromy,int gox, int goy, Invocacion* unit); //returns true if unit is moved succesfully
         bool removeUnit(int posx, int posy, Invocacion* unit); //returns true if unit is removed succesfully
         void Adyacentes(int posx, int posy);
         int getAlcanzable(int posx, int posy);
@@ -76,7 +76,7 @@ class Tablero{
         void drawMana(int commander, sf::RenderWindow& window);
         void drawRetrato(int commander, sf::RenderWindow& window);
         void Mostrar_mano(sf::RenderWindow& window);
-        
+        void setFree(int posx,int posy,bool set);
         //GETTERS & SETTERS
         bool isFree(int posx, int posy);
         Player* getPlayer(){return player1;};

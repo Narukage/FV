@@ -67,23 +67,33 @@ void Game::update(){
             if(!tablero->isFree(coord.x,coord.y) && actuainvocacion==false){ //si la posicion que clickamos contiene una unidad
                 std::cout << "Invocacionnnn" << std::endl;
                 actuainvocacion=true;
+                tablero->Adyacentes(coord.x,coord.y);
                 posXinvocacion=coord.x;
                 posYinvocacion=coord.y;
-                tablero->Adyacentes(coord.x,coord.y);
-              
             } //unidad seleccionada, preparada para hacer alguna accion
-            else if(actuainvocacion==true && tablero->isFree(coord.x,coord.y)==true && tablero->getAlcanzable(coord.x,coord.y)==1){
-            std::cout << "Amoh a movernos" << std::endl;
-            actuainvocacion=false;
-            tablero->moveToPos(coord.x,coord.y,tablero->getUnit(posXinvocacion,posYinvocacion));
-            posXinvocacion=-1;
-            posYinvocacion=-1;
-            tablero->ReiniciarAdy();
-            }else{
+            else if(actuainvocacion==true){
+                tablero->moveToPos(posXinvocacion, posYinvocacion,coord.x,coord.y,tablero->getUnit(posXinvocacion,posYinvocacion));
+                tablero->setFree(coord.x,coord.y,false); 
+                std::cout<<tablero->moveToPos(posXinvocacion, posYinvocacion,coord.x,coord.y,tablero->getUnit(posXinvocacion,posYinvocacion))<<std::endl;
+                actuainvocacion=false;
+                if(tablero->moveToPos(posXinvocacion, posYinvocacion,coord.x,coord.y,tablero->getUnit(posXinvocacion,posYinvocacion))){std::cout<<"TRUE"<<std::endl;
+                     std::cout<<"true"<<std::endl;
+                }
+                else{
+                    std::cout<<"false"<<std::endl;
+                }
+                
+                if(tablero->isFree(posXinvocacion,posYinvocacion)){
+                    std::cout<<"TRUE"<<std::endl;
+                }
+                else{
+                    std::cout<<"FALSE"<<std::endl;
+                }
+                tablero->ReiniciarAdy();
+            }
+            else{
+                actuainvocacion=false;
                tablero->ReiniciarAdy();
-               actuainvocacion=false;
-               posXinvocacion=-1;
-               posYinvocacion=-1;
             }
             
         }

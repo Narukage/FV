@@ -167,22 +167,15 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
 }
 
                                                               
-bool Tablero::moveToPos(int posx, int posy, Invocacion* unit){                                                              
-    std::cout <<" Esto es un amagoh" << std::endl;
+bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){                                                              
     Invocacion jugada = Invocacion();
-    posx = (posx-100)/50;
-    posy = (posy-80)/50;
-   if(((posx<10 && posx>=0) && (posy<20 && posy>=0)) && board[posx][posy].free==true){
-       int x=unit->getX(),y=unit->getY();
-       jugada=player1->getMonstruo(unit,2);
-       board[posx][posy].free=false;
-       //HAY QUE HACERLO PARA LA IA
-            unit->setPosicion(posx,posy);
-            board[posx][posy].unit=unit;
-            player1->RellenarJugadas(jugada);
-          
-       removeUnit(x,y,unit);
+    gox = (gox-100)/50;
+    goy = (goy-80)/50;
+   if(((gox<10 && gox>=0) && (goy<20 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
        std::cout <<" Ya noh emo movioh" << std::endl;
+       board[gox][goy].unit=unit;
+       
+       removeUnit(fromx,fromy,unit);
        return true;
    }else{
        std::cout <<"ALGUNA VEZ ENTRAS AQUI??"<<std::endl;
@@ -191,11 +184,10 @@ bool Tablero::moveToPos(int posx, int posy, Invocacion* unit){
 }
         
 bool Tablero::removeUnit(int posx, int posy, Invocacion* unit){
-    std::cout<<"estado de la casilla inici"<<board[posx][posy].free<<std::endl;
+           std::cout <<"AMOH A HACEH REMOVIET??"<<std::endl;
     board[posx][posy].unit=NULL;
-    board[posx][posy].free=true;
-    std::cout<<"estado de la casilla final"<<board[posx][posy].free<<std::endl;
-    std::cout<<"estado de la casilla alcanzable "<<board[posx][posy].alcanzable<<std::endl;
+    setFree(posx,posy,true);
+    return true;
 }
 
 Invocacion* Tablero::getUnit(int posx, int posy){//meter cual player es cada 1 eliminar UNIT de tablero
@@ -489,4 +481,9 @@ int Tablero::getAlcanzable(int posx, int posy){
     posx = (posx-100)/50;
     posy = (posy-80)/50;
     return board[posx][posy].alcanzable;
+}
+void Tablero::setFree(int posx,int posy,bool set){
+    posx = (posx-100)/50;
+    posy = (posy-80)/50;
+    board[posx][posy].free=set;
 }
