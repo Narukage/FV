@@ -16,10 +16,11 @@ class Player{
         sf::Texture textura2;
         sf::Texture textura3;
         sf::Sprite retrato;
+        int contador = 0;
   
         Invocacion* mano= new Invocacion[5];//mano
-        Invocacion* jugadas = new Invocacion[19];//en el tablero
-        Invocacion* invo= new Invocacion[19];//mazo
+        Invocacion* jugadas = new Invocacion[20];//en el tablero
+        Invocacion* invo= new Invocacion[20];//mazo
         /* A ver hay que hacer un array o una lista que guarde las cartas jugadas, borrar la carta de mano
          y la pones aqui, ademas el setposicion se tiene que hacer directamente en la carta que se añada en este array
          y no desde el puntero, hacer que unit(puntero) apunte a la invocacion que se meta en este array o lista*/
@@ -47,6 +48,7 @@ class Player{
         bool RellenarJugadas(Invocacion invo);
         void eliminarMano(Invocacion invo);
         void eliminarJugadas(Invocacion invo);
+        
         
 };
 

@@ -24,65 +24,60 @@ Player::Player(int commander){
         retrato.setPosition(700,0);
     }
    // string s="s";
-    for(int i=0;i<19;i++){
+    for(int i=0;i<20;i++){
         invo=new Invocacion[i];
     }
     
   ifstream fin;
-  fin.open("baraja.txt");
+  fin.open("baraja.txt"); 
+ 
   while(!fin.eof()){
   int id;
-  int contador=0;
+  
   
  
   fin >> id;
   cout << id << endl;
-  switch(id){
-    case(1):
-      invo[contador]=Invocacion("Cthughax",1,1,1,commander,contador);
-      contador++;
-    break;
-    case(2):
-      invo[contador]=Invocacion("Yigx",3,3,2,commander,contador);
-      contador++;
-    break;
-    case(3):
-      invo[contador]=Invocacion("Zoogx",2,2,1,commander,contador);
-      contador++;
-    break;
-    case(4):
-      invo[contador]=Invocacion("Gugox",5,4,4,commander,contador);
-      contador++;
-    break;
-    case(5):
-      invo[contador]=Invocacion("Bokrugs",4,1,4,commander,contador);
-      contador++;
-    break;
-    case(6):
-      invo[contador]=Invocacion("Orrys",7,7,2,commander,contador);
-      contador++;
-    break;
-    case(7):
-      invo[contador]=Invocacion("Ahtuh",4,4,2,commander,contador);
-      contador++;
-    break;
-    case(8):
-      invo[contador]=Invocacion("Blemiax",8,7,8,commander,contador);
-      contador++;
-    break;
-    case(9):
-      invo[contador]=Invocacion("Shanx",6,3,6,commander,contador);
-      contador++;
-    break;
-    case(10):
-      invo[contador]=Invocacion("Azathothx",10,12,12,commander,contador);
-      contador++;
-    break;
-    
+  //Mejor en el txt todos los paramaetros
+  if(contador!=19){
+  if(id==1){
+       invo[contador]= Invocacion("Cthughax",1,1,1,commander,contador);
   }
-  
+  if(id==2){
+       invo[contador]=Invocacion("Yigx",3,3,2,commander,contador);
+  }
+  if(id==3){
+       invo[contador]=Invocacion("Zoogx",2,2,1,commander,contador);
+  }
+  if(id==4){
+       invo[contador]=Invocacion("Gugox",5,4,4,commander,contador);
+  }
+  if(id==5){
+       invo[contador]=Invocacion("Bokrugs",4,1,4,commander,contador);
+  }
+  if(id==6){
+       invo[contador]=Invocacion("Orrys",7,7,2,commander,contador);
+  }
+  if(id==7){
+       invo[contador]=Invocacion("Ahtuh",4,4,2,commander,contador);
+  }
+  if(id==8){
+        invo[contador]=Invocacion("Blemiax",8,7,8,commander,contador);
+  }
+  if(id==9){
+      invo[contador]=Invocacion("Shanx",6,3,6,commander,contador);
+  }
+  if(id==10){
+       invo[contador]=Invocacion("Azathothx",10,12,12,commander,contador);
+  }
+  }
+ contador++;
+
   }
   fin.close();
+  /*for(int x=0;x<19;x++){
+       std::cout << "Soy el monstruo de: " << x<< ", con nombre: "<< invo[x].getNombre() << std::endl;
+  }*/
     /*invo[0]=Invocacion("C",1,1,1,commander);
     invo[1]=Invocacion("y",3,3,2,commander);
     invo[2]=Invocacion("Z",2,2,1,commander);
@@ -114,8 +109,8 @@ Player::Player(int commander){
              mano[j]=invo[j];
             //carta.setTexture(textura3);
             //mano[j].setCarta(carta);
+             
             mano[j].setJugar(j);;
-            std::cout << "mano[j].setJugar: " << mano[j].getJugar() << std::endl;
         }
     }
    retrato.setTexture(textura);

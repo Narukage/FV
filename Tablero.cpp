@@ -271,13 +271,17 @@ Invocacion* Tablero::esCarta(int posx, int posy){
         posx = (posx-150)/100;
         posy = (posy-480)/146;
     }
-    Invocacion* mano = player1->getMano();
+    Invocacion* mano = new Invocacion[5]; 
+            mano= player1->getMano();
     Invocacion* mano2 = new Invocacion();
     for(int i=0; i<5;i++){
         std::cout << "posx: " << posx << std::endl;
         std::cout << "getjugar: " << mano[i].getJugar() << std::endl;
+        std::cout << "MANO EXISTE : " << mano[i].getNombre()<< std::endl;
         if(mano[i].getJugar()==posx){ //si estoy clickando una carta
             mano2=&mano[i];
+            std::cout << "EXISTO ¿? : " << mano2->getNombre()<< std::endl;
+            
             return mano2;
         }
     }

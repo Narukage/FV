@@ -55,6 +55,7 @@ void Game::update(){
     if(presionado){
         if(tablero->esCarta(coord.x,coord.y)!=NULL){
             inv=tablero->esCarta(coord.x,coord.y);
+            std::cout << "SOY UN MONSTRUO CON VIDA : " << inv->getVida()<< std::endl;
             std::cout << "AY QUE ES UNA CARTA" << std::endl;
             cartaseleccionada=true;
         }

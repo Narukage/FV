@@ -40,4 +40,5 @@ class Invocacion{
         void setVida(int vida){this->vida = vida;};
         int getVida(){return vida;};
         int getAtaque(){return ataque;};
+        string getNombre(){return nombre;};
 };
