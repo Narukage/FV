@@ -15,7 +15,7 @@ class Tablero{
     private:
         //Crear clase Casilla que contenga los atributos del struct
         struct boardInfo {
-            Invocacion* unit;
+            Invocacion* unit= new Invocacion();;
            
             bool free;
             int coordX;

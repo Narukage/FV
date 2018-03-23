@@ -120,6 +120,7 @@ void Tablero::Adyacentes(int posx, int posy){
 bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
     //cambiar posx y posy por matx y maty
     Invocacion unidad2=Invocacion();
+    Invocacion* retorno= new Invocacion();
 
     if((posx>100 && posx<700)&&(posy>80 && posy<475)){
         posx = (posx-100)/50;
@@ -133,8 +134,10 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
             board[posx][posy].coordY=posy;
             unidad2.setPosicion(posx,posy);
             player1->RellenarJugadas(unidad2);
+            retorno=&unidad2;
+             board[posx][posy].unit=retorno;
             player1->eliminarMano(unidad2);
-           // board[posx][posy].unit=unit; //cambiar esto
+            //cambiar esto
             
             /*Arreglar la fila puto 1 de mierda que hay bug y me cago en la ostia
              y en la madre que lo pario me muero, controlar que no se meta mas uno, comprobarlo*/
@@ -163,9 +166,8 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
     return false;
 }
 
-                                                              ///////////////////////////////////////
-bool Tablero::moveToPos(int posx, int posy, Invocacion* unit){//AQUI HAY QUE ECHAR UN VISTAZO PORQUE NO
-                                                              //HACER EL ELSE
+                                                              
+bool Tablero::moveToPos(int posx, int posy, Invocacion* unit){                                                              
     std::cout <<" Esto es un amagoh" << std::endl;
     Invocacion jugada = Invocacion();
     posx = (posx-100)/50;
@@ -174,9 +176,9 @@ bool Tablero::moveToPos(int posx, int posy, Invocacion* unit){//AQUI HAY QUE ECH
        int x=unit->getX(),y=unit->getY();
        jugada=player1->getMonstruo(unit,2);
        board[posx][posy].free=false;
-       board[y][y].free=true;
        //HAY QUE HACERLO PARA LA IA
             unit->setPosicion(posx,posy);
+            board[posx][posy].unit=unit;
             player1->RellenarJugadas(jugada);
           
        removeUnit(x,y,unit);
@@ -193,7 +195,7 @@ bool Tablero::removeUnit(int posx, int posy, Invocacion* unit){
     board[posx][posy].unit=NULL;
     board[posx][posy].free=true;
     std::cout<<"estado de la casilla final"<<board[posx][posy].free<<std::endl;
-    
+    std::cout<<"estado de la casilla alcanzable "<<board[posx][posy].alcanzable<<std::endl;
 }
 
 Invocacion* Tablero::getUnit(int posx, int posy){//meter cual player es cada 1 eliminar UNIT de tablero

@@ -64,24 +64,28 @@ void Game::update(){
                 cartaseleccionada=false;
             }
         }else{ //queremos mover unidad en tablero
-            if(!tablero->isFree(coord.x,coord.y)){ //si la posicion que clickamos contiene una unidad
+            if(!tablero->isFree(coord.x,coord.y) && actuainvocacion==false){ //si la posicion que clickamos contiene una unidad
                 std::cout << "Invocacionnnn" << std::endl;
                 actuainvocacion=true;
                 posXinvocacion=coord.x;
                 posYinvocacion=coord.y;
                 tablero->Adyacentes(coord.x,coord.y);
               
-            }
+            } //unidad seleccionada, preparada para hacer alguna accion
             else if(actuainvocacion==true && tablero->isFree(coord.x,coord.y)==true && tablero->getAlcanzable(coord.x,coord.y)==1){
             std::cout << "Amoh a movernos" << std::endl;
-            tablero->moveToPos(coord.x,coord.y,tablero->getUnit(posXinvocacion,posYinvocacion));
             actuainvocacion=false;
+            tablero->moveToPos(coord.x,coord.y,tablero->getUnit(posXinvocacion,posYinvocacion));
             posXinvocacion=-1;
             posYinvocacion=-1;
             tablero->ReiniciarAdy();
             }else{
                tablero->ReiniciarAdy();
+               actuainvocacion=false;
+               posXinvocacion=-1;
+               posYinvocacion=-1;
             }
+            
         }
         presionado=false;
     }
