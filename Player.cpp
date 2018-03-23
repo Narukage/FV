@@ -10,14 +10,14 @@ Player::Player(int commander){
     
     if(commander==1){
          vida=100;
-        comandante=Invocacion("P",0,5,vida,1);
+        comandante=Invocacion("P",0,5,vida,1,-1);
         if(!textura.loadFromFile("assets/HUD/retrato1.png")){
                std::cout<<"Textura no aplicada"<<std::endl;
             }
         retrato.setPosition(0,0);
     }else{
          vida=100;
-       comandante=Invocacion("E",0,8,vida,2);
+       comandante=Invocacion("E",0,8,vida,2,-2);
         if(!textura.loadFromFile("assets/HUD/retrato2.png")){
                std::cout<<"Textura no aplicada"<<std::endl;
             }
@@ -39,43 +39,43 @@ Player::Player(int commander){
   cout << id << endl;
   switch(id){
     case(1):
-      invo[contador]=Invocacion("Cthughax",1,1,1,commander);
+      invo[contador]=Invocacion("Cthughax",1,1,1,commander,contador);
       contador++;
     break;
     case(2):
-      invo[contador]=Invocacion("Yigx",3,3,2,commander);
+      invo[contador]=Invocacion("Yigx",3,3,2,commander,contador);
       contador++;
     break;
     case(3):
-      invo[contador]=Invocacion("Zoogx",2,2,1,commander);
+      invo[contador]=Invocacion("Zoogx",2,2,1,commander,contador);
       contador++;
     break;
     case(4):
-      invo[contador]=Invocacion("Gugox",5,4,4,commander);
+      invo[contador]=Invocacion("Gugox",5,4,4,commander,contador);
       contador++;
     break;
     case(5):
-      invo[contador]=Invocacion("Bokrugs",4,1,4,commander);
+      invo[contador]=Invocacion("Bokrugs",4,1,4,commander,contador);
       contador++;
     break;
     case(6):
-      invo[contador]=Invocacion("Orrys",7,7,2,commander);
+      invo[contador]=Invocacion("Orrys",7,7,2,commander,contador);
       contador++;
     break;
     case(7):
-      invo[contador]=Invocacion("Ahtuh",4,4,2,commander);
+      invo[contador]=Invocacion("Ahtuh",4,4,2,commander,contador);
       contador++;
     break;
     case(8):
-      invo[contador]=Invocacion("Blemiax",8,7,8,commander);
+      invo[contador]=Invocacion("Blemiax",8,7,8,commander,contador);
       contador++;
     break;
     case(9):
-      invo[contador]=Invocacion("Shanx",6,3,6,commander);
+      invo[contador]=Invocacion("Shanx",6,3,6,commander,contador);
       contador++;
     break;
     case(10):
-      invo[contador]=Invocacion("Azathothx",10,12,12,commander);
+      invo[contador]=Invocacion("Azathothx",10,12,12,commander,contador);
       contador++;
     break;
     
@@ -131,5 +131,61 @@ bool Player::RellenarJugadas(Invocacion jugada){
     }
     return false;
 }
+Invocacion Player:: getMonstruo(Invocacion* monstruito, int donde){
+    if(donde==0){//0 = a mazo
+        for(int i=0;i<19;i++){
+            if(invo[i].GetUnico()==monstruito->GetUnico()){
+                return invo[i];
+            }
+        }
+    }
+    if(donde==1){// 1 = mano
+        for(int i=0;i<5;i++){
+            if(invo[i].GetUnico()==monstruito->GetUnico()){
+                return mano[i];
+            }
+        }
+    }
+    if(donde==2){// 2 = jugadas
+        for(int i=0;i<19;i++){
+            if(invo[i].GetUnico()==monstruito->GetUnico()){
+                return jugadas[i];
+            }
+        }
+    }  
+    Invocacion invo = Invocacion();
+    return invo;
+}
+void Player:: eliminarMano(Invocacion invo){
+    
+    for(int i=0;i<5;i++){
+        if(mano[i].GetUnico()==invo.GetUnico()){
+            if(i!=4){
+                mano[i]=mano[i+1];
+                for(int j=i+1;j<5;j++){
+                    if(j!=4){
+                        mano[j]=mano[j+1];
+                    }
+                }
+            }
+        }
+    }
+}
+void Player:: eliminarJugadas(Invocacion invo){// PENSAR
+    Invocacion devolver = Invocacion();
+    for(int i=0;i<19;i++){
+        if(jugadas[i].GetUnico()==invo.GetUnico()){
+            if(i!=19){
+                jugadas[i]=jugadas[i+1];
+                for(int j=i+1;j<19;j++){
+                    if(j!=19){
+                        jugadas[j]=jugadas[j+1];
+                    }
+                }
+            }
+        }
+    }
+}
+
 Player::~Player(){
 }

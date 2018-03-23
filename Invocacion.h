@@ -17,10 +17,11 @@ class Invocacion{
         int comandante=1;
         sf::Texture textura;
         sf::Sprite carta;
+        int unico;// -1 Es el jugador -2 es el rival
         
     public:
         Invocacion();
-        Invocacion(string nombre,int coste,int vida,int ataque,int comandante);
+        Invocacion(string nombre,int coste,int vida,int ataque,int comandante,int unico);
         ~Invocacion();
         
         void moveToPos(int posx, int posy/*Tablero& tablero*/);
@@ -33,4 +34,5 @@ class Invocacion{
         int getJugar(){return jugarla;};
         void setExisto(){existo=true;};
         bool getExisto(){return existo;};
+        int GetUnico(){return unico;};
 };

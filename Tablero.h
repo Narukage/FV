@@ -60,13 +60,14 @@ class Tablero{
         bool moveToPos(int posx, int posy, Invocacion* unit); //returns true if unit is moved succesfully
         bool removeUnit(int posx, int posy, Invocacion* unit); //returns true if unit is removed succesfully
         void Adyacentes(int posx, int posy);
+        int getAlcanzable(int posx, int posy);
         Invocacion* esCarta(int posx, int posy);
         void resetMap();
         void drawMap(sf::RenderWindow& window);
         void drawAdyacentes(sf::RenderWindow& window);
         void ReiniciarAdy();
-        Invocacion* unitIn(int posx, int posy);
-        
+        Invocacion* getUnit(int posx, int posy);
+       
         void drawLife(int commander, sf::RenderWindow& window);
         sf::Text drawLifeNumb(int commander);
         sf::Text drawManaRest(int commander);

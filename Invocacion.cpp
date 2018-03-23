@@ -11,12 +11,13 @@ Invocacion::Invocacion() {
     comandante=false;
 
 }
-Invocacion::Invocacion(string nombre,int coste,int ataque,int vida,int comandante) {
+Invocacion::Invocacion(string nombre,int coste,int ataque,int vida,int comandante,int unico) {
         this->nombre = nombre;
         this->coste = coste;
         this->ataque = ataque;
         this->vida = vida;
         this->comandante=comandante;
+        this->unico=unico;
         
         if(!textura.loadFromFile("assets/Sprites/bloque2.png")){
            std::cout<<"Textura no aplicada"<<std::endl;

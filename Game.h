@@ -24,7 +24,10 @@ private:
     sf::Vector2i coord;
     bool presionado = false;
     bool cartaseleccionada = false;
+    bool actuainvocacion =false;
     Invocacion* inv;
+    int posXinvocacion=-1;
+    int posYinvocacion=-1;
        
 private:
     void inicializar();
