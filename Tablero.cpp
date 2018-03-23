@@ -169,8 +169,9 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
                                                               
 bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){                                                              
     Invocacion jugada = Invocacion();
-    gox = (gox-100)/50;
-    goy = (goy-80)/50;
+    gox = (gox-100)/50; //REVISAR URGENTEMENTE//
+    goy = (goy-80)/50;  //SOLO TRANSFORMAMOS LOS PARAMENTROS GO, SI TRANSFORMAMOS LOS DE FROM 
+                        //FUNCIONA MAL, NO TIENE SENTIDO Y NO SABEMOS PORQUE
    if(((gox<10 && gox>=0) && (goy<20 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
        std::cout <<" Ya noh emo movioh" << std::endl;
        board[gox][goy].unit=unit;
@@ -486,4 +487,20 @@ void Tablero::setFree(int posx,int posy,bool set){
     posx = (posx-100)/50;
     posy = (posy-80)/50;
     board[posx][posy].free=set;
+}
+void Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
+    Invocacion* unidad = new Invocacion();
+    Invocacion* unidad2 =new  Invocacion();
+    unidad=this->getUnit(gox,goy);
+    unidad2=this->getUnit(fromx,fromy);
+    std::cout << "Vida 1: " <<unidad->getVida() <<std::endl;
+    std::cout << "Ataque 2: " <<unidad2->getAtaque() <<std::endl;
+    unidad->setVida(unidad->getVida()-unidad2->getAtaque());
+   std::cout << "Vida 1 R: " <<unidad->getVida() <<std::endl;
+    //hacia los dos lados
+    if(unidad->getVida()<=0){
+        std::cout << "ME MUEEERO: " <<unidad->getVida() <<std::endl;
+       removeUnit(gox,goy,unidad);
+    }
+    true;
 }

@@ -71,28 +71,30 @@ void Game::update(){
                 posXinvocacion=coord.x;
                 posYinvocacion=coord.y;
             } //unidad seleccionada, preparada para hacer alguna accion
-            else if(actuainvocacion==true){
+            else if(actuainvocacion==true && tablero->isFree(coord.x,coord.y)){
                 tablero->moveToPos(posXinvocacion, posYinvocacion,coord.x,coord.y,tablero->getUnit(posXinvocacion,posYinvocacion));
                 tablero->setFree(coord.x,coord.y,false); 
-                std::cout<<tablero->moveToPos(posXinvocacion, posYinvocacion,coord.x,coord.y,tablero->getUnit(posXinvocacion,posYinvocacion))<<std::endl;
                 actuainvocacion=false;
-                if(tablero->moveToPos(posXinvocacion, posYinvocacion,coord.x,coord.y,tablero->getUnit(posXinvocacion,posYinvocacion))){std::cout<<"TRUE"<<std::endl;
-                     std::cout<<"true"<<std::endl;
-                }
-                else{
-                    std::cout<<"false"<<std::endl;
-                }
-                
-                if(tablero->isFree(posXinvocacion,posYinvocacion)){
-                    std::cout<<"TRUE"<<std::endl;
-                }
-                else{
-                    std::cout<<"FALSE"<<std::endl;
-                }
+                posXinvocacion=-1;
+                posYinvocacion=-1;
                 tablero->ReiniciarAdy();
             }
+            else if(actuainvocacion==true && !tablero->isFree(coord.x,coord.y)){
+                if(tablero->getUnit(posXinvocacion,posYinvocacion)->esAliado(tablero->getUnit(coord.x,coord.y)->getComandante())){
+                    
+                    std::cout<<"AL ATAKERRRRR CANDEMOR"<<std::endl;
+                    tablero->atackToPos(posXinvocacion,posYinvocacion,coord.x,coord.y);
+                    actuainvocacion=false;
+                posXinvocacion=-1;
+                posYinvocacion=-1;
+                tablero->ReiniciarAdy();
+                }
+            }
             else{
-                actuainvocacion=false;
+               actuainvocacion=false;
+               posXinvocacion=-1;
+               posYinvocacion=-1;
+               tablero->ReiniciarAdy();
                tablero->ReiniciarAdy();
             }
             

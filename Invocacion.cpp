@@ -39,4 +39,13 @@ void Invocacion::setPosicion(int x, int y){
     pos_x=x;
     pos_y=y;
 }
+bool Invocacion:: esAliado(int comandante){
+    if(comandante == this->comandante){
+        return true;
+    }
+    return false;
+}
+int Invocacion::getComandante(){
+    return this->comandante;
+}
 

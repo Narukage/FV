@@ -35,4 +35,9 @@ class Invocacion{
         void setExisto(){existo=true;};
         bool getExisto(){return existo;};
         int GetUnico(){return unico;};
+        bool esAliado(int comandante);
+        int getComandante();
+        void setVida(int vida){this->vida = vida;};
+        int getVida(){return vida;};
+        int getAtaque(){return ataque;};
 };
