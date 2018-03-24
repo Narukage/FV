@@ -116,11 +116,13 @@ Player::Player(int commander){
    retrato.setTexture(textura);
    
 }
-bool Player::RellenarJugadas(Invocacion jugada){
+bool Player::RellenarJugadas(Invocacion* jugada){
+    Invocacion guardada = Invocacion();
+    guardada=getMonstruo(jugada,1);
     for(int i=0;i<19;i++){
         if(jugadas[i].getExisto()==false){
             jugadas[i].setExisto();
-            jugadas[i]=jugada;
+            jugadas[i]=guardada;
             return true;
         }
     }
@@ -151,10 +153,10 @@ Invocacion Player:: getMonstruo(Invocacion* monstruito, int donde){
     Invocacion invo = Invocacion();
     return invo;
 }
-void Player:: eliminarMano(Invocacion invo){
+void Player:: eliminarMano(Invocacion* invo){
     
     for(int i=0;i<5;i++){
-        if(mano[i].GetUnico()==invo.GetUnico()){
+        if(mano[i].GetUnico()==invo->GetUnico()){
             if(i!=4){
                 mano[i]=mano[i+1];
                 for(int j=i+1;j<5;j++){
@@ -166,10 +168,10 @@ void Player:: eliminarMano(Invocacion invo){
         }
     }
 }
-void Player:: eliminarJugadas(Invocacion invo){// PENSAR
+void Player:: eliminarJugadas(Invocacion* invo){// PENSAR
     Invocacion devolver = Invocacion();
     for(int i=0;i<19;i++){
-        if(jugadas[i].GetUnico()==invo.GetUnico()){
+        if(jugadas[i].GetUnico()==invo->GetUnico()){
             if(i!=19){
                 jugadas[i]=jugadas[i+1];
                 for(int j=i+1;j<19;j++){

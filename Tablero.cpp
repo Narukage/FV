@@ -119,24 +119,25 @@ void Tablero::Adyacentes(int posx, int posy){
 
 bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
     //cambiar posx y posy por matx y maty
-    Invocacion unidad2=Invocacion();
-    Invocacion* retorno= new Invocacion();
+    std::cout << "SOY UN MONSTRUO me llamo ... : " << unit->getNombre()<< std::endl;
+  /*  Invocacion unidad2=Invocacion();
+    Invocacion* retorno= new Invocacion();*/
 
     if((posx>100 && posx<700)&&(posy>80 && posy<475)){
         posx = (posx-100)/50;
         posy = (posy-80)/50;
     }
     if(spawn==1){
-        unidad2=player1->getMonstruo(unit,2);
+        //unidad2=player1->getMonstruo(unit,2);
         if(((posx>=0 && posx<3)&& (posy>=0 && posy<10))&& isFree(posx,posy)){
             board[posx][posy].free=false;
             board[posx][posy].coordX=posx;
             board[posx][posy].coordY=posy;
-            unidad2.setPosicion(posx,posy);
-            player1->RellenarJugadas(unidad2);
-            retorno=&unidad2;
-             board[posx][posy].unit=retorno;
-            player1->eliminarMano(unidad2);
+            unit->setPosicion(posx,posy);
+            player1->RellenarJugadas(unit);
+             board[posx][posy].unit=unit;
+             std::cout << "SOY UN MONSTRUO me llamo ... : " << unit->getNombre()<<"y estoy ya en : "<<unit->getX()<< std::endl;
+            player1->eliminarMano(unit);
             //cambiar esto
             
             /*Arreglar la fila puto 1 de mierda que hay bug y me cago en la ostia
@@ -155,16 +156,16 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
           unit->setPosicion(posx,posy);
           Invocacion invoc =  Invocacion();
           invoc=unit[0];
-          if(player1->RellenarJugadas(invoc)){
+         // if(player1->RellenarJugadas(invoc)){
               std::cout<<"Hola funciono"<<endl;
               /*Borrar unidad de la mano
                y setear antes su posicion*/
           }
           return true;  
         }
-    }
     return false;
-}
+    }
+    
 
                                                               
 bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){                                                              
@@ -495,12 +496,16 @@ void Tablero::setFree(int posx,int posy,bool set){
 void Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     Invocacion* unidad = new Invocacion();
     Invocacion* unidad2 =new  Invocacion();
-    unidad=this->getUnit(gox,goy);
-    unidad2=this->getUnit(fromx,fromy);
-    std::cout << "Vida 1: " <<unidad->getVida() <<std::endl;
-    std::cout << "Ataque 2: " <<unidad2->getAtaque() <<std::endl;
+    gox = (gox-100)/50;
+    goy = (goy-80)/50;
+    fromx = (fromx-100)/50;
+    fromy = (fromy-80)/50;
+    unidad=getUnit(gox,goy);
+    unidad2=getUnit(fromx,fromy);
+    std::cout << "Soy el poderoso: " <<unidad->getNombre()<<" con esta vida: "<<unidad->getVida() <<std::endl;
+    std::cout << "Soy el poderoso: " <<unidad2->getNombre()<<" con este ataque: "<<unidad2->getAtaque() <<std::endl;
     unidad->setVida(unidad->getVida()-unidad2->getAtaque());
-   std::cout << "Vida 1 R: " <<unidad->getVida() <<std::endl;
+   std::cout << "Soy el poderoso: " <<unidad->getNombre()<<" me he quedado con: "<<unidad->getVida() <<std::endl;
     //hacia los dos lados
     if(unidad->getVida()<=0){
         std::cout << "ME MUEEERO: " <<unidad->getVida() <<std::endl;

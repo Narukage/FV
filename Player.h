@@ -45,9 +45,9 @@ class Player{
         Invocacion getMonstruo(Invocacion* montruito, int donde);
         Invocacion* getMano(){ return mano; };
         Invocacion* getJugadas(){return jugadas; };
-        bool RellenarJugadas(Invocacion invo);
-        void eliminarMano(Invocacion invo);
-        void eliminarJugadas(Invocacion invo);
+        bool RellenarJugadas(Invocacion* invo);
+        void eliminarMano(Invocacion* invo);
+        void eliminarJugadas(Invocacion* invo);
         
         
 };

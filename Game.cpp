@@ -56,11 +56,13 @@ void Game::update(){
         if(tablero->esCarta(coord.x,coord.y)!=NULL){
             inv=tablero->esCarta(coord.x,coord.y);
             std::cout << "SOY UN MONSTRUO CON VIDA : " << inv->getVida()<< std::endl;
+         
+            std::cout << "SOY UN MONSTRUO CON VIDA : " << inv->getVida()<< std::endl;
             std::cout << "AY QUE ES UNA CARTA" << std::endl;
             cartaseleccionada=true;
         }
         
-        if(cartaseleccionada){ //queremos invocar en tablero
+        else if(cartaseleccionada ){ //queremos invocar en tablero
             if(tablero->addUnit(coord.x,coord.y,inv,1)){
                 cartaseleccionada=false;
             }
@@ -80,7 +82,7 @@ void Game::update(){
                 posYinvocacion=-1;
                 tablero->ReiniciarAdy();
             }
-            else if(actuainvocacion==true && !tablero->isFree(coord.x,coord.y)){
+            else if(actuainvocacion==true && !tablero->isFree(coord.x,coord.y)&&tablero->getAlcanzable(coord.x,coord.y)==1){
                 if(tablero->getUnit(posXinvocacion,posYinvocacion)->esAliado(tablero->getUnit(coord.x,coord.y)->getComandante())){
                     
                     std::cout<<"AL ATAKERRRRR CANDEMOR"<<std::endl;
