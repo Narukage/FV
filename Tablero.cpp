@@ -255,16 +255,10 @@ void Tablero::drawAdyacentes(sf::RenderWindow& window){
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
                 window.draw(board[i][j].sprite);
                 }
-                else{
-                board[i][j].sprite.setTexture(texturabloquerojo);
-                board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
-                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
-                window.draw(board[i][j].sprite);    
-                }
             }
         }
     }
-}
+
 
 void Tablero::drawMap(sf::RenderWindow& window){
         
@@ -277,10 +271,6 @@ void Tablero::drawMap(sf::RenderWindow& window){
             if(i<WIDTH/2){
                 if(board[i][j].free){
                     board[i][j].sprite.setTexture(texturabloqueazul);
-                if(board[i][j].alcanzable==1){
-                   //aqui nunca entra porque alcanzable solo se cambia en tablero, no board//
-                        board[i][j].sprite.setTexture(Zoogx);
-                    }
                 }else{
                  board[i][j].sprite.setTexture(texturabloqueazul);   
                 }
@@ -289,13 +279,7 @@ void Tablero::drawMap(sf::RenderWindow& window){
             }else{
                 if(board[i][j].free){
                 board[i][j].sprite.setTexture(texturabloquerojo);
-                if(board[i][j].alcanzable==1){
-                   //aqui nunca entra porque alcanzable solo se cambia en tablero, no board//
-                    std::cout<<"entramos en el alcanzable 1"<<std::endl;
-                        board[i][j].sprite.setTexture(Zoogx);
-                    }
                 }else{
-                    std::cout<<"entramos en el else "<<std::endl;
                  board[i][j].sprite.setTexture(texturabloquerojo);   
                 }
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
@@ -319,10 +303,7 @@ Invocacion* Tablero::esCarta(int posx, int posy){
     vector<Invocacion*>::iterator it3;
                  int i=0;
     for(it3=player1->getMano().begin();it3!=player1->getMano().end();++it3){
-        if(i<=player1->getMano().size()){
-        std::cout << "posx: " << posx << std::endl;
-        std::cout << "getjugar: " << player1->getMano().at(i)->getJugar() << std::endl;
-        std::cout << "MANO EXISTE : " << player1->getMano().at(i)->getNombre()<< std::endl;
+        if(i<player1->getMano().size()){
         if(player1->getMano().at(i)->getJugar()==posx){ //si estoy clickando una carta
            // std::cout << "EXISTO ¿? : " << mano2->getNombre()<< std::endl;
             
@@ -361,14 +342,12 @@ void Tablero::drawUnit(sf::RenderWindow& window){
         for(int j=0;j<HEIGHT;j++){
             
                 if(player1->JugadaEn(i,j)->getNombre()=="Zoogx"){
-                std::cout<<"hay criaturas porque nacho es dios"<<std::endl;
                 board[i][j].sprite.setTexture(Zoogx);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
                 window.draw(board[i][j].sprite);
                 }
                 if(player1->JugadaEn(i,j)->getNombre()=="Cthughax"){
-                std::cout<<"hay criaturas porque nacho es dios"<<std::endl;
                 board[i][j].sprite.setTexture(Cthughax);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
@@ -376,7 +355,6 @@ void Tablero::drawUnit(sf::RenderWindow& window){
                 }
                 
                 if(player1->JugadaEn(i,j)->getNombre()=="Gugox"){
-                std::cout<<"hay criaturas porque nacho es dios"<<std::endl;
                 board[i][j].sprite.setTexture(Gugox);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
@@ -384,7 +362,6 @@ void Tablero::drawUnit(sf::RenderWindow& window){
                 }
                 
                 if(player1->JugadaEn(i,j)->getNombre()=="Yigx"){
-                std::cout<<"hay criaturas porque nacho es dios"<<std::endl;
                 board[i][j].sprite.setTexture(Yigx);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
@@ -392,7 +369,6 @@ void Tablero::drawUnit(sf::RenderWindow& window){
                 }
                 
                 if(player1->JugadaEn(i,j)->getNombre()=="Bokrugs"){
-                std::cout<<"hay criaturas porque nacho es dios"<<std::endl;
                 board[i][j].sprite.setTexture(Bokrugs);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
