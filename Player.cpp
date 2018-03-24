@@ -194,12 +194,15 @@ void Player:: eliminarMano(Invocacion* invo){
          
             std::cout<< "I vale : "<< i<< std::endl;
             if(i==4){
+                
                 mano.pop_back();
-                 
+                 std::cout<< "jibiri" << std::endl;
             }
             else{
-                    mano.erase(it3);    
-                    std::cout<< "SOY un nigga  : "<< mano.at(i)->getNombre()<< std::endl;
+                
+                    mano.erase(it3); 
+                    
+                    
             }
                  
         }
@@ -241,15 +244,18 @@ void Player:: eliminarJugadas(Invocacion* invo){// get unico creo que no sirve s
      return retorno;
  }
  bool Player:: estaJugadaEn(int posx, int posy){
+      vector<Invocacion*>::iterator it3;
+                 int i=0;
      if((posx>100 && posx<700)&&(posy>80 && posy<475)){
         posx = (posx-100)/50;
         posy = (posy-80)/50;
     }
-     for(int i=0;i<20;i++){
-         if(jugadas[i].getX()==posx && jugadas[i].getY()==posy){
+     for(it3=jugadas.begin();it3!=jugadas.end();++it3){
+         if(jugadas.at(i)->getX()==posx && jugadas.at(i)->getY()==posy){
              std::cout<<"entro aqui porque no soy racista"<<std::endl;
              return true;
          }
+         i++;
      }
      return false;
  }

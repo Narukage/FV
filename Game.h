@@ -19,6 +19,8 @@ private:
     Invocacion* invocacion;
     Player* player;
     Player* player2;
+    Player* current = player;
+    int turno = 1;
             
     Interface* interface;
     sf::Vector2i coord;
@@ -35,7 +37,9 @@ private:
     void update();
     void render();
     void cleared();
-    
+    void setTurno(int num){turno=num;}
+    int getTurno(){return turno;}
+    void nexTurn(int num);
 public:
     Game();
     ~Game();

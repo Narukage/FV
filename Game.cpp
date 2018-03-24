@@ -164,3 +164,9 @@ void Game::run(){
     
         cleared();
     }
+
+void Game::nexTurn(int num){
+
+    turno=num+1;
+                        
+}

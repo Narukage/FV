@@ -12,8 +12,12 @@
         <group>
             <file>file:/home/manu/Escritorio/Summoners/Tablero.cpp</file>
             <file>file:/home/manu/Escritorio/Summoners/Player.h</file>
+            <file>file:/home/manu/Escritorio/Summoners/Game.h</file>
+            <file>file:/home/manu/Escritorio/Summoners/Interface.h</file>
+            <file>file:/home/manu/Escritorio/Summoners/Interface.cpp</file>
             <file>file:/home/manu/Escritorio/Summoners/Invocacion.cpp</file>
             <file>file:/home/manu/Escritorio/Summoners/Tablero.h</file>
+            <file>file:/home/manu/Escritorio/Summoners/Invocacion.h</file>
             <file>file:/home/manu/Escritorio/Summoners/Game.cpp</file>
             <file>file:/home/manu/Escritorio/Summoners/Player.cpp</file>
         </group>
