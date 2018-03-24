@@ -196,7 +196,6 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
     gox = (gox-100)/50; //REVISAR URGENTEMENTE//
     goy = (goy-80)/50;  //SOLO TRANSFORMAMOS LOS PARAMENTROS GO, SI TRANSFORMAMOS LOS DE FROM 
                         //FUNCIONA MAL, NO TIENE SENTIDO Y NO SABEMOS PORQUE
-   if(((gox<12 && gox>=0) && (goy<8 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
   
    if(((gox<12 && gox>=0) && (goy<8 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
        std::cout <<" Ya noh emo movioh" << std::endl;
@@ -209,7 +208,6 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
        std::cout <<"ALGUNA VEZ ENTRAS AQUI??"<<std::endl;
        return false;
    }        
-}
 }    
 bool Tablero::removeUnit(int posx, int posy, Invocacion* unit){
     board[posx][posy].unit=NULL;
@@ -250,10 +248,18 @@ void Tablero::drawAdyacentes(sf::RenderWindow& window){
             if(board[i][j].alcanzable==1){
                /* std::cout << "i: " << i << std::endl;
                 std::cout << "j: " << i << std::endl;*/
+                if(board[i][j].free){
                 board[i][j].sprite.setTexture(texturabloqueverde);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
                 window.draw(board[i][j].sprite);
+                }
+                else{
+                board[i][j].sprite.setTexture(texturabloquerojo);
+                board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
+                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
+                window.draw(board[i][j].sprite);   
+                }
                 }
             }
         }
@@ -559,6 +565,7 @@ void Tablero::setFree(int posx,int posy,bool set){
     board[posx][posy].free=set;
 }
 bool Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
+    bool retorno=false;
     Invocacion* unidad = new Invocacion();
     Invocacion* unidad2 =new  Invocacion();
     gox = (gox-100)/50;
@@ -568,12 +575,19 @@ bool Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     unidad=player1->JugadaEn(fromx,fromy);//el que pega
     unidad2=player1->JugadaEn(gox,goy);
     unidad2->setVida(unidad2->getVida()-unidad->getAtaque());
+    unidad->setVida(unidad->getVida()-unidad2->getAtaque());
     //hacia los dos lados
     if(unidad2->getVida()<=0){
         std::cout << "ME MUEEERO: " <<unidad2->getVida() <<std::endl;
         player1->eliminarJugadas(unidad2);
        removeUnit(gox,goy,unidad2);
-       return true;
+       retorno=true;
     }
-    return false;
+    if(unidad->getVida()<=0){
+        std::cout << "ME MUEEERO TAMBIEN : " <<unidad->getVida() <<std::endl;
+        player1->eliminarJugadas(unidad);
+        removeUnit(fromx,fromy,unidad);
+        retorno =true;
+    }
+    return retorno;
 }

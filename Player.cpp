@@ -220,7 +220,7 @@ void Player:: eliminarJugadas(Invocacion* invo){// get unico creo que no sirve s
    vector<Invocacion*>::iterator it3;
     int i=0;
     for(it3=jugadas.begin();it3!=jugadas.end();++it3){
-        if(jugadas.at(i)->GetUnico()==invo->GetUnico()){
+        if(i<jugadas.size()&&jugadas.at(i)->GetUnico()==invo->GetUnico()){
                     jugadas.erase(it3);        
                     
         }

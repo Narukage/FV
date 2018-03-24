@@ -37,9 +37,9 @@ private:
     void update();
     void render();
     void cleared();
-    void setTurno(int num){turno=num;}
-    int getTurno(){return turno;}
-    void nexTurn(int num);
+   // void setTurno(int num){turno=num;}
+    //int getTurno(){return turno;}
+    //void nexTurn(int num);
 public:
     Game();
     ~Game();
