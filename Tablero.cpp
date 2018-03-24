@@ -379,7 +379,7 @@ void Tablero::drawLife(int commander, sf::RenderWindow& window){
 
 sf::Text Tablero::drawLifeNumb(int commander){
     if(commander==1){
-        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+        if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
                 std::cout << "Fuente no aplicada" <<std::endl;
             }
         int life = player1->getLife();
@@ -392,7 +392,7 @@ sf::Text Tablero::drawLifeNumb(int commander){
             vida.setPosition(350,1);
             return vida;
     }else{
-        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+        if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
                 std::cout << "Fuente no aplicada" <<std::endl;
             }
         int life = player2->getLife();
@@ -409,7 +409,7 @@ sf::Text Tablero::drawLifeNumb(int commander){
 
 sf::Text Tablero::drawManaNumb(int commander){
     if(commander==1){
-        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+        if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
                 std::cout << "Fuente no aplicada" <<std::endl;
             }
         int mana = player1->getMana();
@@ -422,7 +422,7 @@ sf::Text Tablero::drawManaNumb(int commander){
             mananumb.setPosition(193,37);
             return mananumb;
     }else{
-        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+        if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
                 std::cout << "Fuente no aplicada" <<std::endl;
             }
         int mana = player2->getMana();
@@ -438,7 +438,7 @@ sf::Text Tablero::drawManaNumb(int commander){
 
 sf::Text Tablero::drawManaRest(int commander){
     if(commander==1){
-        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+        if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
                     std::cout << "Fuente no aplicada" <<std::endl;
                 }
         int manarest = player1->getManaRest();
@@ -451,7 +451,7 @@ sf::Text Tablero::drawManaRest(int commander){
                 manar.setPosition(158,37);
                 return manar;
     }else{
-        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+        if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
                     std::cout << "Fuente no aplicada" <<std::endl;
                 }
         int manarest = player2->getManaRest();
@@ -467,7 +467,7 @@ sf::Text Tablero::drawManaRest(int commander){
 
 sf::Text Tablero::drawBarra(int commander){
     if(commander==1){
-        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+        if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
                         std::cout << "Fuente no aplicada" <<std::endl;
                     }
        barra.setFont(font);
@@ -476,7 +476,7 @@ sf::Text Tablero::drawBarra(int commander){
        barra.setString("/");
        return barra;
     }else{
-        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+        if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
                         std::cout << "Fuente no aplicada" <<std::endl;
                     }
        barra.setFont(font);
