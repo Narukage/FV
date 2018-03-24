@@ -34,7 +34,11 @@ class Tablero{
        sf::Texture texturabloqueazul;
        sf::Texture texturabloquerojo;
        sf::Texture texturabloqueverde;
-       sf::Texture criatura;
+       sf::Texture Bokrugs;
+       sf::Texture Zoogx;
+       sf::Texture Yigx;
+       sf::Texture Gugox;
+       sf::Texture Cthughax;
        sf::Texture texturavida;
        sf::Texture texturalife;
        sf::Texture texturacarta;
