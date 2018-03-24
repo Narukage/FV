@@ -30,7 +30,19 @@ Tablero::Tablero(){
     if(!texturabloqueverde.loadFromFile("assets/Sprites/bloque3.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
-    if(!criatura.loadFromFile("assets/Sprites/criatura.png")){
+    if(!Zoogx.loadFromFile("assets/Sprites/Zoogx.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        }
+    if(!Cthughax.loadFromFile("assets/Sprites/Cthughax.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        }
+    if(!Gugox.loadFromFile("assets/Sprites/Gugox.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        }
+    if(!Yigx.loadFromFile("assets/Sprites/Yigx.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        }
+    if(!Bokrugs.loadFromFile("assets/Sprites/Bokrugs.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
     board[0][3].free=false; //commander 1
@@ -234,12 +246,20 @@ void Tablero::drawAdyacentes(sf::RenderWindow& window){
     for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
             if(board[i][j].alcanzable==1){
+                if(board[i][j].free){
                 std::cout << "i: " << i << std::endl;
                 std::cout << "j: " << i << std::endl;
                 board[i][j].sprite.setTexture(texturabloqueverde);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
                 window.draw(board[i][j].sprite);
+                }
+                else{
+                board[i][j].sprite.setTexture(texturabloquerojo);
+                board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
+                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
+                window.draw(board[i][j].sprite);    
+                }
             }
         }
     }
@@ -258,7 +278,7 @@ void Tablero::drawMap(sf::RenderWindow& window){
                     board[i][j].sprite.setTexture(texturabloqueazul);
                 if(board[i][j].alcanzable==1){
                    //aqui nunca entra porque alcanzable solo se cambia en tablero, no board//
-                        board[i][j].sprite.setTexture(criatura);
+                        board[i][j].sprite.setTexture(Zoogx);
                     }
                 }else{
                  board[i][j].sprite.setTexture(texturabloqueazul);   
@@ -271,7 +291,7 @@ void Tablero::drawMap(sf::RenderWindow& window){
                 if(board[i][j].alcanzable==1){
                    //aqui nunca entra porque alcanzable solo se cambia en tablero, no board//
                     std::cout<<"entramos en el alcanzable 1"<<std::endl;
-                        board[i][j].sprite.setTexture(criatura);
+                        board[i][j].sprite.setTexture(Zoogx);
                     }
                 }else{
                     std::cout<<"entramos en el else "<<std::endl;
@@ -330,14 +350,45 @@ void Tablero::Mostrar_mano(sf::RenderWindow& window){
 void Tablero::drawUnit(sf::RenderWindow& window){
     for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
-            if(player1->estaJugadaEn(i,j)){
-                //Falta insertar comandantes porque manu no tiene ni idea y comandantes no son invocaciones//
+            
+                if(player1->JugadaEn(i,j)->getNombre()=="Zoogx"){
                 std::cout<<"hay criaturas porque nacho es dios"<<std::endl;
-                board[i][j].sprite.setTexture(criatura);
+                board[i][j].sprite.setTexture(Zoogx);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
                 window.draw(board[i][j].sprite);
-            }
+                }
+                if(player1->JugadaEn(i,j)->getNombre()=="Cthughax"){
+                std::cout<<"hay criaturas porque nacho es dios"<<std::endl;
+                board[i][j].sprite.setTexture(Cthughax);
+                board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
+                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
+                window.draw(board[i][j].sprite);
+                }
+                
+                if(player1->JugadaEn(i,j)->getNombre()=="Gugox"){
+                std::cout<<"hay criaturas porque nacho es dios"<<std::endl;
+                board[i][j].sprite.setTexture(Gugox);
+                board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
+                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
+                window.draw(board[i][j].sprite);
+                }
+                
+                if(player1->JugadaEn(i,j)->getNombre()=="Yigx"){
+                std::cout<<"hay criaturas porque nacho es dios"<<std::endl;
+                board[i][j].sprite.setTexture(Yigx);
+                board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
+                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
+                window.draw(board[i][j].sprite);
+                }
+                
+                if(player1->JugadaEn(i,j)->getNombre()=="Bokrugs"){
+                std::cout<<"hay criaturas porque nacho es dios"<<std::endl;
+                board[i][j].sprite.setTexture(Bokrugs);
+                board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
+                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
+                window.draw(board[i][j].sprite);
+                }
         }
     }
 }
