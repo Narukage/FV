@@ -61,10 +61,6 @@ void Game::update(){
     if(presionado){
         if(tablero->esCarta(coord.x,coord.y)!=NULL){
             inv=tablero->esCarta(coord.x,coord.y);
-            std::cout << "SOY UN MONSTRUO CON VIDA : " << inv->getVida()<< std::endl;
-         
-            std::cout << "SOY UN MONSTRUO CON VIDA : " << inv->getVida()<< std::endl;
-            std::cout << "AY QUE ES UNA CARTA" << std::endl;
             cartaseleccionada=true;
         }
         
@@ -73,8 +69,6 @@ void Game::update(){
                 cartaseleccionada=false;
                 for(int i=0;i<20;i++){
                     //*if(tablero->getPlayer()->getJugadas()[i].getX()>=0){
-                    std::cout << "Soy el monstruo de jugadas: " << tablero->getPlayer()->getJugadas()[i].getNombre()<<"en la posicion de array: "<< i<<std::endl;
-                    std::cout << "En tablero X =  " << tablero->getPlayer()->getJugadas()[i].getX()<<"en tablero Y = "<<tablero->getPlayer()->getJugadas()[i].getY()<< std::endl;
                     //}
                 }  
             }
@@ -89,15 +83,13 @@ void Game::update(){
                 std::cout << "posYinvocacion: " << posYinvocacion << std::endl;
                 std::cout << "pero que " << std::endl;
             } //unidad seleccionada, preparada para hacer alguna accion
-            else if(actuainvocacion==true && tablero->isFree(coord.x,coord.y) && tablero->getAlcanzable(coord.x,coord.y)==1){
+            else if(actuainvocacion==true && tablero->isFree(coord.x,coord.y)){
                 /*for(int i=0;i<20;i++){
                     std::cout << "Soy el mosntruo de jugadas: " << tablero->getPlayer()->getJugadas()[i].getNombre()<<"en la posicion de array: "<< std::endl;
                     std::cout << "En tablero X =  " << tablero->getPlayer()->getJugadas()[i].getX()<<"en tablero Y = "<<tablero->getPlayer()->getJugadas()[i].getY()<< std::endl;
                 }   */
-             std::cout << "SOY UN MONSTRUO que se va a mover soy: ... : " << tablero->getUnit(posXinvocacion,posYinvocacion)->getNombre()<<"y estoy ya en : "<<tablero->getUnit(posXinvocacion,posYinvocacion)->getX()<< std::endl;
                 tablero->moveToPos(posXinvocacion, posYinvocacion,coord.x,coord.y,tablero->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion));
-                tablero->setFree(coord.x,coord.y,false); 
-                
+                tablero->setFree(coord.x,coord.y,false);             
                 actuainvocacion=false;
                 posXinvocacion=-1;
                 posYinvocacion=-1;
@@ -133,6 +125,7 @@ void Game::render(){
     
     window.clear(sf::Color::Black);
     tablero->drawMap(window);
+    tablero->drawUnit(window);
     tablero->drawAdyacentes(window);
     tablero->drawLife(1,window);
     window.draw(tablero->drawLifeNumb(1));
@@ -149,7 +142,7 @@ void Game::render(){
     tablero->drawRetrato(1,window); //esto solo deberia dibujarlo una vez
     tablero->drawRetrato(2,window); //same
     tablero->Mostrar_mano(window);
- 
+     tablero->drawUnit(window);
     window.display();
 }
 

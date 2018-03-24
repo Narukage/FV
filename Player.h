@@ -50,6 +50,6 @@ class Player{
         void eliminarJugadas(Invocacion* invo);
         
         Invocacion* JugadaEn(int posx, int posy);
-        
+        bool estaJugadaEn(int posx, int posy);
 };
 

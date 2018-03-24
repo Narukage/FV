@@ -34,6 +34,7 @@ class Tablero{
        sf::Texture texturabloqueazul;
        sf::Texture texturabloquerojo;
        sf::Texture texturabloqueverde;
+       sf::Texture criatura;
        sf::Texture texturavida;
        sf::Texture texturalife;
        sf::Texture texturacarta;
@@ -66,6 +67,7 @@ class Tablero{
         void resetMap();
         void drawMap(sf::RenderWindow& window);
         void drawAdyacentes(sf::RenderWindow& window);
+        void drawUnit(sf::RenderWindow& window);
         void ReiniciarAdy();
         Invocacion* getUnit(int posx, int posy);
        

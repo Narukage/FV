@@ -27,8 +27,10 @@ Tablero::Tablero(){
     if(!texturabloquerojo.loadFromFile("assets/Sprites/bloque2.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
-    
     if(!texturabloqueverde.loadFromFile("assets/Sprites/bloque3.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        }
+    if(!criatura.loadFromFile("assets/Sprites/criatura.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
     board[0][3].free=false; //commander 1
@@ -123,11 +125,63 @@ if((posx>0 && posx<11)&& (posy>0 && posy<7) && !entrado){
     board[posx][posy+1].alcanzable=1;
     entrado=true;
 }
+    posx = (posx-100)/50;
+    posy = (posy-80)/50;
+    //esquina superior izq -- iluminar
+    if(posx==0 && posy==0){
+        board[posx+1][posy].alcanzable=1;
+        board[posx][posy-1].alcanzable=1;
+    }
+    //esquina superior dcha -- iluminar
+    /*if(){
+        board[posx-1][posy].sprite.setTexture(texturabloqueverde);
+        board[posx][posy-1].sprite.setTexture(texturabloqueverde);
+    }
+    //esquina inferior izq -- iluminar
+    if(){
+        board[posx+1][posy].sprite.setTexture(texturabloqueverde);
+        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
+    }
+    //esquina inferior dcha -- iluminar
+    if(){
+        board[posx-1][posy].sprite.setTexture(texturabloqueverde);
+        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
+    }*/
+    //arriba -- iluminar
+    if(posy==0 && (posx!=0 && posx!=9)){
+        board[posx-1][posy].alcanzable=1;
+        board[posx+1][posy].alcanzable=1;
+        board[posx][posy+1].alcanzable=1;
+    }
+    //abajo -- iluminar
+    /*if(){
+        board[posx-1][posy].sprite.setTexture(texturabloqueverde);
+        board[posx+1][posy].sprite.setTexture(texturabloqueverde);
+        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
+    }
+    //izq -- iluminar
+    if(){
+        board[posx+1][posy].sprite.setTexture(texturabloqueverde);
+        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
+        board[posx][posy-1].sprite.setTexture(texturabloqueverde);
+    }
+    //dcha -- iluminar
+    if(){
+        board[posx-1][posy].sprite.setTexture(texturabloqueverde);
+        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
+        board[posx][posy-1].sprite.setTexture(texturabloqueverde);
+    }*/
+    //centro -- iluminar
+    if((posx>0 && posx<10)&& (posy>0 && posy<7)){
+        board[posx-1][posy].alcanzable=1;
+        board[posx+1][posy].alcanzable=1;
+        board[posx][posy-1].alcanzable=1;
+        board[posx][posy+1].alcanzable=1;
+    }
 }
 
 bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
     //cambiar posx y posy por matx y maty
-    std::cout << "SOY UN MONSTRUO me llamo ... : " << unit->getNombre()<< std::endl;
   /*  Invocacion unidad2=Invocacion();
     Invocacion* retorno= new Invocacion();*/
 
@@ -146,9 +200,7 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
             unit->setPosicion(posx,posy);
             player1->RellenarJugadas(unit);
              board[posx][posy].unit=unit;
-             std::cout << "SOY UN MONSTRUO me llamo ... : " << unit->getNombre()<<"y estoy ya en : "<<unit->getX()<< std::endl;
            // player1->eliminarMano(unit); Comprobar bien cuando borramos
-            std::cout << "Sigo siendo un monstruo ... : " << unit->getNombre()<<"y estoy ya en : "<<unit->getX()<< std::endl;
 
             //cambiar esto
             
@@ -169,7 +221,6 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
           Invocacion invoc =  Invocacion();
           invoc=unit[0];
          // if(player1->RellenarJugadas(invoc)){
-              std::cout<<"Hola funciono"<<endl;
               /*Borrar unidad de la mano
                y setear antes su posicion*/
           }
@@ -186,10 +237,11 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
     goy = (goy-80)/50;  //SOLO TRANSFORMAMOS LOS PARAMENTROS GO, SI TRANSFORMAMOS LOS DE FROM 
                         //FUNCIONA MAL, NO TIENE SENTIDO Y NO SABEMOS PORQUE
    if(((gox<12 && gox>=0) && (goy<8 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
+  
+   if(((gox<10 && gox>=0) && (goy<20 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
        std::cout <<" Ya noh emo movioh" << std::endl;
        unit->setPosicion(gox,goy);
        board[gox][goy].unit=unit;
-       
        removeUnit(fromx,fromy,unit);
        return true;
    }else{
@@ -197,10 +249,8 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
        return false;
    }        
 }
-        
+}    
 bool Tablero::removeUnit(int posx, int posy, Invocacion* unit){
-           std::cout <<"AMOH A HACEH REMOVIET??"<<std::endl;
-         
     board[posx][posy].unit=NULL;
     setFree(posx,posy,true);
     return true;
@@ -259,19 +309,24 @@ void Tablero::drawMap(sf::RenderWindow& window){
             if(i<WIDTH/2){
                 if(board[i][j].free){
                     board[i][j].sprite.setTexture(texturabloqueazul);
+                if(board[i][j].alcanzable==1){
+                   //aqui nunca entra porque alcanzable solo se cambia en tablero, no board//
+                        board[i][j].sprite.setTexture(criatura);
+                    }
                 }else{
-                 board[i][j].sprite.setTexture(texturabloqueverde);   
+                 board[i][j].sprite.setTexture(criatura);   
                 }
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
             }else{
-                if(board[i][j].free){    
+                if(board[i][j].free){
                 board[i][j].sprite.setTexture(texturabloquerojo);
                 if(board[i][j].alcanzable==1){
-                        board[i][j].sprite.setTexture(texturabloqueverde);
+                   //aqui nunca entra porque alcanzable solo se cambia en tablero, no board//
+                        board[i][j].sprite.setTexture(criatura);
                     }
                 }else{
-                 board[i][j].sprite.setTexture(texturabloqueverde);   
+                 board[i][j].sprite.setTexture(criatura);   
                 }
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
@@ -292,13 +347,8 @@ Invocacion* Tablero::esCarta(int posx, int posy){
             mano= player1->getMano();
     Invocacion* mano2 = new Invocacion();
     for(int i=0; i<5;i++){
-        std::cout << "posx: " << posx << std::endl;
-        std::cout << "getjugar: " << mano[i].getJugar() << std::endl;
-        std::cout << "MANO EXISTE : " << mano[i].getNombre()<< std::endl;
         if(mano[i].getJugar()==posx){ //si estoy clickando una carta
             mano2=&mano[i];
-            std::cout << "EXISTO ¿? : " << mano2->getNombre()<< std::endl;
-            
             return mano2;
         }
     }
@@ -327,7 +377,19 @@ void Tablero::Mostrar_mano(sf::RenderWindow& window){
     
         
 }
-
+void Tablero::drawUnit(sf::RenderWindow& window){
+    for(int i=0;i<WIDTH;i++){
+        for(int j=0;j<HEIGHT;j++){
+            if(player1->estaJugadaEn(i,j)){
+                
+                board[i][j].sprite.setTexture(criatura);
+                board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
+                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
+                window.draw(board[i][j].sprite);
+            }
+        }
+    }
+}
 void Tablero::drawLife(int commander, sf::RenderWindow& window){
     if(commander==1){
         if(!texturavida.loadFromFile("assets/HUD/vida.png")){
@@ -518,13 +580,9 @@ bool Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     fromy = (fromy-80)/50;*/
     unidad=player1->JugadaEn(fromx,fromy);//el que pega
     unidad2=player1->JugadaEn(gox,goy);
-    std::cout << "Soy el poderoso: " <<unidad2->getNombre()<<" con esta vida: "<<unidad2->getVida() <<std::endl;
-    std::cout << "Soy el poderoso: " <<unidad->getNombre()<<" con este ataque: "<<unidad->getAtaque() <<std::endl;
     unidad2->setVida(unidad2->getVida()-unidad->getAtaque());
-   std::cout << "Soy el poderoso: " <<unidad2->getNombre()<<" me he quedado con: "<<unidad2->getVida() <<std::endl;
     //hacia los dos lados
     if(unidad2->getVida()<=0){
-        std::cout << "ME MUEEERO: " <<unidad2->getVida() <<std::endl;
        removeUnit(gox,goy,unidad2);
        return true;
     }
