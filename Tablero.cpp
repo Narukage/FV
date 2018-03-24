@@ -38,12 +38,12 @@ Tablero::Tablero(){
     board[0][3].spawn2=false;
     board[0][3].unit=player1->getUnit();
             
-    board[11][3].free=false; //commander 2
-    board[11][3].coordX=11;
-    board[11][3].coordY=3;
-    board[11][3].spawn1=false;
-    board[11][3].spawn2=true;
-    board[11][3].unit=player2->getUnit();
+    board[11][0].free=false; //commander 2
+    board[11][0].coordX=11;
+    board[11][0].coordY=3;
+    board[11][0].spawn1=false;
+    board[11][0].spawn2=true;
+    board[11][0].unit=player2->getUnit();
 }
 
 void Tablero::ReiniciarAdy(){
@@ -58,63 +58,71 @@ void Tablero::ReiniciarAdy(){
 
 void Tablero::Adyacentes(int posx, int posy){
     //Mover este calculo a una funcion para que no se repita
-    posx = (posx-100)/50;
-    posy = (posy-80)/50;
-    
-    std::cout << posx << std::endl;
-    std::cout << posy << std::endl;
-    
-    //esquina superior izq -- iluminar
-    if(posx==0 && posy==0){
-        board[posx+1][posy].alcanzable=1;
-        board[posx][posy-1].alcanzable=1;
-    }
-    //esquina superior dcha -- iluminar
-    /*if(){
-        board[posx-1][posy].sprite.setTexture(texturabloqueverde);
-        board[posx][posy-1].sprite.setTexture(texturabloqueverde);
-    }
-    //esquina inferior izq -- iluminar
-    if(){
-        board[posx+1][posy].sprite.setTexture(texturabloqueverde);
-        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
-    }
-    //esquina inferior dcha -- iluminar
-    if(){
-        board[posx-1][posy].sprite.setTexture(texturabloqueverde);
-        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
-    }*/
-    //arriba -- iluminar
-    if(posy==0 && (posx!=0 && posx!=9)){
-        board[posx-1][posy].alcanzable=1;
-        board[posx+1][posy].alcanzable=1;
-        board[posx][posy+1].alcanzable=1;
-    }
-    //abajo -- iluminar
-    /*if(){
-        board[posx-1][posy].sprite.setTexture(texturabloqueverde);
-        board[posx+1][posy].sprite.setTexture(texturabloqueverde);
-        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
-    }
-    //izq -- iluminar
-    if(){
-        board[posx+1][posy].sprite.setTexture(texturabloqueverde);
-        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
-        board[posx][posy-1].sprite.setTexture(texturabloqueverde);
-    }
-    //dcha -- iluminar
-    if(){
-        board[posx-1][posy].sprite.setTexture(texturabloqueverde);
-        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
-        board[posx][posy-1].sprite.setTexture(texturabloqueverde);
-    }*/
-    //centro -- iluminar
-    if((posx>0 && posx<10)&& (posy>0 && posy<7)){
-        board[posx-1][posy].alcanzable=1;
-        board[posx+1][posy].alcanzable=1;
-        board[posx][posy-1].alcanzable=1;
-        board[posx][posy+1].alcanzable=1;
-    }
+posx = (posx-100)/50;
+posy = (posy-80)/50;
+
+bool entrado=false;
+
+//esquina superior izq -- iluminar
+if(posx==0 && posy==9 && !entrado){
+    board[posx+1][posy].alcanzable=1;
+    board[posx][posy+1].alcanzable=1;
+    entrado=true;
+}
+//esquina superior dcha -- iluminar
+if(posy==0 && posx==11 && !entrado){
+    board[posx-1][posy].alcanzable=1;
+    board[posx][posy+1].alcanzable=1;
+    entrado=true;
+}
+//esquina inferior izq -- iluminar
+if(posx==0 && posy==7 && !entrado){
+    board[posx+1][posy].alcanzable=1;
+    board[posx][posy-1].alcanzable=1;
+    entrado=true;
+}
+//esquina inferior dcha -- iluminar
+if(posx==11 && posy==7 && !entrado){
+    board[posx-1][posy].alcanzable=1;
+    board[posx][posy-1].alcanzable=1;
+    entrado=true;
+}
+//arriba -- iluminar
+if(posy==0 && (posx>=0 && posx<12) && !entrado){
+    board[posx-1][posy].alcanzable=1;
+    board[posx+1][posy].alcanzable=1;
+    board[posx][posy+1].alcanzable=1;
+    entrado=true;
+}
+//abajo -- iluminar
+if((posx>=0 && posx<12) && posy==7 && !entrado){
+    board[posx-1][posy].alcanzable=1;
+    board[posx+1][posy].alcanzable=1;
+    board[posx][posy-1].alcanzable=1;
+    entrado=true;
+}
+//izq -- iluminar
+if(posx==0 && (posy>=0 && posy<8) && !entrado){
+    board[posx+1][posy].alcanzable=1;
+    board[posx][posy+1].alcanzable=1;
+    board[posx][posy-1].alcanzable=1;
+    entrado=true;
+}
+//dcha -- iluminar
+if(posx==11 && (posy>=0 && posy<8) && !entrado){
+    board[posx-1][posy].alcanzable=1;
+    board[posx][posy+1].alcanzable=1;
+    board[posx][posy-1].alcanzable=1;
+    entrado=true;
+}
+//centro -- iluminar
+if((posx>0 && posx<11)&& (posy>0 && posy<7) && !entrado){
+    board[posx-1][posy].alcanzable=1;
+    board[posx+1][posy].alcanzable=1;
+    board[posx][posy-1].alcanzable=1;
+    board[posx][posy+1].alcanzable=1;
+    entrado=true;
+}
 }
 
 bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
@@ -127,6 +135,8 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
         posx = (posx-100)/50;
         posy = (posy-80)/50;
     }
+
+    
     if(spawn==1){
         //unidad2=player1->getMonstruo(unit,2);
         if(((posx>=0 && posx<3)&& (posy>=0 && posy<10))&& isFree(posx,posy)){
@@ -175,7 +185,7 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
     gox = (gox-100)/50; //REVISAR URGENTEMENTE//
     goy = (goy-80)/50;  //SOLO TRANSFORMAMOS LOS PARAMENTROS GO, SI TRANSFORMAMOS LOS DE FROM 
                         //FUNCIONA MAL, NO TIENE SENTIDO Y NO SABEMOS PORQUE
-   if(((gox<10 && gox>=0) && (goy<20 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
+   if(((gox<12 && gox>=0) && (goy<8 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
        std::cout <<" Ya noh emo movioh" << std::endl;
        unit->setPosicion(gox,goy);
        board[gox][goy].unit=unit;
@@ -227,6 +237,8 @@ void Tablero::drawAdyacentes(sf::RenderWindow& window){
     for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
             if(board[i][j].alcanzable==1){
+                std::cout << "i: " << i << std::endl;
+                std::cout << "j: " << i << std::endl;
                 board[i][j].sprite.setTexture(texturabloqueverde);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));

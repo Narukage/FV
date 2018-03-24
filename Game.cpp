@@ -47,6 +47,10 @@ void Game::eventos(){
                             presionado=true;
                             std::cout << coord.x << std::endl;
                             std::cout << coord.y << std::endl;
+                            int posx = (coord.x-100)/50;
+                            int posy = (coord.y-80)/50;
+                            std::cout << "posx: " << posx << std::endl;
+                            std::cout << "posy: " << posy << std::endl;
                         }
                 }
     }
@@ -81,6 +85,9 @@ void Game::update(){
                 tablero->Adyacentes(coord.x,coord.y);
                 posXinvocacion=coord.x;
                 posYinvocacion=coord.y;
+                std::cout << "posXinvocacion: " << posXinvocacion << std::endl;
+                std::cout << "posYinvocacion: " << posYinvocacion << std::endl;
+                std::cout << "pero que " << std::endl;
             } //unidad seleccionada, preparada para hacer alguna accion
             else if(actuainvocacion==true && tablero->isFree(coord.x,coord.y)){
                 /*for(int i=0;i<20;i++){
@@ -103,7 +110,7 @@ void Game::update(){
                    if( tablero->atackToPos(posXinvocacion,posYinvocacion,coord.x,coord.y)){
                        tablero->setFree(coord.x,coord.y,true);
                    }
-                    actuainvocacion=false;
+                actuainvocacion=false;
                 posXinvocacion=-1;
                 posYinvocacion=-1;
                 tablero->ReiniciarAdy();
@@ -139,8 +146,8 @@ void Game::render(){
     window.draw(tablero->drawManaNumb(2));
     window.draw(tablero->drawManaRest(2));
     window.draw(tablero->drawBarra(2));
-    tablero->drawRetrato(1,window);
-    tablero->drawRetrato(2,window);
+    tablero->drawRetrato(1,window); //esto solo deberia dibujarlo una vez
+    tablero->drawRetrato(2,window); //same
     tablero->Mostrar_mano(window);
  
     window.display();
