@@ -10,7 +10,7 @@ Player::Player(int commander){
     
     if(commander==1){
          vida=100;
-        comandante=Invocacion("P",0,5,vida,1,-1);
+        comandante=Invocacion("Gugox",0,5,vida,1,-1);
         if(!textura.loadFromFile("assets/HUD/retrato1.png")){
                std::cout<<"Textura no aplicada"<<std::endl;
             }

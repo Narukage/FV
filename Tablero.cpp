@@ -45,6 +45,9 @@ Tablero::Tablero(){
     if(!Bokrugs.loadFromFile("assets/Sprites/Bokrugs.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
+    if(!Zoogx.loadFromFile("assets/Sprites/Zoogxredim.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        }
     board[0][3].free=false; //commander 1
     board[0][3].coordX=0;
     board[0][3].coordY=3;
@@ -329,16 +332,60 @@ bool Tablero::isFree(int posx, int posy){
 
 /*DIBUJADO DE PLAYER*/
 void Tablero::Mostrar_mano(sf::RenderWindow& window){
-    for(int i=0;i<5;i++){
-        if(!texturacarta.loadFromFile("assets/Sprites/carta.png")){
+    vector<Invocacion*>::iterator it3;
+    int i=0;
+    for(it3=player1->getMano().begin();it3!=player1->getMano().end();++it3){
+        if(!Zoogxredim.loadFromFile("assets/Sprites/Zoogxredim.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         } 
-        carta.setTexture(texturacarta);
+        if(!Yigxredim.loadFromFile("assets/Sprites/Yigxredim.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        } 
+        if(!Cthughaxredim.loadFromFile("assets/Sprites/Cthughaxredim.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        } 
+        if(!Gugoxredim.loadFromFile("assets/Sprites/Gugoxredim.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        } 
+        if(!Bokrugsredim.loadFromFile("assets/Sprites/Bokrugsredim.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        } 
+        if(i<player1->getMano().size() && player1->getMano().at(i)->getNombre()=="Zoogx"){
+        carta.setTexture(Zoogxredim);
         //mano[i].setCarta(carta);
         carta.setPosition((i*100)+150,480);
         window.draw(carta);
         //mano[i].setJugar(i);
-        
+        }
+        if(i<player1->getMano().size() && player1->getMano().at(i)->getNombre()=="Yigx"){
+        carta.setTexture(Yigxredim);
+        //mano[i].setCarta(carta);
+        carta.setPosition((i*100)+150,480);
+        window.draw(carta);
+        //mano[i].setJugar(i);
+        }
+        if(i<player1->getMano().size() && player1->getMano().at(i)->getNombre()=="Cthughax"){
+        carta.setTexture(Cthughaxredim);
+        //mano[i].setCarta(carta);
+        carta.setPosition((i*100)+150,480);
+        window.draw(carta);
+        //mano[i].setJugar(i);
+        }
+        if(i<player1->getMano().size() && player1->getMano().at(i)->getNombre()=="Gugox"){
+        carta.setTexture(Gugoxredim);
+        //mano[i].setCarta(carta);
+        carta.setPosition((i*100)+150,480);
+        window.draw(carta);
+        //mano[i].setJugar(i);
+        }
+        if(i<player1->getMano().size() && player1->getMano().at(i)->getNombre()=="Bokrugs"){
+        carta.setTexture(Bokrugsredim);
+        //mano[i].setCarta(carta);
+        carta.setPosition((i*100)+150,480);
+        window.draw(carta);
+        //mano[i].setJugar(i);
+        }
+        i++;
     }
     
         
