@@ -95,7 +95,7 @@ void Game::update(){
                 posYinvocacion=-1;
                 tablero->ReiniciarAdy();
             }//ataque
-            else if(actuainvocacion==true && !tablero->isFree(coord.x,coord.y)&&tablero->getAlcanzable(coord.x,coord.y)==1){
+            else if(actuainvocacion==true && !tablero->isFree(coord.x,coord.y)&& tablero->getAlcanzable(coord.x,coord.y)==1){
                 if(tablero->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->esAliado(tablero->getUnit(coord.x,coord.y)->getComandante())){
                     
                     std::cout<<"AL ATAKERRRRR CANDEMOR"<<std::endl;

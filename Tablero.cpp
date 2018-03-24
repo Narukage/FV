@@ -125,59 +125,6 @@ if((posx>0 && posx<11)&& (posy>0 && posy<7) && !entrado){
     board[posx][posy+1].alcanzable=1;
     entrado=true;
 }
-    posx = (posx-100)/50;
-    posy = (posy-80)/50;
-    //esquina superior izq -- iluminar
-    if(posx==0 && posy==0){
-        board[posx+1][posy].alcanzable=1;
-        board[posx][posy-1].alcanzable=1;
-    }
-    //esquina superior dcha -- iluminar
-    /*if(){
-        board[posx-1][posy].sprite.setTexture(texturabloqueverde);
-        board[posx][posy-1].sprite.setTexture(texturabloqueverde);
-    }
-    //esquina inferior izq -- iluminar
-    if(){
-        board[posx+1][posy].sprite.setTexture(texturabloqueverde);
-        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
-    }
-    //esquina inferior dcha -- iluminar
-    if(){
-        board[posx-1][posy].sprite.setTexture(texturabloqueverde);
-        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
-    }*/
-    //arriba -- iluminar
-    if(posy==0 && (posx!=0 && posx!=9)){
-        board[posx-1][posy].alcanzable=1;
-        board[posx+1][posy].alcanzable=1;
-        board[posx][posy+1].alcanzable=1;
-    }
-    //abajo -- iluminar
-    /*if(){
-        board[posx-1][posy].sprite.setTexture(texturabloqueverde);
-        board[posx+1][posy].sprite.setTexture(texturabloqueverde);
-        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
-    }
-    //izq -- iluminar
-    if(){
-        board[posx+1][posy].sprite.setTexture(texturabloqueverde);
-        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
-        board[posx][posy-1].sprite.setTexture(texturabloqueverde);
-    }
-    //dcha -- iluminar
-    if(){
-        board[posx-1][posy].sprite.setTexture(texturabloqueverde);
-        board[posx][posy+1].sprite.setTexture(texturabloqueverde);
-        board[posx][posy-1].sprite.setTexture(texturabloqueverde);
-    }*/
-    //centro -- iluminar
-    if((posx>0 && posx<10)&& (posy>0 && posy<7)){
-        board[posx-1][posy].alcanzable=1;
-        board[posx+1][posy].alcanzable=1;
-        board[posx][posy-1].alcanzable=1;
-        board[posx][posy+1].alcanzable=1;
-    }
 }
 
 bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
@@ -238,7 +185,7 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
                         //FUNCIONA MAL, NO TIENE SENTIDO Y NO SABEMOS PORQUE
    if(((gox<12 && gox>=0) && (goy<8 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
   
-   if(((gox<10 && gox>=0) && (goy<20 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
+   if(((gox<12 && gox>=0) && (goy<8 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
        std::cout <<" Ya noh emo movioh" << std::endl;
        unit->setPosicion(gox,goy);
        board[gox][goy].unit=unit;
