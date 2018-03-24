@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <vector>
 using namespace std;
 
 class Invocacion{

@@ -145,6 +145,7 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
             board[posx][posy].coordY=posy;
             unit->setPosicion(posx,posy);
             player1->RellenarJugadas(unit);
+            player1->eliminarMano(unit);
              board[posx][posy].unit=unit;
              std::cout << "SOY UN MONSTRUO me llamo ... : " << unit->getNombre()<<"y estoy ya en : "<<unit->getX()<< std::endl;
            // player1->eliminarMano(unit); Comprobar bien cuando borramos
@@ -189,7 +190,7 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
        std::cout <<" Ya noh emo movioh" << std::endl;
        unit->setPosicion(gox,goy);
        board[gox][goy].unit=unit;
-       
+       std:cout<<" ESTOY AQUI HIJO DE PUTA"<<std::endl;
        removeUnit(fromx,fromy,unit);
        return true;
    }else{
@@ -213,7 +214,7 @@ Invocacion* Tablero::getUnit(int posx, int posy){//meter cual player es cada 1 e
         Invocacion* devolver= new Invocacion();
         posx = (posx-100)/50;
         posy = (posy-80)/50;
-        recorrer=player1->getJugadas();
+//        recorrer=player1->getJugadas();
         for(int i=0;i<19;i++){
             if((recorrer[i].getX()==posx)&&(recorrer[i].getY()==posy)){
                 devolver=&recorrer[i];
@@ -237,8 +238,8 @@ void Tablero::drawAdyacentes(sf::RenderWindow& window){
     for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
             if(board[i][j].alcanzable==1){
-                std::cout << "i: " << i << std::endl;
-                std::cout << "j: " << i << std::endl;
+               /* std::cout << "i: " << i << std::endl;
+                std::cout << "j: " << i << std::endl;*/
                 board[i][j].sprite.setTexture(texturabloqueverde);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
@@ -288,19 +289,22 @@ Invocacion* Tablero::esCarta(int posx, int posy){
         posx = (posx-150)/100;
         posy = (posy-480)/146;
     }
-    Invocacion* mano = new Invocacion[5]; 
-            mano= player1->getMano();
-    Invocacion* mano2 = new Invocacion();
-    for(int i=0; i<5;i++){
+  
+    //Invocacion* mano2 = new Invocacion();
+    vector<Invocacion*>::iterator it3;
+                 int i=0;
+    for(it3=player1->getMano().begin();it3!=player1->getMano().end();++it3){
+        if(i<=player1->getMano().size()){
         std::cout << "posx: " << posx << std::endl;
-        std::cout << "getjugar: " << mano[i].getJugar() << std::endl;
-        std::cout << "MANO EXISTE : " << mano[i].getNombre()<< std::endl;
-        if(mano[i].getJugar()==posx){ //si estoy clickando una carta
-            mano2=&mano[i];
-            std::cout << "EXISTO ¿? : " << mano2->getNombre()<< std::endl;
+        std::cout << "getjugar: " << player1->getMano().at(i)->getJugar() << std::endl;
+        std::cout << "MANO EXISTE : " << player1->getMano().at(i)->getNombre()<< std::endl;
+        if(player1->getMano().at(i)->getJugar()==posx){ //si estoy clickando una carta
+           // std::cout << "EXISTO ¿? : " << mano2->getNombre()<< std::endl;
             
-            return mano2;
+            return player1->getMano().at(i);
         }
+        i++;
+    }
     }
     return NULL;
 }
@@ -525,6 +529,7 @@ bool Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     //hacia los dos lados
     if(unidad2->getVida()<=0){
         std::cout << "ME MUEEERO: " <<unidad2->getVida() <<std::endl;
+        player1->eliminarJugadas(unidad2);
        removeUnit(gox,goy,unidad2);
        return true;
     }

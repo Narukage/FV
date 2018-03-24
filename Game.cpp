@@ -71,12 +71,14 @@ void Game::update(){
         else if(cartaseleccionada ){ //queremos invocar en tablero
             if(tablero->addUnit(coord.x,coord.y,inv,1)){
                 cartaseleccionada=false;
-                for(int i=0;i<20;i++){
-                    //*if(tablero->getPlayer()->getJugadas()[i].getX()>=0){
-                    std::cout << "Soy el monstruo de jugadas: " << tablero->getPlayer()->getJugadas()[i].getNombre()<<"en la posicion de array: "<< i<<std::endl;
-                    std::cout << "En tablero X =  " << tablero->getPlayer()->getJugadas()[i].getX()<<"en tablero Y = "<<tablero->getPlayer()->getJugadas()[i].getY()<< std::endl;
-                    //}
-                }  
+                  vector<Invocacion*>::iterator it3;
+                 int i=0;
+                for(it3=tablero->getPlayer()->getJugadas().begin();it3!=tablero->getPlayer()->getJugadas().end();++it3){
+                  std::cout << "En tablero X =  " << tablero->getPlayer()->getJugadas().at(i)->getX()<<"en tablero Y = "<<tablero->getPlayer()->getJugadas().at(i)->getY()<< std::endl;
+                     i++;
+                }
+                    
+           
             }
         }else{ //queremos mover unidad en tablero
             if(!tablero->isFree(coord.x,coord.y) && actuainvocacion==false){ //si la posicion que clickamos contiene una unidad
@@ -90,11 +92,7 @@ void Game::update(){
                 std::cout << "pero que " << std::endl;
             } //unidad seleccionada, preparada para hacer alguna accion
             else if(actuainvocacion==true && tablero->isFree(coord.x,coord.y) && tablero->getAlcanzable(coord.x,coord.y)==1){
-                /*for(int i=0;i<20;i++){
-                    std::cout << "Soy el mosntruo de jugadas: " << tablero->getPlayer()->getJugadas()[i].getNombre()<<"en la posicion de array: "<< std::endl;
-                    std::cout << "En tablero X =  " << tablero->getPlayer()->getJugadas()[i].getX()<<"en tablero Y = "<<tablero->getPlayer()->getJugadas()[i].getY()<< std::endl;
-                }   */
-             std::cout << "SOY UN MONSTRUO que se va a mover soy: ... : " << tablero->getUnit(posXinvocacion,posYinvocacion)->getNombre()<<"y estoy ya en : "<<tablero->getUnit(posXinvocacion,posYinvocacion)->getX()<< std::endl;
+              
                 tablero->moveToPos(posXinvocacion, posYinvocacion,coord.x,coord.y,tablero->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion));
                 tablero->setFree(coord.x,coord.y,false); 
                 
@@ -104,7 +102,7 @@ void Game::update(){
                 tablero->ReiniciarAdy();
             }//ataque
             else if(actuainvocacion==true && !tablero->isFree(coord.x,coord.y)&&tablero->getAlcanzable(coord.x,coord.y)==1){
-                if(tablero->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->esAliado(tablero->getUnit(coord.x,coord.y)->getComandante())){
+                if(tablero->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->esAliado(tablero->getPlayer()->JugadaEn(coord.x,coord.y)->getComandante())){
                     
                     std::cout<<"AL ATAKERRRRR CANDEMOR"<<std::endl;
                    if( tablero->atackToPos(posXinvocacion,posYinvocacion,coord.x,coord.y)){
