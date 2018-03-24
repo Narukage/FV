@@ -49,6 +49,7 @@ class Player{
         void eliminarMano(Invocacion* invo);
         void eliminarJugadas(Invocacion* invo);
         
+        Invocacion* JugadaEn(int posx, int posy);
         
 };
 

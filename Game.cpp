@@ -16,6 +16,8 @@ void Game::inicializar(){
     window.setVerticalSyncEnabled(true);
     
    //invocacion = new Invocacion();
+  /*  tablero = Tablero();
+    tablero2 = Tablero();*/
     tablero = Tablero::Instance();
     tablero2 = tablero->Instance();
     Tablero& tableroref = * Tablero::Instance();
@@ -65,6 +67,12 @@ void Game::update(){
         else if(cartaseleccionada ){ //queremos invocar en tablero
             if(tablero->addUnit(coord.x,coord.y,inv,1)){
                 cartaseleccionada=false;
+                for(int i=0;i<20;i++){
+                    //*if(tablero->getPlayer()->getJugadas()[i].getX()>=0){
+                    std::cout << "Soy el monstruo de jugadas: " << tablero->getPlayer()->getJugadas()[i].getNombre()<<"en la posicion de array: "<< i<<std::endl;
+                    std::cout << "En tablero X =  " << tablero->getPlayer()->getJugadas()[i].getX()<<"en tablero Y = "<<tablero->getPlayer()->getJugadas()[i].getY()<< std::endl;
+                    //}
+                }  
             }
         }else{ //queremos mover unidad en tablero
             if(!tablero->isFree(coord.x,coord.y) && actuainvocacion==false){ //si la posicion que clickamos contiene una unidad
@@ -75,18 +83,26 @@ void Game::update(){
                 posYinvocacion=coord.y;
             } //unidad seleccionada, preparada para hacer alguna accion
             else if(actuainvocacion==true && tablero->isFree(coord.x,coord.y)){
-                tablero->moveToPos(posXinvocacion, posYinvocacion,coord.x,coord.y,tablero->getUnit(posXinvocacion,posYinvocacion));
+                /*for(int i=0;i<20;i++){
+                    std::cout << "Soy el mosntruo de jugadas: " << tablero->getPlayer()->getJugadas()[i].getNombre()<<"en la posicion de array: "<< std::endl;
+                    std::cout << "En tablero X =  " << tablero->getPlayer()->getJugadas()[i].getX()<<"en tablero Y = "<<tablero->getPlayer()->getJugadas()[i].getY()<< std::endl;
+                }   */
+             std::cout << "SOY UN MONSTRUO que se va a mover soy: ... : " << tablero->getUnit(posXinvocacion,posYinvocacion)->getNombre()<<"y estoy ya en : "<<tablero->getUnit(posXinvocacion,posYinvocacion)->getX()<< std::endl;
+                tablero->moveToPos(posXinvocacion, posYinvocacion,coord.x,coord.y,tablero->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion));
                 tablero->setFree(coord.x,coord.y,false); 
+                
                 actuainvocacion=false;
                 posXinvocacion=-1;
                 posYinvocacion=-1;
                 tablero->ReiniciarAdy();
-            }
+            }//ataque
             else if(actuainvocacion==true && !tablero->isFree(coord.x,coord.y)&&tablero->getAlcanzable(coord.x,coord.y)==1){
-                if(tablero->getUnit(posXinvocacion,posYinvocacion)->esAliado(tablero->getUnit(coord.x,coord.y)->getComandante())){
+                if(tablero->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->esAliado(tablero->getUnit(coord.x,coord.y)->getComandante())){
                     
                     std::cout<<"AL ATAKERRRRR CANDEMOR"<<std::endl;
-                    tablero->atackToPos(posXinvocacion,posYinvocacion,coord.x,coord.y);
+                   if( tablero->atackToPos(posXinvocacion,posYinvocacion,coord.x,coord.y)){
+                       tablero->setFree(coord.x,coord.y,true);
+                   }
                     actuainvocacion=false;
                 posXinvocacion=-1;
                 posYinvocacion=-1;

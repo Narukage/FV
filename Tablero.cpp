@@ -137,7 +137,9 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
             player1->RellenarJugadas(unit);
              board[posx][posy].unit=unit;
              std::cout << "SOY UN MONSTRUO me llamo ... : " << unit->getNombre()<<"y estoy ya en : "<<unit->getX()<< std::endl;
-            player1->eliminarMano(unit);
+           // player1->eliminarMano(unit); Comprobar bien cuando borramos
+            std::cout << "Sigo siendo un monstruo ... : " << unit->getNombre()<<"y estoy ya en : "<<unit->getX()<< std::endl;
+
             //cambiar esto
             
             /*Arreglar la fila puto 1 de mierda que hay bug y me cago en la ostia
@@ -175,6 +177,7 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
                         //FUNCIONA MAL, NO TIENE SENTIDO Y NO SABEMOS PORQUE
    if(((gox<10 && gox>=0) && (goy<20 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
        std::cout <<" Ya noh emo movioh" << std::endl;
+       unit->setPosicion(gox,goy);
        board[gox][goy].unit=unit;
        
        removeUnit(fromx,fromy,unit);
@@ -187,6 +190,7 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
         
 bool Tablero::removeUnit(int posx, int posy, Invocacion* unit){
            std::cout <<"AMOH A HACEH REMOVIET??"<<std::endl;
+         
     board[posx][posy].unit=NULL;
     setFree(posx,posy,true);
     return true;
@@ -493,23 +497,24 @@ void Tablero::setFree(int posx,int posy,bool set){
     posy = (posy-80)/50;
     board[posx][posy].free=set;
 }
-void Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
+bool Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     Invocacion* unidad = new Invocacion();
     Invocacion* unidad2 =new  Invocacion();
     gox = (gox-100)/50;
     goy = (goy-80)/50;
-    fromx = (fromx-100)/50;
-    fromy = (fromy-80)/50;
-    unidad=getUnit(gox,goy);
-    unidad2=getUnit(fromx,fromy);
-    std::cout << "Soy el poderoso: " <<unidad->getNombre()<<" con esta vida: "<<unidad->getVida() <<std::endl;
-    std::cout << "Soy el poderoso: " <<unidad2->getNombre()<<" con este ataque: "<<unidad2->getAtaque() <<std::endl;
-    unidad->setVida(unidad->getVida()-unidad2->getAtaque());
-   std::cout << "Soy el poderoso: " <<unidad->getNombre()<<" me he quedado con: "<<unidad->getVida() <<std::endl;
+    /*fromx = (fromx-100)/50;
+    fromy = (fromy-80)/50;*/
+    unidad=player1->JugadaEn(fromx,fromy);//el que pega
+    unidad2=player1->JugadaEn(gox,goy);
+    std::cout << "Soy el poderoso: " <<unidad2->getNombre()<<" con esta vida: "<<unidad2->getVida() <<std::endl;
+    std::cout << "Soy el poderoso: " <<unidad->getNombre()<<" con este ataque: "<<unidad->getAtaque() <<std::endl;
+    unidad2->setVida(unidad2->getVida()-unidad->getAtaque());
+   std::cout << "Soy el poderoso: " <<unidad2->getNombre()<<" me he quedado con: "<<unidad2->getVida() <<std::endl;
     //hacia los dos lados
-    if(unidad->getVida()<=0){
-        std::cout << "ME MUEEERO: " <<unidad->getVida() <<std::endl;
-       removeUnit(gox,goy,unidad);
+    if(unidad2->getVida()<=0){
+        std::cout << "ME MUEEERO: " <<unidad2->getVida() <<std::endl;
+       removeUnit(gox,goy,unidad2);
+       return true;
     }
-    true;
+    return false;
 }

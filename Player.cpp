@@ -118,11 +118,15 @@ Player::Player(int commander){
 }
 bool Player::RellenarJugadas(Invocacion* jugada){
     Invocacion guardada = Invocacion();
+    std::cout<< "La jugada es : "<< jugada->getNombre()<< std::endl;
     guardada=getMonstruo(jugada,1);
     for(int i=0;i<19;i++){
+            std::cout<< "Entro en rellenar, soy: "<< guardada.getNombre()<< std::endl;
         if(jugadas[i].getExisto()==false){
-            jugadas[i].setExisto();
+            std::cout<< "VOy a ser metida, soy: "<< guardada.getNombre()<< std::endl; 
             jugadas[i]=guardada;
+            jugadas[i].setExisto();
+            std::cout<< "me metieron pendejo:  "<< jugadas[i].getNombre()<< std::endl;
             return true;
         }
     }
@@ -168,21 +172,33 @@ void Player:: eliminarMano(Invocacion* invo){
         }
     }
 }
-void Player:: eliminarJugadas(Invocacion* invo){// PENSAR
-    Invocacion devolver = Invocacion();
-    for(int i=0;i<19;i++){
+void Player:: eliminarJugadas(Invocacion* invo){// get unico creo que no sirve si miramos posiciones
+    Invocacion* devolver;
+    for(int i=0;i<20;i++){
         if(jugadas[i].GetUnico()==invo->GetUnico()){
-            if(i!=19){
-                jugadas[i]=jugadas[i+1];
-                for(int j=i+1;j<19;j++){
-                    if(j!=19){
-                        jugadas[j]=jugadas[j+1];
-                    }
-                }
+            if(i!=20){
+                devolver=&jugadas[i];
+                devolver=NULL;
+               /* if(jugadas[i]->NULL && i!=20){
+                    jugadas[i]=jugadas[i+1];
+                }*/
             }
         }
     }
 }
+ Invocacion* Player::  JugadaEn(int posx, int posy){
+     Invocacion* retorno = new Invocacion();
+     if((posx>100 && posx<700)&&(posy>80 && posy<475)){
+        posx = (posx-100)/50;
+        posy = (posy-80)/50;
+    }
+     for(int i=0;i<20;i++){
+         if(jugadas[i].getX()==posx && jugadas[i].getY()==posy){
+             retorno=&jugadas[i];
+         }
+     }
+     return retorno;
+ }
 
 Player::~Player(){
 }
