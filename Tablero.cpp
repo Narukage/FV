@@ -27,8 +27,10 @@ Tablero::Tablero(){
     if(!texturabloquerojo.loadFromFile("assets/Sprites/bloque2.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
-    
     if(!texturabloqueverde.loadFromFile("assets/Sprites/bloque3.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        }
+    if(!criatura.loadFromFile("assets/Sprites/criatura.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
     board[0][3].free=false; //commander 1
@@ -127,7 +129,6 @@ if((posx>0 && posx<11)&& (posy>0 && posy<7) && !entrado){
 
 bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
     //cambiar posx y posy por matx y maty
-    std::cout << "SOY UN MONSTRUO me llamo ... : " << unit->getNombre()<< std::endl;
   /*  Invocacion unidad2=Invocacion();
     Invocacion* retorno= new Invocacion();*/
 
@@ -147,9 +148,7 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
             player1->RellenarJugadas(unit);
             player1->eliminarMano(unit);
              board[posx][posy].unit=unit;
-             std::cout << "SOY UN MONSTRUO me llamo ... : " << unit->getNombre()<<"y estoy ya en : "<<unit->getX()<< std::endl;
            // player1->eliminarMano(unit); Comprobar bien cuando borramos
-            std::cout << "Sigo siendo un monstruo ... : " << unit->getNombre()<<"y estoy ya en : "<<unit->getX()<< std::endl;
 
             //cambiar esto
             
@@ -170,7 +169,6 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
           Invocacion invoc =  Invocacion();
           invoc=unit[0];
          // if(player1->RellenarJugadas(invoc)){
-              std::cout<<"Hola funciono"<<endl;
               /*Borrar unidad de la mano
                y setear antes su posicion*/
           }
@@ -187,6 +185,8 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
     goy = (goy-80)/50;  //SOLO TRANSFORMAMOS LOS PARAMENTROS GO, SI TRANSFORMAMOS LOS DE FROM 
                         //FUNCIONA MAL, NO TIENE SENTIDO Y NO SABEMOS PORQUE
    if(((gox<12 && gox>=0) && (goy<8 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
+  
+   if(((gox<12 && gox>=0) && (goy<8 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
        std::cout <<" Ya noh emo movioh" << std::endl;
        unit->setPosicion(gox,goy);
        board[gox][goy].unit=unit;
@@ -198,10 +198,8 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
        return false;
    }        
 }
-        
+}    
 bool Tablero::removeUnit(int posx, int posy, Invocacion* unit){
-           std::cout <<"AMOH A HACEH REMOVIET??"<<std::endl;
-         
     board[posx][posy].unit=NULL;
     setFree(posx,posy,true);
     return true;
@@ -260,23 +258,31 @@ void Tablero::drawMap(sf::RenderWindow& window){
             if(i<WIDTH/2){
                 if(board[i][j].free){
                     board[i][j].sprite.setTexture(texturabloqueazul);
+                if(board[i][j].alcanzable==1){
+                   //aqui nunca entra porque alcanzable solo se cambia en tablero, no board//
+                        board[i][j].sprite.setTexture(criatura);
+                    }
                 }else{
-                 board[i][j].sprite.setTexture(texturabloqueverde);   
+                 board[i][j].sprite.setTexture(texturabloqueazul);   
                 }
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
             }else{
-                if(board[i][j].free){    
+                if(board[i][j].free){
                 board[i][j].sprite.setTexture(texturabloquerojo);
                 if(board[i][j].alcanzable==1){
-                        board[i][j].sprite.setTexture(texturabloqueverde);
+                   //aqui nunca entra porque alcanzable solo se cambia en tablero, no board//
+                    std::cout<<"entramos en el alcanzable 1"<<std::endl;
+                        board[i][j].sprite.setTexture(criatura);
                     }
                 }else{
-                 board[i][j].sprite.setTexture(texturabloqueverde);   
+                    std::cout<<"entramos en el else "<<std::endl;
+                 board[i][j].sprite.setTexture(texturabloquerojo);   
                 }
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
             }
+    
           window.draw(board[i][j].sprite);
         }
     }
@@ -331,7 +337,20 @@ void Tablero::Mostrar_mano(sf::RenderWindow& window){
     
         
 }
-
+void Tablero::drawUnit(sf::RenderWindow& window){
+    for(int i=0;i<WIDTH;i++){
+        for(int j=0;j<HEIGHT;j++){
+            if(player1->estaJugadaEn(i,j)){
+                //Falta insertar comandantes porque manu no tiene ni idea y comandantes no son invocaciones//
+                std::cout<<"hay criaturas porque nacho es dios"<<std::endl;
+                board[i][j].sprite.setTexture(criatura);
+                board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
+                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
+                window.draw(board[i][j].sprite);
+            }
+        }
+    }
+}
 void Tablero::drawLife(int commander, sf::RenderWindow& window){
     if(commander==1){
         if(!texturavida.loadFromFile("assets/HUD/vida.png")){
@@ -370,7 +389,7 @@ void Tablero::drawLife(int commander, sf::RenderWindow& window){
 
 sf::Text Tablero::drawLifeNumb(int commander){
     if(commander==1){
-        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+        if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
                 std::cout << "Fuente no aplicada" <<std::endl;
             }
         int life = player1->getLife();
@@ -383,7 +402,7 @@ sf::Text Tablero::drawLifeNumb(int commander){
             vida.setPosition(350,1);
             return vida;
     }else{
-        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+        if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
                 std::cout << "Fuente no aplicada" <<std::endl;
             }
         int life = player2->getLife();
@@ -400,7 +419,7 @@ sf::Text Tablero::drawLifeNumb(int commander){
 
 sf::Text Tablero::drawManaNumb(int commander){
     if(commander==1){
-        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+        if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
                 std::cout << "Fuente no aplicada" <<std::endl;
             }
         int mana = player1->getMana();
@@ -413,7 +432,7 @@ sf::Text Tablero::drawManaNumb(int commander){
             mananumb.setPosition(193,37);
             return mananumb;
     }else{
-        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+        if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
                 std::cout << "Fuente no aplicada" <<std::endl;
             }
         int mana = player2->getMana();
@@ -429,7 +448,7 @@ sf::Text Tablero::drawManaNumb(int commander){
 
 sf::Text Tablero::drawManaRest(int commander){
     if(commander==1){
-        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+        if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
                     std::cout << "Fuente no aplicada" <<std::endl;
                 }
         int manarest = player1->getManaRest();
@@ -442,7 +461,7 @@ sf::Text Tablero::drawManaRest(int commander){
                 manar.setPosition(158,37);
                 return manar;
     }else{
-        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+        if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
                     std::cout << "Fuente no aplicada" <<std::endl;
                 }
         int manarest = player2->getManaRest();
@@ -458,7 +477,7 @@ sf::Text Tablero::drawManaRest(int commander){
 
 sf::Text Tablero::drawBarra(int commander){
     if(commander==1){
-        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+        if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
                         std::cout << "Fuente no aplicada" <<std::endl;
                     }
        barra.setFont(font);
@@ -467,7 +486,7 @@ sf::Text Tablero::drawBarra(int commander){
        barra.setString("/");
        return barra;
     }else{
-        if(!font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeMono.ttf")){
+        if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
                         std::cout << "Fuente no aplicada" <<std::endl;
                     }
        barra.setFont(font);
@@ -522,10 +541,7 @@ bool Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     fromy = (fromy-80)/50;*/
     unidad=player1->JugadaEn(fromx,fromy);//el que pega
     unidad2=player1->JugadaEn(gox,goy);
-    std::cout << "Soy el poderoso: " <<unidad2->getNombre()<<" con esta vida: "<<unidad2->getVida() <<std::endl;
-    std::cout << "Soy el poderoso: " <<unidad->getNombre()<<" con este ataque: "<<unidad->getAtaque() <<std::endl;
     unidad2->setVida(unidad2->getVida()-unidad->getAtaque());
-   std::cout << "Soy el poderoso: " <<unidad2->getNombre()<<" me he quedado con: "<<unidad2->getVida() <<std::endl;
     //hacia los dos lados
     if(unidad2->getVida()<=0){
         std::cout << "ME MUEEERO: " <<unidad2->getVida() <<std::endl;

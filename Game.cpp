@@ -61,10 +61,6 @@ void Game::update(){
     if(presionado){
         if(tablero->esCarta(coord.x,coord.y)!=NULL){
             inv=tablero->esCarta(coord.x,coord.y);
-            std::cout << "SOY UN MONSTRUO CON VIDA : " << inv->getVida()<< std::endl;
-         
-            std::cout << "SOY UN MONSTRUO CON VIDA : " << inv->getVida()<< std::endl;
-            std::cout << "AY QUE ES UNA CARTA" << std::endl;
             cartaseleccionada=true;
         }
         
@@ -94,8 +90,7 @@ void Game::update(){
             else if(actuainvocacion==true && tablero->isFree(coord.x,coord.y) && tablero->getAlcanzable(coord.x,coord.y)==1){
               
                 tablero->moveToPos(posXinvocacion, posYinvocacion,coord.x,coord.y,tablero->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion));
-                tablero->setFree(coord.x,coord.y,false); 
-                
+                tablero->setFree(coord.x,coord.y,false);             
                 actuainvocacion=false;
                 posXinvocacion=-1;
                 posYinvocacion=-1;
@@ -131,6 +126,7 @@ void Game::render(){
     
     window.clear(sf::Color::Black);
     tablero->drawMap(window);
+    tablero->drawUnit(window);
     tablero->drawAdyacentes(window);
     tablero->drawLife(1,window);
     window.draw(tablero->drawLifeNumb(1));
@@ -147,7 +143,7 @@ void Game::render(){
     tablero->drawRetrato(1,window); //esto solo deberia dibujarlo una vez
     tablero->drawRetrato(2,window); //same
     tablero->Mostrar_mano(window);
- 
+     tablero->drawUnit(window);
     window.display();
 }
 
