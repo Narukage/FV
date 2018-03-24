@@ -89,7 +89,7 @@ void Game::update(){
                 std::cout << "posYinvocacion: " << posYinvocacion << std::endl;
                 std::cout << "pero que " << std::endl;
             } //unidad seleccionada, preparada para hacer alguna accion
-            else if(actuainvocacion==true && tablero->isFree(coord.x,coord.y)){
+            else if(actuainvocacion==true && tablero->isFree(coord.x,coord.y) && tablero->getAlcanzable(coord.x,coord.y)==1){
                 /*for(int i=0;i<20;i++){
                     std::cout << "Soy el mosntruo de jugadas: " << tablero->getPlayer()->getJugadas()[i].getNombre()<<"en la posicion de array: "<< std::endl;
                     std::cout << "En tablero X =  " << tablero->getPlayer()->getJugadas()[i].getX()<<"en tablero Y = "<<tablero->getPlayer()->getJugadas()[i].getY()<< std::endl;
