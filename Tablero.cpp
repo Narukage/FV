@@ -261,7 +261,7 @@ void Tablero::drawMap(sf::RenderWindow& window){
                         board[i][j].sprite.setTexture(criatura);
                     }
                 }else{
-                 board[i][j].sprite.setTexture(criatura);   
+                 board[i][j].sprite.setTexture(texturabloqueazul);   
                 }
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
@@ -270,14 +270,17 @@ void Tablero::drawMap(sf::RenderWindow& window){
                 board[i][j].sprite.setTexture(texturabloquerojo);
                 if(board[i][j].alcanzable==1){
                    //aqui nunca entra porque alcanzable solo se cambia en tablero, no board//
+                    std::cout<<"entramos en el alcanzable 1"<<std::endl;
                         board[i][j].sprite.setTexture(criatura);
                     }
                 }else{
-                 board[i][j].sprite.setTexture(criatura);   
+                    std::cout<<"entramos en el else "<<std::endl;
+                 board[i][j].sprite.setTexture(texturabloquerojo);   
                 }
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
             }
+    
           window.draw(board[i][j].sprite);
         }
     }
@@ -328,7 +331,8 @@ void Tablero::drawUnit(sf::RenderWindow& window){
     for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
             if(player1->estaJugadaEn(i,j)){
-                
+                //Falta insertar comandantes porque manu no tiene ni idea y comandantes no son invocaciones//
+                std::cout<<"hay criaturas porque nacho es dios"<<std::endl;
                 board[i][j].sprite.setTexture(criatura);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
