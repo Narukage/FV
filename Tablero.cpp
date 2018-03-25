@@ -45,7 +45,7 @@ Tablero::Tablero(){
     if(!Bokrugs.loadFromFile("assets/Sprites/Bokrugs.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
-    if(!Zoogxredim.loadFromFile("assets/Sprites/Zoogxredim.png")){
+    /*if(!Zoogxredim.loadFromFile("assets/Sprites/Zoogxredim.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
     if(!Cthughaxredim.loadFromFile("assets/Sprites/Cthughaxredim.png")){
@@ -59,7 +59,7 @@ Tablero::Tablero(){
         }
     if(!Bokrugsredim.loadFromFile("assets/Sprites/Bokrugsredim.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
-    }
+    }*/
     board[0][3].free=false; //commander 1
     board[0][3].coordX=0;
     board[0][3].coordY=3;
@@ -174,7 +174,7 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
             unit->setPosicion(posx,posy);
             player1->RellenarJugadas(unit);
             player1->eliminarMano(unit);
-             board[posx][posy].unit=unit;
+           //  board[posx][posy].unit=unit;
            // player1->eliminarMano(unit); Comprobar bien cuando borramos
 
             //cambiar esto
@@ -189,7 +189,7 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
         //Ponerlo para la IA
         if(((posx>WIDTH-4 && posx<WIDTH-1)&& (posy>=0 && posy<HEIGHT-1))&& isFree(posx,posy)){
           board[posx][posy].free=false;
-          board[posx][posy].unit=unit;
+          //board[posx][posy].unit=unit;
           board[posx][posy].coordX=posx;
           board[posx][posy].coordY=posy;
           unit->setPosicion(posx,posy);
@@ -207,20 +207,16 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
 
                                                               
 bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){                                                              
-    Invocacion jugada = Invocacion();
     gox = (gox-100)/50; //REVISAR URGENTEMENTE//
     goy = (goy-80)/50;  //SOLO TRANSFORMAMOS LOS PARAMENTROS GO, SI TRANSFORMAMOS LOS DE FROM 
                         //FUNCIONA MAL, NO TIENE SENTIDO Y NO SABEMOS PORQUE
   
    if(((gox<12 && gox>=0) && (goy<8 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
-       std::cout <<" Ya noh emo movioh" << std::endl;
        unit->setPosicion(gox,goy);
-       board[gox][goy].unit=unit;
-       std:cout<<" ESTOY AQUI HIJO DE PUTA"<<std::endl;
-       removeUnit(fromx,fromy,unit);
+       //board[gox][goy].unit=unit;
+       setFree(fromx,fromy,true);
        return true;
    }else{
-       std::cout <<"ALGUNA VEZ ENTRAS AQUI??"<<std::endl;
        return false;
    }        
 }    
@@ -231,21 +227,14 @@ bool Tablero::removeUnit(int posx, int posy, Invocacion* unit){
 }
 
 Invocacion* Tablero::getUnit(int posx, int posy){//meter cual player es cada 1 eliminar UNIT de tablero
-    if(!isFree(posx,posy)){
+    /*if(!isFree(posx,posy)){
         //if player es 1 o 2
-        Invocacion* recorrer= new Invocacion();
-        Invocacion* devolver= new Invocacion();
         posx = (posx-100)/50;
         posy = (posy-80)/50;
 //        recorrer=player1->getJugadas();
-        for(int i=0;i<19;i++){
-            if((recorrer[i].getX()==posx)&&(recorrer[i].getY()==posy)){
-                devolver=&recorrer[i];
-                break;
-            }
-        }
+     
         return devolver;
-    }
+    }*/
 }
 
 void Tablero::resetMap(){
@@ -344,25 +333,28 @@ bool Tablero::isFree(int posx, int posy){
 
 /*DIBUJADO DE PLAYER*/
 void Tablero::Mostrar_mano(sf::RenderWindow& window){
+    int i=0;
+    vector<Invocacion*>::iterator it3;
+    for(it3=player1->getMano().begin();it3!=player1->getMano().end();++it3){
+        //std::cout<< "entro posicion: "<<((i*100)+150)<<std::endl;
+        if(i<5){
+        //player1->getMano().at(i)->getSpriteM().setPosition((i*100)+150,480);
+        window.draw( player1->getMano().at(i)->getSpriteM());
+        }
+        i++;
+    }
+    /*
     vector<Invocacion*>::iterator it3;
     int i=0;
     for(it3=player1->getMano().begin();it3!=player1->getMano().end();++it3){
-        if(!Zoogxredim.loadFromFile("assets/Sprites/Zoogxredim.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        } 
-        if(!Yigxredim.loadFromFile("assets/Sprites/Yigxredim.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        } 
-        if(!Cthughaxredim.loadFromFile("assets/Sprites/Cthughaxredim.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        } 
-        if(!Gugoxredim.loadFromFile("assets/Sprites/Gugoxredim.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        } 
-        if(!Bokrugsredim.loadFromFile("assets/Sprites/Bokrugsredim.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        } 
+ 
+        
+        
+        
         if(i<player1->getMano().size() && player1->getMano().at(i)->getNombre()=="Zoogx"){
+             if(!Zoogxredim.loadFromFile("assets/Sprites/Zoogxredim.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        } 
         carta.setTexture(Zoogxredim);
         //mano[i].setCarta(carta);
         carta.setPosition((i*100)+150,480);
@@ -370,6 +362,9 @@ void Tablero::Mostrar_mano(sf::RenderWindow& window){
         //mano[i].setJugar(i);
         }
         if(i<player1->getMano().size() && player1->getMano().at(i)->getNombre()=="Yigx"){
+            if(!Yigxredim.loadFromFile("assets/Sprites/Yigxredim.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        } 
         carta.setTexture(Yigxredim);
         //mano[i].setCarta(carta);
         carta.setPosition((i*100)+150,480);
@@ -377,7 +372,13 @@ void Tablero::Mostrar_mano(sf::RenderWindow& window){
         //mano[i].setJugar(i);
         }
         if(i<player1->getMano().size() && player1->getMano().at(i)->getNombre()=="Cthughax"){
+            if(!Cthughaxredim.loadFromFile("assets/Sprites/Cthughaxredim.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        } 
         carta.setTexture(Cthughaxredim);
+        if(!Gugoxredim.loadFromFile("assets/Sprites/Gugoxredim.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        } 
         //mano[i].setCarta(carta);
         carta.setPosition((i*100)+150,480);
         window.draw(carta);
@@ -391,6 +392,9 @@ void Tablero::Mostrar_mano(sf::RenderWindow& window){
         //mano[i].setJugar(i);
         }
         if(i<player1->getMano().size() && player1->getMano().at(i)->getNombre()=="Bokrugs"){
+            if(!Bokrugsredim.loadFromFile("assets/Sprites/Bokrugsredim.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        } 
         carta.setTexture(Bokrugsredim);
         //mano[i].setCarta(carta);
         carta.setPosition((i*100)+150,480);
@@ -400,45 +404,61 @@ void Tablero::Mostrar_mano(sf::RenderWindow& window){
         i++;
     }
     
-        
+        */
 }
 void Tablero::drawUnit(sf::RenderWindow& window){
+    int pos=-1;
     for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
-            
-                if(player1->JugadaEn(i,j)->getNombre()=="Zoogx"){
+            //liberar codigo
+            if(player1->JugadaEn(i,j)->getNombre()!= ""){
+                pos=player1->damePosicion(i,j);
+                pos=pos-1;
+                if(pos!=-1 && (pos < player1->getJugadas().size())){
+                    float calculox =(i*50)+100;
+                    float calculoy = (j*50)+80;
+                    float vectrx= 0.3;
+                    
+                    std::cout<<"POS: "<<pos<<" Quien soy : "<<player1->getJugadas().at(pos)->getNombre()<<std::endl;
+                    player1->getJugadas().at(pos)->setPosition(calculox,calculoy);
+                    player1->getJugadas().at(pos)->setScale(vectrx,vectrx);
+                    window.draw(player1->getJugadas().at(pos)->getSprite());
+                }
+               // window.draw( player1->getMano().at(i)->getSpriteM());
+            }
+             /*   if(player1->JugadaEn(i,j)->getNombre()=="Zoogx"){
                 board[i][j].sprite.setTexture(Zoogx);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
-                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
+                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f));
                 window.draw(board[i][j].sprite);
                 }
                 if(player1->JugadaEn(i,j)->getNombre()=="Cthughax"){
                 board[i][j].sprite.setTexture(Cthughax);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
-                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
+                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f));
                 window.draw(board[i][j].sprite);
                 }
                 
                 if(player1->JugadaEn(i,j)->getNombre()=="Gugox"){
                 board[i][j].sprite.setTexture(Gugox);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
-                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
+                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f));
                 window.draw(board[i][j].sprite);
                 }
                 
                 if(player1->JugadaEn(i,j)->getNombre()=="Yigx"){
                 board[i][j].sprite.setTexture(Yigx);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
-                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
+                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f));
                 window.draw(board[i][j].sprite);
                 }
                 
                 if(player1->JugadaEn(i,j)->getNombre()=="Bokrugs"){
                 board[i][j].sprite.setTexture(Bokrugs);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
-                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
+                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f));
                 window.draw(board[i][j].sprite);
-                }
+                }*/
         }
     }
 }
@@ -637,13 +657,12 @@ bool Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     unidad->setVida(unidad->getVida()-unidad2->getAtaque());
     //hacia los dos lados
     if(unidad2->getVida()<=0){
-        std::cout << "ME MUEEERO: " <<unidad2->getVida() <<std::endl;
+
         player1->eliminarJugadas(unidad2);
        removeUnit(gox,goy,unidad2);
        retorno=true;
     }
     if(unidad->getVida()<=0){
-        std::cout << "ME MUEEERO TAMBIEN : " <<unidad->getVida() <<std::endl;
         player1->eliminarJugadas(unidad);
         removeUnit(fromx,fromy,unidad);
         retorno =true;

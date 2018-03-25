@@ -19,10 +19,10 @@ Invocacion::Invocacion(string nombre,int coste,int vida,int ataque,int comandant
         this->comandante=comandante;
         this->unico=unico;
         
-        if(!textura.loadFromFile("assets/Sprites/bloque2.png")){
+     /*   if(!textura.loadFromFile("assets/Sprites/bloque2.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
-        carta.setTexture(textura);
+        carta.setTexture(textura);*/
         
    
 }
@@ -47,5 +47,89 @@ bool Invocacion:: esAliado(int comandante){
 }
 int Invocacion::getComandante(){
     return this->comandante;
+}
+bool Invocacion:: soyManoT(string nombretext,int i){
+    bool devolver = false;
+    if(mano==true){
+        if(nombretext=="Zoogx"){
+            if(!textcarta.loadFromFile("assets/Sprites/Zoogxredim.png")){
+                std::cout<<"Textura en mano aplicada"<<std::endl;
+            }
+            devolver=true;
+        }
+        if(nombretext=="Yigx"){
+            if(!textcarta.loadFromFile("assets/Sprites/Yigxredim.png")){
+                std::cout<<"Textura en mano aplicada"<<std::endl;
+            }
+           devolver=true;
+        }
+        if(nombretext=="Cthughax"){
+            if(!textcarta.loadFromFile("assets/Sprites/Cthughaxredim.png")){
+                std::cout<<"Textura en mano aplicada"<<std::endl;
+            }
+            devolver=true;
+        }
+        if(nombretext=="Gugox"){
+            if(!textcarta.loadFromFile("assets/Sprites/Gugoxredim.png")){
+                std::cout<<"Textura en mano aplicada"<<std::endl;
+            }
+           devolver=true;
+        }
+        if(nombretext=="Bokrugs"){
+            if(!textcarta.loadFromFile("assets/Sprites/Bokrugsredim.png")){
+                std::cout<<"Textura en mano aplicada"<<std::endl;
+            }
+            devolver=true;
+        }
+        cartamano.setTexture(textcarta);
+        cartamano.setPosition((i*100)+150,480);
+    }
+    return devolver;
+}
+bool Invocacion:: soyJugada(string nombretext){
+    bool devolver= false;
+    if(mano==false){
+        if(nombretext=="Zoogx"){
+            if(!textura.loadFromFile("assets/Sprites/Zoogx.png")){
+                std::cout<<"Textura jugada aplicada"<<std::endl;
+            }
+            devolver=true;
+        }
+        if(nombretext=="Yigx"){
+            if(!textura.loadFromFile("assets/Sprites/Yigx.png")){
+                std::cout<<"Textura jugada aplicada"<<std::endl;
+            }
+            devolver=true;
+        }
+        if(nombretext=="Cthughax"){
+            if(!textura.loadFromFile("assets/Sprites/Cthughax.png")){
+                std::cout<<"Textura jugada aplicada"<<std::endl;
+            }
+            devolver=true;
+        }
+        if(nombretext=="Gugox"){
+            if(!textura.loadFromFile("assets/Sprites/Gugox.png")){
+                std::cout<<"Textura jugada aplicada"<<std::endl;
+            }
+            devolver=true;
+        }
+        if(nombretext=="Bokrugs"){
+            if(!textura.loadFromFile("assets/Sprites/Bokrugs.png")){
+                std::cout<<"Textura jugada aplicada"<<std::endl;
+            }
+            devolver=true;
+        }
+
+        carta.setTexture(textura);
+        //carta.setPosition((i*100)+150,480);
+    }
+    return devolver;
+}
+void Invocacion:: setPosition(float positionX, float positionY){
+    carta.setPosition(positionX,positionY);
+}
+void Invocacion:: setScale(float scaleX, float scaleY){
+    carta.setScale(sf::Vector2f(scaleX,scaleY));
+    
 }
 

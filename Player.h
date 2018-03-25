@@ -47,11 +47,12 @@ class Player{
         Invocacion* getMonstruo(Invocacion* montruito, int donde);
         vector<Invocacion*> getMano(){ return mano; };
         vector<Invocacion*> getJugadas(){return jugadas; };
-        bool RellenarJugadas(Invocacion* invo);
+        bool RellenarJugadas(Invocacion* jugada);
         void eliminarMano(Invocacion* invo);
         void eliminarJugadas(Invocacion* invo);
-        
+        bool RellenarMano(Invocacion* invo, int jugar);
         Invocacion* JugadaEn(int posx, int posy);
+        int damePosicion(int posx,int posy);
         bool estaJugadaEn(int posx, int posy);
 };
 

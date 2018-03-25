@@ -45,12 +45,10 @@ void Game::eventos(){
                         if(evento.mouseButton.button==sf::Mouse::Left){
                             coord = sf::Mouse::getPosition(window);
                             presionado=true;
-                            std::cout << coord.x << std::endl;
-                            std::cout << coord.y << std::endl;
+              
                             int posx = (coord.x-100)/50;
                             int posy = (coord.y-80)/50;
-                            std::cout << "posx: " << posx << std::endl;
-                            std::cout << "posy: " << posy << std::endl;
+                        
                         }
                 }
     }
@@ -69,23 +67,15 @@ void Game::update(){
                 cartaseleccionada=false;
                   vector<Invocacion*>::iterator it3;
                  int i=0;
-                for(it3=tablero->getPlayer()->getJugadas().begin();it3!=tablero->getPlayer()->getJugadas().end();++it3){
-                  std::cout << "En tablero X =  " << tablero->getPlayer()->getJugadas().at(i)->getX()<<"en tablero Y = "<<tablero->getPlayer()->getJugadas().at(i)->getY()<< std::endl;
-                     i++;
-                }
                     
            
             }
         }else{ //queremos mover unidad en tablero
             if(!tablero->isFree(coord.x,coord.y) && actuainvocacion==false){ //si la posicion que clickamos contiene una unidad
-                std::cout << "Invocacionnnn" << std::endl;
                 actuainvocacion=true;
                 tablero->Adyacentes(coord.x,coord.y);
                 posXinvocacion=coord.x;
                 posYinvocacion=coord.y;
-                std::cout << "posXinvocacion: " << posXinvocacion << std::endl;
-                std::cout << "posYinvocacion: " << posYinvocacion << std::endl;
-                std::cout << "pero que " << std::endl;
             } //unidad seleccionada, preparada para hacer alguna accion
             else if(actuainvocacion==true && tablero->isFree(coord.x,coord.y) && tablero->getAlcanzable(coord.x,coord.y)==1){
               
@@ -99,7 +89,6 @@ void Game::update(){
             else if(actuainvocacion==true && !tablero->isFree(coord.x,coord.y)&&tablero->getAlcanzable(coord.x,coord.y)==1){
                 if(tablero->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->esAliado(tablero->getPlayer()->JugadaEn(coord.x,coord.y)->getComandante())){
                     
-                    std::cout<<"AL ATAKERRRRR CANDEMOR"<<std::endl;
                    if( tablero->atackToPos(posXinvocacion,posYinvocacion,coord.x,coord.y)){
                        tablero->setFree(coord.x,coord.y,true);
                    }

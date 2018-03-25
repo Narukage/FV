@@ -36,54 +36,61 @@ Player::Player(int commander){
   
  
   fin >> id;
-  cout << id << endl;
   //Mejor en el txt todos los paramaetros
   if(contador!=19){
   if(id==1){
        insertar[contador]= Invocacion("Cthughax",1,1,1,commander,contador);
+       insertar[contador].soyJugada(insertar[contador].getNombre());
        invo.push_back(&insertar[contador]);
   }
   if(id==2){
       insertar[contador]=Invocacion("Yigx",3,3,2,commander,contador);
+      insertar[contador].soyJugada(insertar[contador].getNombre());
        invo.push_back(&insertar[contador]);
   }
   if(id==3){
        insertar[contador]=Invocacion("Zoogx",2,2,1,commander,contador);
+       insertar[contador].soyJugada(insertar[contador].getNombre());
 
        invo.push_back(&insertar[contador]);
   }
   if(id==4){
        insertar[contador]=Invocacion("Gugox",5,4,4,commander,contador);
+       insertar[contador].soyJugada(insertar[contador].getNombre());
 
        invo.push_back(&insertar[contador]);
   }
   if(id==5){
        insertar[contador]=Invocacion("Bokrugs",4,1,4,commander,contador);
+       insertar[contador].soyJugada(insertar[contador].getNombre());
 
        invo.push_back(&insertar[contador]);
   }
   if(id==6){
        insertar[contador]=Invocacion("Orrys",7,7,2,commander,contador);
+       insertar[contador].soyJugada(insertar[contador].getNombre());
 
        invo.push_back(&insertar[contador]);
   }
   if(id==7){
        insertar[contador]=Invocacion("Ahtuh",4,4,2,commander,contador);
+       insertar[contador].soyJugada(insertar[contador].getNombre());
+
        invo.push_back(&insertar[contador]);
   }
   if(id==8){
         insertar[contador]=Invocacion("Blemiax",8,7,8,commander,contador);
-
+        insertar[contador].soyJugada(insertar[contador].getNombre());
         invo.push_back(&insertar[contador]);
   }
   if(id==9){
       insertar[contador]=Invocacion("Shanx",6,3,6,commander,contador);
-
+      insertar[contador].soyJugada(insertar[contador].getNombre());
       invo.push_back(&insertar[contador]);
   }
   if(id==10){
        insertar[contador]=Invocacion("Azathothx",10,12,12,commander,contador);
-
+       insertar[contador].soyJugada(insertar[contador].getNombre());
        invo.push_back(&insertar[contador]);
   }
   }
@@ -123,31 +130,45 @@ Player::Player(int commander){
         } */
     if(commander==1){
         for(int j=0;j<5;j++){
-            std::cout<<"Posicion: "<<j<<"Como me llamo: "<<invo.at(j)->getNombre()<<std::endl;
-             mano.push_back(invo.at(j));
+            RellenarMano(invo.at(j),j);
+             //mano.push_back(invo.at(j));
             //carta.setTexture(textura3);
             //mano[j].setCarta(carta);
              
-            mano.at(j)->setJugar(j);
-            std::cout<<"JUGARLA VALE : "<<mano.at(j)->getJugar()<<std::endl;
-            std::cout<<"Carta en mano nombre : "<<mano.at(j)->getNombre()<<std::endl;
+           // mano.at(j)->setJugar(j);
         }
     }
    retrato.setTexture(textura);
    
 }
-bool Player::RellenarJugadas(Invocacion* jugada){
-    std::cout<< "La jugada es : "<< jugada->getNombre()<< std::endl;
-    int i=0;
-      vector<Invocacion*>::iterator it3;
-    if(jugada->getExisto()==false){
-        jugada->setExisto();
-         std::cout<< "Existo es : "<< jugada->getExisto()<< std::endl;
-        jugadas.push_back(jugada);
-         for(it3=jugadas.begin();it3!=jugadas.end();++it3){
+bool Player:: RellenarMano(Invocacion* invo,int jugar){
+    if(mano.size()<=5){
+        invo->setMano(true);
+        invo->soyManoT(invo->getNombre(),jugar);
+        invo->setJugar(jugar);
+        mano.push_back(invo);
+         /*for(it3=jugadas.begin();it3!=jugadas.end();++it3){
             std::cout<< "SOY  : "<< jugadas.at(i)->getNombre()<< std::endl;
             i++;
-         }
+         }*/
+         //std::cout<< "Existo es : "<< jugadas.a<< std::endl;
+        
+        return true;
+    }
+    return false;
+}
+bool Player::RellenarJugadas(Invocacion* jugada){
+    //int i=0;
+      //vector<Invocacion*>::iterator it3;
+    if(jugada->getExisto()==false){
+        jugada->setMano(false);
+       // jugada->soyJugada(jugada->getNombre());
+        jugada->setExisto();
+        jugadas.push_back(jugada);
+         /*for(it3=jugadas.begin();it3!=jugadas.end();++it3){
+            std::cout<< "SOY  : "<< jugadas.at(i)->getNombre()<< std::endl;
+            i++;
+         }*/
          //std::cout<< "Existo es : "<< jugadas.a<< std::endl;
         
         return true;
@@ -192,11 +213,9 @@ void Player:: eliminarMano(Invocacion* invo){
     for(it3=mano.begin();it3!=mano.end();++it3){
         if(i<mano.size()&&mano.at(i)->GetUnico()==invo->GetUnico()){
          
-            std::cout<< "I vale : "<< i<< std::endl;
             if(i==4){
                 
                 mano.pop_back();
-                 std::cout<< "jibiri" << std::endl;
             }
             else{
                 
@@ -220,8 +239,9 @@ void Player:: eliminarJugadas(Invocacion* invo){// get unico creo que no sirve s
    vector<Invocacion*>::iterator it3;
     int i=0;
     for(it3=jugadas.begin();it3!=jugadas.end();++it3){
-        if(i<jugadas.size()&&jugadas.at(i)->GetUnico()==invo->GetUnico()){
-                    jugadas.erase(it3);        
+        if(i<jugadas.size()&&jugadas.at(i)->GetUnico()==invo->GetUnico()){      
+            jugadas.erase(it3);        
+                    
                     
         }
         i++;
@@ -243,6 +263,23 @@ void Player:: eliminarJugadas(Invocacion* invo){// get unico creo que no sirve s
      }
      return retorno;
  }
+ int Player:: damePosicion(int posx,int posy){
+     
+     int retorno =-1;
+     if((posx>100 && posx<700)&&(posy>80 && posy<475)){
+        posx = (posx-100)/50;
+        posy = (posy-80)/50;
+    }
+     vector<Invocacion*>::iterator it3;
+                 int i=0;
+     for(it3=jugadas.begin();it3!=jugadas.end();++it3){
+         if(i<jugadas.size()&&jugadas.at(i)->getX()==posx && jugadas.at(i)->getY()==posy){
+             retorno=i;
+         }
+         i++;
+     }
+                 return i;
+ }
  bool Player:: estaJugadaEn(int posx, int posy){
       vector<Invocacion*>::iterator it3;
                  int i=0;
@@ -252,7 +289,6 @@ void Player:: eliminarJugadas(Invocacion* invo){// get unico creo que no sirve s
     }
      for(it3=jugadas.begin();it3!=jugadas.end();++it3){
          if(jugadas.at(i)->getX()==posx && jugadas.at(i)->getY()==posy){
-             std::cout<<"entro aqui porque no soy racista"<<std::endl;
              return true;
          }
          i++;

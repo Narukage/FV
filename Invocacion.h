@@ -17,7 +17,10 @@ class Invocacion{
         bool existo=false;
         int comandante=1;
         sf::Texture textura;
+        sf::Texture textcarta;
         sf::Sprite carta;
+        sf::Sprite cartamano;
+        bool mano=false;
         int unico;// -1 Es el jugador -2 es el rival
         
     public:
@@ -42,4 +45,12 @@ class Invocacion{
         int getVida(){return vida;};
         int getAtaque(){return ataque;};
         string getNombre(){return nombre;};
+        bool getMano(){return mano;};
+        void setMano(bool man){mano=man;};
+        sf::Sprite getSpriteM(){ return cartamano; };
+        bool soyManoT(string nombretext,int i);
+        bool soyJugada(string nombretext);
+        void setPosition(float positionX,float positionY);
+        void setScale(float scaleX,float scaleY);
+        
 };
