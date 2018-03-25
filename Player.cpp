@@ -10,14 +10,20 @@ Player::Player(int commander){
     
     if(commander==1){
          vida=100;
-        comandante=Invocacion("Gugox",0,5,vida,1,-1);
+       insertar[0]=Invocacion("Zoogx",0,5,vida,1,-1);
+        comandante = &insertar[0];
+        comandante->setCom();
+        jugadas.push_back(comandante);
         if(!textura.loadFromFile("assets/HUD/retrato1.png")){
                std::cout<<"Textura no aplicada"<<std::endl;
             }
         retrato.setPosition(0,0);
     }else{
          vida=100;
-       comandante=Invocacion("E",0,8,vida,2,-2);
+        insertar[0]=Invocacion("E",0,8,vida,2,-2);
+       comandante = &insertar[0];
+        comandante->setCom();
+
         if(!textura.loadFromFile("assets/HUD/retrato2.png")){
                std::cout<<"Textura no aplicada"<<std::endl;
             }

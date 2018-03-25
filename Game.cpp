@@ -40,8 +40,19 @@ void Game::eventos(){
                         if(evento.key.code==sf::Keyboard::Escape){
                             isPlay = false;
                         }
+                     //david toca esto  
+                     
+                         if(evento.key.code==sf::Keyboard::Space){
+                            
+                            nexTurn(turno);
+                            cambioTurno(meToca);
+                            cout<<"he entrado"<<meToca<<std::endl;
+                             cout<<"he entrado"<<turno<<std::endl;
+                        }
+                   
 
                     case sf::Event::MouseButtonPressed:
+                        if(meToca){
                         if(evento.mouseButton.button==sf::Mouse::Left){
                             coord = sf::Mouse::getPosition(window);
                             presionado=true;
@@ -51,6 +62,7 @@ void Game::eventos(){
                             int posy = (coord.y-80)/50;
                             std::cout << "posx: " << posx << std::endl;
                             std::cout << "posy: " << posy << std::endl;
+                        }
                         }
                 }
     }
@@ -165,8 +177,8 @@ void Game::run(){
         cleared();
     }
 
-/*void Game::nexTurn(int num){
+void Game::nexTurn(int num){
 
     turno=num+1;
                         
-}*/
+}
