@@ -45,9 +45,21 @@ Tablero::Tablero(){
     if(!Bokrugs.loadFromFile("assets/Sprites/Bokrugs.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
-    if(!Zoogx.loadFromFile("assets/Sprites/Zoogxredim.png")){
+    if(!Zoogxredim.loadFromFile("assets/Sprites/Zoogxredim.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
+    if(!Cthughaxredim.loadFromFile("assets/Sprites/Cthughaxredim.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        }
+    if(!Gugoxredim.loadFromFile("assets/Sprites/Gugoxredim.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        }
+    if(!Yigxredim.loadFromFile("assets/Sprites/Yigxredim.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+        }
+    if(!Bokrugsredim.loadFromFile("assets/Sprites/Bokrugsredim.png")){
+           std::cout<<"Textura no aplicada"<<std::endl;
+    }
     board[0][3].free=false; //commander 1
     board[0][3].coordX=0;
     board[0][3].coordY=3;
