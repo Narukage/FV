@@ -28,7 +28,8 @@ class Player{
          y no desde el puntero, hacer que unit(puntero) apunte a la invocacion que se meta en este array o lista*/
         Invocacion* man = new Invocacion();
         
-        Invocacion* comandante=new Invocacion();
+        Invocacion comandante;
+        Invocacion *com;
         sf::Sprite carta;
         
 
@@ -42,7 +43,7 @@ class Player{
         void Mostrar_mano(sf::RenderWindow& window);
         sf::Sprite getRetrato(){ return retrato; };
         float getManaRest(){ return manarest; };
-        Invocacion* getUnit(){ return comandante; };
+        Invocacion* getUnit(){ com=&comandante; return com; };
         Invocacion* getMonstruo(Invocacion* montruito, int donde);
         vector<Invocacion*> getMano(){ return mano; };
         vector<Invocacion*> getJugadas(){return jugadas; };
