@@ -16,6 +16,7 @@ class Invocacion{
         string nombre;
         bool existo=false;
         int comandante=1;
+        bool esComandante=false;
         sf::Texture textura;
         sf::Sprite carta;
         int unico;// -1 Es el jugador -2 es el rival
@@ -42,4 +43,6 @@ class Invocacion{
         int getVida(){return vida;};
         int getAtaque(){return ataque;};
         string getNombre(){return nombre;};
+        void setCom(){esComandante=true;}
+        bool getCom(){return esComandante;}
 };

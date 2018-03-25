@@ -21,6 +21,7 @@ private:
     Player* player2;
     Player* current = player;
     int turno = 1;
+    bool meToca = true;
             
     Interface* interface;
     sf::Vector2i coord;
@@ -37,9 +38,12 @@ private:
     void update();
     void render();
     void cleared();
-   // void setTurno(int num){turno=num;}
-    //int getTurno(){return turno;}
-    //void nexTurn(int num);
+    void setTurno(int num){turno=num;}
+    int getTurno(){return turno;}
+    void nexTurn(int num);
+    bool getMeToca(){return meToca;}
+    void setMeToca(bool meTo){meToca = meTo;}
+    void cambioTurno(bool meTo){if(meTo==true){meToca=false;}else{meToca=true;}};
 public:
     Game();
     ~Game();
