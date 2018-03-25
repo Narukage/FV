@@ -39,6 +39,11 @@ class Tablero{
        sf::Texture Yigx;
        sf::Texture Gugox;
        sf::Texture Cthughax;
+        sf::Texture Bokrugsredim;
+       sf::Texture Zoogxredim;
+       sf::Texture Yigxredim;
+       sf::Texture Gugoxredim;
+       sf::Texture Cthughaxredim;
        sf::Texture texturavida;
        sf::Texture texturalife;
        sf::Texture texturacarta;
