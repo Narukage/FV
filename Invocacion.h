@@ -18,7 +18,7 @@ class Invocacion{
         int comandante=1;
         sf::Texture textura;
         sf::Texture textcarta;
-        sf::Sprite carta;
+        sf::Sprite monstruo;
         sf::Sprite cartamano;
         bool mano=false;
         int unico;// -1 Es el jugador -2 es el rival
@@ -30,10 +30,10 @@ class Invocacion{
         
         void moveToPos(int posx, int posy/*Tablero& tablero*/);
         void setPosicion(int x, int y);
-        void setCarta(sf::Sprite carta){this->carta=carta;};
+       // void setCarta(sf::Sprite carta){this->monstruo=monstruo;};
         int getX(){ return pos_x; };
         int getY(){ return pos_y; };
-        sf::Sprite getSprite(){ return carta; };
+        sf::Sprite getSprite(){ return monstruo; };
         void setJugar(int jugar){this->jugarla=jugar;};
         int getJugar(){return jugarla;};
         void setExisto(){existo=true;};

@@ -130,7 +130,9 @@ Player::Player(int commander){
         } */
     if(commander==1){
         for(int j=0;j<5;j++){
+            if(j<invo.size()){
             RellenarMano(invo.at(j),j);
+            }
              //mano.push_back(invo.at(j));
             //carta.setTexture(textura3);
             //mano[j].setCarta(carta);
@@ -158,17 +160,17 @@ bool Player:: RellenarMano(Invocacion* invo,int jugar){
     return false;
 }
 bool Player::RellenarJugadas(Invocacion* jugada){
-    //int i=0;
-      //vector<Invocacion*>::iterator it3;
+    int i=0;
+    vector<Invocacion*>::iterator it3;
     if(jugada->getExisto()==false){
         jugada->setMano(false);
        // jugada->soyJugada(jugada->getNombre());
         jugada->setExisto();
         jugadas.push_back(jugada);
-         /*for(it3=jugadas.begin();it3!=jugadas.end();++it3){
-            std::cout<< "SOY  : "<< jugadas.at(i)->getNombre()<< std::endl;
-            i++;
-         }*/
+         //for(it3=jugadas.begin();it3!=jugadas.end();++it3){
+            //std::cout<< "SOY  : "<< jugadas.at(i)->getNombre()<< std::endl;
+            //i++;
+         //}
          //std::cout<< "Existo es : "<< jugadas.a<< std::endl;
         
         return true;
@@ -181,7 +183,7 @@ Invocacion* Player:: getMonstruo(Invocacion* monstruito, int donde){
      int i = 0;
     if(donde==0){//0 = a mazo
         for(it3=invo.begin();it3!=invo.end();++it3){
-            if(invo.at(i)->GetUnico()==monstruito->GetUnico()){
+            if(i<invo.size() &&  invo.at(i)->GetUnico()==monstruito->GetUnico()){
                 retorno = invo.at(i);
             }
             i++;
@@ -190,7 +192,7 @@ Invocacion* Player:: getMonstruo(Invocacion* monstruito, int donde){
      i=0;
     if(donde==1){// 1 = mano
         for(it3=mano.begin();it3!=mano.end();++it3){
-            if(mano.at(i)->GetUnico()==monstruito->GetUnico()){
+            if(i<mano.size() &&  mano.at(i)->GetUnico()==monstruito->GetUnico()){
                 retorno = mano.at(i);
             }
             i++;
@@ -199,7 +201,7 @@ Invocacion* Player:: getMonstruo(Invocacion* monstruito, int donde){
      i=0;
     if(donde==2){// 2 = jugadas
         for(it3=jugadas.begin();it3!=jugadas.end();++it3){
-            if(jugadas.at(i)->GetUnico()==monstruito->GetUnico()){
+            if(i<jugadas.size() &&  jugadas.at(i)->GetUnico()==monstruito->GetUnico()){
                 retorno = jugadas.at(i);
             }
             i++;
@@ -288,7 +290,7 @@ void Player:: eliminarJugadas(Invocacion* invo){// get unico creo que no sirve s
         posy = (posy-80)/50;
     }
      for(it3=jugadas.begin();it3!=jugadas.end();++it3){
-         if(jugadas.at(i)->getX()==posx && jugadas.at(i)->getY()==posy){
+         if(i<jugadas.size() && jugadas.at(i)->getX()==posx && jugadas.at(i)->getY()==posy){
              return true;
          }
          i++;

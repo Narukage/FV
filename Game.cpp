@@ -132,7 +132,6 @@ void Game::render(){
     tablero->drawRetrato(1,window); //esto solo deberia dibujarlo una vez
     tablero->drawRetrato(2,window); //same
     tablero->Mostrar_mano(window);
-    tablero->drawUnit(window);
     window.display();
 }
 

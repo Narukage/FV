@@ -30,7 +30,7 @@ Tablero::Tablero(){
     if(!texturabloqueverde.loadFromFile("assets/Sprites/bloque3.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
-    if(!Zoogx.loadFromFile("assets/Sprites/Zoogx.png")){
+    /*if(!Zoogx.loadFromFile("assets/Sprites/Zoogx.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
     if(!Cthughax.loadFromFile("assets/Sprites/Cthughax.png")){
@@ -44,7 +44,7 @@ Tablero::Tablero(){
         }
     if(!Bokrugs.loadFromFile("assets/Sprites/Bokrugs.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
-        }
+        }*/
     /*if(!Zoogxredim.loadFromFile("assets/Sprites/Zoogxredim.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
@@ -337,7 +337,7 @@ void Tablero::Mostrar_mano(sf::RenderWindow& window){
     vector<Invocacion*>::iterator it3;
     for(it3=player1->getMano().begin();it3!=player1->getMano().end();++it3){
         //std::cout<< "entro posicion: "<<((i*100)+150)<<std::endl;
-        if(i<5){
+        if(i<player1->getMano().size()){
         //player1->getMano().at(i)->getSpriteM().setPosition((i*100)+150,480);
         window.draw( player1->getMano().at(i)->getSpriteM());
         }
@@ -407,26 +407,42 @@ void Tablero::Mostrar_mano(sf::RenderWindow& window){
         */
 }
 void Tablero::drawUnit(sf::RenderWindow& window){
-    int pos=-1;
+     vector<Invocacion*>::iterator it3;
+     int i=0;
+     float vectrx= 0.3;
+     for(it3=player1->getJugadas().begin();it3!=player1->getJugadas().end();++it3){
+         if(i<player1->getJugadas().size() && player1->getJugadas().at(i)->getNombre()!=""){
+             float calculox =(player1->getJugadas().at(i)->getX()*50)+100;
+             float calculoy = (player1->getJugadas().at(i)->getY()*50)+80;
+             /*std::cout<<"entrox : "<<player1->getJugadas().at(i)->getX()<<std::endl;
+             std::cout<<"entroy : "<<player1->getJugadas().at(i)->getY()<<std::endl;*/
+             player1->getJugadas().at(i)->setPosition(calculox,calculoy);
+             player1->getJugadas().at(i)->setScale(vectrx,vectrx);
+             window.draw(player1->getJugadas().at(i)->getSprite());
+         }
+         i++;
+     }
+    /*int pos=-1;
     for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
             //liberar codigo
             if(player1->JugadaEn(i,j)->getNombre()!= ""){
-                pos=player1->damePosicion(i,j);
+                pos=player1->damePosicion(i,j);//no es un for, entonces e queda apuntando en el ultimo y no los reinicia para mirar los anteiores
                 pos=pos-1;
                 if(pos!=-1 && (pos < player1->getJugadas().size())){
                     float calculox =(i*50)+100;
                     float calculoy = (j*50)+80;
                     float vectrx= 0.3;
-                    
-                    std::cout<<"POS: "<<pos<<" Quien soy : "<<player1->getJugadas().at(pos)->getNombre()<<std::endl;
+                    std::cout<<"GetUnico : "<<player1->getJugadas().at(pos)->GetUnico()<<std::endl;
+                    std::cout<<"GetNombre : "<<player1->getJugadas().at(pos)->getNombre()<<std::endl;
+                    //std::cout<<"POS: "<<pos<<" Quien soy : "<<player1->getJugadas().at(pos)->getNombre()<<std::endl;
                     player1->getJugadas().at(pos)->setPosition(calculox,calculoy);
                     player1->getJugadas().at(pos)->setScale(vectrx,vectrx);
                     window.draw(player1->getJugadas().at(pos)->getSprite());
                 }
                // window.draw( player1->getMano().at(i)->getSpriteM());
             }
-             /*   if(player1->JugadaEn(i,j)->getNombre()=="Zoogx"){
+                if(player1->JugadaEn(i,j)->getNombre()=="Zoogx"){
                 board[i][j].sprite.setTexture(Zoogx);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f));
@@ -458,9 +474,9 @@ void Tablero::drawUnit(sf::RenderWindow& window){
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
                 board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f));
                 window.draw(board[i][j].sprite);
-                }*/
+                }
         }
-    }
+    }*/
 }
 void Tablero::drawLife(int commander, sf::RenderWindow& window){
     if(commander==1){

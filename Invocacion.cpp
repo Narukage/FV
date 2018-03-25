@@ -120,16 +120,16 @@ bool Invocacion:: soyJugada(string nombretext){
             devolver=true;
         }
 
-        carta.setTexture(textura);
+        monstruo.setTexture(textura);
         //carta.setPosition((i*100)+150,480);
     }
     return devolver;
 }
 void Invocacion:: setPosition(float positionX, float positionY){
-    carta.setPosition(positionX,positionY);
+    monstruo.setPosition(positionX,positionY);
 }
 void Invocacion:: setScale(float scaleX, float scaleY){
-    carta.setScale(sf::Vector2f(scaleX,scaleY));
+    monstruo.setScale(sf::Vector2f(scaleX,scaleY));
     
 }
 
