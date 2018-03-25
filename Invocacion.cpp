@@ -46,6 +46,6 @@ bool Invocacion:: esAliado(int comandante){
     return false;
 }
 int Invocacion::getComandante(){
-    return this->comandante;
+    return comandante;
 }
 
