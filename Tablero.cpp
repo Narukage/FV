@@ -30,6 +30,9 @@ Tablero::Tablero(){
     if(!texturabloqueverde.loadFromFile("assets/Sprites/bloque3.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
+    
+    drawRetrato();
+    
     /*if(!Zoogx.loadFromFile("assets/Sprites/Zoogx.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
@@ -85,11 +88,10 @@ void Tablero::ReiniciarAdy(){
     }
 }
 
+
+
 void Tablero::Adyacentes(int posx, int posy){
     //Mover este calculo a una funcion para que no se repita
-posx = (posx-100)/50;
-posy = (posy-80)/50;
-
 bool entrado=false;
 
 //esquina superior izq -- iluminar
@@ -155,14 +157,6 @@ if((posx>0 && posx<11)&& (posy>0 && posy<7) && !entrado){
 }
 
 bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
-    //cambiar posx y posy por matx y maty
-  /*  Invocacion unidad2=Invocacion();
-    Invocacion* retorno= new Invocacion();*/
-
-    if((posx>100 && posx<700)&&(posy>80 && posy<475)){
-        posx = (posx-100)/50;
-        posy = (posy-80)/50;
-    }
 
     
     if(spawn==1){
@@ -207,10 +201,7 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
 
                                                               
 bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){                                                              
-    gox = (gox-100)/50; //REVISAR URGENTEMENTE//
-    goy = (goy-80)/50;  //SOLO TRANSFORMAMOS LOS PARAMENTROS GO, SI TRANSFORMAMOS LOS DE FROM 
-                        //FUNCIONA MAL, NO TIENE SENTIDO Y NO SABEMOS PORQUE
-  
+
    if(((gox<12 && gox>=0) && (goy<8 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
        unit->setPosicion(gox,goy);
        //board[gox][goy].unit=unit;
@@ -225,18 +216,6 @@ bool Tablero::removeUnit(int posx, int posy, Invocacion* unit){
     setFree(posx,posy,true);
     return true;
 }
-
-Invocacion* Tablero::getUnit(int posx, int posy){//meter cual player es cada 1 eliminar UNIT de tablero
-    /*if(!isFree(posx,posy)){
-        //if player es 1 o 2
-        posx = (posx-100)/50;
-        posy = (posy-80)/50;
-//        recorrer=player1->getJugadas();
-     
-        return devolver;
-    }*/
-}
-
 void Tablero::resetMap(){
    for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
@@ -250,8 +229,8 @@ void Tablero::drawAdyacentes(sf::RenderWindow& window){
     for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
             if(board[i][j].alcanzable==1){
-               /* std::cout << "i: " << i << std::endl;
-                std::cout << "j: " << i << std::endl;*/
+               std::cout << "i: " << i << std::endl;
+                std::cout << "j: " << i << std::endl;
                 if(board[i][j].free){
                 board[i][j].sprite.setTexture(texturabloqueverde);
                 board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
@@ -302,12 +281,6 @@ void Tablero::drawMap(sf::RenderWindow& window){
 }
 
 Invocacion* Tablero::esCarta(int posx, int posy){
-    
-    if((posx>150 && posx<650)&&(posy>480 && posy<600)){
-        //Crear funcion para que no se repita este calculo
-        posx = (posx-150)/100;
-        posy = (posy-480)/146;
-    }
   
     //Invocacion* mano2 = new Invocacion();
     vector<Invocacion*>::iterator it3;
@@ -326,8 +299,6 @@ Invocacion* Tablero::esCarta(int posx, int posy){
 }
 
 bool Tablero::isFree(int posx, int posy){
-    posx = (posx-100)/50;
-    posy = (posy-80)/50;
     return board[posx][posy].free;
 }
 
@@ -650,23 +621,15 @@ void Tablero::drawRetrato(int commander, sf::RenderWindow& window){
 }
 
 int Tablero::getAlcanzable(int posx, int posy){
-    posx = (posx-100)/50;
-    posy = (posy-80)/50;
     return board[posx][posy].alcanzable;
 }
 void Tablero::setFree(int posx,int posy,bool set){
-    posx = (posx-100)/50;
-    posy = (posy-80)/50;
     board[posx][posy].free=set;
 }
 bool Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     bool retorno=false;
     Invocacion* unidad = new Invocacion();
     Invocacion* unidad2 =new  Invocacion();
-    gox = (gox-100)/50;
-    goy = (goy-80)/50;
-    /*fromx = (fromx-100)/50;
-    fromy = (fromy-80)/50;*/
     unidad=player1->JugadaEn(fromx,fromy);//el que pega
     unidad2=player1->JugadaEn(gox,goy);
     unidad2->setVida(unidad2->getVida()-unidad->getAtaque());

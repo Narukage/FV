@@ -30,6 +30,10 @@ private:
     Invocacion* inv;
     int posXinvocacion=-1;
     int posYinvocacion=-1;
+    int campox;
+    int campoy;
+    int manox;
+    int manoy;
        
 private:
     void inicializar();
@@ -37,6 +41,7 @@ private:
     void update();
     void render();
     void cleared();
+    
    // void setTurno(int num){turno=num;}
     //int getTurno(){return turno;}
     //void nexTurn(int num);

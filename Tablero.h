@@ -46,6 +46,7 @@ class Tablero{
        sf::Text mananumb;
        sf::Text barra;
        sf::CircleShape coco;
+
        
        static Tablero* pinstance;
        
@@ -68,7 +69,6 @@ class Tablero{
         void drawAdyacentes(sf::RenderWindow& window);
         void drawUnit(sf::RenderWindow& window);
         void ReiniciarAdy();
-        Invocacion* getUnit(int posx, int posy);
        
         void drawLife(int commander, sf::RenderWindow& window);
         sf::Text drawLifeNumb(int commander);
