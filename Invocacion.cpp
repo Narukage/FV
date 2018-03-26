@@ -51,6 +51,7 @@ int Invocacion::getComandante(){
 bool Invocacion:: soyManoT(string nombretext,int i){
     bool devolver = false;
     if(mano==true){
+        std::cout << "mano true" << std::endl;
         if(nombretext=="Zoogx"){
             if(!textcarta.loadFromFile("assets/Sprites/Zoogxredim.png")){
                 std::cout<<"Textura en mano aplicada"<<std::endl;

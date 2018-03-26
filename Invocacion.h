@@ -20,6 +20,7 @@ class Invocacion{
         sf::Texture textcarta;
         sf::Sprite monstruo;
         sf::Sprite cartamano;
+        bool com=false;
         bool mano=false;
         int unico;// -1 Es el jugador -2 es el rival
         
@@ -52,5 +53,7 @@ class Invocacion{
         bool soyJugada(string nombretext);
         void setPosition(float positionX,float positionY);
         void setScale(float scaleX,float scaleY);
+        bool getCom(){return com;};
+        void setCom(bool coman){com=coman;};
         
 };

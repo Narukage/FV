@@ -40,8 +40,49 @@ void Game::eventos(){
                         if(evento.key.code==sf::Keyboard::Escape){
                             isPlay = false;
                         }
+                        if(evento.key.code==sf::Keyboard::Space){
+                            
+                            nexTurn(turno);
+                            cambioTurno(meToca);
+                            cout<<"he entrado"<<meToca<<std::endl;
+                             cout<<"he entrado"<<turno<<std::endl;
+                             tablero->setTurno(meToca);
+                             if(meToca==true){
+                                 tablero->getPlayer()->Robar();
+                             
+                             }
+                             /*if(meToca==false){
+                                 srand(time(NULL));
+                                 //preguntar naru tamaños
+                                 int eX = rand()% 600 + 800;
+                                 int eY = rand()% 100 + 500;
+                                 //eX=1;
+                                 eX = (eX-100)/50;
+                                 eY = (eY-80)/50;
+                                 
+                                  
+                                  if(tablero->addUnit(eX,eY,inv,2)){
+                                  //cartaseleccionada=false;
+                  vector<Invocacion*>::iterator it3;
+                 //int i=0;
+                     nexTurn(turno);
+                            cambioTurno(meToca);
+           
+            }
+                                  else {
+                                     nexTurn(turno);
+                            cambioTurno(meToca);
+                                  }
+                             }
+                            }
+                            else{
+                            
+                            }*/
+                        
+                        }
 
                     case sf::Event::MouseButtonPressed:
+                        if(meToca==true){
                         if(evento.mouseButton.button==sf::Mouse::Left){
                             coord = sf::Mouse::getPosition(window);
                             presionado=true;
@@ -54,7 +95,7 @@ void Game::eventos(){
                             
                             campox = (coord.x-100)/50;
                             campoy = (coord.y-80)/50;
-                        
+                        }
                         }
                 }
     }
@@ -100,9 +141,9 @@ void Game::update(){
             else if(actuainvocacion==true && !tablero->isFree(campox,campoy)&&tablero->getAlcanzable(campox,campoy)==1){
                 if(tablero->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->esAliado(tablero->getPlayer()->JugadaEn(coord.x,coord.y)->getComandante())){
                     
-                   if( tablero->atackToPos(posXinvocacion,posYinvocacion,campox,campoy)){
-                       tablero->setFree(campox,campoy,true);
-                   }
+                    tablero->atackToPos(posXinvocacion,posYinvocacion,campox,campoy);
+                       //tablero->setFree(campox,campoy,true);
+                   
                 actuainvocacion=false;
                 posXinvocacion=-1;
                 posYinvocacion=-1;
@@ -140,6 +181,8 @@ void Game::render(){
     window.draw(tablero->drawManaNumb(2));
     window.draw(tablero->drawManaRest(2));
     window.draw(tablero->drawBarra(2));
+    tablero->drawRetrato(1,window); //esto solo deberia dibujarlo una vez
+    tablero->drawRetrato(2,window); //same
     tablero->Mostrar_mano(window);
     window.display();
 }
@@ -162,8 +205,8 @@ void Game::run(){
         cleared();
     }
 
-/*void Game::nexTurn(int num){
+void Game::nexTurn(int num){
 
     turno=num+1;
                         
-}*/
+}

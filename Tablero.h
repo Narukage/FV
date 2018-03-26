@@ -29,6 +29,7 @@ class Tablero{
         
         Player* player1;
         Player* player2;
+        bool turno=true;
         
        boardInfo board[WIDTH][HEIGHT]; //board matrix with information about what it contains
        sf::Texture texturabloqueazul;
@@ -81,5 +82,6 @@ class Tablero{
         void setFree(int posx,int posy,bool set);
         //GETTERS & SETTERS
         bool isFree(int posx, int posy);
+        void setTurno(bool metoca){turno=metoca;};
         Player* getPlayer(){return player1;};
 };

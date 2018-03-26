@@ -17,18 +17,19 @@ class Player{
         sf::Texture textura3;
         sf::Sprite retrato;
         int contador = 0;
+        int posmano=0;
         vector<Invocacion*> mano;
         vector<Invocacion*> jugadas;
         vector<Invocacion*> invo;
         //Invocacion* mano= new Invocacion[5];//mano
-        Invocacion* insertar = new Invocacion[20];//en el tablero
+       // Invocacion* insertar = new Invocacion[20];//en el tablero
         //Invocacion* invo= new Invocacion[20];//mazo
         /* A ver hay que hacer un array o una lista que guarde las cartas jugadas, borrar la carta de mano
          y la pones aqui, ademas el setposicion se tiene que hacer directamente en la carta que se añada en este array
          y no desde el puntero, hacer que unit(puntero) apunte a la invocacion que se meta en este array o lista*/
         Invocacion* man = new Invocacion();
         
-        Invocacion comandante;
+        Invocacion* comandante= new Invocacion();
         Invocacion *com;
         sf::Sprite carta;
         
@@ -43,16 +44,18 @@ class Player{
         void Mostrar_mano(sf::RenderWindow& window);
         sf::Sprite getRetrato(){ return retrato; };
         float getManaRest(){ return manarest; };
-        Invocacion* getUnit(){ com=&comandante; return com; };
+        Invocacion* getUnit(){  return comandante; };
         Invocacion* getMonstruo(Invocacion* montruito, int donde);
         vector<Invocacion*> getMano(){ return mano; };
         vector<Invocacion*> getJugadas(){return jugadas; };
         bool RellenarJugadas(Invocacion* jugada);
-        void eliminarMano(Invocacion* invo);
-        void eliminarJugadas(Invocacion* invo);
+        bool eliminarMano(Invocacion* invo);
+        bool eliminarJugadas(Invocacion* invo);
         bool RellenarMano(Invocacion* invo, int jugar);
         Invocacion* JugadaEn(int posx, int posy);
         int damePosicion(int posx,int posy);
         bool estaJugadaEn(int posx, int posy);
+        void Robar();
+        void setPosMano(int pos){posmano=pos;};
 };
 

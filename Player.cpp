@@ -6,18 +6,25 @@ Player::Player(int commander){
     vida=100;
     mana=10;
     manarest=10;
-
+    Invocacion* prueba = new Invocacion();
     
     if(commander==1){
          vida=100;
-        comandante=Invocacion("Gugox",0,5,vida,1,-1);
+        comandante=new Invocacion("Gugox",0,vida,5,1,-1);
+        comandante->setCom(true);
+        comandante->setPosicion(0,3);
+        comandante->soyJugada(comandante->getNombre());
+        RellenarJugadas(comandante);
+        
         if(!textura.loadFromFile("assets/HUD/retrato1.png")){
                std::cout<<"Textura no aplicada"<<std::endl;
             }
         retrato.setPosition(0,0);
     }else{
          vida=100;
-       comandante=Invocacion("E",0,8,vida,2,-2);
+       comandante=new Invocacion("E",0,vida,5,2,-2);
+       comandante->setCom(true);
+      // RellenarJugadas(comandante);
         if(!textura.loadFromFile("assets/HUD/retrato2.png")){
                std::cout<<"Textura no aplicada"<<std::endl;
             }
@@ -39,59 +46,59 @@ Player::Player(int commander){
   //Mejor en el txt todos los paramaetros
   if(contador!=19){
   if(id==1){
-       insertar[contador]= Invocacion("Cthughax",1,1,1,commander,contador);
-       insertar[contador].soyJugada(insertar[contador].getNombre());
-       invo.push_back(&insertar[contador]);
+       prueba=new Invocacion("Cthughax",1,1,1,commander,contador);
+       prueba->soyJugada(prueba->getNombre());
+       invo.push_back(prueba);
   }
   if(id==2){
-      insertar[contador]=Invocacion("Yigx",3,3,2,commander,contador);
-      insertar[contador].soyJugada(insertar[contador].getNombre());
-       invo.push_back(&insertar[contador]);
+     prueba=new Invocacion("Yigx",3,3,2,commander,contador);
+      prueba->soyJugada(prueba->getNombre());
+       invo.push_back(prueba);
   }
   if(id==3){
-       insertar[contador]=Invocacion("Zoogx",2,2,1,commander,contador);
-       insertar[contador].soyJugada(insertar[contador].getNombre());
+       prueba=new Invocacion("Zoogx",2,2,1,commander,contador);
+       prueba->soyJugada(prueba->getNombre());
 
-       invo.push_back(&insertar[contador]);
+       invo.push_back(prueba);
   }
   if(id==4){
-       insertar[contador]=Invocacion("Gugox",5,4,4,commander,contador);
-       insertar[contador].soyJugada(insertar[contador].getNombre());
+      prueba=new Invocacion("Gugox",5,4,4,commander,contador);
+       prueba->soyJugada(prueba->getNombre());
 
-       invo.push_back(&insertar[contador]);
+       invo.push_back(prueba);
   }
   if(id==5){
-       insertar[contador]=Invocacion("Bokrugs",4,1,4,commander,contador);
-       insertar[contador].soyJugada(insertar[contador].getNombre());
+       prueba=new Invocacion("Bokrugs",4,1,4,commander,contador);
+       prueba->soyJugada(prueba->getNombre());
 
-       invo.push_back(&insertar[contador]);
+       invo.push_back(prueba);
   }
   if(id==6){
-       insertar[contador]=Invocacion("Orrys",7,7,2,commander,contador);
-       insertar[contador].soyJugada(insertar[contador].getNombre());
+       prueba=new Invocacion("Orrys",7,7,2,commander,contador);
+       prueba->soyJugada(prueba->getNombre());
 
-       invo.push_back(&insertar[contador]);
+       invo.push_back(prueba);
   }
   if(id==7){
-       insertar[contador]=Invocacion("Ahtuh",4,4,2,commander,contador);
-       insertar[contador].soyJugada(insertar[contador].getNombre());
+       prueba=new Invocacion("Ahtuh",4,4,2,commander,contador);
+       prueba->soyJugada(prueba->getNombre());
 
-       invo.push_back(&insertar[contador]);
+       invo.push_back(prueba);
   }
   if(id==8){
-        insertar[contador]=Invocacion("Blemiax",8,7,8,commander,contador);
-        insertar[contador].soyJugada(insertar[contador].getNombre());
-        invo.push_back(&insertar[contador]);
+        prueba=new Invocacion("Blemiax",8,7,8,commander,contador);
+        prueba->soyJugada(prueba->getNombre());
+        invo.push_back(prueba);
   }
   if(id==9){
-      insertar[contador]=Invocacion("Shanx",6,3,6,commander,contador);
-      insertar[contador].soyJugada(insertar[contador].getNombre());
-      invo.push_back(&insertar[contador]);
+      prueba=new Invocacion("Shanx",6,3,6,commander,contador);
+      prueba->soyJugada(prueba->getNombre());
+      invo.push_back(prueba);
   }
   if(id==10){
-       insertar[contador]=Invocacion("Azathothx",10,12,12,commander,contador);
-       insertar[contador].soyJugada(insertar[contador].getNombre());
-       invo.push_back(&insertar[contador]);
+       prueba=new Invocacion("Azathothx",10,12,12,commander,contador);
+       prueba->soyJugada(prueba->getNombre());
+       invo.push_back(prueba);
   }
   }
 //std::cout<<"Posicion: "<<contador<<"Como me llamo: "<<invo.at(contador)->getNombre()<<std::endl;
@@ -99,6 +106,15 @@ Player::Player(int commander){
 
   }
   fin.close();
+  vector<Invocacion*>::iterator it3;
+     int z = 0;
+    //0 = a mazo
+       /* for(it3=invo.begin();it3!=invo.end();++it3){
+            if(z<invo.size()){
+            cout<<"Soy: "<<invo.at(z)->getNombre()<<"con id: "<<invo.at(z)->GetUnico()<<endl;
+            }
+           z++; 
+        }*/
   /*for(int x=0;x<19;x++){
        std::cout << "Soy el monstruo de: " << x<< ", con nombre: "<< invo[x].getNombre() << std::endl;
   }*/
@@ -129,7 +145,9 @@ Player::Player(int commander){
            std::cout<<"Textura no aplicada"<<std::endl;
         } */
     if(commander==1){
+        
         for(int j=0;j<5;j++){
+           
             if(j<invo.size()){
             RellenarMano(invo.at(j),j);
             }
@@ -144,11 +162,14 @@ Player::Player(int commander){
    
 }
 bool Player:: RellenarMano(Invocacion* invo,int jugar){
-    if(mano.size()<=5){
+   
+    if(mano.size()<5){
+        cout<<"manica: "<<invo->getNombre()<<endl;
         invo->setMano(true);
         invo->soyManoT(invo->getNombre(),jugar);
         invo->setJugar(jugar);
         mano.push_back(invo);
+        setPosMano(posmano+1);
          /*for(it3=jugadas.begin();it3!=jugadas.end();++it3){
             std::cout<< "SOY  : "<< jugadas.at(i)->getNombre()<< std::endl;
             i++;
@@ -161,7 +182,7 @@ bool Player:: RellenarMano(Invocacion* invo,int jugar){
 }
 bool Player::RellenarJugadas(Invocacion* jugada){
     int i=0;
-    vector<Invocacion*>::iterator it3;
+    //vector<Invocacion*>::iterator it8;
     if(jugada->getExisto()==false){
         jugada->setMano(false);
        // jugada->soyJugada(jugada->getNombre());
@@ -179,56 +200,63 @@ bool Player::RellenarJugadas(Invocacion* jugada){
 }
 Invocacion* Player:: getMonstruo(Invocacion* monstruito, int donde){
     Invocacion* retorno = new Invocacion();
-     vector<Invocacion*>::iterator it3;
+     vector<Invocacion*>::iterator it7;
      int i = 0;
     if(donde==0){//0 = a mazo
-        for(it3=invo.begin();it3!=invo.end();++it3){
+        for(it7=invo.begin();it7!=invo.end();++it7){
             if(i<invo.size() &&  invo.at(i)->GetUnico()==monstruito->GetUnico()){
                 retorno = invo.at(i);
+
             }
             i++;
         }
     }
      i=0;
     if(donde==1){// 1 = mano
-        for(it3=mano.begin();it3!=mano.end();++it3){
+        for(it7=mano.begin();it7!=mano.end();++it7){
             if(i<mano.size() &&  mano.at(i)->GetUnico()==monstruito->GetUnico()){
                 retorno = mano.at(i);
+               
             }
             i++;
         }
     }
      i=0;
     if(donde==2){// 2 = jugadas
-        for(it3=jugadas.begin();it3!=jugadas.end();++it3){
+        for(it7=jugadas.begin();it7!=jugadas.end();++it7){
             if(i<jugadas.size() &&  jugadas.at(i)->GetUnico()==monstruito->GetUnico()){
                 retorno = jugadas.at(i);
+              
             }
             i++;
         }
     }  
-    return retorno;
+
+     return retorno;
 }
-void Player:: eliminarMano(Invocacion* invo){   
-    vector<Invocacion*>::iterator it3;
+bool Player:: eliminarMano(Invocacion* invo){   
+    bool devolver=false;
+    vector<Invocacion*>::iterator it2;
     int i=0;
-    for(it3=mano.begin();it3!=mano.end();++it3){
+    for(it2=mano.begin();it2!=mano.end()&&i<5;++it2){
+        cout<<"entro "<<endl;
         if(i<mano.size()&&mano.at(i)->GetUnico()==invo->GetUnico()){
+         cout<<"hasta el fondo "<<endl;
+       
+                    mano.erase(it2); 
+                    devolver = true;
          
-            if(i==4){
-                
-                mano.pop_back();
-            }
-            else{
-                
-                    mano.erase(it3); 
                     
-                    
-            }
+            
                  
+        }
+        if(i<mano.size()&&!mano.empty()){
+         mano.at(i)->setJugar(i);
+                     mano.at(i)->soyManoT(mano.at(i)->getNombre(),i);
         }
         i++;
     }
+    return devolver;
     /*i=0;
     for(it3=mano.begin();it3!=mano.end();++it3){
         if(i<mano.size()){
@@ -236,18 +264,24 @@ void Player:: eliminarMano(Invocacion* invo){
             i++;
         }
     }*/
+  
 }
-void Player:: eliminarJugadas(Invocacion* invo){// get unico creo que no sirve si miramos posiciones
-   vector<Invocacion*>::iterator it3;
+bool Player:: eliminarJugadas(Invocacion* invo){// get unico creo que no sirve si miramos posiciones
+   vector<Invocacion*>::iterator it4;
     int i=0;
-    for(it3=jugadas.begin();it3!=jugadas.end();++it3){
-        if(i<jugadas.size()&&jugadas.at(i)->GetUnico()==invo->GetUnico()){      
-            jugadas.erase(it3);        
-                    
+    for(it4=jugadas.begin();it4!=jugadas.end();++it4){
+         //cout<<"estoy apunto de morir: "<<i<<endl;
+        if(i<jugadas.size()&&jugadas.at(i)->GetUnico()==invo->GetUnico()){  
+            cout<<"me van a matar: "<<invo->getNombre()<<endl;
+            jugadas.erase(it4);  
+
+              return true;      
                     
         }
         i++;
     }
+
+    return false;
 }
  Invocacion* Player::  JugadaEn(int posx, int posy){
      Invocacion* retorno = new Invocacion();
@@ -255,14 +289,16 @@ void Player:: eliminarJugadas(Invocacion* invo){// get unico creo que no sirve s
         posx = (posx-100)/50;
         posy = (posy-80)/50;
     }
-    vector<Invocacion*>::iterator it3;
+    vector<Invocacion*>::iterator it6;
                  int i=0;
-     for(it3=jugadas.begin();it3!=jugadas.end();++it3){
+     for(it6=jugadas.begin();it6!=jugadas.end();++it6){
          if(i<jugadas.size()&&jugadas.at(i)->getX()==posx && jugadas.at(i)->getY()==posy){
              retorno=jugadas.at(i);
+  
          }
          i++;
      }
+                 
      return retorno;
  }
  int Player:: damePosicion(int posx,int posy){
@@ -272,30 +308,47 @@ void Player:: eliminarJugadas(Invocacion* invo){// get unico creo que no sirve s
         posx = (posx-100)/50;
         posy = (posy-80)/50;
     }
-     vector<Invocacion*>::iterator it3;
+     vector<Invocacion*>::iterator it5;
                  int i=0;
-     for(it3=jugadas.begin();it3!=jugadas.end();++it3){
+     for(it5=jugadas.begin();it5!=jugadas.end();++it5){
          if(i<jugadas.size()&&jugadas.at(i)->getX()==posx && jugadas.at(i)->getY()==posy){
              retorno=i;
          }
          i++;
      }
+               
                  return i;
  }
  bool Player:: estaJugadaEn(int posx, int posy){
-      vector<Invocacion*>::iterator it3;
+      vector<Invocacion*>::iterator it1;
                  int i=0;
      if((posx>100 && posx<700)&&(posy>80 && posy<475)){
         posx = (posx-100)/50;
         posy = (posy-80)/50;
     }
-     for(it3=jugadas.begin();it3!=jugadas.end();++it3){
+     for(it1=jugadas.begin();it1!=jugadas.end();++it1){
          if(i<jugadas.size() && jugadas.at(i)->getX()==posx && jugadas.at(i)->getY()==posy){
+        
+            
              return true;
+             
          }
          i++;
      }
+               
      return false;
+ }
+ void Player:: Robar(){
+     vector<Invocacion*>::iterator it5;
+                 int i=0;
+                 int j =0;
+     for(it5=mano.begin();it5!=mano.end();++it5){
+         
+         i++;
+     }
+                 j=j+1;
+                 RellenarMano(invo.at(posmano),i);
+                 eliminarJugadas(invo.at(posmano));
  }
 
 Player::~Player(){

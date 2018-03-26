@@ -31,7 +31,6 @@ Tablero::Tablero(){
            std::cout<<"Textura no aplicada"<<std::endl;
         }
     
-    drawRetrato();
     
     /*if(!Zoogx.loadFromFile("assets/Sprites/Zoogx.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
@@ -63,19 +62,9 @@ Tablero::Tablero(){
     if(!Bokrugsredim.loadFromFile("assets/Sprites/Bokrugsredim.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
     }*/
-    board[0][3].free=false; //commander 1
-    board[0][3].coordX=0;
-    board[0][3].coordY=3;
-    board[0][3].spawn1=true;
-    board[0][3].spawn2=false;
-    board[0][3].unit=player1->getUnit();
-            
-    board[11][0].free=false; //commander 2
-    board[11][0].coordX=11;
-    board[11][0].coordY=3;
-    board[11][0].spawn1=false;
-    board[11][0].spawn2=true;
-    board[11][0].unit=player2->getUnit();
+    addUnit(player1->getUnit()->getX(),player1->getUnit()->getY(),player1->getUnit(),player1->getUnit()->getComandante());
+    //addUnit(player2->getUnit()->getX(),player2->getUnit()->getY(),player2->getUnit(),player2->getUnit()->getComandante());
+    
 }
 
 void Tablero::ReiniciarAdy(){
@@ -212,7 +201,7 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
    }        
 }    
 bool Tablero::removeUnit(int posx, int posy, Invocacion* unit){
-    board[posx][posy].unit=NULL;
+    //board[posx][posy].unit=NULL;
     setFree(posx,posy,true);
     return true;
 }
@@ -226,7 +215,7 @@ void Tablero::resetMap(){
 }
 
 void Tablero::drawAdyacentes(sf::RenderWindow& window){
-    for(int i=0;i<WIDTH;i++){
+    for(int i=0;i<WIDTH;i++){//estos for habra que cambiarlo por unidad.movimiento y dos contadores x,y que sumados sean <= que su movimiento
         for(int j=0;j<HEIGHT;j++){
             if(board[i][j].alcanzable==1){
                std::cout << "i: " << i << std::endl;
@@ -288,13 +277,14 @@ Invocacion* Tablero::esCarta(int posx, int posy){
     for(it3=player1->getMano().begin();it3!=player1->getMano().end();++it3){
         if(i<player1->getMano().size()){
         if(player1->getMano().at(i)->getJugar()==posx){ //si estoy clickando una carta
-           // std::cout << "EXISTO ¿? : " << mano2->getNombre()<< std::endl;
+           //std::cout << "EXISTO ¿? : " << mano2->getNombre()<< std::endl;
             
             return player1->getMano().at(i);
         }
         i++;
     }
     }
+                 
     return NULL;
 }
 
@@ -307,9 +297,12 @@ void Tablero::Mostrar_mano(sf::RenderWindow& window){
     int i=0;
     vector<Invocacion*>::iterator it3;
     for(it3=player1->getMano().begin();it3!=player1->getMano().end();++it3){
-        //std::cout<< "entro posicion: "<<((i*100)+150)<<std::endl;
         if(i<player1->getMano().size()){
+                   // std::cout<< "entro posicion: "<<((i*100)+150)<<std::endl;
+
         //player1->getMano().at(i)->getSpriteM().setPosition((i*100)+150,480);
+            //player1->getMano().at(i)->soyManoT()
+            //player1->getMano().at(i)->soyManoT(player1->getMano().at(i)->getNombre(),player1->getMano().at(i)->getJugar());
         window.draw( player1->getMano().at(i)->getSpriteM());
         }
         i++;
@@ -381,8 +374,10 @@ void Tablero::drawUnit(sf::RenderWindow& window){
      vector<Invocacion*>::iterator it3;
      int i=0;
      float vectrx= 0.3;
+     if(player1->getJugadas().empty()==false){
      for(it3=player1->getJugadas().begin();it3!=player1->getJugadas().end();++it3){
-         if(i<player1->getJugadas().size() && player1->getJugadas().at(i)->getNombre()!=""){
+         if(player1->getJugadas().empty()==false&&i<player1->getJugadas().size() && player1->getJugadas().at(i)->getNombre()!=""){
+             if(!player1->getJugadas().at(i)->getCom()){
              float calculox =(player1->getJugadas().at(i)->getX()*50)+100;
              float calculoy = (player1->getJugadas().at(i)->getY()*50)+80;
              /*std::cout<<"entrox : "<<player1->getJugadas().at(i)->getX()<<std::endl;
@@ -390,9 +385,22 @@ void Tablero::drawUnit(sf::RenderWindow& window){
              player1->getJugadas().at(i)->setPosition(calculox,calculoy);
              player1->getJugadas().at(i)->setScale(vectrx,vectrx);
              window.draw(player1->getJugadas().at(i)->getSprite());
+             }
+             else{
+                 //cout<<"x vale: "<<player1->getJugadas().at(i)->getX()<<endl;
+                 //cout<<"Y vale: "<<player1->getJugadas().at(i)->getY()<<endl;
+             float calculox =(player1->getJugadas().at(i)->getX()*50)+100;
+             float calculoy = (player1->getJugadas().at(i)->getY()*50)+80;
+             /*std::cout<<"entrox : "<<player1->getJugadas().at(i)->getX()<<std::endl;
+             std::cout<<"entroy : "<<player1->getJugadas().at(i)->getY()<<std::endl;*/
+             player1->getJugadas().at(i)->setPosition(calculox,calculoy);
+             player1->getJugadas().at(i)->setScale(vectrx,vectrx);
+             window.draw(player1->getJugadas().at(i)->getSprite()); 
+             }
          }
          i++;
      }
+}
     /*int pos=-1;
     for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
@@ -634,17 +642,35 @@ bool Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     unidad2=player1->JugadaEn(gox,goy);
     unidad2->setVida(unidad2->getVida()-unidad->getAtaque());
     unidad->setVida(unidad->getVida()-unidad2->getAtaque());
+    cout<<"Me llamo: "<<unidad2->getNombre()<<"vida al que atacan: "<<unidad2->getVida()<<endl;
+     cout<<"Me llamo: "<<unidad->getNombre()<<"vida del que ataca : "<<unidad->getVida()<<endl;
     //hacia los dos lados
-    if(unidad2->getVida()<=0){
-
+     if(unidad2->getCom()==true||unidad->getCom()==false){
+         if(unidad2->getCom()==true){
+             player1->setLife(unidad2->getVida());
+         }
+         if(unidad->getCom()==true){
+             player1->setLife(unidad->getVida());
+         }
+     }
+    if(unidad2->getCom()==false&&unidad2->getVida()<=0){
+        // cout<<"me voy a morir: "<<unidad2->getVida()<<endl;
+        setFree(gox,goy,true);
         player1->eliminarJugadas(unidad2);
-       removeUnit(gox,goy,unidad2);
+        
+       //removeUnit(gox,goy,unidad2);
        retorno=true;
     }
-    if(unidad->getVida()<=0){
+    if(unidad->getCom()==false&&unidad->getVida()<=0){ 
+        // cout<<"me voy a morir 2: "<<unidad->getVida()<<endl;
+        setFree(fromx,fromy,true);
         player1->eliminarJugadas(unidad);
-        removeUnit(fromx,fromy,unidad);
+       
+        //removeUnit(fromx,fromy,unidad);
         retorno =true;
     }
+     if((unidad2->getCom()==true||unidad->getCom()==true) && (unidad2->getVida()<=0 || unidad->getVida()<=0)){
+         
+     }
     return retorno;
 }
