@@ -58,9 +58,10 @@ class Tablero{
     public:
         static Tablero* Instance();
         ~Tablero();
+        void clear();
         bool addUnit(int posx, int posy, Invocacion* unit, int spawn); //return true if adds a unit at the location succesfully
         bool moveToPos(int fromx, int fromy,int gox, int goy, Invocacion* unit); //returns true if unit is moved succesfully
-        bool atackToPos(int fromx, int fromy,int gox, int goy);
+        int atackToPos(int fromx, int fromy,int gox, int goy);
         bool removeUnit(int posx, int posy, Invocacion* unit); //returns true if unit is removed succesfully
         void Adyacentes(int posx, int posy);
         int getAlcanzable(int posx, int posy);

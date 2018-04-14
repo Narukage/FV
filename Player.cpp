@@ -10,7 +10,7 @@ Player::Player(int commander){
     
     if(commander==1){
          vida=100;
-        comandante=new Invocacion("Gugox",0,vida,5,1,-1);
+        comandante=new Invocacion("comandante1",0,vida,5,1,-1);
         comandante->setCom(true);
         comandante->setPosicion(0,3);
         comandante->soyJugada(comandante->getNombre());
@@ -22,8 +22,11 @@ Player::Player(int commander){
         retrato.setPosition(0,0);
     }else{
          vida=100;
-       comandante=new Invocacion("E",0,vida,5,2,-2);
+       comandante=new Invocacion("comandante2",0,vida,5,2,-2);
        comandante->setCom(true);
+       comandante->setPosicion(11,3);
+       comandante->soyJugada(comandante->getNombre());
+       RellenarJugadas(comandante);
       // RellenarJugadas(comandante);
         if(!textura.loadFromFile("assets/HUD/retrato2.png")){
                std::cout<<"Textura no aplicada"<<std::endl;

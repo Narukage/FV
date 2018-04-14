@@ -96,6 +96,18 @@ bool Invocacion:: soyJugada(string nombretext){
             }
             devolver=true;
         }
+         if(nombretext=="comandante1"){
+            if(!textura.loadFromFile("assets/Sprites/comandante1.png")){
+                std::cout<<"Textura jugada aplicada"<<std::endl;
+            }
+            devolver=true;
+        }
+        if(nombretext=="comandante2"){
+            if(!textura.loadFromFile("assets/Sprites/comandante2.png")){
+                std::cout<<"Textura jugada aplicada"<<std::endl;
+            }
+            devolver=true;
+        }
         if(nombretext=="Yigx"){
             if(!textura.loadFromFile("assets/Sprites/Yigx.png")){
                 std::cout<<"Textura jugada aplicada"<<std::endl;
