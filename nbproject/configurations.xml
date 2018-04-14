@@ -46,6 +46,7 @@
       </toolsSet>
       <compileType>
         <ccTool>
+          <standard>8</standard>
           <incDir>
             <pElem>/usr/include/SFML</pElem>
           </incDir>
