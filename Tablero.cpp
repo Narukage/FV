@@ -1,4 +1,5 @@
 #include "Tablero.h"
+//SINGLETON
 
 Tablero* Tablero::pinstance = 0;
     
@@ -45,44 +46,17 @@ Tablero::Tablero(){
     if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
                 std::cout << "Fuente no aplicada" <<std::endl;
         }
-    
-    
-    /*if(!Zoogx.loadFromFile("assets/Sprites/Zoogx.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        }
-    if(!Cthughax.loadFromFile("assets/Sprites/Cthughax.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        }
-    if(!Gugox.loadFromFile("assets/Sprites/Gugox.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        }
-    if(!Yigx.loadFromFile("assets/Sprites/Yigx.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        }
-    if(!Bokrugs.loadFromFile("assets/Sprites/Bokrugs.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        }*/
-    /*if(!Zoogxredim.loadFromFile("assets/Sprites/Zoogxredim.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        }
-    if(!Cthughaxredim.loadFromFile("assets/Sprites/Cthughaxredim.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        }
-    if(!Gugoxredim.loadFromFile("assets/Sprites/Gugoxredim.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        }
-    if(!Yigxredim.loadFromFile("assets/Sprites/Yigxredim.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        }
-    if(!Bokrugsredim.loadFromFile("assets/Sprites/Bokrugsredim.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-    }*/
+ 
     addUnit(player1->getUnit()->getX(),player1->getUnit()->getY(),player1->getUnit(),player1->getUnit()->getComandante());
     cout<<"X del 2: "<<player2->getUnit()->getX()<<"Y del 2: "<<player1->getUnit()->getY()<<endl;
     addUnit(player2->getUnit()->getX(),player2->getUnit()->getY(),player2->getUnit(),player2->getUnit()->getComandante());
     //addUnit(player2->getUnit()->getX(),player2->getUnit()->getY(),player2->getUnit(),player2->getUnit()->getComandante());
     
 }
+
+Tablero *p1 = Tablero::Instance();
+Tablero *p2 = p1->Instance();
+Tablero &ref = * Tablero::Instance();
 
 void Tablero::ReiniciarAdy(){
     for(int i=0;i<WIDTH;i++){

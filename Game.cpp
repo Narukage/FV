@@ -15,15 +15,7 @@ void Game::inicializar(){
     window.setFramerateLimit(60);
     window.setVerticalSyncEnabled(true);
     
-   //invocacion = new Invocacion();
-  /*  tablero = Tablero();
-    tablero2 = Tablero();*/
-    tablero = Tablero::Instance();
-    tablero2 = tablero->Instance();
-    Tablero& tableroref = * Tablero::Instance();
-    /*player = new Player(1);
-    player2 = new Player(2);*/
-    interface = new Interface();
+    Tablero::Instance(); //se ha creado el tablero
     inv = new Invocacion();
     generalmuerto1=false;
     generalmuerto2=false;
@@ -47,13 +39,12 @@ void Game::eventos(){
                           
                             nexTurn(turno);
                             cambioTurno(meToca);
-                            tablero->setTurno(meToca);
+                            Tablero::Instance()->setTurno(meToca);
                             cout<<"he entrado"<<meToca<<std::endl;
                              cout<<"he entrado"<<turno<<std::endl;
                              
                              if(meToca==true){
-                                 tablero->getPlayer()->Robar();
-                             
+                                 Tablero::Instance()->getPlayer()->Robar();
                              }
                              /*if(meToca==false){
                                  srand(time(NULL));
@@ -86,7 +77,7 @@ void Game::eventos(){
                         }
 
                     case sf::Event::MouseButtonPressed:
-                        //if(meToca==true){
+                        if(meToca==true){
                         if(evento.mouseButton.button==sf::Mouse::Left){
                             coord = sf::Mouse::getPosition(window);
                             
@@ -100,7 +91,7 @@ void Game::eventos(){
                             campox = (coord.x-100)/50;
                             campoy = (coord.y-80)/50;
                         }
-                       // }
+                       }
                 }
     }
 }
@@ -112,7 +103,7 @@ void Game::update(){
       
         if((coord.x>150 && coord.x<650)&&(coord.y>480 && coord.y<600)){
             std::cout<<"Entramos dentro del la mano"<<std::endl;
-            inv=tablero->esCarta(manox,manoy);
+            inv=Tablero::Instance()->esCarta(manox,manoy);
             if(inv!=NULL){
                 std::cout<<"esCarta es distinto de null"<<std::endl;
                 cartaseleccionada=true;
@@ -122,7 +113,8 @@ void Game::update(){
         else if(cartaseleccionada ){ //queremos invocar en tablero
             if((coord.x>100 && coord.x<700)&&(coord.y>80 && coord.y<475)){
               
-                    if(tablero->addUnit(campox,campoy,inv,1)){
+                    if(Tablero::Instance()->addUnit(campox,campoy,inv,1)){
+                        
                         cartaseleccionada=false;
                         /* vector<Invocacion*>::iterator it3;
                         int i=0;*/
@@ -130,7 +122,7 @@ void Game::update(){
                     }
                 
                 else{
-                    if(tablero->addUnit(campox,campoy,inv,2)){
+                    if(Tablero::Instance()->addUnit(campox,campoy,inv,2)){
                         cartaseleccionada=false;
                          /*vector<Invocacion*>::iterator it3;
                         int i=0;*/
@@ -139,26 +131,24 @@ void Game::update(){
                 }
             }
         }else{ //queremos mover unidad en tablero
-            if(!tablero->isFree(campox,campoy) && actuainvocacion==false){ //si la posicion que clickamos contiene una unidad
+            if(!Tablero::Instance()->isFree(campox,campoy) && actuainvocacion==false){ //si la posicion que clickamos contiene una unidad
                 actuainvocacion=true;
-                tablero->Adyacentes(campox,campoy);
+                Tablero::Instance()->Adyacentes(campox,campoy);
                 tieneadyacentes=true;
                 posXinvocacion=campox;
                 posYinvocacion=campoy;
             } //unidad seleccionada, preparada para hacer alguna accion
-            else if(actuainvocacion==true && tablero->isFree(campox,campoy) && tablero->getAlcanzable(campox,campoy)==1){
-              
-                tablero->moveToPos(posXinvocacion, posYinvocacion,campox,campoy,tablero->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion));
-                tablero->setFree(campox,campoy,false);             
+            else if(actuainvocacion==true && Tablero::Instance()->isFree(campox,campoy) && Tablero::Instance()->getAlcanzable(campox,campoy)==1){
+                Tablero::Instance()->moveToPos(posXinvocacion, posYinvocacion,campox,campoy,Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion));
+                Tablero::Instance()->setFree(campox,campoy,false);
                 actuainvocacion=false;
                 posXinvocacion=-1;
                 posYinvocacion=-1;
-                tablero->ReiniciarAdy();
+                Tablero::Instance()->ReiniciarAdy();
             }//ataque
-            else if(actuainvocacion==true && !tablero->isFree(campox,campoy)&&tablero->getAlcanzable(campox,campoy)==1){
-                if(tablero->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->esAliado(tablero->getPlayer()->JugadaEn(coord.x,coord.y)->getComandante())){
-                    
-                    ganador=tablero->atackToPos(posXinvocacion,posYinvocacion,campox,campoy);
+            else if(actuainvocacion==true && !Tablero::Instance()->isFree(campox,campoy)&&Tablero::Instance()->getAlcanzable(campox,campoy)==1){
+                if(Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->esAliado(Tablero::Instance()->getPlayer()->JugadaEn(coord.x,coord.y)->getComandante())){
+                    ganador=Tablero::Instance()->atackToPos(posXinvocacion,posYinvocacion,campox,campoy);
                        //tablero->setFree(campox,campoy,true);
                     if(ganador==-1){
                         generalmuerto1=true;
@@ -173,15 +163,15 @@ void Game::update(){
                 actuainvocacion=false;
                 posXinvocacion=-1;
                 posYinvocacion=-1;
-                tablero->ReiniciarAdy();
+                Tablero::Instance()->ReiniciarAdy();
                 }
             }
             else{
                actuainvocacion=false;
                posXinvocacion=-1;
                posYinvocacion=-1;
-               tablero->ReiniciarAdy();
-               tablero->ReiniciarAdy();
+               Tablero::Instance()->ReiniciarAdy();
+               Tablero::Instance()->ReiniciarAdy();
             }
             
         }
@@ -192,7 +182,7 @@ void Game::update(){
 }
 void Game:: updateIA(){
     if(meToca==false){
-        inv=tablero->esCarta(0,0);
+        inv=Tablero::Instance()->esCarta(0,0);
         if(inv!=NULL){
             
         }
@@ -202,15 +192,15 @@ void Game:: updateIA(){
 void Game::render(){
     
     window.clear(sf::Color::Black);
-    tablero->drawMap(window);
-    tablero->drawUnit(window);
+    Tablero::Instance()->drawMap(window);
+    Tablero::Instance()->drawUnit(window);
     if(tieneadyacentes){
-        tablero->drawAdyacentes(window);
+        Tablero::Instance()->drawAdyacentes(window);
     }
-    tablero->drawLife(1,window);
-    window.draw(tablero->drawLifeNumb(1));
-    tablero->drawLife(2,window);
-    window.draw(tablero->drawLifeNumb(2));
+    Tablero::Instance()->drawLife(1,window);
+    window.draw(Tablero::Instance()->drawLifeNumb(1));
+    Tablero::Instance()->drawLife(2,window);
+    window.draw(Tablero::Instance()->drawLifeNumb(2));
    // tablero->drawMana(1,window);
    // window.draw(tablero->drawManaNumb(1));
     //window.draw(tablero->drawManaRest(1));
@@ -219,9 +209,9 @@ void Game::render(){
     //window.draw(tablero->drawManaNumb(2));
    // window.draw(tablero->drawManaRest(2));
     //window.draw(tablero->drawBarra(2));
-    tablero->drawRetrato(1,window); //esto solo deberia dibujarlo una vez
-    tablero->drawRetrato(2,window); //same
-    tablero->Mostrar_mano(window);
+    Tablero::Instance()->drawRetrato(1,window); //esto solo deberia dibujarlo una vez
+    Tablero::Instance()->drawRetrato(2,window); //same
+    Tablero::Instance()->Mostrar_mano(window);
     window.display();
 }
 
