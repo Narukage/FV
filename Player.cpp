@@ -181,8 +181,8 @@ Player::Player(int commander){
         
         for(int j=0;j<5;j++){
            
-            if(j<invo.size()){
-            RellenarMano(invo.at(j),j);
+            if(j<invo2.size()){
+            RellenarMano(invo2.at(j),j);
             }
              //mano.push_back(invo.at(j));
             //carta.setTexture(textura3);
@@ -194,14 +194,14 @@ Player::Player(int commander){
    retrato.setTexture(textura);
    
 }
-bool Player:: RellenarMano(Invocacion* invo,int jugar){
+bool Player:: RellenarMano(Invocacion* invo2,int jugar){
    
     if(mano.size()<5){
-        cout<<"manica: "<<invo->getNombre()<<endl;
-        invo->setMano(true);
-        invo->soyManoT(invo->getNombre(),jugar);
-        invo->setJugar(jugar);
-        mano.push_back(invo);
+        cout<<"manica: "<<invo2->getNombre()<<endl;
+        invo2->setMano(true);
+        invo2->soyManoT(invo2->getNombre(),jugar);
+        invo2->setJugar(jugar);
+        mano.push_back(invo2);
         setPosMano(posmano+1);
          /*for(it3=jugadas.begin();it3!=jugadas.end();++it3){
             std::cout<< "SOY  : "<< jugadas.at(i)->getNombre()<< std::endl;
@@ -236,9 +236,9 @@ Invocacion* Player:: getMonstruo(Invocacion* monstruito, int donde){
      vector<Invocacion*>::iterator it7;
      int i = 0;
     if(donde==0){//0 = a mazo
-        for(it7=invo.begin();it7!=invo.end();++it7){
-            if(i<invo.size() &&  invo.at(i)->GetUnico()==monstruito->GetUnico()){
-                retorno = invo.at(i);
+        for(it7=invo2.begin();it7!=invo2.end();++it7){
+            if(i<invo2.size() &&  invo2.at(i)->GetUnico()==monstruito->GetUnico()){
+                retorno = invo2.at(i);
 
             }
             i++;
@@ -267,13 +267,13 @@ Invocacion* Player:: getMonstruo(Invocacion* monstruito, int donde){
 
      return retorno;
 }
-bool Player:: eliminarMano(Invocacion* invo){   
+bool Player:: eliminarMano(Invocacion* invo2){   
     bool devolver=false;
     vector<Invocacion*>::iterator it2;
     int i=0;
     for(it2=mano.begin();it2!=mano.end()&&i<5;++it2){
         cout<<"entro "<<endl;
-        if(i<mano.size()&&mano.at(i)->GetUnico()==invo->GetUnico()){
+        if(i<mano.size()&&mano.at(i)->GetUnico()==invo2->GetUnico()){
          cout<<"hasta el fondo "<<endl;
        
                     mano.erase(it2); 
@@ -299,13 +299,13 @@ bool Player:: eliminarMano(Invocacion* invo){
     }*/
   
 }
-bool Player:: eliminarJugadas(Invocacion* invo){// get unico creo que no sirve si miramos posiciones
+bool Player:: eliminarJugadas(Invocacion* invo2){// get unico creo que no sirve si miramos posiciones
    vector<Invocacion*>::iterator it4;
     int i=0;
     for(it4=jugadas.begin();it4!=jugadas.end();++it4){
          //cout<<"estoy apunto de morir: "<<i<<endl;
-        if(i<jugadas.size()&&jugadas.at(i)->GetUnico()==invo->GetUnico()){  
-            cout<<"me van a matar: "<<invo->getNombre()<<endl;
+        if(i<jugadas.size()&&jugadas.at(i)->GetUnico()==invo2->GetUnico()){  
+            cout<<"me van a matar: "<<invo2->getNombre()<<endl;
             jugadas.erase(it4);  
 
               return true;      
@@ -380,8 +380,8 @@ bool Player:: eliminarJugadas(Invocacion* invo){// get unico creo que no sirve s
          i++;
      }
                  j=j+1;
-                 RellenarMano(invo.at(posmano),i);
-                 eliminarJugadas(invo.at(posmano));
+                 RellenarMano(invo2.at(posmano),i);
+                 eliminarJugadas(invo2.at(posmano));
  }
 
 Player::~Player(){
