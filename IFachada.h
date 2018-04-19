@@ -14,7 +14,6 @@ public:
     virtual void set_Position() = 0;
     virtual void set_Scale() = 0;
     virtual void set_Rotation() = 0;
-    virtual void comprobarColision() = 0;
 private:
 
 };

@@ -28,6 +28,8 @@ int FachadaMotor2D::crearSprite(std::string &url){
     //Hacemos id++ para que el id propio del sprite cambie
     s.id = cont;
     cont++;
+    //Almacenamos el sprite en una lista de sprites para poder buscarlo despues
+    sprites.push_back(s);
     //Devolvemos el id propio del sprite que se ha creado
     return s.id;
 }
