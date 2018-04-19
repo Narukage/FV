@@ -4,7 +4,9 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>FachadaMotor2D.h</itemPath>
       <itemPath>Game.h</itemPath>
+      <itemPath>IFachada.h</itemPath>
       <itemPath>Interface.h</itemPath>
       <itemPath>Invocacion.h</itemPath>
       <itemPath>Player.h</itemPath>
@@ -17,6 +19,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>FachadaMotor2D.cpp</itemPath>
       <itemPath>Game.cpp</itemPath>
       <itemPath>Interface.cpp</itemPath>
       <itemPath>Invocacion.cpp</itemPath>
@@ -64,9 +67,15 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="FachadaMotor2D.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="FachadaMotor2D.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IFachada.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Interface.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -107,9 +116,15 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="FachadaMotor2D.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="FachadaMotor2D.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IFachada.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Interface.cpp" ex="false" tool="1" flavor2="0">
       </item>

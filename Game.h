@@ -5,13 +5,15 @@
 #include "Tablero.h"
 #include "Player.h"
 #include "Interface.h"
+#include "IFachada.h"
+#include "FachadaMotor2D.h"
 
 
 
 class Game{
     
 private:
-     sf::Clock clock;
+    sf::Clock clock;
     sf::RenderWindow window;
     sf::Event evento;      
     bool isPlay = true;
@@ -21,6 +23,7 @@ private:
     Player* player;
     Player* player2;
     Player* current = player;
+    IFachada* motor;
     int turno = 1;
             
     Interface* interface;
@@ -57,10 +60,7 @@ private:
     void setMeToca(bool meTo){meToca = meTo;}
     void cambioTurno(bool meTo){if(meTo==true){meToca=false;}else{meToca=true;}};
     void finalizado();
-    
-   // void setTurno(int num){turno=num;}
-    //int getTurno(){return turno;}
-    //void nexTurn(int num);
+
 public:
     Game();
     ~Game();

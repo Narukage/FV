@@ -2,20 +2,11 @@
 
 #include "Game.h"
 #define kUpdateTimePS 1000/15
-Game::Game(): window(sf::VideoMode(800,600),"Summoners"){
-   
-}
-
-Game::~Game(){
-    
-}
 
 void Game::inicializar(){
     
-    window.setFramerateLimit(60);
-    window.setVerticalSyncEnabled(true);
-    
-    Tablero::Instance(); //se ha creado el tablero
+    motor = new FachadaMotor2D();
+    Tablero::Instance();
     inv = new Invocacion();
     generalmuerto1=false;
     generalmuerto2=false;
