@@ -109,6 +109,36 @@ Player::Player(int commander){
 
   }
   fin.close();
+  
+  //aqui barajo
+  
+  
+	int hecho=0;
+	
+	int pos;
+	//inicializo la nueva baraja
+	for(int i=0; i<invo.size(); i++){
+    	invo2.push_back(NULL);
+	}
+       
+	
+	srand (time(NULL));
+        //invo2[0]==NULL;
+	while(hecho<invo.size()){
+    	pos = rand() % invo.size();
+    	
+    	if(invo2[pos]==NULL){
+            cout << "entro" << endl;
+        	invo2[pos]=invo[hecho];
+        	hecho++;
+        	
+               	 
+    	}
+   	 
+	}
+       cout << invo2.size() << endl;
+       cout << invo.size() << endl;
+      
   vector<Invocacion*>::iterator it3;
      int z = 0;
     //0 = a mazo

@@ -4,6 +4,13 @@
 #include <SFML/Graphics.hpp>
 #include "Invocacion.h"
 #include <vector>
+#include <cstdlib>
+
+#include <stdio.h>  	/* printf, scanf, puts, NULL */
+#include <stdlib.h> 	/* srand, rand */
+#include <time.h>   	/* time */
+
+
 
 using namespace std;
 
@@ -21,6 +28,7 @@ class Player{
         vector<Invocacion*> mano;
         vector<Invocacion*> jugadas;
         vector<Invocacion*> invo;
+        vector<Invocacion*> invo2;
         //Invocacion* mano= new Invocacion[5];//mano
        // Invocacion* insertar = new Invocacion[20];//en el tablero
         //Invocacion* invo= new Invocacion[20];//mazo
