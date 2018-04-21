@@ -13,6 +13,7 @@ private:
     
 public:
     static RenderManager* Instance(int libreria);
+    IFachada* getMotor(){ return motor; }
     
 protected:
     RenderManager(int libreria);

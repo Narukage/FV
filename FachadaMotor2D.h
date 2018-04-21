@@ -34,7 +34,7 @@ private:
     
     struct Audio{
         int id;
-        sf::SoundBuffer* buffer;
+        sf::SoundBuffer buffer;
         sf::Sound* sound;
     };
     
@@ -51,7 +51,7 @@ public:
     int crearSprite(std::string &url);
     bool borrarSprite(int id);
     void dibujar(int id, float positionx, float positiony, float scale);
-    int crearAudio(std::string &url);
+    int crearAudio(std::string &url, int volumen);
     /*bool borrarAudio();
     void play();
     int crearTexto();

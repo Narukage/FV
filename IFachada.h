@@ -18,7 +18,7 @@ public:
     virtual int crearSprite(std::string &url) = 0;
     virtual bool borrarSprite(int id) = 0;
     virtual void dibujar(int id, float positionx, float positiony, float scale) = 0;
-    virtual int crearAudio(std::string &url) = 0;
+    virtual int crearAudio(std::string &url, int volumen) = 0;
     /*virtual bool borrarAudio() = 0;
     virtual void play() = 0;
     virtual int crearTexto() = 0;

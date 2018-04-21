@@ -107,6 +107,18 @@ void FachadaMotor2D::dibujar(int id, float positionx, float positiony, float sca
     }
 }
 
-int FachadaMotor2D::crearAudio(std::string& url){
+int FachadaMotor2D::crearAudio(std::string& url, int volumen){    
+    if (!m.buffer.loadFromFile(url)){
+        std::cout << "No pudo abrir el archivo de audio" << "\n";
+    }
     
+    m.sound = new sf::Sound;
+    
+    m.sound->setVolume(volumen);
+    m.sound->setBuffer(m.buffer);
+    
+    m.id = cont3;
+    cont3++;
+    sonidos.push_back(m);
+    return m.id;
 }
