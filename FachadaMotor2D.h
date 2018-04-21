@@ -52,9 +52,9 @@ public:
     bool borrarSprite(int id);
     void dibujar(int id, float positionx, float positiony, float scale);
     int crearAudio(std::string &url, int volumen);
-    /*bool borrarAudio();
-    void play();
-    int crearTexto();
+    bool borrarAudio(int id);
+    void play(int id);
+    /*int crearTexto();
     bool borrarTexto();
     void escribir();*/
 };

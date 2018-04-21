@@ -122,3 +122,27 @@ int FachadaMotor2D::crearAudio(std::string& url, int volumen){
     sonidos.push_back(m);
     return m.id;
 }
+
+bool FachadaMotor2D::borrarAudio(int id){
+    bool borrado = false;
+    int i=0;
+    for(auto it=sonidos.begin();it!=sonidos.end();++it){
+        if(sonidos.at(i).id==id){
+            //borrar puntero
+            sonidos.erase(it);
+            borrado=true;
+        }
+        i++;
+    }
+    return borrado;
+}
+
+void FachadaMotor2D::play(int id){
+    int i=0;
+    for(auto it=sonidos.begin();it!=sonidos.end();++it){
+        if(sonidos.at(i).id==id){
+            sonidos.at(i).sound->play();
+        }
+        i++;
+    }
+}
