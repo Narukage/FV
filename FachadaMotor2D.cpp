@@ -106,3 +106,7 @@ void FachadaMotor2D::dibujar(int id, float positionx, float positiony, float sca
         i++;
     }
 }
+
+int FachadaMotor2D::crearAudio(std::string& url){
+    
+}

@@ -30,6 +30,16 @@ private:
     std::vector<Animacion> animaciones;
     int cont = 0;
     int cont2 = 0;
+    int cont3 = 0;
+    
+    struct Audio{
+        int id;
+        sf::SoundBuffer* buffer;
+        sf::Sound* sound;
+    };
+    
+    Audio m;
+    std::vector<Audio> sonidos;
     
 public:
     FachadaMotor2D() : IFachada(){};
@@ -41,8 +51,8 @@ public:
     int crearSprite(std::string &url);
     bool borrarSprite(int id);
     void dibujar(int id, float positionx, float positiony, float scale);
-    /*int crearAudio();
-    bool borrarAudio();
+    int crearAudio(std::string &url);
+    /*bool borrarAudio();
     void play();
     int crearTexto();
     bool borrarTexto();
