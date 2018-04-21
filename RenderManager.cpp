@@ -78,6 +78,7 @@ bool FachadaMotor2D::borrarAnimacion(int id){
             animaciones.erase(it);
             delete aux.sprite;
             delete aux.textura;
+            delete &aux;
             borrado=true;
         }
         i++;
@@ -114,6 +115,7 @@ bool FachadaMotor2D::borrarSprite(int id){
             Sprite aux = sprites.at(i);
             sprites.erase(it);
             delete aux.sprite;
+            delete &aux;
             borrado=true;
         }
         i++;
@@ -156,6 +158,7 @@ bool FachadaMotor2D::borrarAudio(int id){
             Audio aux = sonidos.at(i);
             sonidos.erase(it);
             delete aux.sound;
+            delete &aux;
             borrado=true;
         }
         i++;
@@ -190,6 +193,18 @@ int FachadaMotor2D::crearTexto(std::string& url){
 }
 
 bool FachadaMotor2D::borrarTexto(int id){
-    
+    bool borrado = false;
+    int i=0;
+    for(auto it=textos.begin();it!=textos.end();++it){
+        if(textos.at(i).id==id){
+            Texto aux = textos.at(i);
+            textos.erase(it);
+            delete aux.text;
+            delete &aux;
+            borrado=true;
+        }
+        i++;
+    }
+    return borrado;
 }
 
