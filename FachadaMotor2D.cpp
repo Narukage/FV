@@ -52,6 +52,7 @@ bool FachadaMotor2D::borrarAnimacion(int id){
     int i=0;
     for(auto it=animaciones.begin();it!=animaciones.end();++it){
         if(animaciones.at(i).id==id){
+            //borrar puntero
             animaciones.erase(it);
             borrado=true;
         }
@@ -86,6 +87,7 @@ bool FachadaMotor2D::borrarSprite(int id){
     int i=0;
     for(auto it=sprites.begin();it!=sprites.end();++it){
         if(sprites.at(i).id==id){
+            //borrar puntero
             sprites.erase(it);
             borrado=true;
         }

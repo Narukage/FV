@@ -10,6 +10,7 @@
       <itemPath>Interface.h</itemPath>
       <itemPath>Invocacion.h</itemPath>
       <itemPath>Player.h</itemPath>
+      <itemPath>RenderManager.h</itemPath>
       <itemPath>Tablero.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -24,6 +25,7 @@
       <itemPath>Interface.cpp</itemPath>
       <itemPath>Invocacion.cpp</itemPath>
       <itemPath>Player.cpp</itemPath>
+      <itemPath>RenderManager.cpp</itemPath>
       <itemPath>Tablero.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -89,6 +91,10 @@
       </item>
       <item path="Player.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="RenderManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RenderManager.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Tablero.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Tablero.h" ex="false" tool="3" flavor2="0">
@@ -137,6 +143,10 @@
       <item path="Player.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Player.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RenderManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RenderManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Tablero.cpp" ex="false" tool="1" flavor2="0">
       </item>

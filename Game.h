@@ -5,8 +5,8 @@
 #include "Tablero.h"
 #include "Player.h"
 #include "Interface.h"
-#include "IFachada.h"
 #include "FachadaMotor2D.h"
+#include "RenderManager.h"
 
 
 
@@ -17,13 +17,13 @@ private:
     sf::RenderWindow window;
     sf::Event evento;      
     bool isPlay = true;
+    RenderManager* motor;
     Tablero* tablero;
     Tablero* tablero2;
     Invocacion* invocacion;
     Player* player;
     Player* player2;
     Player* current = player;
-    IFachada* motor;
     int turno = 1;
             
     Interface* interface;
@@ -46,6 +46,7 @@ private:
    
     bool meToca = true;
        
+    static Game* pinstance;
 private:
     void inicializar();
     void eventos();
@@ -60,9 +61,10 @@ private:
     void setMeToca(bool meTo){meToca = meTo;}
     void cambioTurno(bool meTo){if(meTo==true){meToca=false;}else{meToca=true;}};
     void finalizado();
-
-public:
+protected:
     Game();
+public:
+    static Game* Instance();
     ~Game();
     void run();
 };

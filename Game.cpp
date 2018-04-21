@@ -3,9 +3,25 @@
 #include "Game.h"
 #define kUpdateTimePS 1000/15
 
+Game* Game::pinstance = 0;
+    
+Game* Game::Instance(){
+    if(pinstance==0){
+        pinstance = new Game;
+    }
+    return pinstance;
+}
+
+Game::Game(){
+}
+
+Game *p1 = Game::Instance();
+Game *p2 = p1->Instance();
+Game &ref = * Game::Instance();
+
 void Game::inicializar(){
     
-    motor = new FachadaMotor2D();
+    RenderManager::Instance(1);
     Tablero::Instance();
     inv = new Invocacion();
     generalmuerto1=false;

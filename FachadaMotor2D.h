@@ -1,10 +1,6 @@
 #ifndef FACHADAMOTOR2D_H
 #define FACHADAMOTOR2D_H
-#include <iostream>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
 #include "IFachada.h"
-#include <vector>
 
 
 class FachadaMotor2D : public IFachada {
@@ -45,12 +41,12 @@ public:
     int crearSprite(std::string &url);
     bool borrarSprite(int id);
     void dibujar(int id, float positionx, float positiony, float scale);
-    int crearAudio();
+    /*int crearAudio();
     bool borrarAudio();
     void play();
     int crearTexto();
     bool borrarTexto();
-    void escribir();
+    void escribir();*/
 };
 
 #endif

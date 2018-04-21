@@ -6,10 +6,7 @@ using namespace std;
 
 int main() {
 
-    Game *p = new Game();
+    Game::Instance()->run();
 
-    p->run();
-    
-    delete p;
     return 0;
 }

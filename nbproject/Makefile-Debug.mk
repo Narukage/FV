@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Interface.o \
 	${OBJECTDIR}/Invocacion.o \
 	${OBJECTDIR}/Player.o \
+	${OBJECTDIR}/RenderManager.o \
 	${OBJECTDIR}/Tablero.o \
 	${OBJECTDIR}/main.o
 
@@ -92,6 +93,11 @@ ${OBJECTDIR}/Player.o: Player.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include/SFML -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Player.o Player.cpp
+
+${OBJECTDIR}/RenderManager.o: RenderManager.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/SFML -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RenderManager.o RenderManager.cpp
 
 ${OBJECTDIR}/Tablero.o: Tablero.cpp
 	${MKDIR} -p ${OBJECTDIR}
