@@ -12,7 +12,7 @@ Game* Game::Instance(){
     return pinstance;
 }
 
-Game::Game(): window(sf::VideoMode(800,600),"Ventana de SFML"){
+Game::Game()/*: window(sf::VideoMode(800,600),"Ventana de SFML")*/{
 }
 
 Game *p1 = Game::Instance();
@@ -21,9 +21,9 @@ Game &ref = * Game::Instance();
 
 void Game::inicializar(){
     
-    RenderManager::Instance(1);
-    window.setFramerateLimit(60);
-    window.setVerticalSyncEnabled(true);
+    RenderManager::Instance(1)->getMotor()->crearVentana(800,600,60,true);
+    /*window.setFramerateLimit(60);
+    window.setVerticalSyncEnabled(true);*/
     Tablero::Instance();
     inv = new Invocacion();
     generalmuerto1=false;

@@ -1,5 +1,5 @@
 build/Debug/GNU-Linux/Game.o: Game.cpp Game.h Tablero.h Player.h \
- Invocacion.h Interface.h FachadaMotor2D.h IFachada.h RenderManager.h
+ Invocacion.h Interface.h RenderManager.h IFachada.h
 
 Game.h:
 
@@ -11,8 +11,6 @@ Invocacion.h:
 
 Interface.h:
 
-FachadaMotor2D.h:
+RenderManager.h:
 
 IFachada.h:
-
-RenderManager.h:

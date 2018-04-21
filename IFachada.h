@@ -21,9 +21,9 @@ public:
     virtual int crearAudio(std::string &url, int volumen) = 0;
     virtual bool borrarAudio(int id) = 0;
     virtual void play(int id) = 0;
-    /*virtual int crearTexto() = 0;
-    virtual bool borrarTexto() = 0;
-    virtual void escribir() = 0;*/
+    virtual int crearTexto(std::string &url) = 0;
+    virtual bool borrarTexto(int id) = 0;
+    //virtual void escribir() = 0;
 private:
 
 };
