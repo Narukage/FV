@@ -6,6 +6,8 @@
                    projectFiles="true">
       <itemPath>Game.h</itemPath>
       <itemPath>IFachada.h</itemPath>
+      <itemPath>InputFachada.h</itemPath>
+      <itemPath>InputManager.h</itemPath>
       <itemPath>Interface.h</itemPath>
       <itemPath>Invocacion.h</itemPath>
       <itemPath>Player.h</itemPath>
@@ -20,6 +22,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>Game.cpp</itemPath>
+      <itemPath>InputManager.cpp</itemPath>
       <itemPath>Interface.cpp</itemPath>
       <itemPath>Invocacion.cpp</itemPath>
       <itemPath>Player.cpp</itemPath>
@@ -73,6 +76,12 @@
       </item>
       <item path="IFachada.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="InputFachada.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="InputManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="InputManager.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Interface.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Interface.h" ex="false" tool="3" flavor2="0">
@@ -121,6 +130,12 @@
       <item path="Game.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="IFachada.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="InputFachada.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="InputManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="InputManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Interface.cpp" ex="false" tool="1" flavor2="0">
       </item>

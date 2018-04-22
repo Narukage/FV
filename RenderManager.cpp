@@ -17,17 +17,17 @@ RenderManager::RenderManager(int libreria) {
     }
 }
 
-/*RenderManager *p1 = RenderManager::Instance(1);
-RenderManager *p2 = p1->Instance(1);
-RenderManager &ref = * RenderManager::Instance(1);*/
+RenderManager *r1 = RenderManager::Instance(1);
+RenderManager *r2 = r1->Instance(1);
+RenderManager &refr = * RenderManager::Instance(1);
 
 //CLASE FACHADAMOTOR2D
 
 //Crea la ventana del juego, le paso tamanyo de la ventana, fps y si lleva o no vsync
 void FachadaMotor2D::crearVentana(int width, int height, int frames, bool vsync){
-    window = new sf::RenderWindow(sf::VideoMode(width,height),"Summoners");
-    window->setFramerateLimit(frames);
-    window->setVerticalSyncEnabled(vsync);
+    window(sf::VideoMode(width,height),"Summoners");
+    window.setFramerateLimit(frames);
+    window.setVerticalSyncEnabled(vsync);
 }
 
 int FachadaMotor2D::crearAnimacion(std::string &url, float imageCountx, float imageCounty, float switchTime){

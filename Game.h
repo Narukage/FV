@@ -13,9 +13,9 @@ class Game{
     
 private:
     sf::Clock clock;
-    sf::RenderWindow window;
+    sf::RenderWindow* window;
     sf::Event evento;      
-    bool isPlay = true;
+    bool isPlay;
     RenderManager* motor;
     Tablero* tablero;
     Tablero* tablero2;

@@ -15,13 +15,14 @@ Game* Game::Instance(){
 Game::Game()/*: window(sf::VideoMode(800,600),"Ventana de SFML")*/{
 }
 
-Game *p1 = Game::Instance();
-Game *p2 = p1->Instance();
-Game &ref = * Game::Instance();
+Game *g1 = Game::Instance();
+Game *g2 = g1->Instance();
+Game &refg = * Game::Instance();
 
 void Game::inicializar(){
     
     RenderManager::Instance(1)->getMotor()->crearVentana(800,600,60,true);
+    window = RenderManager::Instance(1)->getMotor()->getWindow();
     /*window.setFramerateLimit(60);
     window.setVerticalSyncEnabled(true);*/
     Tablero::Instance();
@@ -29,6 +30,7 @@ void Game::inicializar(){
     generalmuerto1=false;
     generalmuerto2=false;
     empate=false;
+    isPlay=true;
 }
 
 void Game::eventos(){

@@ -15,6 +15,7 @@ private:
 public:
     static RenderManager* Instance(int libreria);
     IFachada* getMotor(){ return motor; }
+    ~RenderManager();
     
 protected:
     RenderManager(int libreria);
@@ -23,6 +24,9 @@ protected:
 
 class FachadaMotor2D : public IFachada {
 private:
+    
+    sf::RenderWindow window;
+    
     struct Sprite{
         int id;
         sf::Texture textura;
@@ -31,7 +35,6 @@ private:
     
     Sprite s;
     std::vector<Sprite> sprites;
-    sf::RenderWindow* window;
    
     struct Animacion{
         int id;
@@ -85,6 +88,8 @@ public:
     int crearTexto(std::string &url);
     bool borrarTexto(int id);
     //void escribir();
+    
+    sf::RenderWindow getVentana(){ return window; }
 };
 
 #endif /* RENDERMANAGER_H */
