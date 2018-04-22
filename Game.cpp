@@ -133,7 +133,7 @@ void Game:: updateIA(){
 
 void Game::render(){
     
-    /*Tablero::Instance()->drawMap(window);
+    Tablero::Instance()->drawMap(window);
     Tablero::Instance()->drawUnit(window);
     if(tieneadyacentes){
         Tablero::Instance()->drawAdyacentes(window);
@@ -153,7 +153,7 @@ void Game::render(){
     Tablero::Instance()->drawRetrato(1,window); //esto solo deberia dibujarlo una vez
     Tablero::Instance()->drawRetrato(2,window); //same
     Tablero::Instance()->Mostrar_mano(window);
-    window.display();*/
+    window.display();
 }
 
 void Game::cleared(){
