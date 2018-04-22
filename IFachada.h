@@ -13,7 +13,7 @@ class IFachada {
 public:
     IFachada(){};
     virtual ~IFachada(){};
-    virtual void crearVentana(int width, int height, int frames, bool vsync) = 0;
+    virtual void crearVentana(int frames, bool vsync, sf::RenderWindow& window) = 0;
     virtual void cerrarVentana() = 0;
     virtual void crearClock();
     virtual int crearAnimacion(std::string &url, float imageCountx, float imageCounty, float switchTime) = 0;

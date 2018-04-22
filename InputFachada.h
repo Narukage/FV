@@ -15,7 +15,7 @@ class InputFachada {
 public:
     InputFachada(){};
     virtual ~InputFachada(){};
-    virtual void Eventos(bool isPlay) = 0;
+    virtual void Eventos(bool isPlay, sf::RenderWindow& window) = 0;
     virtual void nexTurn(int num) = 0;
     virtual void cambioTurno(bool meTo) = 0;
     virtual bool getPresionado() = 0;

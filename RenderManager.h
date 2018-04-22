@@ -5,19 +5,19 @@
 #include "InputFachada.h"
 #include <string>
 #include <vector>
+#include <memory>
+#include <iostream>
 
 //SINGLETON
 
 class RenderManager {
 private:
     IFachada* motor;
-    InputFachada* input;
     static RenderManager* pinstance;
     
 public:
     static RenderManager* Instance(int libreria);
     IFachada* getMotor(){ return motor; };
-    InputFachada* getInput(){ return input; };
     ~RenderManager();
     
 protected:
@@ -29,7 +29,6 @@ protected:
 class FachadaMotor2D : public IFachada {
 private:
     sf::Clock clock;
-    sf::RenderWindow window;
     
     struct Sprite{
         int id;
@@ -79,7 +78,7 @@ private:
 public:
     FachadaMotor2D() : IFachada(){};
     virtual ~FachadaMotor2D(){};
-    void crearVentana(int width, int height, int frames, bool vsync);
+    void crearVentana(int frames, bool vsync, sf::RenderWindow& window);
     void cerrarVentana();
     void crearClock();
     int crearAnimacion(std::string &url, float imageCountx, float imageCounty, float switchTime);
@@ -96,35 +95,6 @@ public:
     //void escribir();
     
 };
-
-class FachadaInput : public InputFachada {
-    private:
-        sf::RenderWindow window;
-        sf::Vector2i coord;
-        sf::Vector2i campo;
-        sf::Vector2i mano;
-        int turno = 1;
-        bool presionado = false;
-        bool meToca = true;
-        sf::Event evento;
-    
-    public:
-     FachadaInput() : InputFachada(){};
-     virtual ~FachadaInput(){};
-     void Eventos(bool isPlay);
-     void nexTurn(int num);
-     void cambioTurno(bool meTo){if(meTo==true){meToca=false;}else{meToca=true;}};
-     bool getPresionado(){ return presionado; };
-     
-     sf::Vector2i getCoord(){ return coord; };
-     sf::Vector2i getCampo(){ return campo; };
-     sf::Vector2i getMano(){ return mano; };
-     int getTurno(){return turno;}
-     bool getMeToca(){ return meToca; };
-     void setMeToca(bool meTo){meToca = meTo;}
-     void setTurno(int num){turno=num;}
-};    
-
 
 #endif /* RENDERMANAGER_H */
 

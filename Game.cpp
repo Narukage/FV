@@ -1,6 +1,7 @@
 #include <valarray>
 
 #include "Game.h"
+#include "InputManager.h"
 #define kUpdateTimePS 1000/15
 
 Game* Game::pinstance = 0;
@@ -12,7 +13,7 @@ Game* Game::Instance(){
     return pinstance;
 }
 
-Game::Game(){
+Game::Game(): window(sf::VideoMode(800,600),"Ventana de SFML"){
 }
 
 Game *g1 = Game::Instance();
@@ -21,8 +22,8 @@ Game &refg = * Game::Instance();
 
 void Game::inicializar(){
     //No se si usar InputManager pasandole la ventana y creandola aqui o todo en RenderManager
-    RenderManager::Instance(1)->getMotor()->crearVentana(800,600,60,true);
     RenderManager::Instance(1)->getMotor()->crearClock();
+    RenderManager::Instance(1)->getMotor()->crearVentana(60,true, window);
     Tablero::Instance();
     inv = new Invocacion();
     generalmuerto1=false;
@@ -32,16 +33,16 @@ void Game::inicializar(){
 }
 
 void Game::eventos(){  
-    RenderManager::Instance(1)->getInput()->Eventos(isPlay);
+    InputManager::Instance(1)->getInput()->Eventos(isPlay, window);
 }
 
 void Game::update(){
     //Una vez este el StateManager hay que mover el update
-    presionado = RenderManager::Instance(1)->getInput()->getPresionado();
+    presionado = InputManager::Instance(1)->getInput()->getPresionado();
     if(presionado){
-        coord = RenderManager::Instance(1)->getInput()->getCoord();
-        campo = RenderManager::Instance(1)->getInput()->getCampo();
-        mano = RenderManager::Instance(1)->getInput()->getMano();
+        coord = InputManager::Instance(1)->getInput()->getCoord();
+        campo = InputManager::Instance(1)->getInput()->getCampo();
+        mano = InputManager::Instance(1)->getInput()->getMano();
         if((coord.x>150 && coord.x<650)&&(coord.y>480 && coord.y<600)){
             std::cout<<"Entramos dentro del la mano"<<std::endl;
             inv=Tablero::Instance()->esCarta(mano.x,mano.y);
@@ -122,7 +123,7 @@ void Game::update(){
     }
 }
 void Game:: updateIA(){
-    meToca = RenderManager::Instance(1)->getInput()->getMeToca();
+    meToca = InputManager::Instance(1)->getInput()->getMeToca();
     if(meToca==false){
         inv=Tablero::Instance()->esCarta(0,0);
         if(inv!=NULL){

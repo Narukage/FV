@@ -13,7 +13,6 @@ RenderManager* RenderManager::Instance(int libreria){
 RenderManager::RenderManager(int libreria) {
     if(libreria==1){
         motor = new FachadaMotor2D();
-        input = new FachadaInput();
     }else{
         //otra libreria de graficos 2D como SDL, OpenGL...
     }
@@ -26,13 +25,12 @@ RenderManager &refr = * RenderManager::Instance(1);
 //CLASE FACHADAMOTOR2D
 
 //Crea la ventana del juego, le paso tamanyo de la ventana, fps y si lleva o no vsync
-void FachadaMotor2D::crearVentana(int width, int height, int frames, bool vsync) {
-    window.create(sf::VideoMode(width,height),"Ventana de SFML");
+void FachadaMotor2D::crearVentana(int frames, bool vsync, sf::RenderWindow& window) {
     window.setFramerateLimit(frames);
     window.setVerticalSyncEnabled(vsync);
 }
 
-void FachadaMotor2D::cerrarVentana(){
+void FachadaMotor2D::cerrarVentana(sf::RenderWindow& window){
     window.close();
 }
 
@@ -134,7 +132,7 @@ bool FachadaMotor2D::borrarSprite(int id){
     return borrado;
 }
 //Dibuja en la ventana del juego
-void FachadaMotor2D::dibujar(int id, float positionx, float positiony, float scale){
+void FachadaMotor2D::dibujar(int id, float positionx, float positiony, float scale, sf::RenderWindow& window){
     window.clear(sf::Color::Black);
     int i=0;
     for(auto it=sprites.begin();it!=sprites.end();++it){
@@ -220,85 +218,4 @@ bool FachadaMotor2D::borrarTexto(int id){
         i++;
     }
     return borrado;
-}
-
-//CLASE FACHADAINPUT
-
-void FachadaInput::Eventos(bool isPlay){
-    while(window.pollEvent(evento)){
-               if(evento.type==sf::Event::Closed){
-                            isPlay = false;
-                  }   
-          switch(evento.type){
-           
-                    case sf::Event::KeyPressed:
-
-                        if(evento.key.code==sf::Keyboard::Escape){
-                            isPlay = false;
-                        }
-                        if(evento.key.code==sf::Keyboard::Space){
-                          
-                            nexTurn(turno);
-                            cambioTurno(meToca);
-                            Tablero::Instance()->setTurno(meToca);
-                            cout<<"he entrado"<<meToca<<std::endl;
-                             cout<<"he entrado"<<turno<<std::endl;
-                             
-                             if(meToca==true){
-                                 Tablero::Instance()->getPlayer()->Robar();
-                             }
-                             /*if(meToca==false){
-                                 srand(time(NULL));
-                                 //preguntar naru tamaños
-                                 int eX = rand()% 600 + 800;
-                                 int eY = rand()% 100 + 500;
-                                 //eX=1;
-                                 eX = (eX-100)/50;
-                                 eY = (eY-80)/50;
-                                 
-                                  
-                                  if(tablero->addUnit(eX,eY,inv,2)){
-                                  //cartaseleccionada=false;
-                  vector<Invocacion*>::iterator it3;
-                 //int i=0;
-                     nexTurn(turno);
-                            cambioTurno(meToca);
-           
-            }
-                                  else {
-                                     nexTurn(turno);
-                            cambioTurno(meToca);
-                                  }
-                             }
-                            }
-                            else{
-                            
-                            }*/
-                        
-                        }
-
-                    case sf::Event::MouseButtonPressed:
-                        if(meToca==true){
-                        if(evento.mouseButton.button==sf::Mouse::Left){
-                            coord = sf::Mouse::getPosition(window);
-                            
-                            presionado=true;
-                            std::cout << "coordx: " << coord.x << std::endl;
-                            std::cout << "coordy: " << coord.y << std::endl;
-                                          
-                            mano.x = (coord.x-150)/100;
-                            mano.y = (coord.y-480)/146;
-                            
-                            campo.x = (coord.x-100)/50;
-                            campo.y = (coord.y-80)/50;
-                        }
-                       }
-                }
-    }
-}
-
-void FachadaInput::nexTurn(int num){
-
-    turno=num+1;
-                        
 }

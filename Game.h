@@ -12,14 +12,14 @@ class Game{
     
 private:
     bool isPlay;
+    sf::RenderWindow window;
     RenderManager* motor;
     Tablero* tablero;
     Tablero* tablero2;
     Invocacion* invocacion;
     Player* player;
     Player* player2;
-    Player* current = player;
-            
+    Player* current = player;  
     sf::Vector2i coord;
     bool presionado;
     bool cartaseleccionada = false;
