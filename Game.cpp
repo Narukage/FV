@@ -20,7 +20,9 @@ Game *g2 = g1->Instance();
 Game &refg = * Game::Instance();
 
 void Game::inicializar(){
+    //No se si usar InputManager pasandole la ventana y creandola aqui o todo en RenderManager
     RenderManager::Instance(1)->getMotor()->crearVentana(800,600,60,true);
+    RenderManager::Instance(1)->getMotor()->crearClock();
     Tablero::Instance();
     inv = new Invocacion();
     generalmuerto1=false;
@@ -34,13 +36,15 @@ void Game::eventos(){
 }
 
 void Game::update(){
-    //while(!generalmuerto1 && !generalmuerto2 && !empate){
-     // cout<<"entro update: "<<meToca<<endl;
-    if(presionado /*&& meToca*/){
-      
+    //Una vez este el StateManager hay que mover el update
+    presionado = RenderManager::Instance(1)->getInput()->getPresionado();
+    if(presionado){
+        coord = RenderManager::Instance(1)->getInput()->getCoord();
+        campo = RenderManager::Instance(1)->getInput()->getCampo();
+        mano = RenderManager::Instance(1)->getInput()->getMano();
         if((coord.x>150 && coord.x<650)&&(coord.y>480 && coord.y<600)){
             std::cout<<"Entramos dentro del la mano"<<std::endl;
-            inv=Tablero::Instance()->esCarta(manox,manoy);
+            inv=Tablero::Instance()->esCarta(mano.x,mano.y);
             if(inv!=NULL){
                 std::cout<<"esCarta es distinto de null"<<std::endl;
                 cartaseleccionada=true;
@@ -50,7 +54,7 @@ void Game::update(){
         else if(cartaseleccionada ){ //queremos invocar en tablero
             if((coord.x>100 && coord.x<700)&&(coord.y>80 && coord.y<475)){
               
-                    if(Tablero::Instance()->addUnit(campox,campoy,inv,1)){
+                    if(Tablero::Instance()->addUnit(campo.x,campo.y,inv,1)){
                         
                         cartaseleccionada=false;
                         /* vector<Invocacion*>::iterator it3;
@@ -59,7 +63,7 @@ void Game::update(){
                     }
                 
                 else{
-                    if(Tablero::Instance()->addUnit(campox,campoy,inv,2)){
+                    if(Tablero::Instance()->addUnit(campo.x,campo.y,inv,2)){
                         cartaseleccionada=false;
                          /*vector<Invocacion*>::iterator it3;
                         int i=0;*/
@@ -68,24 +72,24 @@ void Game::update(){
                 }
             }
         }else{ //queremos mover unidad en tablero
-            if(!Tablero::Instance()->isFree(campox,campoy) && actuainvocacion==false){ //si la posicion que clickamos contiene una unidad
+            if(!Tablero::Instance()->isFree(campo.x,campo.y) && actuainvocacion==false){ //si la posicion que clickamos contiene una unidad
                 actuainvocacion=true;
-                Tablero::Instance()->Adyacentes(campox,campoy);
+                Tablero::Instance()->Adyacentes(campo.x,campo.y);
                 tieneadyacentes=true;
-                posXinvocacion=campox;
-                posYinvocacion=campoy;
+                posXinvocacion=campo.x;
+                posYinvocacion=campo.y;
             } //unidad seleccionada, preparada para hacer alguna accion
-            else if(actuainvocacion==true && Tablero::Instance()->isFree(campox,campoy) && Tablero::Instance()->getAlcanzable(campox,campoy)==1){
-                Tablero::Instance()->moveToPos(posXinvocacion, posYinvocacion,campox,campoy,Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion));
-                Tablero::Instance()->setFree(campox,campoy,false);
+            else if(actuainvocacion==true && Tablero::Instance()->isFree(campo.x,campo.y) && Tablero::Instance()->getAlcanzable(campo.x,campo.y)==1){
+                Tablero::Instance()->moveToPos(posXinvocacion, posYinvocacion,campo.x,campo.y,Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion));
+                Tablero::Instance()->setFree(campo.x,campo.y,false);
                 actuainvocacion=false;
                 posXinvocacion=-1;
                 posYinvocacion=-1;
                 Tablero::Instance()->ReiniciarAdy();
             }//ataque
-            else if(actuainvocacion==true && !Tablero::Instance()->isFree(campox,campoy)&&Tablero::Instance()->getAlcanzable(campox,campoy)==1){
+            else if(actuainvocacion==true && !Tablero::Instance()->isFree(campo.x,campo.y)&&Tablero::Instance()->getAlcanzable(campo.x,campo.y)==1){
                 if(Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->esAliado(Tablero::Instance()->getPlayer()->JugadaEn(coord.x,coord.y)->getComandante())){
-                    ganador=Tablero::Instance()->atackToPos(posXinvocacion,posYinvocacion,campox,campoy);
+                    ganador=Tablero::Instance()->atackToPos(posXinvocacion,posYinvocacion,campo.x,campo.y);
                        //tablero->setFree(campox,campoy,true);
                     if(ganador==-1){
                         generalmuerto1=true;
@@ -118,6 +122,7 @@ void Game::update(){
     }
 }
 void Game:: updateIA(){
+    meToca = RenderManager::Instance(1)->getInput()->getMeToca();
     if(meToca==false){
         inv=Tablero::Instance()->esCarta(0,0);
         if(inv!=NULL){
@@ -128,7 +133,7 @@ void Game:: updateIA(){
 
 void Game::render(){
     
-    Tablero::Instance()->drawMap(window);
+    /*Tablero::Instance()->drawMap(window);
     Tablero::Instance()->drawUnit(window);
     if(tieneadyacentes){
         Tablero::Instance()->drawAdyacentes(window);
@@ -148,12 +153,12 @@ void Game::render(){
     Tablero::Instance()->drawRetrato(1,window); //esto solo deberia dibujarlo una vez
     Tablero::Instance()->drawRetrato(2,window); //same
     Tablero::Instance()->Mostrar_mano(window);
-    window.display();
+    window.display();*/
 }
 
 void Game::cleared(){
  
-    window.close();
+    RenderManager::Instance(1)->getMotor()->cerrarVentana();
 }
 
 void Game::run(){
@@ -173,12 +178,6 @@ void Game::run(){
     
         cleared();
     }
-
-void Game::nexTurn(int num){
-
-    turno=num+1;
-                        
-}
 
 void Game::finalizado(){
     if(generalmuerto1){

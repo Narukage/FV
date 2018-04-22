@@ -18,6 +18,14 @@ public:
     virtual void Eventos(bool isPlay) = 0;
     virtual void nexTurn(int num) = 0;
     virtual void cambioTurno(bool meTo) = 0;
+    virtual bool getPresionado() = 0;
+    virtual sf::Vector2i getCoord() = 0;
+    virtual sf::Vector2i getCampo() = 0;
+    virtual sf::Vector2i getMano() = 0;
+    virtual bool getMeToca() = 0;
+    virtual void setMeToca(bool meTo) = 0;
+    virtual int getTurno() = 0;
+    virtual void setTurno(int num) = 0;
 };
 
 #endif /* IFACHADA_H */

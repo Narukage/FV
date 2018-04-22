@@ -14,7 +14,8 @@ public:
     IFachada(){};
     virtual ~IFachada(){};
     virtual void crearVentana(int width, int height, int frames, bool vsync) = 0;
-    
+    virtual void cerrarVentana() = 0;
+    virtual void crearClock();
     virtual int crearAnimacion(std::string &url, float imageCountx, float imageCounty, float switchTime) = 0;
     virtual void updateAnimacion(int row,float deltaTime) = 0;
     virtual bool borrarAnimacion(int id) = 0;

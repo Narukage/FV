@@ -28,7 +28,7 @@ protected:
 
 class FachadaMotor2D : public IFachada {
 private:
-    
+    sf::Clock clock;
     sf::RenderWindow window;
     
     struct Sprite{
@@ -80,6 +80,8 @@ public:
     FachadaMotor2D() : IFachada(){};
     virtual ~FachadaMotor2D(){};
     void crearVentana(int width, int height, int frames, bool vsync);
+    void cerrarVentana();
+    void crearClock();
     int crearAnimacion(std::string &url, float imageCountx, float imageCounty, float switchTime);
     void updateAnimacion(int row,float deltaTime);
     bool borrarAnimacion(int id);
@@ -99,11 +101,9 @@ class FachadaInput : public InputFachada {
     private:
         sf::RenderWindow window;
         sf::Vector2i coord;
-        int campox;
-        int campoy;
-        int manox;
-        int manoy;
-        int turno = 0;
+        sf::Vector2i campo;
+        sf::Vector2i mano;
+        int turno = 1;
         bool presionado = false;
         bool meToca = true;
         sf::Event evento;
@@ -114,6 +114,15 @@ class FachadaInput : public InputFachada {
      void Eventos(bool isPlay);
      void nexTurn(int num);
      void cambioTurno(bool meTo){if(meTo==true){meToca=false;}else{meToca=true;}};
+     bool getPresionado(){ return presionado; };
+     
+     sf::Vector2i getCoord(){ return coord; };
+     sf::Vector2i getCampo(){ return campo; };
+     sf::Vector2i getMano(){ return mano; };
+     int getTurno(){return turno;}
+     bool getMeToca(){ return meToca; };
+     void setMeToca(bool meTo){meToca = meTo;}
+     void setTurno(int num){turno=num;}
 };    
 
 

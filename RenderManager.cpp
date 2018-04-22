@@ -32,6 +32,15 @@ void FachadaMotor2D::crearVentana(int width, int height, int frames, bool vsync)
     window.setVerticalSyncEnabled(vsync);
 }
 
+void FachadaMotor2D::cerrarVentana(){
+    window.close();
+}
+
+void FachadaMotor2D::crearClock(){
+    clock = new sf::Clock;
+    clock.restart();
+}
+
 int FachadaMotor2D::crearAnimacion(std::string &url, float imageCountx, float imageCounty, float switchTime){
     if(!a.textura->loadFromFile(url)){
         std::cout << "Error al cargar la textura." << std::endl;
@@ -126,12 +135,14 @@ bool FachadaMotor2D::borrarSprite(int id){
 }
 //Dibuja en la ventana del juego
 void FachadaMotor2D::dibujar(int id, float positionx, float positiony, float scale){
-    int i=0;
     window.clear(sf::Color::Black);
+    int i=0;
     for(auto it=sprites.begin();it!=sprites.end();++it){
         if(sprites.at(i).id==id){
             sprites.at(i).sprite->setPosition(positionx, positiony);
             sprites.at(i).sprite->setScale(scale, scale);
+            window.draw(sprites.at(i).sprite);
+            window.display();
         }
         i++;
     }
@@ -275,11 +286,11 @@ void FachadaInput::Eventos(bool isPlay){
                             std::cout << "coordx: " << coord.x << std::endl;
                             std::cout << "coordy: " << coord.y << std::endl;
                                           
-                            manox = (coord.x-150)/100;
-                            manoy = (coord.y-480)/146;
+                            mano.x = (coord.x-150)/100;
+                            mano.y = (coord.y-480)/146;
                             
-                            campox = (coord.x-100)/50;
-                            campoy = (coord.y-80)/50;
+                            campo.x = (coord.x-100)/50;
+                            campo.y = (coord.y-80)/50;
                         }
                        }
                 }
