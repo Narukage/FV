@@ -41,7 +41,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/Player.o \
 	${OBJECTDIR}/RenderManager.o \
 	${OBJECTDIR}/Tablero.o \
-	${OBJECTDIR}/fgth.o \
 	${OBJECTDIR}/main.o
 
 
@@ -98,11 +97,6 @@ ${OBJECTDIR}/Tablero.o: Tablero.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tablero.o Tablero.cpp
-
-${OBJECTDIR}/fgth.o: fgth.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/fgth.o fgth.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}

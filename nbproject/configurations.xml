@@ -12,7 +12,6 @@
       <itemPath>Player.h</itemPath>
       <itemPath>RenderManager.h</itemPath>
       <itemPath>Tablero.h</itemPath>
-      <itemPath>fgth.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -27,7 +26,6 @@
       <itemPath>Player.cpp</itemPath>
       <itemPath>RenderManager.cpp</itemPath>
       <itemPath>Tablero.cpp</itemPath>
-      <itemPath>fgth.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -98,10 +96,6 @@
       </item>
       <item path="Tablero.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="fgth.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="fgth.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -152,10 +146,6 @@
       <item path="Tablero.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Tablero.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="fgth.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="fgth.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
