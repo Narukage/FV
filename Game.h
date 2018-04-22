@@ -4,7 +4,6 @@
 #include <SFML/Audio.hpp>
 #include "Tablero.h"
 #include "Player.h"
-#include "Interface.h"
 #include "RenderManager.h"
 
 
@@ -13,9 +12,8 @@ class Game{
     
 private:
     sf::Clock clock;
-    sf::RenderWindow* window;
-    sf::Event evento;      
     bool isPlay;
+    sf::RenderWindow window;
     RenderManager* motor;
     Tablero* tablero;
     Tablero* tablero2;
@@ -25,7 +23,6 @@ private:
     Player* current = player;
     int turno = 1;
             
-    Interface* interface;
     sf::Vector2i coord;
     bool presionado = false;
     bool cartaseleccionada = false;

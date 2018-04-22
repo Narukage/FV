@@ -37,11 +37,11 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/Game.o \
 	${OBJECTDIR}/InputManager.o \
-	${OBJECTDIR}/Interface.o \
 	${OBJECTDIR}/Invocacion.o \
 	${OBJECTDIR}/Player.o \
 	${OBJECTDIR}/RenderManager.o \
 	${OBJECTDIR}/Tablero.o \
+	${OBJECTDIR}/fgth.o \
 	${OBJECTDIR}/main.o
 
 
@@ -79,11 +79,6 @@ ${OBJECTDIR}/InputManager.o: InputManager.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include/SFML -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/InputManager.o InputManager.cpp
 
-${OBJECTDIR}/Interface.o: Interface.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/SFML -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Interface.o Interface.cpp
-
 ${OBJECTDIR}/Invocacion.o: Invocacion.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -103,6 +98,11 @@ ${OBJECTDIR}/Tablero.o: Tablero.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include/SFML -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tablero.o Tablero.cpp
+
+${OBJECTDIR}/fgth.o: fgth.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/SFML -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/fgth.o fgth.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}

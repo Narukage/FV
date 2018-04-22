@@ -8,11 +8,11 @@
       <itemPath>IFachada.h</itemPath>
       <itemPath>InputFachada.h</itemPath>
       <itemPath>InputManager.h</itemPath>
-      <itemPath>Interface.h</itemPath>
       <itemPath>Invocacion.h</itemPath>
       <itemPath>Player.h</itemPath>
       <itemPath>RenderManager.h</itemPath>
       <itemPath>Tablero.h</itemPath>
+      <itemPath>fgth.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -23,11 +23,11 @@
                    projectFiles="true">
       <itemPath>Game.cpp</itemPath>
       <itemPath>InputManager.cpp</itemPath>
-      <itemPath>Interface.cpp</itemPath>
       <itemPath>Invocacion.cpp</itemPath>
       <itemPath>Player.cpp</itemPath>
       <itemPath>RenderManager.cpp</itemPath>
       <itemPath>Tablero.cpp</itemPath>
+      <itemPath>fgth.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -82,10 +82,6 @@
       </item>
       <item path="InputManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Interface.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Interface.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Invocacion.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Invocacion.h" ex="false" tool="3" flavor2="0">
@@ -101,6 +97,10 @@
       <item path="Tablero.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Tablero.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="fgth.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="fgth.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -137,10 +137,6 @@
       </item>
       <item path="InputManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Interface.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Interface.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Invocacion.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Invocacion.h" ex="false" tool="3" flavor2="0">
@@ -156,6 +152,10 @@
       <item path="Tablero.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Tablero.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="fgth.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="fgth.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

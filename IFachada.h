@@ -27,7 +27,6 @@ public:
     virtual int crearTexto(std::string &url) = 0;
     virtual bool borrarTexto(int id) = 0;
     //virtual void escribir() = 0;
-    virtual sf::RenderWindow* getWindow() = 0;
 private:
 
 };

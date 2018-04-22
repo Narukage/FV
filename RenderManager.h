@@ -2,6 +2,7 @@
 #ifndef RENDERMANAGER_H
 #define RENDERMANAGER_H
 #include "IFachada.h"
+#include "InputFachada.h"
 #include <string>
 #include <vector>
 
@@ -10,15 +11,18 @@
 class RenderManager {
 private:
     IFachada* motor;
+    InputFachada* input;
     static RenderManager* pinstance;
     
 public:
     static RenderManager* Instance(int libreria);
-    IFachada* getMotor(){ return motor; }
+    IFachada* getMotor(){ return motor; };
+    InputFachada* getInput(){ return input; };
     ~RenderManager();
     
 protected:
     RenderManager(int libreria);
+    RenderManager(const RenderManager& orig);
 
 };
 
@@ -89,8 +93,29 @@ public:
     bool borrarTexto(int id);
     //void escribir();
     
-    sf::RenderWindow getVentana(){ return window; }
 };
+
+class FachadaInput : public InputFachada {
+    private:
+        sf::RenderWindow window;
+        sf::Vector2i coord;
+        int campox;
+        int campoy;
+        int manox;
+        int manoy;
+        int turno = 0;
+        bool presionado = false;
+        bool meToca = true;
+        sf::Event evento;
+    
+    public:
+     FachadaInput() : InputFachada(){};
+     virtual ~FachadaInput(){};
+     void Eventos(bool isPlay);
+     void nexTurn(int num);
+     void cambioTurno(bool meTo){if(meTo==true){meToca=false;}else{meToca=true;}};
+};    
+
 
 #endif /* RENDERMANAGER_H */
 
