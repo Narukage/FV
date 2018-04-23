@@ -5,6 +5,8 @@
 #include "Tablero.h"
 #include "Player.h"
 #include "RenderManager.h"
+#include "InputManager.h"
+
 
 
 

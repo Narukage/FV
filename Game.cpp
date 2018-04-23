@@ -1,7 +1,5 @@
 #include <valarray>
-
 #include "Game.h"
-#include "InputManager.h"
 #define kUpdateTimePS 1000/15
 
 Game* Game::pinstance = 0;
@@ -134,7 +132,7 @@ void Game:: updateIA(){
 
 void Game::render(){
     
-    Tablero::Instance()->drawMap(window);
+    /*Tablero::Instance()->drawMap(window);
     Tablero::Instance()->drawUnit(window);
     if(tieneadyacentes){
         Tablero::Instance()->drawAdyacentes(window);
@@ -154,26 +152,26 @@ void Game::render(){
     Tablero::Instance()->drawRetrato(1,window); //esto solo deberia dibujarlo una vez
     Tablero::Instance()->drawRetrato(2,window); //same
     Tablero::Instance()->Mostrar_mano(window);
-    window.display();
+    window.display();*/
 }
 
 void Game::cleared(){
  
-    RenderManager::Instance(1)->getMotor()->cerrarVentana();
+    RenderManager::Instance(1)->getMotor()->cerrarVentana(window);
 }
 
 void Game::run(){
     
     inicializar();
     
-      sf::Time timeStartUpdate = clock.getElapsedTime();
+      sf::Time timeStartUpdate = RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime();
         while(isPlay){
            eventos();
-           if(clock.getElapsedTime().asMilliseconds()-timeStartUpdate.asMilliseconds()>kUpdateTimePS){
+           if(RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime().asMilliseconds()-timeStartUpdate.asMilliseconds()>kUpdateTimePS){
             update();
             updateIA();
             render();
-            timeStartUpdate = clock.getElapsedTime();
+            timeStartUpdate = RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime();
            }
         }
     

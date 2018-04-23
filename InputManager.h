@@ -35,7 +35,7 @@ class FachadaInput : public InputFachada {
      FachadaInput() : InputFachada(){};
      virtual ~FachadaInput(){};
      void Eventos(bool isPlay, sf::RenderWindow& window);
-     void nexTurn(int num);
+     void nexTurn(int num){ turno=num+1; };
      void cambioTurno(bool meTo){if(meTo==true){meToca=false;}else{meToca=true;}};
      bool getPresionado(){ return presionado; };
 

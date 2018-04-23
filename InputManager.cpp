@@ -25,8 +25,6 @@ InputManager *i1 = InputManager::Instance(1);
 InputManager *i2 = i1->Instance(1);
 InputManager &refi = * InputManager::Instance(1);
 
-////CLASE FACHADAINPUT
-
 //CLASE FACHADAINPUT
 
 void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
@@ -100,10 +98,4 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                        }
                 }
     }
-}
-
-void FachadaInput::nexTurn(int num){
-
-    turno=num+1;
-                        
 }

@@ -1,12 +1,6 @@
-
 #ifndef RENDERMANAGER_H
 #define RENDERMANAGER_H
 #include "IFachada.h"
-#include "InputFachada.h"
-#include <string>
-#include <vector>
-#include <memory>
-#include <iostream>
 
 //SINGLETON
 
@@ -79,20 +73,21 @@ public:
     FachadaMotor2D() : IFachada(){};
     virtual ~FachadaMotor2D(){};
     void crearVentana(int frames, bool vsync, sf::RenderWindow& window);
-    void cerrarVentana();
+    void cerrarVentana(sf::RenderWindow& window);
     void crearClock();
     int crearAnimacion(std::string &url, float imageCountx, float imageCounty, float switchTime);
     void updateAnimacion(int row,float deltaTime);
     bool borrarAnimacion(int id);
     int crearSprite(std::string &url);
     bool borrarSprite(int id);
-    void dibujar(int id, float positionx, float positiony, float scale);
+    void dibujar(int id, float positionx, float positiony, float scale, sf::RenderWindow& window);
     int crearAudio(std::string &url, int volumen);
     bool borrarAudio(int id);
     void play(int id);
     int crearTexto(std::string &url);
     bool borrarTexto(int id);
     //void escribir();
+    sf::Clock getClock(){ return clock; };
     
 };
 

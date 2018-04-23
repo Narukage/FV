@@ -35,7 +35,6 @@ void FachadaMotor2D::cerrarVentana(sf::RenderWindow& window){
 }
 
 void FachadaMotor2D::crearClock(){
-    clock = new sf::Clock;
     clock.restart();
 }
 
@@ -139,7 +138,7 @@ void FachadaMotor2D::dibujar(int id, float positionx, float positiony, float sca
         if(sprites.at(i).id==id){
             sprites.at(i).sprite->setPosition(positionx, positiony);
             sprites.at(i).sprite->setScale(scale, scale);
-            window.draw(sprites.at(i).sprite);
+            window.draw(*(sprites.at(i).sprite));
             window.display();
         }
         i++;
