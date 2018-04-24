@@ -36,7 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/Game.o \
-	${OBJECTDIR}/Interface.o \
+	${OBJECTDIR}/InputManager.o \
 	${OBJECTDIR}/Invocacion.o \
 	${OBJECTDIR}/Player.o \
 	${OBJECTDIR}/RenderManager.o \
@@ -73,10 +73,10 @@ ${OBJECTDIR}/Game.o: Game.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Game.o Game.cpp
 
-${OBJECTDIR}/Interface.o: Interface.cpp
+${OBJECTDIR}/InputManager.o: InputManager.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Interface.o Interface.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/InputManager.o InputManager.cpp
 
 ${OBJECTDIR}/Invocacion.o: Invocacion.cpp
 	${MKDIR} -p ${OBJECTDIR}

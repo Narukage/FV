@@ -1,9 +1,6 @@
-
 #ifndef RENDERMANAGER_H
 #define RENDERMANAGER_H
 #include "IFachada.h"
-#include <string>
-#include <vector>
 
 //SINGLETON
 
@@ -14,24 +11,26 @@ private:
     
 public:
     static RenderManager* Instance(int libreria);
-    IFachada* getMotor(){ return motor; }
+    IFachada* getMotor(){ return motor; };
+    ~RenderManager();
     
 protected:
     RenderManager(int libreria);
+    RenderManager(const RenderManager& orig);
 
 };
 
 class FachadaMotor2D : public IFachada {
 private:
+    sf::Clock clock;
+    
     struct Sprite{
         int id;
         sf::Texture textura;
         sf::Sprite *sprite;
     };
-    
-    Sprite s;
+        
     std::vector<Sprite> sprites;
-    sf::RenderWindow* window;
    
     struct Animacion{
         int id;
@@ -72,19 +71,23 @@ private:
 public:
     FachadaMotor2D() : IFachada(){};
     virtual ~FachadaMotor2D(){};
-    void crearVentana(int width, int height, int frames, bool vsync);
-    int crearAnimacion(std::string &url, float imageCountx, float imageCounty, float switchTime);
+    void crearVentana(int frames, bool vsync, sf::RenderWindow& window);
+    void cerrarVentana(sf::RenderWindow& window);
+    void crearClock();
+    int crearAnimacion(std::string url, float imageCountx, float imageCounty, float switchTime);
     void updateAnimacion(int row,float deltaTime);
     bool borrarAnimacion(int id);
-    int crearSprite(std::string &url);
+    int crearSprite(std::string url);
     bool borrarSprite(int id);
-    void dibujar(int id, float positionx, float positiony, float scale);
-    int crearAudio(std::string &url, int volumen);
+    void dibujar(int id, float positionx, float positiony, float scale, sf::RenderWindow& window);
+    int crearAudio(std::string url, int volumen);
     bool borrarAudio(int id);
     void play(int id);
-    int crearTexto(std::string &url);
+    int crearTexto(std::string url);
     bool borrarTexto(int id);
-    //void escribir();
+    void escribir(std::string s, int id, float positionx, float positiony, float scale, sf::RenderWindow& window);
+    sf::Clock getClock(){ return clock; };
+    
 };
 
 #endif /* RENDERMANAGER_H */
