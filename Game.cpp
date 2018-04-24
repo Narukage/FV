@@ -21,7 +21,7 @@ Game &refg = * Game::Instance();
 void Game::inicializar(){
     
     //No se si usar InputManager pasandole la ventana y creandola aqui o todo en RenderManager
-    //RenderManager::Instance(1)->getMotor()->crearClock();
+    RenderManager::Instance(1)->getMotor()->crearClock();
     RenderManager::Instance(1)->getMotor()->crearVentana(60,false, window);
     Tablero::Instance();
     inv = new Invocacion();
@@ -159,14 +159,14 @@ void Game::cleared(){
 void Game::run(){
     inicializar();
     
-      sf::Time timeStartUpdate = clock.getElapsedTime();
+      sf::Time timeStartUpdate = RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime();
         while(isPlay){
             InputManager::Instance(1)->getInput()->Eventos(isPlay, window);
-           if(clock.getElapsedTime().asMilliseconds()-timeStartUpdate.asMilliseconds()>kUpdateTimePS){
+           if(RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime().asMilliseconds()-timeStartUpdate.asMilliseconds()>kUpdateTimePS){
             update();
             updateIA();
             render();
-            timeStartUpdate = clock.getElapsedTime();
+            timeStartUpdate = RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime();
           }
 
         }

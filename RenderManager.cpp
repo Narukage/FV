@@ -39,6 +39,7 @@ void FachadaMotor2D::crearClock(){
 }
 
 int FachadaMotor2D::crearAnimacion(std::string url, float imageCountx, float imageCounty, float switchTime){
+    a.textura = new sf::Texture;
     if(!a.textura->loadFromFile(url)){
         std::cout << "Error al cargar la textura." << std::endl;
         exit(-1);
