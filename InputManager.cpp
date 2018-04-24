@@ -36,7 +36,7 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
            
                     case sf::Event::KeyPressed:
 
-                        if(evento.key.code==sf::Keyboard::Escape){
+                        if(evento.key.code==sf::Keyboard::Q){
                             isPlay = false;
                         }
                         if(evento.key.code==sf::Keyboard::Space){

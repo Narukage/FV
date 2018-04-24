@@ -19,9 +19,10 @@ Game *g2 = g1->Instance();
 Game &refg = * Game::Instance();
 
 void Game::inicializar(){
+    
     //No se si usar InputManager pasandole la ventana y creandola aqui o todo en RenderManager
-    RenderManager::Instance(1)->getMotor()->crearClock();
-    RenderManager::Instance(1)->getMotor()->crearVentana(60,true, window);
+    //RenderManager::Instance(1)->getMotor()->crearClock();
+    RenderManager::Instance(1)->getMotor()->crearVentana(60,false, window);
     Tablero::Instance();
     inv = new Invocacion();
     generalmuerto1=false;
@@ -129,25 +130,24 @@ void Game:: updateIA(){
 void Game::render(){
     window.clear(sf::Color::Black);
     Tablero::Instance()->drawMap(window);
-    //Tablero::Instance()->drawUnit(window);
-    /*if(tieneadyacentes){
+    Tablero::Instance()->drawUnit(window);
+    if(tieneadyacentes){
         Tablero::Instance()->drawAdyacentes(window);
-    }*/
-    /*Tablero::Instance()->drawLife(1,window);
+    }
+    Tablero::Instance()->drawLife(1,window);
     Tablero::Instance()->drawLifeNumb(1,window);
     Tablero::Instance()->drawLife(2,window);
-    Tablero::Instance()->drawLifeNumb(2,window);*/
-   // tablero->drawMana(1,window);
-   // window.draw(tablero->drawManaNumb(1));
-    //window.draw(tablero->drawManaRest(1));
-    //window.draw(tablero->drawBarra(1));
-    //tablero->drawMana(2,window);
-    //window.draw(tablero->drawManaNumb(2));
-   // window.draw(tablero->drawManaRest(2));
-    //window.draw(tablero->drawBarra(2));
-    /*Tablero::Instance()->drawRetrato(1,window); //esto solo deberia dibujarlo una vez
+    Tablero::Instance()->drawLifeNumb(2,window);
+    Tablero::Instance()->drawMana(1,window);
+    Tablero::Instance()->drawManaNumb(1,window);
+    Tablero::Instance()->drawManaRest(1,window);
+    Tablero::Instance()->drawBarra(1,window);
+    Tablero::Instance()->drawMana(2,window);
+    Tablero::Instance()->drawManaNumb(2,window);
+    Tablero::Instance()->drawManaRest(2,window);
+    Tablero::Instance()->drawRetrato(1,window);
     Tablero::Instance()->drawRetrato(2,window); //same
-    Tablero::Instance()->Mostrar_mano(window);*/
+    Tablero::Instance()->Mostrar_mano(window);
     window.display();
 }
 
@@ -157,18 +157,18 @@ void Game::cleared(){
 }
 
 void Game::run(){
-    
     inicializar();
     
-      sf::Time timeStartUpdate = RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime();
+      sf::Time timeStartUpdate = clock.getElapsedTime();
         while(isPlay){
-           InputManager::Instance(1)->getInput()->Eventos(isPlay, window);
-           if(RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime().asMilliseconds()-timeStartUpdate.asMilliseconds()>kUpdateTimePS){
+            InputManager::Instance(1)->getInput()->Eventos(isPlay, window);
+           if(clock.getElapsedTime().asMilliseconds()-timeStartUpdate.asMilliseconds()>kUpdateTimePS){
             update();
             updateIA();
             render();
-            timeStartUpdate = RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime();
-           }
+            timeStartUpdate = clock.getElapsedTime();
+          }
+
         }
     
         cleared();

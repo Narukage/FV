@@ -50,7 +50,6 @@ class Player{
         int getLife(){ return vida; };
         int getMana(){ return mana; };
         void Mostrar_mano(sf::RenderWindow& window);
-        sf::Sprite getRetrato(){ return retrato; };
         float getManaRest(){ return manarest; };
         Invocacion* getUnit(){  return comandante; };
         Invocacion* getMonstruo(Invocacion* montruito, int donde);

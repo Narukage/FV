@@ -26,8 +26,8 @@ RenderManager &refr = * RenderManager::Instance(1);
 
 //Crea la ventana del juego, le paso tamanyo de la ventana, fps y si lleva o no vsync
 void FachadaMotor2D::crearVentana(int frames, bool vsync, sf::RenderWindow& window) {
-    window.setFramerateLimit(frames);
-    window.setVerticalSyncEnabled(vsync);
+   window.setFramerateLimit(frames);
+   window.setVerticalSyncEnabled(vsync);
 }
 
 void FachadaMotor2D::cerrarVentana(sf::RenderWindow& window){
@@ -96,23 +96,22 @@ bool FachadaMotor2D::borrarAnimacion(int id){
 
 //Crea un sprite, le paso la url de la textura para cargarla en memoria
 int FachadaMotor2D::crearSprite(std::string url){
-    Sprite s;
     //Cargamos la textura
-    if(!s.textura.loadFromFile(url)){
+    s.textura = new sf::Texture;
+    if(!s.textura->loadFromFile(url)){
         std::cout << "Error al cargar la textura." << std::endl;
         exit(-1);
     }
     //Reservamos memoria para el sprite, ya que ahora es un puntero
     s.sprite = new sf::Sprite;
     //Asignamos la textura al sprite
-    s.sprite->setTexture(s.textura);
+    s.sprite->setTexture(*(s.textura));
     //Hacemos id++ para que el id propio del sprite cambie
     s.id = cont;
     cont++;
     //Almacenamos el sprite en una lista de sprites para poder buscarlo despues
     sprites.push_back(s);
-    int i=0;
-    i++;
+    
     //Devolvemos el id propio del sprite que se ha creado
     return s.id;
 }
@@ -126,6 +125,7 @@ bool FachadaMotor2D::borrarSprite(int id){
             Sprite aux = sprites.at(i);
             sprites.erase(it);
             delete aux.sprite;
+            delete aux.textura;
             delete &aux;
             borrado=true;
         }
@@ -137,29 +137,24 @@ bool FachadaMotor2D::borrarSprite(int id){
 void FachadaMotor2D::dibujar(int id, float positionx, float positiony, float scale, sf::RenderWindow& window){
     int i=0;
     for(auto it=sprites.begin();it!=sprites.end();++it){
-        std::cout << "hey hou" << sprites.at(i).id << std::endl;
-        i++;
-    }
-    i=0;
-    for(auto it=sprites.begin();it!=sprites.end();++it){
         if(sprites.at(i).id==id){
             sprites.at(i).sprite->setPosition(positionx, positiony);
             sprites.at(i).sprite->setScale(scale, scale);
             window.draw(*(sprites.at(i).sprite));
-        }
+       }
         i++;
     }
 }
 
-int FachadaMotor2D::crearAudio(std::string url, int volumen){    
-    if (!m.buffer.loadFromFile(url)){
+int FachadaMotor2D::crearAudio(std::string url, int volumen){
+    if (!m.buffer->loadFromFile(url)){
         std::cout << "No pudo abrir el archivo de audio" << "\n";
     }
     
     m.sound = new sf::Sound;
     
     m.sound->setVolume(volumen);
-    m.sound->setBuffer(m.buffer);
+    m.sound->setBuffer(*(m.buffer));
     
     m.id = cont3;
     cont3++;
@@ -194,13 +189,14 @@ void FachadaMotor2D::play(int id){
 }
 
 int FachadaMotor2D::crearTexto(std::string url){
-    if(!t.font.loadFromFile(url)){
+    t.font = new sf::Font;
+    if(!t.font->loadFromFile(url)){
         std::cout << "Fuente no aplicada" <<std::endl;
     }
     
     t.text = new sf::Text;
     t.text->setColor(sf::Color::White);
-    t.text->setFont(t.font);
+    t.text->setFont(*(t.font));
     
     t.id = cont4;
     cont4++;
@@ -216,6 +212,7 @@ bool FachadaMotor2D::borrarTexto(int id){
             Texto aux = textos.at(i);
             textos.erase(it);
             delete aux.text;
+            delete aux.font;
             delete &aux;
             borrado=true;
         }
@@ -232,7 +229,6 @@ void FachadaMotor2D::escribir(std::string s, int id, float positionx, float posi
             textos.at(i).text->setPosition(positionx, positiony);
             textos.at(i).text->setScale(scale, scale);
             window.draw(*(textos.at(i).text));
-            window.display();
         }
         i++;
     }

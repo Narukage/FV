@@ -37,6 +37,7 @@ private:
     bool generalmuerto2=false;
     bool tieneadyacentes=false;
     bool meToca = true;
+    sf::Clock clock;
    
        
     static Game* pinstance;

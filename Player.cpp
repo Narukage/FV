@@ -5,7 +5,7 @@
 Player::Player(int commander){
     vida=100;
     mana=10;
-    manarest=10;
+    manarest=8;
     Invocacion* prueba = new Invocacion();
     
     if(commander==1){
@@ -16,10 +16,7 @@ Player::Player(int commander){
         comandante->soyJugada(comandante->getNombre());
         RellenarJugadas(comandante);
         
-        if(!textura.loadFromFile("assets/HUD/retrato1.png")){
-               std::cout<<"Textura no aplicada"<<std::endl;
-            }
-        retrato.setPosition(0,0);
+        
     }else{
          vida=100;
        comandante=new Invocacion("comandante2",0,vida,5,2,-2);
@@ -28,10 +25,7 @@ Player::Player(int commander){
        comandante->soyJugada(comandante->getNombre());
        RellenarJugadas(comandante);
       // RellenarJugadas(comandante);
-        if(!textura.loadFromFile("assets/HUD/retrato2.png")){
-               std::cout<<"Textura no aplicada"<<std::endl;
-            }
-        retrato.setPosition(700,0);
+        
     }
    // string s="s";
     /*for(int i=0;i<20;i++){

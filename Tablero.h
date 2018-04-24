@@ -40,6 +40,8 @@ class Tablero{
         int manarest;
         int barra;
         int mana;
+        int retrato1;
+        int retrato2;
         
        boardInfo board[WIDTH][HEIGHT]; //board matrix with information about what it contains
        sf::Texture texturacarta;

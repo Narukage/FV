@@ -28,7 +28,7 @@ Tablero::Tablero(){
     
    /*0*/ idrojo = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/bloque2.png"); //bloque rojo
    /*1*/ idverde = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/bloque3.png"); //bloque verde
-   /*2*/ idazul = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/150px-SokobanWallDepictionDrawing.png"); //bloque azul
+   /*2*/idazul = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/150px-SokobanWallDepictionDrawing.png"); //bloque azul
     idvidaco = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/vida.png"); //vida corazon
     idvidacu = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/life.png"); //vida cuadradito
     fuente = RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf"); //fuente
@@ -36,6 +36,9 @@ Tablero::Tablero(){
     manarest = RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf");
     barra = RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf");
     mana = RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf");
+
+    retrato1 = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/retrato1.png");
+    retrato2 = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/retrato2.png");
 
  
     addUnit(player1->getUnit()->getX(),player1->getUnit()->getY(),player1->getUnit(),player1->getUnit()->getComandante());
@@ -213,10 +216,10 @@ void Tablero::drawAdyacentes(sf::RenderWindow& window){
         for(int j=0;j<HEIGHT;j++){
             if(board[i][j].alcanzable==1){;
                 if(board[i][j].free){
-                    RenderManager::Instance(1)->getMotor()->dibujar(idverde,(i*50)+100,(j*50)+80,3.0,window);
+                    RenderManager::Instance(1)->getMotor()->dibujar(idverde,(i*50)+100,(j*50)+80,0.3,window);
                 }
                 else{
-                    RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,3.0,window);   
+                    RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,window);   
                 }
               }
             }
@@ -230,15 +233,15 @@ void Tablero::drawMap(sf::RenderWindow& window){
         for(int j=0;j<HEIGHT;j++){
             if(i<WIDTH/2){
                 if(board[i][j].free){
-                  /*2*/  RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+100,0.3,window);
+                  /*2*/  RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,window);
                 }else{
-                    RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+100,0.3,window);  
+                    RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,window);  
                 }
             }else{
                 if(board[i][j].free){
-                /*0*/ RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+100,0.3,window);
+                /*0*/ RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,window);
                 }else{
-                 RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+100,0.3,window);   
+                 RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,window);   
                 }
             }
         }
@@ -480,16 +483,16 @@ void Tablero::drawUnit(sf::RenderWindow& window){
 }
 void Tablero::drawLife(int commander, sf::RenderWindow& window){
     if(commander==1){
-        RenderManager::Instance(1)->getMotor()->dibujar(idvidaco,100,5,0.5,window);
+        RenderManager::Instance(1)->getMotor()->dibujar(idvidacu,100,5,0.5,window);
                 
         for(int i=0;i<player1->getLife();i++){
-            RenderManager::Instance(1)->getMotor()->dibujar(idvidacu,(i*2)+135,10,2,window);
+            RenderManager::Instance(1)->getMotor()->dibujar(idvidaco,(i*2)+135,10,2,window);
         }
     }else{
-        RenderManager::Instance(1)->getMotor()->dibujar(idvidaco,670,5,0.5,window);
+        RenderManager::Instance(1)->getMotor()->dibujar(idvidacu,670,5,0.5,window);
         
         for(int i=0;i<player2->getLife();i++){
-            RenderManager::Instance(1)->getMotor()->dibujar(idvidacu,(i*2)+455,10,2,window);
+            RenderManager::Instance(1)->getMotor()->dibujar(idvidaco,(i*2)+455,10,2,window);
         }
     }
 }
@@ -570,9 +573,9 @@ void Tablero::drawMana(int commander, sf::RenderWindow& window){
 
 void Tablero::drawRetrato(int commander, sf::RenderWindow& window){
     if(commander==1){
-        window.draw(player1->getRetrato());
+        RenderManager::Instance(1)->getMotor()->dibujar(retrato1,0,0,1,window);
     }else{
-        window.draw(player2->getRetrato());
+        RenderManager::Instance(1)->getMotor()->dibujar(retrato2,700,0,1,window);
     }
 }
 
