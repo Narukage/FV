@@ -38,7 +38,7 @@ void FachadaMotor2D::crearClock(){
     clock.restart();
 }
 
-int FachadaMotor2D::crearAnimacion(std::string &url, float imageCountx, float imageCounty, float switchTime){
+int FachadaMotor2D::crearAnimacion(std::string url, float imageCountx, float imageCounty, float switchTime){
     if(!a.textura->loadFromFile(url)){
         std::cout << "Error al cargar la textura." << std::endl;
         exit(-1);
@@ -95,7 +95,8 @@ bool FachadaMotor2D::borrarAnimacion(int id){
 }
 
 //Crea un sprite, le paso la url de la textura para cargarla en memoria
-int FachadaMotor2D::crearSprite(std::string &url){
+int FachadaMotor2D::crearSprite(std::string url){
+    Sprite s;
     //Cargamos la textura
     if(!s.textura.loadFromFile(url)){
         std::cout << "Error al cargar la textura." << std::endl;
@@ -110,6 +111,8 @@ int FachadaMotor2D::crearSprite(std::string &url){
     cont++;
     //Almacenamos el sprite en una lista de sprites para poder buscarlo despues
     sprites.push_back(s);
+    int i=0;
+    i++;
     //Devolvemos el id propio del sprite que se ha creado
     return s.id;
 }
@@ -132,20 +135,23 @@ bool FachadaMotor2D::borrarSprite(int id){
 }
 //Dibuja en la ventana del juego
 void FachadaMotor2D::dibujar(int id, float positionx, float positiony, float scale, sf::RenderWindow& window){
-    window.clear(sf::Color::Black);
     int i=0;
+    for(auto it=sprites.begin();it!=sprites.end();++it){
+        std::cout << "hey hou" << sprites.at(i).id << std::endl;
+        i++;
+    }
+    i=0;
     for(auto it=sprites.begin();it!=sprites.end();++it){
         if(sprites.at(i).id==id){
             sprites.at(i).sprite->setPosition(positionx, positiony);
             sprites.at(i).sprite->setScale(scale, scale);
             window.draw(*(sprites.at(i).sprite));
-            window.display();
         }
         i++;
     }
 }
 
-int FachadaMotor2D::crearAudio(std::string& url, int volumen){    
+int FachadaMotor2D::crearAudio(std::string url, int volumen){    
     if (!m.buffer.loadFromFile(url)){
         std::cout << "No pudo abrir el archivo de audio" << "\n";
     }
@@ -187,14 +193,13 @@ void FachadaMotor2D::play(int id){
     }
 }
 
-int FachadaMotor2D::crearTexto(std::string& url){
-    if(!t.font.loadFromFile("fonts/FreeMono.ttf")){
+int FachadaMotor2D::crearTexto(std::string url){
+    if(!t.font.loadFromFile(url)){
         std::cout << "Fuente no aplicada" <<std::endl;
     }
     
     t.text = new sf::Text;
-    
-    t.text->setColor(sf::Color::Red);
+    t.text->setColor(sf::Color::White);
     t.text->setFont(t.font);
     
     t.id = cont4;
@@ -217,4 +222,18 @@ bool FachadaMotor2D::borrarTexto(int id){
         i++;
     }
     return borrado;
+}
+
+void FachadaMotor2D::escribir(std::string s, int id, float positionx, float positiony, float scale, sf::RenderWindow& window){
+    int i=0;
+    for(auto it=textos.begin();it!=textos.end();++it){
+        if(textos.at(i).id==id){
+            textos.at(i).text->setString(s);
+            textos.at(i).text->setPosition(positionx, positiony);
+            textos.at(i).text->setScale(scale, scale);
+            window.draw(*(textos.at(i).text));
+            window.display();
+        }
+        i++;
+    }
 }

@@ -29,8 +29,7 @@ private:
         sf::Texture textura;
         sf::Sprite *sprite;
     };
-    
-    Sprite s;
+        
     std::vector<Sprite> sprites;
    
     struct Animacion{
@@ -75,18 +74,18 @@ public:
     void crearVentana(int frames, bool vsync, sf::RenderWindow& window);
     void cerrarVentana(sf::RenderWindow& window);
     void crearClock();
-    int crearAnimacion(std::string &url, float imageCountx, float imageCounty, float switchTime);
+    int crearAnimacion(std::string url, float imageCountx, float imageCounty, float switchTime);
     void updateAnimacion(int row,float deltaTime);
     bool borrarAnimacion(int id);
-    int crearSprite(std::string &url);
+    int crearSprite(std::string url);
     bool borrarSprite(int id);
     void dibujar(int id, float positionx, float positiony, float scale, sf::RenderWindow& window);
-    int crearAudio(std::string &url, int volumen);
+    int crearAudio(std::string url, int volumen);
     bool borrarAudio(int id);
     void play(int id);
-    int crearTexto(std::string &url);
+    int crearTexto(std::string url);
     bool borrarTexto(int id);
-    //void escribir();
+    void escribir(std::string s, int id, float positionx, float positiony, float scale, sf::RenderWindow& window);
     sf::Clock getClock(){ return clock; };
     
 };

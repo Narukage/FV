@@ -4,6 +4,7 @@
 #include <SFML/Audio.hpp>
 #include <sstream>
 #include "Player.h"
+#include "RenderManager.h"
 #define WIDTH 12
 #define HEIGHT 8
 
@@ -22,7 +23,6 @@ class Tablero{
             int coordY;
             bool spawn1; //spawn permitted commander1
             bool spawn2; //spawn permitted commander2
-            sf::Sprite sprite;
             int alcanzable=0;
             
         };
@@ -30,24 +30,19 @@ class Tablero{
         Player* player1;
         Player* player2;
         bool turno=true;
+        int idverde;
+        int idrojo;
+        int idazul;
+        int idvidacu;
+        int idvidaco;
+        int fuente;
+        int fuentemana;
+        int manarest;
+        int barra;
+        int mana;
         
        boardInfo board[WIDTH][HEIGHT]; //board matrix with information about what it contains
-       sf::Texture texturabloqueazul;
-       sf::Texture texturabloquerojo;
-       sf::Texture texturabloqueverde;
-
-       sf::Texture texturavida;
-       sf::Texture texturalife;
        sf::Texture texturacarta;
-       sf::Sprite sprite;
-       sf::Sprite sprite2;
-       sf::Font font;
-       sf::Text manar;
-       sf::Text vida;
-       sf::Text mananumb;
-       sf::Text barra;
-       sf::CircleShape coco;
-
        
        static Tablero* pinstance;
        
@@ -73,10 +68,10 @@ class Tablero{
         void ReiniciarAdy();
        
         void drawLife(int commander, sf::RenderWindow& window);
-        sf::Text drawLifeNumb(int commander);
-        sf::Text drawManaRest(int commander);
-        sf::Text drawManaNumb(int commander);
-        sf::Text drawBarra(int commander);
+        void drawLifeNumb(int commander, sf::RenderWindow& window);
+        void drawManaRest(int commander, sf::RenderWindow& window);
+        void drawManaNumb(int commander, sf::RenderWindow& window);
+        void drawBarra(int commander, sf::RenderWindow& window);
         void drawMana(int commander, sf::RenderWindow& window);
         void drawRetrato(int commander, sf::RenderWindow& window);
         void Mostrar_mano(sf::RenderWindow& window);

@@ -30,10 +30,6 @@ void Game::inicializar(){
     isPlay=true;
 }
 
-void Game::eventos(){  
-    InputManager::Instance(1)->getInput()->Eventos(isPlay, window);
-}
-
 void Game::update(){
     //Una vez este el StateManager hay que mover el update
     presionado = InputManager::Instance(1)->getInput()->getPresionado();
@@ -131,16 +127,16 @@ void Game:: updateIA(){
 }
 
 void Game::render(){
-    
-    /*Tablero::Instance()->drawMap(window);
-    Tablero::Instance()->drawUnit(window);
-    if(tieneadyacentes){
+    window.clear(sf::Color::Black);
+    Tablero::Instance()->drawMap(window);
+    //Tablero::Instance()->drawUnit(window);
+    /*if(tieneadyacentes){
         Tablero::Instance()->drawAdyacentes(window);
-    }
-    Tablero::Instance()->drawLife(1,window);
-    window.draw(Tablero::Instance()->drawLifeNumb(1));
+    }*/
+    /*Tablero::Instance()->drawLife(1,window);
+    Tablero::Instance()->drawLifeNumb(1,window);
     Tablero::Instance()->drawLife(2,window);
-    window.draw(Tablero::Instance()->drawLifeNumb(2));
+    Tablero::Instance()->drawLifeNumb(2,window);*/
    // tablero->drawMana(1,window);
    // window.draw(tablero->drawManaNumb(1));
     //window.draw(tablero->drawManaRest(1));
@@ -149,10 +145,10 @@ void Game::render(){
     //window.draw(tablero->drawManaNumb(2));
    // window.draw(tablero->drawManaRest(2));
     //window.draw(tablero->drawBarra(2));
-    Tablero::Instance()->drawRetrato(1,window); //esto solo deberia dibujarlo una vez
+    /*Tablero::Instance()->drawRetrato(1,window); //esto solo deberia dibujarlo una vez
     Tablero::Instance()->drawRetrato(2,window); //same
-    Tablero::Instance()->Mostrar_mano(window);
-    window.display();*/
+    Tablero::Instance()->Mostrar_mano(window);*/
+    window.display();
 }
 
 void Game::cleared(){
@@ -166,7 +162,7 @@ void Game::run(){
     
       sf::Time timeStartUpdate = RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime();
         while(isPlay){
-           eventos();
+           InputManager::Instance(1)->getInput()->Eventos(isPlay, window);
            if(RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime().asMilliseconds()-timeStartUpdate.asMilliseconds()>kUpdateTimePS){
             update();
             updateIA();

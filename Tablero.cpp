@@ -1,4 +1,6 @@
 #include "Tablero.h"
+#include "RenderManager.h"
+#include <string>
 //SINGLETON
 
 Tablero* Tablero::pinstance = 0;
@@ -24,28 +26,17 @@ Tablero::Tablero(){
     player1 = new Player(1);
     player2 = new Player(2);
     
-    
-    if(!texturabloquerojo.loadFromFile("assets/Sprites/bloque2.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        }
-    if(!texturabloqueverde.loadFromFile("assets/Sprites/bloque3.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        }
-    if(!texturabloqueazul.loadFromFile("assets/Sprites/150px-SokobanWallDepictionDrawing.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        }
-    if(!texturavida.loadFromFile("assets/HUD/vida.png")){
-               std::cout<<"Textura no aplicada"<<std::endl;
-        }
-    if(!texturalife.loadFromFile("assets/HUD/life.png")){
-               std::cout<<"Textura no aplicada"<<std::endl;
-        }
-    if(!texturavida.loadFromFile("assets/HUD/vida.png")){
-               std::cout<<"Textura no aplicada"<<std::endl;
-        }
-    if(!font.loadFromFile("assets/Fonts/FreeMono.ttf")){
-                std::cout << "Fuente no aplicada" <<std::endl;
-        }
+   /*0*/ idrojo = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/bloque2.png"); //bloque rojo
+   /*1*/ idverde = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/bloque3.png"); //bloque verde
+   /*2*/ idazul = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/150px-SokobanWallDepictionDrawing.png"); //bloque azul
+    idvidaco = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/vida.png"); //vida corazon
+    idvidacu = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/life.png"); //vida cuadradito
+    fuente = RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf"); //fuente
+    fuentemana = RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf"); //fuente
+    manarest = RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf");
+    barra = RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf");
+    mana = RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf");
+
  
     addUnit(player1->getUnit()->getX(),player1->getUnit()->getY(),player1->getUnit(),player1->getUnit()->getComandante());
     cout<<"X del 2: "<<player2->getUnit()->getX()<<"Y del 2: "<<player1->getUnit()->getY()<<endl;
@@ -71,7 +62,6 @@ void Tablero::ReiniciarAdy(){
 
 
 void Tablero::Adyacentes(int posx, int posy){
-    //Mover este calculo a una funcion para que no se repita
 bool entrado=false;
 
 //esquina superior izq -- iluminar
@@ -223,18 +213,12 @@ void Tablero::drawAdyacentes(sf::RenderWindow& window){
         for(int j=0;j<HEIGHT;j++){
             if(board[i][j].alcanzable==1){;
                 if(board[i][j].free){
-                board[i][j].sprite.setTexture(texturabloqueverde);
-                board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
-                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
-                window.draw(board[i][j].sprite);
+                    RenderManager::Instance(1)->getMotor()->dibujar(idverde,(i*50)+100,(j*50)+80,3.0,window);
                 }
                 else{
-                board[i][j].sprite.setTexture(texturabloquerojo);
-                board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
-                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
-                window.draw(board[i][j].sprite);   
+                    RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,3.0,window);   
                 }
-                }
+              }
             }
         }
     }
@@ -246,23 +230,17 @@ void Tablero::drawMap(sf::RenderWindow& window){
         for(int j=0;j<HEIGHT;j++){
             if(i<WIDTH/2){
                 if(board[i][j].free){
-                    board[i][j].sprite.setTexture(texturabloqueazul);
+                  /*2*/  RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+100,0.3,window);
                 }else{
-                 board[i][j].sprite.setTexture(texturabloqueazul);   
+                    RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+100,0.3,window);  
                 }
-                board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
-                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
             }else{
                 if(board[i][j].free){
-                board[i][j].sprite.setTexture(texturabloquerojo);
+                /*0*/ RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+100,0.3,window);
                 }else{
-                 board[i][j].sprite.setTexture(texturabloquerojo);   
+                 RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+100,0.3,window);   
                 }
-                board[i][j].sprite.setPosition((i*50)+100,(j*50)+80);
-                board[i][j].sprite.setScale(sf::Vector2f(0.3,0.3/*50.f/150.f,50.f/150.f*/));
             }
-    
-          window.draw(board[i][j].sprite);
         }
     }
 }
@@ -502,127 +480,78 @@ void Tablero::drawUnit(sf::RenderWindow& window){
 }
 void Tablero::drawLife(int commander, sf::RenderWindow& window){
     if(commander==1){
-        
-        sprite.setTexture(texturavida);
-        sprite2.setTexture(texturalife);
-        sprite2.setPosition(100,5);
-        sprite2.setScale(0.5,0.5);
-        window.draw(sprite2);
+        RenderManager::Instance(1)->getMotor()->dibujar(idvidaco,100,5,0.5,window);
                 
         for(int i=0;i<player1->getLife();i++){
-            sprite.setPosition((i*2)+135,10);
-            sprite.setScale(2,2);
-            window.draw(sprite);
+            RenderManager::Instance(1)->getMotor()->dibujar(idvidacu,(i*2)+135,10,2,window);
         }
     }else{
-        
-        sprite.setTexture(texturavida);
-        sprite2.setTexture(texturalife);
-        sprite2.setPosition(670,5);
-        sprite2.setScale(0.5,0.5);
-        window.draw(sprite2);
+        RenderManager::Instance(1)->getMotor()->dibujar(idvidaco,670,5,0.5,window);
         
         for(int i=0;i<player2->getLife();i++){
-            sprite.setPosition((i*2)+455,10);
-            window.draw(sprite);
+            RenderManager::Instance(1)->getMotor()->dibujar(idvidacu,(i*2)+455,10,2,window);
         }
     }
 }
 
-sf::Text Tablero::drawLifeNumb(int commander){
+void Tablero::drawLifeNumb(int commander, sf::RenderWindow& window){
     if(commander==1){
         
         int life = player1->getLife();
             std::stringstream ss;
             ss << life;
-            vida.setString(ss.str().c_str());
-            vida.setColor(sf::Color::White);
-            vida.setFont(font);
-            vida.setScale(0.7,0.7);
-            vida.setPosition(350,1);
-            return vida;
+            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuente,350,1,0.7, window);
     }else{
 
         int life = player2->getLife();
             std::stringstream ss;
             ss << life;
-            vida.setString(ss.str().c_str());
-            vida.setColor(sf::Color::White);
-            vida.setFont(font);
-            vida.setScale(0.7,0.7);
-            vida.setPosition(412,1);
-            return vida;
+            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuente,412,1,0.7, window);
     }
 }
 
-sf::Text Tablero::drawManaNumb(int commander){
+void Tablero::drawManaNumb(int commander, sf::RenderWindow& window){
     if(commander==1){
 
         int mana = player1->getMana();
             std::stringstream ss;
             ss << mana;
-            mananumb.setString(ss.str().c_str());
-            mananumb.setColor(sf::Color::White);
-            mananumb.setFont(font);
-            mananumb.setScale(0.8,0.8);
-            mananumb.setPosition(193,37);
-            return mananumb;
+            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuentemana,193,37,0.8, window);
     }else{
 
         int mana = player2->getMana();
             std::stringstream ss;
             ss << mana;
-            mananumb.setString(ss.str().c_str());
-            mananumb.setColor(sf::Color::White);
-            mananumb.setFont(font);
-            mananumb.setPosition(620,37);
-            return mananumb;
+            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuentemana,620,37,0.8, window);
     }
 }
 
-sf::Text Tablero::drawManaRest(int commander){
+void Tablero::drawManaRest(int commander, sf::RenderWindow& window){
     if(commander==1){
  
         int manarest = player1->getManaRest();
                 std::stringstream ss;
                 ss << manarest;
-                manar.setString(ss.str().c_str());
-                manar.setColor(sf::Color::White);
-                manar.setFont(font);
-                manar.setScale(0.8,0.8);
-                manar.setPosition(158,37);
-                return manar;
+                RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),manarest,158,37,0.8,window);
     }else{
   
         int manarest = player2->getManaRest();
                 std::stringstream ss;
                 ss << manarest;
-                manar.setString(ss.str().c_str());
-                manar.setColor(sf::Color::White);
-                manar.setFont(font);
-                manar.setPosition(585,37);
-                return manar;
+                RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),manarest,585,37,0.8,window);
     }
 }
 
-sf::Text Tablero::drawBarra(int commander){
+void Tablero::drawBarra(int commander, sf::RenderWindow& window){
     if(commander==1){
-
-       barra.setFont(font);
-       barra.setPosition(182,37);
-       barra.setScale(0.8,0.8);
-       barra.setString("/");
-       return barra;
+       RenderManager::Instance(1)->getMotor()->escribir("/",barra,182,37,0.8,window);
     }else{
 }
-       barra.setFont(font);
-       barra.setPosition(609,37);
-       barra.setString("/");
-       return barra;
+       RenderManager::Instance(1)->getMotor()->escribir("/",manarest,609,37,0.8,window);
     }
 
 void Tablero::drawMana(int commander, sf::RenderWindow& window){
-    if(commander==1){
+    /*if(commander==1){
         int mana = player1->getMana();
         coco.setFillColor(sf::Color::Blue);
         coco.setRadius(mana*2);
@@ -636,7 +565,7 @@ void Tablero::drawMana(int commander, sf::RenderWindow& window){
         coco.setPosition(655,37);
 
         window.draw(coco);
-    }
+    }*/
 }
 
 void Tablero::drawRetrato(int commander, sf::RenderWindow& window){
