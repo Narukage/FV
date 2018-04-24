@@ -55,5 +55,6 @@ class Invocacion{
         void setScale(float scaleX,float scaleY);
         bool getCom(){return com;};
         void setCom(bool coman){com=coman;};
+        int getCoste(){return coste;}
         
 };

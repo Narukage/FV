@@ -4,12 +4,14 @@
 
 Player::Player(int commander){
     vida=100;
-    mana=10;
-    manarest=10;
+    mana=1;
+    manarest=1;
     Invocacion* prueba = new Invocacion();
     
     if(commander==1){
          vida=100;
+       
+         
         comandante=new Invocacion("comandante1",0,vida,5,1,-1);
         comandante->setCom(true);
         comandante->setPosicion(0,3);
@@ -110,10 +112,10 @@ Player::Player(int commander){
   }
   fin.close();
   
-  //aqui barajo
   
+  //barajado
   
-	int hecho=0;
+  int hecho=0;
 	
 	int pos;
 	//inicializo la nueva baraja
@@ -138,7 +140,6 @@ Player::Player(int commander){
 	}
        cout << invo2.size() << endl;
        cout << invo.size() << endl;
-      
   vector<Invocacion*>::iterator it3;
      int z = 0;
     //0 = a mazo
@@ -216,6 +217,7 @@ bool Player:: RellenarMano(Invocacion* invo2,int jugar){
 bool Player::RellenarJugadas(Invocacion* jugada){
     int i=0;
     //vector<Invocacion*>::iterator it8;
+   
     if(jugada->getExisto()==false){
         jugada->setMano(false);
        // jugada->soyJugada(jugada->getNombre());
@@ -229,6 +231,7 @@ bool Player::RellenarJugadas(Invocacion* jugada){
         
         return true;
     }
+    
     return false;
 }
 Invocacion* Player:: getMonstruo(Invocacion* monstruito, int donde){
