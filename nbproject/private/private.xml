@@ -7,34 +7,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/Interface.cpp</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/Game.cpp</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/Invocacion.h</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/Estado.cpp</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/Partida.h</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/TurnoIA.cpp</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/Partida.cpp</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/RenderManager.h</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/Pausa.h</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/Player.cpp</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/InputFachada.h</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/PartidaFinalizada.h</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/main.cpp</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/Player.h</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/PartidaFinalizada.cpp</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/Estado.h</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/Pausa.cpp</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/TurnoIA.h</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/IFachada.h</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/RenderManager.cpp</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/Tablero.h</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/Game.h</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/InputManager.cpp</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/Invocacion.cpp</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/Menu.cpp</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/Menu.h</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/InputManager.h</file>
-            <file>file:/home/nacho/Escritorio/Repositorio/Summoners/Tablero.cpp</file>
+            <file>file:/home/naru/Escritorio/Summoners/Player.cpp</file>
+            <file>file:/home/naru/Escritorio/Summoners/PartidaFinalizada.cpp</file>
+            <file>file:/home/naru/Escritorio/Summoners/PartidaFinalizada.h</file>
+            <file>file:/home/naru/Escritorio/Summoners/IA.cpp</file>
+            <file>file:/home/naru/Escritorio/Summoners/Tablero.cpp</file>
+            <file>file:/home/naru/Escritorio/Summoners/Tablero.h</file>
+            <file>file:/home/naru/Escritorio/Summoners/RenderManager.cpp</file>
+            <file>file:/home/naru/Escritorio/Summoners/Invocacion.h</file>
+            <file>file:/home/naru/Escritorio/Summoners/RenderManager.h</file>
+            <file>file:/home/naru/Escritorio/Summoners/Game.cpp</file>
+            <file>file:/home/naru/Escritorio/Summoners/Invocacion.cpp</file>
+            <file>file:/home/naru/Escritorio/Summoners/IA.h</file>
         </group>
     </open-files>
 </project-private>
