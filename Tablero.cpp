@@ -39,6 +39,8 @@ Tablero::Tablero(){
 
     retrato1 = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/retrato1.png");
     retrato2 = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/retrato2.png");
+    
+    idle = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/idle.png",3.5,4,0.1f,11,2);
 
  
     addUnit(player1->getUnit()->getX(),player1->getUnit()->getY(),player1->getUnit(),player1->getUnit()->getComandante());
@@ -392,7 +394,9 @@ void Tablero::drawUnit(sf::RenderWindow& window){
              std::cout<<"entroy : "<<player1->getJugadas().at(i)->getY()<<std::endl;*/
              player1->getJugadas().at(i)->setPosition(calculox,calculoy);
              player1->getJugadas().at(i)->setScale(vectrx,vectrx);
-             window.draw(player1->getJugadas().at(i)->getSprite()); 
+             //window.draw(player1->getJugadas().at(i)->getSprite());
+             RenderManager::Instance(1)->getMotor()->updateAnimacion(idle,0,RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime().asSeconds());
+             RenderManager::Instance(1)->getMotor()->dibujarAnimacion(idle,calculox,calculoy,vectrx,window);
              }
          }
          i++;

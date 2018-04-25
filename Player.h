@@ -50,7 +50,6 @@ class Player{
         int getLife(){ return vida; };
         int getMana(){ return mana; };
         void Mostrar_mano(sf::RenderWindow& window);
-     
         int getManaRest(){ return manarest; };
         void setManaRest(int x){ manarest=x; };
         Invocacion* getUnit(){  return comandante; };
