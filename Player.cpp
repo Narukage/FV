@@ -50,36 +50,31 @@ Player::Player(int commander){
   if(id==2){
      prueba=new Invocacion("Yigx",3,3,2,commander,contador);
       prueba->soyJugada(prueba->getNombre());
-       invo.push_back(prueba);
+      invo.push_back(prueba);
   }
   if(id==3){
        prueba=new Invocacion("Zoogx",2,2,1,commander,contador);
        prueba->soyJugada(prueba->getNombre());
-
        invo.push_back(prueba);
   }
   if(id==4){
       prueba=new Invocacion("Gugox",5,4,4,commander,contador);
        prueba->soyJugada(prueba->getNombre());
-
        invo.push_back(prueba);
   }
   if(id==5){
        prueba=new Invocacion("Bokrugs",4,1,4,commander,contador);
        prueba->soyJugada(prueba->getNombre());
-
        invo.push_back(prueba);
   }
   if(id==6){
        prueba=new Invocacion("Orrys",7,7,2,commander,contador);
        prueba->soyJugada(prueba->getNombre());
-
        invo.push_back(prueba);
   }
   if(id==7){
        prueba=new Invocacion("Ahtuh",4,4,2,commander,contador);
        prueba->soyJugada(prueba->getNombre());
-
        invo.push_back(prueba);
   }
   if(id==8){

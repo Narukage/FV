@@ -51,7 +51,6 @@ Tablero::Tablero(){
     retrato2 = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/retrato2.png");
     
     idle = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/dolorArterial.png",14,1,0.001f,14,1);
-    cout<<"LA ANIMACION ES: "<<idle<<endl;
  
     addUnit(player1->getUnit()->getX(),player1->getUnit()->getY(),player1->getUnit(),player1->getUnit()->getComandante());
     cout<<"X del 2: "<<player2->getUnit()->getX()<<"Y del 2: "<<player1->getUnit()->getY()<<endl;
@@ -404,9 +403,9 @@ void Tablero::drawInvocaciones(vector<Invocacion*> array)
                 array[i]->setPosition(calculox,calculoy);
                 array[i]->setScale(spriteSize,spriteSize);
                 
-                //Se pinta la animación correspondiente
-                RenderManager::Instance(1)->getMotor()->updateAnimacion(idle,0,RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime().asSeconds());
-                RenderManager::Instance(1)->getMotor()->dibujarAnimacion(idle,calculox,calculoy,spriteSize,window); 
+                //Se pinta la animación correspondiente a cada id
+                RenderManager::Instance(1)->getMotor()->updateAnimacion(array[i]->getId(),0,RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime().asSeconds());
+                RenderManager::Instance(1)->getMotor()->dibujarAnimacion(array[i]->getId(),calculox,calculoy,spriteSize,window); 
             }
         }
     }

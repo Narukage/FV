@@ -18,11 +18,12 @@ class Invocacion{
         int comandante=1;
         sf::Texture textura;
         sf::Texture textcarta;
-        sf::Sprite monstruo;
         sf::Sprite cartamano;
         bool com;  //???????????????'
         bool mano; //????
         int unico;// -1 Es el jugador -2 es el rival
+        int idsprite;
+        int id;
         
     public:
         Invocacion();
@@ -31,10 +32,8 @@ class Invocacion{
         
         void moveToPos(int posx, int posy/*Tablero& tablero*/);
         void setPosicion(int x, int y);
-       // void setCarta(sf::Sprite carta){this->monstruo=monstruo;};
         int getX(){ return pos_x; };
         int getY(){ return pos_y; };
-        sf::Sprite getSprite(){ return monstruo; };
         void setJugar(int jugar){this->jugarla=jugar;};
         int getJugar(){return jugarla;};
         void setExisto(){existo=true;};
@@ -56,4 +55,5 @@ class Invocacion{
         bool getCom(){return com;};
         void setCom(bool coman){com=coman;};
         int getCoste(){return coste;}
+        int getId(){return id; };
 };

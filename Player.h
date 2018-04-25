@@ -37,7 +37,7 @@ class Player{
          y no desde el puntero, hacer que unit(puntero) apunte a la invocacion que se meta en este array o lista*/
         
         Invocacion* comandante;
-
+                
     public:
         ///////////////////////////////
         // CONSTRUCTO / DESTRUCTOR

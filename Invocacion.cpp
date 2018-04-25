@@ -19,13 +19,7 @@ Invocacion::Invocacion(string nombre,int coste,int vida,int ataque,int comandant
         this->vida = vida;
         this->comandante=comandante;
         this->unico=unico;
-        
-     /*   if(!textura.loadFromFile("assets/Sprites/bloque2.png")){
-           std::cout<<"Textura no aplicada"<<std::endl;
-        }
-        carta.setTexture(textura);*/
-        
-   
+
 }
 
 void Invocacion::moveToPos(int posx, int posy/*, Tablero& tablero*/){
@@ -89,61 +83,45 @@ bool Invocacion:: soyManoT(string nombretext,int i){
     return devolver;
 }
 bool Invocacion:: soyJugada(string nombretext){
+    //
     bool devolver= false;
     if(mano==false){
         if(nombretext=="Zoogx"){
-            if(!textura.loadFromFile("assets/Sprites/Zoogx.png")){
-                std::cout<<"Textura jugada aplicada"<<std::endl;
-            }
+            id = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/zoogxiddle.png",11,1,0.001f,11,1);
             devolver=true;
         }
          if(nombretext=="comandante1"){
-            if(!textura.loadFromFile("assets/Sprites/comandante1.png")){
-                std::cout<<"Textura jugada aplicada"<<std::endl;
-            }
+            id = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/com1iddle.png",13,1,0.001f,13,1);
             devolver=true;
         }
         if(nombretext=="comandante2"){
-            if(!textura.loadFromFile("assets/Sprites/comandante2.png")){
-                std::cout<<"Textura jugada aplicada"<<std::endl;
-            }
+            id = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/com2iddle.png",14,1,0.001f,14,1);
             devolver=true;
         }
         if(nombretext=="Yigx"){
-            if(!textura.loadFromFile("assets/Sprites/Yigx.png")){
-                std::cout<<"Textura jugada aplicada"<<std::endl;
-            }
+            id = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/yigxiddle.png",14,1,0.001f,14,1);
             devolver=true;
         }
         if(nombretext=="Cthughax"){
-            if(!textura.loadFromFile("assets/Sprites/Cthughax.png")){
-                std::cout<<"Textura jugada aplicada"<<std::endl;
-            }
+            id = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/cthughaxiddle.png",10,1,0.001f,10,1);
             devolver=true;
         }
         if(nombretext=="Gugox"){
-            if(!textura.loadFromFile("assets/Sprites/Gugox.png")){
-                std::cout<<"Textura jugada aplicada"<<std::endl;
-            }
+            id = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/gugoxiddle.png",14,1,0.001f,14,1);
             devolver=true;
         }
         if(nombretext=="Bokrugs"){
-            if(!textura.loadFromFile("assets/Sprites/Bokrugs.png")){
-                std::cout<<"Textura jugada aplicada"<<std::endl;
-            }
+            id = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/dolorArterial.png",14,1,0.001f,14,1);
             devolver=true;
         }
-
-        monstruo.setTexture(textura);
-        //carta.setPosition((i*100)+150,480);
     }
     return devolver;
 }
 void Invocacion:: setPosition(float positionX, float positionY){
-    monstruo.setPosition(positionX,positionY);
+    //monstruo.setPosition(positionX,positionY);
 }
 void Invocacion:: setScale(float scaleX, float scaleY){
-    monstruo.setScale(sf::Vector2f(scaleX,scaleY));
+    //monstruo.setScale(sf::Vector2f(scaleX,scaleY));
     
 }
 
