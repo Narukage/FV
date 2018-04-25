@@ -1,5 +1,6 @@
 #include "Menu.h"
 
+
 Menu* Menu::pinstance=0;                     
 Menu* Menu::Instance(){
     if(pinstance==0){
@@ -10,7 +11,6 @@ Menu* Menu::Instance(){
 Menu::Menu(){
     
 }
-Menu *p1=Menu::Instance();
-Menu *p2=p1->Instance();
-Menu &ref=*Menu::Instance();
-                                 
+Menu *m1=Menu::Instance();
+Menu *m2=m1->Instance();
+Menu &refm=*Menu::Instance();

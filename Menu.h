@@ -1,6 +1,6 @@
 #include <iostream>
-
-class Menu: public Estado{
+#include "Estado.h"
+    class Menu : public Estado {
     public:
     static Menu* Instance();
 protected:
@@ -9,5 +9,4 @@ protected:
     Menu &operator=(const Menu &);
 private:
     static Menu* pinstance;
-};
-        
+};   

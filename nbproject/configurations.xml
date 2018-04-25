@@ -4,11 +4,16 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Estado.h</itemPath>
       <itemPath>Game.h</itemPath>
       <itemPath>IFachada.h</itemPath>
       <itemPath>InputFachada.h</itemPath>
       <itemPath>InputManager.h</itemPath>
       <itemPath>Invocacion.h</itemPath>
+      <itemPath>Menu.h</itemPath>
+      <itemPath>Partida.h</itemPath>
+      <itemPath>PartidaFinalizada.h</itemPath>
+      <itemPath>Pausa.h</itemPath>
       <itemPath>Player.h</itemPath>
       <itemPath>RenderManager.h</itemPath>
       <itemPath>Tablero.h</itemPath>
@@ -20,12 +25,18 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Estado.cpp</itemPath>
       <itemPath>Game.cpp</itemPath>
       <itemPath>InputManager.cpp</itemPath>
       <itemPath>Invocacion.cpp</itemPath>
+      <itemPath>Menu.cpp</itemPath>
+      <itemPath>Partida.cpp</itemPath>
+      <itemPath>PartidaFinalizada.cpp</itemPath>
+      <itemPath>Pausa.cpp</itemPath>
       <itemPath>Player.cpp</itemPath>
       <itemPath>RenderManager.cpp</itemPath>
       <itemPath>Tablero.cpp</itemPath>
+      <itemPath>TurnoIA.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -39,6 +50,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>TurnoIA.h</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -68,6 +80,10 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="Estado.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Estado.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
@@ -84,6 +100,22 @@
       </item>
       <item path="Invocacion.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Menu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Menu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Partida.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Partida.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PartidaFinalizada.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PartidaFinalizada.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Pausa.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Pausa.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Player.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Player.h" ex="false" tool="3" flavor2="0">
@@ -95,6 +127,10 @@
       <item path="Tablero.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Tablero.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TurnoIA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TurnoIA.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -119,6 +155,10 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Estado.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Estado.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
@@ -135,6 +175,22 @@
       </item>
       <item path="Invocacion.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Menu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Menu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Partida.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Partida.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PartidaFinalizada.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PartidaFinalizada.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Pausa.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Pausa.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Player.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Player.h" ex="false" tool="3" flavor2="0">
@@ -146,6 +202,10 @@
       <item path="Tablero.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Tablero.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TurnoIA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TurnoIA.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

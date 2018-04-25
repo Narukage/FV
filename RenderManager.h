@@ -2,6 +2,7 @@
 #define RENDERMANAGER_H
 #include "IFachada.h"
 
+
 //SINGLETON
 
 class RenderManager {
@@ -26,10 +27,11 @@ private:
     
     struct Sprite{
         int id;
-        sf::Texture textura;
+        sf::Texture* textura;
         sf::Sprite *sprite;
     };
         
+    Sprite s;
     std::vector<Sprite> sprites;
    
     struct Animacion{
@@ -39,6 +41,7 @@ private:
         sf::IntRect uvRect;
         sf::Vector2u currentImage;
         float totalTime;
+        sf::Vector2u textureSize;
         sf::Texture* textura;
         sf::Sprite* sprite;
     };
@@ -52,7 +55,7 @@ private:
     
     struct Audio{
         int id;
-        sf::SoundBuffer buffer;
+        sf::SoundBuffer* buffer;
         sf::Sound* sound;
     };
     
@@ -61,7 +64,7 @@ private:
     
     struct Texto{
         int id;
-        sf::Font font;
+        sf::Font* font;
         sf::Text* text;
     };
     
@@ -69,23 +72,47 @@ private:
     std::vector<Texto> textos;
     
 public:
+    //=================================
+    // FUNCIONES PRINCIPALES
+    //=================================
     FachadaMotor2D() : IFachada(){};
     virtual ~FachadaMotor2D(){};
     void crearVentana(int frames, bool vsync, sf::RenderWindow& window);
     void cerrarVentana(sf::RenderWindow& window);
     void crearClock();
-    int crearAnimacion(std::string url, float imageCountx, float imageCounty, float switchTime);
-    void updateAnimacion(int row,float deltaTime);
+
+    //=================================
+    // ANIMACIONES
+    //=================================
+    int crearAnimacion(std::string url, float imageCountx, float imageCounty, float switchTime, int filas, int columnas);
+    void updateAnimacion(int id, int row,float deltaTime);
+    void dibujarAnimacion(int id, float positionx, float positiony, float scale, sf::RenderWindow& window);
     bool borrarAnimacion(int id);
+    
+    //=================================
+    // SPRITES
+    //=================================
     int crearSprite(std::string url);
     bool borrarSprite(int id);
     void dibujar(int id, float positionx, float positiony, float scale, sf::RenderWindow& window);
+    
+    //=================================
+    // AUDIO
+    //=================================
     int crearAudio(std::string url, int volumen);
     bool borrarAudio(int id);
     void play(int id);
+    
+    //=================================
+    // TEXTO
+    //=================================
     int crearTexto(std::string url);
     bool borrarTexto(int id);
     void escribir(std::string s, int id, float positionx, float positiony, float scale, sf::RenderWindow& window);
+    
+    //=================================
+    // GETTERS Y SETTERS
+    //=================================
     sf::Clock getClock(){ return clock; };
     
 };
