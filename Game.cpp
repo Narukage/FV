@@ -21,7 +21,6 @@ Game &refg = * Game::Instance();
 void Game::inicializar(){
     
     //No se si usar InputManager pasandole la ventana y creandola aqui o todo en RenderManager
-    RenderManager::Instance(1)->getMotor()->crearClock();
     RenderManager::Instance(1)->getMotor()->crearVentana(60,false, window);
     Tablero::Instance();
     inv = new Invocacion();
@@ -33,6 +32,7 @@ void Game::inicializar(){
 
 void Game::update(){
     //Una vez este el StateManager hay que mover el update
+    RenderManager::Instance(1)->getMotor()->crearClock();
     presionado = InputManager::Instance(1)->getInput()->getPresionado();
     if(presionado){
         coord = InputManager::Instance(1)->getInput()->getCoord();

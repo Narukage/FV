@@ -38,12 +38,21 @@ void FachadaMotor2D::crearClock(){
     clock.restart();
 }
 
-int FachadaMotor2D::crearAnimacion(std::string url, float imageCountx, float imageCounty, float switchTime){
+int FachadaMotor2D::crearAnimacion(std::string url, float imageCountx, float imageCounty, float switchTime, int filas, int columnas){
     a.textura = new sf::Texture;
     if(!a.textura->loadFromFile(url)){
         std::cout << "Error al cargar la textura." << std::endl;
         exit(-1);
     }
+    
+    a.sprite = new sf::Sprite;
+    
+    a.sprite->setTexture(*(a.textura));
+    
+    a.textureSize = (*a.textura).getSize();
+    a.textureSize.x /= columnas;
+    a.textureSize.y /= filas;
+    
     this->a.imageCount.x = imageCountx;
     this->a.imageCount.y = imageCounty;
     this->a.switchTime = switchTime;
@@ -61,21 +70,41 @@ int FachadaMotor2D::crearAnimacion(std::string url, float imageCountx, float ima
     return a.id;
 }
 
-void FachadaMotor2D::updateAnimacion(int row,float deltaTime){
-    a.currentImage.y = row;
-    a.totalTime += deltaTime;
-    
-    if(a.totalTime >= a.switchTime){
-        a.totalTime -= a.switchTime;
-        a.currentImage.x++;
-        
-        if(a.currentImage.x >= a.imageCount.x){
-            a.currentImage.x = 0;
+void FachadaMotor2D::updateAnimacion(int id, int row,float deltaTime){
+    int i=0;
+    for(auto it=animaciones.begin();it!=animaciones.end();++it){
+        if(animaciones.at(i).id==id){
+            animaciones.at(i).currentImage.y = row;
+            animaciones.at(i).totalTime += deltaTime;
+
+            if(animaciones.at(i).totalTime >= animaciones.at(i).switchTime){
+                animaciones.at(i).totalTime -= animaciones.at(i).switchTime;
+                animaciones.at(i).currentImage.x++;
+
+                if(animaciones.at(i).currentImage.x >= animaciones.at(i).imageCount.x){
+                    animaciones.at(i).currentImage.x = 0;
+                }
+            }
+
+            animaciones.at(i).uvRect.left = animaciones.at(i).currentImage.x * animaciones.at(i).uvRect.width;
+            animaciones.at(i).uvRect.top = animaciones.at(i).currentImage.y * animaciones.at(i).uvRect.height;
+
+            animaciones.at(i).sprite->setTextureRect(animaciones.at(i).uvRect);
         }
     }
-    
-    a.uvRect.left = a.currentImage.x * a.uvRect.width;
-    a.uvRect.top = a.currentImage.y * a.uvRect.height;
+    i++;
+}
+
+void FachadaMotor2D::dibujarAnimacion(int id, float positionx, float positiony, float scale, sf::RenderWindow& window){
+    int i=0;
+    for(auto it=animaciones.begin();it!=animaciones.end();++it){
+        if(animaciones.at(i).id==id){
+            animaciones.at(i).sprite->setPosition(positionx, positiony);
+            animaciones.at(i).sprite->setScale(scale, scale);
+            window.draw(*(animaciones.at(i).sprite));
+       }
+        i++;
+    }
 }
 
 bool FachadaMotor2D::borrarAnimacion(int id){
