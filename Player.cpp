@@ -5,7 +5,7 @@
 Player::Player(int commander){
     vida=100;
     mana=10;
-    manarest=5;
+    manarest=10;
     Invocacion* prueba = new Invocacion();
     
     if(commander==1){

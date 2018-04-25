@@ -397,14 +397,14 @@ void Tablero::drawInvocaciones(vector<Invocacion*> array)
                 
                 //Se calcula su posición en el mapa
                 float calculox = array[i]->getX()*sizeX+68;
-                float calculoy = array[i]->getY()*sizeY+10;
+                float calculoy = array[i]->getY()*sizeY+20;
                 
                 //Se coloca y escala
                 array[i]->setPosition(calculox,calculoy);
                 array[i]->setScale(spriteSize,spriteSize);
                 
                 //Se pinta la animación correspondiente a cada id
-                RenderManager::Instance(1)->getMotor()->updateAnimacion(array[i]->getId(),0,RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime().asSeconds());
+                RenderManager::Instance(1)->getMotor()->updateAnimacion(array[i]->getId(),0,0.002f/*RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime().asSeconds()*/);
                 RenderManager::Instance(1)->getMotor()->dibujarAnimacion(array[i]->getId(),calculox,calculoy,spriteSize,window); 
             }
         }

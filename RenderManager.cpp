@@ -51,8 +51,8 @@ int FachadaMotor2D::crearAnimacion(std::string url, float imageCountx, float ima
     a.sprite->setTexture(*(a.textura));
     
     a.textureSize = (*a.textura).getSize();
-    a.textureSize.x /= columnas;
-    a.textureSize.y /= filas;
+    a.textureSize.x = (a.textureSize.x / a.textureSize.x) * columnas;
+    a.textureSize.y = (a.textureSize.y / a.textureSize.y) * filas;
     
     a.imageCount.x = imageCountx;
     a.imageCount.y = imageCounty;
