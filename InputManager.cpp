@@ -36,7 +36,7 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
            
                     case sf::Event::KeyPressed:
 
-                        if(evento.key.code==sf::Keyboard::Escape){
+                        if(evento.key.code==sf::Keyboard::Q){
                             isPlay = false;
                         }
                         if(evento.key.code==sf::Keyboard::Space){
@@ -48,6 +48,12 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                              cout<<"he entrado"<<turno<<std::endl;
                              
                              if(meToca==true){
+                                 int mana_aux = Tablero::Instance()->getPlayer()->getMana();
+                                 mana_aux++;
+                                 Tablero::Instance()->getPlayer()->setMana(mana_aux);
+                                 Tablero::Instance()->getPlayer()->setManaRest(mana_aux);
+                                 cout<< "Mana total:"<<Tablero::Instance()->getPlayer()->getMana()<<endl;
+                                 cout<<"Mana restante:"<<Tablero::Instance()->getPlayer()->getManaRest()<<endl;
                                  Tablero::Instance()->getPlayer()->Robar();
                              }
                              /*if(meToca==false){

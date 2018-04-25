@@ -5,17 +5,20 @@
 #include "Invocacion.h"
 #include <vector>
 #include <cstdlib>
+
 #include <stdio.h>  	/* printf, scanf, puts, NULL */
 #include <stdlib.h> 	/* srand, rand */
 #include <time.h>   	/* time */
+
+
 
 using namespace std;
 
 class Player{
     private:
         int vida;
-        int mana=1; //int mana
-        int manarest=mana; // int mana restante, nunca tenemos 4,5 de mana.
+        int mana; //int mana
+        int manarest; // int mana restante, nunca tenemos 4,5 de mana.
         sf::Texture textura;
         sf::Texture textura2;
         sf::Texture textura3;
@@ -25,7 +28,7 @@ class Player{
         vector<Invocacion*> mano;
         vector<Invocacion*> jugadas;
         vector<Invocacion*> invo;
-        vector<Invocacion*> invo2; // baraja barajada
+        vector<Invocacion*> invo2;
         //Invocacion* mano= new Invocacion[5];//mano
        // Invocacion* insertar = new Invocacion[20];//en el tablero
         //Invocacion* invo= new Invocacion[20];//mazo
@@ -47,7 +50,7 @@ class Player{
         int getLife(){ return vida; };
         int getMana(){ return mana; };
         void Mostrar_mano(sf::RenderWindow& window);
-        sf::Sprite getRetrato(){ return retrato; };
+     
         int getManaRest(){ return manarest; };
         void setManaRest(int x){ manarest=x; };
         Invocacion* getUnit(){  return comandante; };
@@ -63,6 +66,5 @@ class Player{
         bool estaJugadaEn(int posx, int posy);
         void Robar();
         void setPosMano(int pos){posmano=pos;};
-      
 };
 

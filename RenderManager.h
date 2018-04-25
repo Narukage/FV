@@ -26,10 +26,11 @@ private:
     
     struct Sprite{
         int id;
-        sf::Texture textura;
+        sf::Texture* textura;
         sf::Sprite *sprite;
     };
         
+    Sprite s;
     std::vector<Sprite> sprites;
    
     struct Animacion{
@@ -52,7 +53,7 @@ private:
     
     struct Audio{
         int id;
-        sf::SoundBuffer buffer;
+        sf::SoundBuffer* buffer;
         sf::Sound* sound;
     };
     
@@ -61,7 +62,7 @@ private:
     
     struct Texto{
         int id;
-        sf::Font font;
+        sf::Font* font;
         sf::Text* text;
     };
     

@@ -56,5 +56,4 @@ class Invocacion{
         bool getCom(){return com;};
         void setCom(bool coman){com=coman;};
         int getCoste(){return coste;}
-        
 };

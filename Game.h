@@ -4,46 +4,42 @@
 #include <SFML/Audio.hpp>
 #include "Tablero.h"
 #include "Player.h"
-#include "Interface.h"
+#include "RenderManager.h"
+#include "InputManager.h"
+
 
 
 
 class Game{
     
 private:
-     sf::Clock clock;
+    bool isPlay;
     sf::RenderWindow window;
-    sf::Event evento;      
-    bool isPlay = true;
+    RenderManager* motor;
     Tablero* tablero;
     Tablero* tablero2;
     Invocacion* invocacion;
     Player* player;
     Player* player2;
-    //Player* aux=tablero->getPlayer();
-    Player* current = player;
-    int turno = 1;
-            
-    Interface* interface;
+    Player* current = player;  
     sf::Vector2i coord;
-    bool presionado = false;
+    bool presionado;
     bool cartaseleccionada = false;
     bool actuainvocacion =false;
     Invocacion* inv;
     int posXinvocacion=-1;
     int posYinvocacion=-1;
-    int campox;
-    int campoy;
-    int manox;
-    int manoy;
+    sf::Vector2i campo;
+    sf::Vector2i mano;
     int ganador;
     bool empate=false;
     bool generalmuerto1=false;
     bool generalmuerto2=false;
     bool tieneadyacentes=false;
-   
     bool meToca = true;
+   
        
+    static Game* pinstance;
 private:
     void inicializar();
     void eventos();
@@ -51,19 +47,11 @@ private:
     void updateIA();
     void render();
     void cleared();
-    void setTurno(int num){turno=num;}
-    int getTurno(){return turno;}
-    void nexTurn(int num);
-    bool getMeToca(){return meToca;}
-    void setMeToca(bool meTo){meToca = meTo;}
-    void cambioTurno(bool meTo){if(meTo==true){meToca=false;}else{meToca=true;}};
     void finalizado();
-    
-   // void setTurno(int num){turno=num;}
-    //int getTurno(){return turno;}
-    //void nexTurn(int num);
-public:
+protected:
     Game();
+public:
+    static Game* Instance();
     ~Game();
     void run();
 };
