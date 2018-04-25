@@ -6,7 +6,7 @@
 #include "Player.h"
 #include "RenderManager.h"
 #include "InputManager.h"
-
+#include "Menu.h"
 
 
 
@@ -14,6 +14,7 @@ class Game{
     
 private:
     bool isPlay;
+    //Estado* state=Menu::Instance();   <- descomentar esta linea cuando el menu este terminado
     sf::RenderWindow window;
     RenderManager* motor;
     Tablero* tablero;

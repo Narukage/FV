@@ -4,14 +4,20 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Estado.h</itemPath>
       <itemPath>Game.h</itemPath>
       <itemPath>IFachada.h</itemPath>
       <itemPath>InputFachada.h</itemPath>
       <itemPath>InputManager.h</itemPath>
       <itemPath>Invocacion.h</itemPath>
+      <itemPath>Menu.h</itemPath>
+      <itemPath>Partida.h</itemPath>
+      <itemPath>PartidaFinalizada.h</itemPath>
+      <itemPath>Pausa.h</itemPath>
       <itemPath>Player.h</itemPath>
       <itemPath>RenderManager.h</itemPath>
       <itemPath>Tablero.h</itemPath>
+      <itemPath>TurnoIA.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -21,13 +27,17 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>Estado.cpp</itemPath>
+<<<<<<< HEAD
       <itemPath>Estado.h</itemPath>
+=======
+>>>>>>> 5a7b824f5ce763c4b44e48c6bc6355ca3e5738a8
       <itemPath>Game.cpp</itemPath>
       <itemPath>IA.cpp</itemPath>
       <itemPath>IA.h</itemPath>
       <itemPath>InputManager.cpp</itemPath>
       <itemPath>Invocacion.cpp</itemPath>
       <itemPath>Menu.cpp</itemPath>
+<<<<<<< HEAD
       <itemPath>Menu.h</itemPath>
       <itemPath>Partida.cpp</itemPath>
       <itemPath>Partida.h</itemPath>
@@ -35,11 +45,19 @@
       <itemPath>PartidaFinalizada.h</itemPath>
       <itemPath>Pausa.cpp</itemPath>
       <itemPath>Pausa.h</itemPath>
+=======
+      <itemPath>Partida.cpp</itemPath>
+      <itemPath>PartidaFinalizada.cpp</itemPath>
+      <itemPath>Pausa.cpp</itemPath>
+>>>>>>> 5a7b824f5ce763c4b44e48c6bc6355ca3e5738a8
       <itemPath>Player.cpp</itemPath>
       <itemPath>RenderManager.cpp</itemPath>
       <itemPath>Tablero.cpp</itemPath>
       <itemPath>TurnoIA.cpp</itemPath>
+<<<<<<< HEAD
       <itemPath>TurnoIA.h</itemPath>
+=======
+>>>>>>> 5a7b824f5ce763c4b44e48c6bc6355ca3e5738a8
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"

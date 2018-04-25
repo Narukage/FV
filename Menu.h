@@ -1,6 +1,9 @@
 #include <iostream>
 #include "Estado.h"
-    class Menu : public Estado {
+/*
+ :public es heredera de Estado en metodos y tipo de clase
+ */
+class Menu : public Estado {
     public:
     static Menu* Instance();
 protected:

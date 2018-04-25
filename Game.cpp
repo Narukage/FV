@@ -168,6 +168,10 @@ void Game::run(){
             update();
             updateIA();
             render();
+            /*
+             state.update();
+             state.updateIA();
+             state.render();*/
             timeStartUpdate = RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime();
           }
 
