@@ -35,12 +35,19 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/Estado.o \
 	${OBJECTDIR}/Game.o \
+	${OBJECTDIR}/IA.o \
 	${OBJECTDIR}/InputManager.o \
 	${OBJECTDIR}/Invocacion.o \
+	${OBJECTDIR}/Menu.o \
+	${OBJECTDIR}/Partida.o \
+	${OBJECTDIR}/PartidaFinalizada.o \
+	${OBJECTDIR}/Pausa.o \
 	${OBJECTDIR}/Player.o \
 	${OBJECTDIR}/RenderManager.o \
 	${OBJECTDIR}/Tablero.o \
+	${OBJECTDIR}/TurnoIA.o \
 	${OBJECTDIR}/main.o
 
 
@@ -68,10 +75,20 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/summoners: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/summoners ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/Estado.o: Estado.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Estado.o Estado.cpp
+
 ${OBJECTDIR}/Game.o: Game.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Game.o Game.cpp
+
+${OBJECTDIR}/IA.o: IA.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/IA.o IA.cpp
 
 ${OBJECTDIR}/InputManager.o: InputManager.cpp
 	${MKDIR} -p ${OBJECTDIR}
@@ -82,6 +99,26 @@ ${OBJECTDIR}/Invocacion.o: Invocacion.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Invocacion.o Invocacion.cpp
+
+${OBJECTDIR}/Menu.o: Menu.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Menu.o Menu.cpp
+
+${OBJECTDIR}/Partida.o: Partida.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Partida.o Partida.cpp
+
+${OBJECTDIR}/PartidaFinalizada.o: PartidaFinalizada.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PartidaFinalizada.o PartidaFinalizada.cpp
+
+${OBJECTDIR}/Pausa.o: Pausa.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Pausa.o Pausa.cpp
 
 ${OBJECTDIR}/Player.o: Player.cpp
 	${MKDIR} -p ${OBJECTDIR}
@@ -97,6 +134,11 @@ ${OBJECTDIR}/Tablero.o: Tablero.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tablero.o Tablero.cpp
+
+${OBJECTDIR}/TurnoIA.o: TurnoIA.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TurnoIA.o TurnoIA.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}

@@ -23,8 +23,18 @@ Tablero::Tablero(){
         }
     }
     
+    //Variables del mapa
+    offsetX = 100;
+    offsetY = 80;
+    sizeX   = 50;
+    sizeY   = 50;
+    
+    //Instanciando jugadores
     player1 = new Player(1);
     player2 = new Player(2);
+    
+    //Variables de sprite
+    spriteSize = 0.9;
     
    /*0*/ idrojo = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/bloque2.png"); //bloque rojo
    /*1*/ idverde = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/bloque3.png"); //bloque verde
@@ -40,8 +50,8 @@ Tablero::Tablero(){
     retrato1 = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/retrato1.png");
     retrato2 = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/retrato2.png");
     
-    idle = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/idle.png",3.5,4,0.1f,11,2);
-
+    idle = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/dolorArterial.png",14,1,0.001f,14,1);
+    cout<<"LA ANIMACION ES: "<<idle<<endl;
  
     addUnit(player1->getUnit()->getX(),player1->getUnit()->getY(),player1->getUnit(),player1->getUnit()->getComandante());
     cout<<"X del 2: "<<player2->getUnit()->getX()<<"Y del 2: "<<player1->getUnit()->getY()<<endl;
@@ -218,15 +228,15 @@ void Tablero::resetMap(){
     }         
 }
 
-void Tablero::drawAdyacentes(sf::RenderWindow& window){
+void Tablero::drawAdyacentes(){
     for(int i=0;i<WIDTH;i++){//estos for habra que cambiarlo por unidad.movimiento y dos contadores x,y que sumados sean <= que su movimiento
         for(int j=0;j<HEIGHT;j++){
             if(board[i][j].alcanzable==1){;
                 if(board[i][j].free){
-                    RenderManager::Instance(1)->getMotor()->dibujar(idverde,(i*50)+100,(j*50)+80,0.3,window);
+                    RenderManager::Instance(1)->getMotor()->dibujar(idverde,(i*50)+100,(j*50)+80,0.3,*window);
                 }
                 else{
-                    RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,window);   
+                    RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,*window);   
                 }
               }
             }
@@ -234,21 +244,21 @@ void Tablero::drawAdyacentes(sf::RenderWindow& window){
     }
 
 
-void Tablero::drawMap(sf::RenderWindow& window){
+void Tablero::drawMap(){
     
    for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
             if(i<WIDTH/2){
                 if(board[i][j].free){
-                  /*2*/  RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,window);
+                  /*2*/  RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,*window);
                 }else{
-                    RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,window);  
+                    RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,*window);  
                 }
             }else{
                 if(board[i][j].free){
-                /*0*/ RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,window);
+                /*0*/ RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,*window);
                 }else{
-                 RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,window);   
+                 RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,*window);   
                 }
             }
         }
@@ -291,7 +301,7 @@ bool Tablero::isFree(int posx, int posy){
     return board[posx][posy].free;
 }
 
-/*DIBUJADO DE PLAYER*/
+//ADAPTAR ESTE METODO PARA QUE DIBUJE CON RENDERMANAGER POR FAVOR
 void Tablero::Mostrar_mano(sf::RenderWindow& window){
     int i=0;
     vector<Invocacion*>::iterator it3;
@@ -369,71 +379,40 @@ void Tablero::Mostrar_mano(sf::RenderWindow& window){
     
         */
 }
-void Tablero::drawUnit(sf::RenderWindow& window){
-     vector<Invocacion*>::iterator it3;
-     int i=0;
-     float vectrx= 0.3;
-     if(player1->getJugadas().empty()==false){
-     for(it3=player1->getJugadas().begin();it3!=player1->getJugadas().end();++it3){
-         if(player1->getJugadas().empty()==false&&i<player1->getJugadas().size() && player1->getJugadas().at(i)->getNombre()!=""){
-             if(!player1->getJugadas().at(i)->getCom()){
-             float calculox =(player1->getJugadas().at(i)->getX()*50)+100;
-             float calculoy = (player1->getJugadas().at(i)->getY()*50)+80;
-             /*std::cout<<"entrox : "<<player1->getJugadas().at(i)->getX()<<std::endl;
-             std::cout<<"entroy : "<<player1->getJugadas().at(i)->getY()<<std::endl;*/
-             player1->getJugadas().at(i)->setPosition(calculox,calculoy);
-             player1->getJugadas().at(i)->setScale(vectrx,vectrx);
-             window.draw(player1->getJugadas().at(i)->getSprite());
-             }
-             else{
-                 //cout<<"x vale: "<<player1->getJugadas().at(i)->getX()<<endl;
-                 //cout<<"Y vale: "<<player1->getJugadas().at(i)->getY()<<endl;
-             float calculox =(player1->getJugadas().at(i)->getX()*50)+100;
-             float calculoy = (player1->getJugadas().at(i)->getY()*50)+80;
-             /*std::cout<<"entrox : "<<player1->getJugadas().at(i)->getX()<<std::endl;
-             std::cout<<"entroy : "<<player1->getJugadas().at(i)->getY()<<std::endl;*/
-             player1->getJugadas().at(i)->setPosition(calculox,calculoy);
-             player1->getJugadas().at(i)->setScale(vectrx,vectrx);
-             //window.draw(player1->getJugadas().at(i)->getSprite());
-             RenderManager::Instance(1)->getMotor()->updateAnimacion(idle,0,RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime().asSeconds());
-             RenderManager::Instance(1)->getMotor()->dibujarAnimacion(idle,calculox,calculoy,vectrx,window);
-             }
-         }
-         i++;
-     }
+
+void Tablero::drawUnit(){
+    //Variables a usar
+    vector<Invocacion*> jugadas1 = player1->getJugadas();
+    vector<Invocacion*> jugadas2 = player2->getJugadas();
+     
+    drawInvocaciones(jugadas1);
+    drawInvocaciones(jugadas2);
 }
-     if(player2->getJugadas().empty()==false){
-         i=0;
-     for(it3=player2->getJugadas().begin();it3!=player2->getJugadas().end();++it3){
-       //  cout<<"entro en drawunit para el 2 comandante: "<<player2->getJugadas().at(i)->getNombre()<<endl;
-         if(player2->getJugadas().empty()==false&&i<player2->getJugadas().size() && player2->getJugadas().at(i)->getNombre()!=""){
-           
-             if(!player2->getJugadas().at(i)->getCom()){
-             float calculox =(player2->getJugadas().at(i)->getX()*50)+100;
-             float calculoy = (player2->getJugadas().at(i)->getY()*50)+80;
-             /*std::cout<<"entrox : "<<player1->getJugadas().at(i)->getX()<<std::endl;
-             std::cout<<"entroy : "<<player1->getJugadas().at(i)->getY()<<std::endl;*/
-             player2->getJugadas().at(i)->setPosition(calculox,calculoy);
-             player2->getJugadas().at(i)->setScale(vectrx,vectrx);
-             window.draw(player2->getJugadas().at(i)->getSprite());
-             }
-             else{
-                 
-                 //cout<<"x vale: "<<player1->getJugadas().at(i)->getX()<<endl;
-                 //cout<<"Y vale: "<<player1->getJugadas().at(i)->getY()<<endl;
-                 // cout<<"entro en drawunit para el 2 comandante: "<<player2->getJugadas().at(i)->getX()<<endl;
-             float calculox =(player2->getJugadas().at(i)->getX()*50)+100;
-             float calculoy = (player2->getJugadas().at(i)->getY()*50)+80;
-             /*std::cout<<"entrox : "<<player1->getJugadas().at(i)->getX()<<std::endl;
-             std::cout<<"entroy : "<<player1->getJugadas().at(i)->getY()<<std::endl;*/
-             player2->getJugadas().at(i)->setPosition(calculox,calculoy);
-             player2->getJugadas().at(i)->setScale(vectrx,vectrx);
-             window.draw(player2->getJugadas().at(i)->getSprite()); 
-             }
-         }
-         i++;
-     }
+
+void Tablero::drawInvocaciones(vector<Invocacion*> array)
+{
+    //Recorremos el array si no está vacío
+    if(!array.empty()){
+        for(unsigned int i = 0; i < array.size(); i++){
+            if(array[i]->getNombre()!=""){
+                
+                //Se calcula su posición en el mapa
+                float calculox = array[i]->getX()*sizeX+68;
+                float calculoy = array[i]->getY()*sizeY+10;
+                
+                //Se coloca y escala
+                array[i]->setPosition(calculox,calculoy);
+                array[i]->setScale(spriteSize,spriteSize);
+                
+                //Se pinta la animación correspondiente
+                RenderManager::Instance(1)->getMotor()->updateAnimacion(idle,0,RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime().asSeconds());
+                RenderManager::Instance(1)->getMotor()->dibujarAnimacion(idle,calculox,calculoy,spriteSize,window); 
+            }
+        }
+    }
 }
+     
+    //TESTEO
     /*int pos=-1;
     for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
@@ -489,80 +468,80 @@ void Tablero::drawUnit(sf::RenderWindow& window){
                 }
         }
     }*/
-}
-void Tablero::drawLife(int commander, sf::RenderWindow& window){
+
+void Tablero::drawLife(int commander){
     if(commander==1){
-        RenderManager::Instance(1)->getMotor()->dibujar(idvidacu,100,5,0.5,window);
+        RenderManager::Instance(1)->getMotor()->dibujar(idvidacu,100,5,0.5,*window);
                 
         for(int i=0;i<player1->getLife();i++){
-            RenderManager::Instance(1)->getMotor()->dibujar(idvidaco,(i*2)+135,10,2,window);
+            RenderManager::Instance(1)->getMotor()->dibujar(idvidaco,(i*2)+135,10,2,*window);
         }
     }else{
-        RenderManager::Instance(1)->getMotor()->dibujar(idvidacu,670,5,0.5,window);
+        RenderManager::Instance(1)->getMotor()->dibujar(idvidacu,670,5,0.5,*window);
         
         for(int i=0;i<player2->getLife();i++){
-            RenderManager::Instance(1)->getMotor()->dibujar(idvidaco,(i*2)+455,10,2,window);
+            RenderManager::Instance(1)->getMotor()->dibujar(idvidaco,(i*2)+455,10,2,*window);
         }
     }
 }
 
-void Tablero::drawLifeNumb(int commander, sf::RenderWindow& window){
+void Tablero::drawLifeNumb(int commander){
     if(commander==1){
         
         int life = player1->getLife();
             std::stringstream ss;
             ss << life;
-            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuente,350,1,0.7, window);
+            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuente,350,1,0.7, *window);
     }else{
 
         int life = player2->getLife();
             std::stringstream ss;
             ss << life;
-            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuente,412,1,0.7, window);
+            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuente,412,1,0.7, *window);
     }
 }
 
-void Tablero::drawManaNumb(int commander, sf::RenderWindow& window){
+void Tablero::drawManaNumb(int commander){
     if(commander==1){
 
         int mana = player1->getMana();
             std::stringstream ss;
             ss << mana;
-            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuentemana,193,37,0.8, window);
+            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuentemana,193,37,0.8, *window);
     }else{
 
         int mana = player2->getMana();
             std::stringstream ss;
             ss << mana;
-            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuentemana,620,37,0.8, window);
+            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuentemana,620,37,0.8, *window);
     }
 }
 
-void Tablero::drawManaRest(int commander, sf::RenderWindow& window){
+void Tablero::drawManaRest(int commander){
     if(commander==1){
  
         int manarest = player1->getManaRest();
                 std::stringstream ss;
                 ss << manarest;
-                RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),manarest,158,37,0.8,window);
+                RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),manarest,158,37,0.8,*window);
     }else{
   
         int manarest = player2->getManaRest();
                 std::stringstream ss;
                 ss << manarest;
-                RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),manarest,585,37,0.8,window);
+                RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),manarest,585,37,0.8,*window);
     }
 }
 
-void Tablero::drawBarra(int commander, sf::RenderWindow& window){
+void Tablero::drawBarra(int commander){
     if(commander==1){
-       RenderManager::Instance(1)->getMotor()->escribir("/",barra,182,37,0.8,window);
+       RenderManager::Instance(1)->getMotor()->escribir("/",barra,182,37,0.8,*window);
     }else{
 }
-       RenderManager::Instance(1)->getMotor()->escribir("/",manarest,609,37,0.8,window);
+       RenderManager::Instance(1)->getMotor()->escribir("/",manarest,609,37,0.8,*window);
     }
 
-void Tablero::drawMana(int commander, sf::RenderWindow& window){
+void Tablero::drawMana(int commander){
     /*if(commander==1){
         int mana = player1->getMana();
         coco.setFillColor(sf::Color::Blue);
@@ -580,11 +559,11 @@ void Tablero::drawMana(int commander, sf::RenderWindow& window){
     }*/
 }
 
-void Tablero::drawRetrato(int commander, sf::RenderWindow& window){
+void Tablero::drawRetrato(int commander){
     if(commander==1){
-        RenderManager::Instance(1)->getMotor()->dibujar(retrato1,0,0,1,window);
+        RenderManager::Instance(1)->getMotor()->dibujar(retrato1,0,0,1,*window);
     }else{
-        RenderManager::Instance(1)->getMotor()->dibujar(retrato2,700,0,1,window);
+        RenderManager::Instance(1)->getMotor()->dibujar(retrato2,700,0,1,*window);
     }
 }
 

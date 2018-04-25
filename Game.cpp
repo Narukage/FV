@@ -22,12 +22,14 @@ void Game::inicializar(){
     
     //No se si usar InputManager pasandole la ventana y creandola aqui o todo en RenderManager
     RenderManager::Instance(1)->getMotor()->crearVentana(60,false, window);
-    Tablero::Instance();
     inv = new Invocacion();
     generalmuerto1=false;
     generalmuerto2=false;
     empate=false;
     isPlay=true;
+    
+    //Pasamos la ventana
+    Tablero::Instance()->setWindow(&window);
 }
 
 void Game::update(){
@@ -129,24 +131,24 @@ void Game:: updateIA(){
 
 void Game::render(){
     window.clear(sf::Color::Black);
-    Tablero::Instance()->drawMap(window);
-    Tablero::Instance()->drawUnit(window);
+    Tablero::Instance()->drawMap();
+    Tablero::Instance()->drawUnit();
     if(tieneadyacentes){
-        Tablero::Instance()->drawAdyacentes(window);
+        Tablero::Instance()->drawAdyacentes();
     }
-    Tablero::Instance()->drawLife(1,window);
-    Tablero::Instance()->drawLifeNumb(1,window);
-    Tablero::Instance()->drawLife(2,window);
-    Tablero::Instance()->drawLifeNumb(2,window);
-    Tablero::Instance()->drawMana(1,window);
-    Tablero::Instance()->drawManaNumb(1,window);
-    Tablero::Instance()->drawManaRest(1,window);
-    Tablero::Instance()->drawBarra(1,window);
-    Tablero::Instance()->drawMana(2,window);
-    Tablero::Instance()->drawManaNumb(2,window);
-    Tablero::Instance()->drawManaRest(2,window);
-    Tablero::Instance()->drawRetrato(1,window);
-    Tablero::Instance()->drawRetrato(2,window); //same
+    Tablero::Instance()->drawLife(1);
+    Tablero::Instance()->drawLifeNumb(1);
+    Tablero::Instance()->drawLife(2);
+    Tablero::Instance()->drawLifeNumb(2);
+    Tablero::Instance()->drawMana(1);
+    Tablero::Instance()->drawManaNumb(1);
+    Tablero::Instance()->drawManaRest(1);
+    Tablero::Instance()->drawBarra(1);
+    Tablero::Instance()->drawMana(2);
+    Tablero::Instance()->drawManaNumb(2);
+    Tablero::Instance()->drawManaRest(2);
+    Tablero::Instance()->drawRetrato(1);
+    Tablero::Instance()->drawRetrato(2); //same
     Tablero::Instance()->Mostrar_mano(window);
     window.display();
 }

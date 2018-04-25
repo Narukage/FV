@@ -9,7 +9,8 @@ Invocacion::Invocacion() {
     ataque = 0;
     vida = 0;
     comandante=false;
-
+    com = false;
+    mano = false;
 }
 Invocacion::Invocacion(string nombre,int coste,int vida,int ataque,int comandante,int unico) {
         this->nombre = nombre;

@@ -20,8 +20,8 @@ class Invocacion{
         sf::Texture textcarta;
         sf::Sprite monstruo;
         sf::Sprite cartamano;
-        bool com=false;
-        bool mano=false;
+        bool com;  //???????????????'
+        bool mano; //????
         int unico;// -1 Es el jugador -2 es el rival
         
     public:

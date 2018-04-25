@@ -10,7 +10,15 @@ Estado* Estado::Instance(){
 Estado::Estado(){
     
 }
-Estado *p1=Estado::Instance();
-Estado *p2=p1->Instance();
-Estado &ref=*Estado::Instance();
-                                                            
+Estado *t1=Estado::Instance();
+Estado *t2=t1->Instance();
+Estado &reft=*Estado::Instance();
+void Estado::update(){
+    
+}   
+void Estado::updateIA(){
+    
+}
+void Estado::render(){
+    
+}

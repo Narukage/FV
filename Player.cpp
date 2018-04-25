@@ -4,8 +4,8 @@
 
 Player::Player(int commander){
     vida=100;
-    mana=1;
-    manarest=1;
+    mana=10;
+    manarest=5;
     Invocacion* prueba = new Invocacion();
     
     if(commander==1){
@@ -293,21 +293,17 @@ bool Player:: eliminarMano(Invocacion* invo2){
     }*/
   
 }
+
+//Se recorren las jugadas para eliminar la invocación
 bool Player:: eliminarJugadas(Invocacion* invo2){// get unico creo que no sirve si miramos posiciones
-   vector<Invocacion*>::iterator it4;
-    int i=0;
-    for(it4=jugadas.begin();it4!=jugadas.end();++it4){
-         //cout<<"estoy apunto de morir: "<<i<<endl;
-        if(i<jugadas.size()&&jugadas.at(i)->GetUnico()==invo2->GetUnico()){  
+    for(unsigned int i = 0; i < jugadas.size(); i++){
+        //cout<<"estoy apunto de morir: "<<i<<endl;
+        if(jugadas.at(i)->GetUnico()==invo2->GetUnico()){  
             cout<<"me van a matar: "<<invo2->getNombre()<<endl;
-            jugadas.erase(it4);  
-
-              return true;      
-                    
+            jugadas.erase(jugadas.begin()+i);  
+            return true;
         }
-        i++;
     }
-
     return false;
 }
  Invocacion* Player::  JugadaEn(int posx, int posy){
