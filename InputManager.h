@@ -32,20 +32,30 @@ class FachadaInput : public InputFachada {
         sf::Event evento;
     
     public:
-     FachadaInput() : InputFachada(){};
-     virtual ~FachadaInput(){};
-     void Eventos(bool isPlay, sf::RenderWindow& window);
-     void nexTurn(int num){ turno=num+1; };
-     void cambioTurno(bool meTo){if(meTo==true){meToca=false;}else{meToca=true;}};
-     bool getPresionado(){ return presionado; };
+        ///////////////////////////////
+        // CONSTRUCTO / DESTRUCTOR
+        ///////////////////////////////
+        FachadaInput() : InputFachada(){};
+        virtual ~FachadaInput(){};
+        
+        ///////////////////////////////
+        // FUNCIONES PRINCIPALES
+        ///////////////////////////////
+        void Eventos(bool isPlay, sf::RenderWindow& window);
+        void nexTurn(int num){ turno=num+1; };
+        void cambioTurno(bool meTo){if(meTo==true){meToca=false;}else{meToca=true;}};
 
-     sf::Vector2i getCoord(){ return coord; };
-     sf::Vector2i getCampo(){ return campo; };
-     sf::Vector2i getMano(){ return mano; };
-     int getTurno(){return turno;}
-     bool getMeToca(){ return meToca; };
-     void setMeToca(bool meTo){meToca = meTo;}
-     void setTurno(int num){turno=num;}
+        ///////////////////////////////
+        // GETTERS Y SETTERS
+        ///////////////////////////////
+        sf::Vector2i getCoord()         { return coord;      };
+        sf::Vector2i getCampo()         { return campo;      };
+        sf::Vector2i getMano()          { return mano;       };
+        int getTurno()                  { return turno;      };
+        bool getMeToca()                { return meToca;     };
+        bool getPresionado()            { return presionado; };
+        void setMeToca(bool meTo)       { meToca = meTo;     };
+        void setTurno(int num)          { turno=num;         };
 };    
 
 #endif

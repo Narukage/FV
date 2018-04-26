@@ -62,16 +62,16 @@ class Player{
         ///////////////////////////////
         // GETTERS Y SETTERS
         ///////////////////////////////
-        void setLife(int x)     { vida=x;           };
-        void setMana(int x)     { mana=x;           };
-        void setManaRest(int x) { manarest=x;       };
-        void setPosMano(int pos){ posmano=pos;      };
-        int getLife()           { return vida;      };
-        int getMana()           { return mana;      };
-        int getManaRest()       { return manarest;  };
-        vector<Invocacion*> getMano()   { return mano;       };
-        vector<Invocacion*> getJugadas(){ return jugadas;    };
-        Invocacion* getUnit()           { return comandante; };
+        void setLife(int x)                 { vida=x;           };
+        void setMana(int x)                 { mana=x;           };
+        void setManaRest(int x)             { manarest=x;       };
+        void setPosMano(int pos)            { posmano=pos;      };
+        int getLife()                       { return vida;      };
+        int getMana()                       { return mana;      };
+        int getManaRest()                   { return manarest;  };
+        vector<Invocacion*> getMano()       { return mano;      };
+        vector<Invocacion*> getJugadas()    { return jugadas;   };
+        Invocacion* getUnit()               { return comandante;};
        
 };
 

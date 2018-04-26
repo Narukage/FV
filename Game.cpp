@@ -149,7 +149,7 @@ void Game::render(){
     Tablero::Instance()->drawManaRest(2);
     Tablero::Instance()->drawRetrato(1);
     Tablero::Instance()->drawRetrato(2); //same
-    Tablero::Instance()->Mostrar_mano(window);
+    Tablero::Instance()->Mostrar_mano();
     window.display();
 }
 

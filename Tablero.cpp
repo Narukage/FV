@@ -301,19 +301,22 @@ bool Tablero::isFree(int posx, int posy){
 }
 
 //ADAPTAR ESTE METODO PARA QUE DIBUJE CON RENDERMANAGER POR FAVOR
-void Tablero::Mostrar_mano(sf::RenderWindow& window){
-    int i=0;
-    vector<Invocacion*>::iterator it3;
-    for(it3=player1->getMano().begin();it3!=player1->getMano().end();++it3){
-        if(i<player1->getMano().size()){
-                   // std::cout<< "entro posicion: "<<((i*100)+150)<<std::endl;
-
-        //player1->getMano().at(i)->getSpriteM().setPosition((i*100)+150,480);
-            //player1->getMano().at(i)->soyManoT()
-            //player1->getMano().at(i)->soyManoT(player1->getMano().at(i)->getNombre(),player1->getMano().at(i)->getJugar());
-        window.draw( player1->getMano().at(i)->getSpriteM());
+void Tablero::Mostrar_mano(){
+    std::vector<Invocacion*> array = player1->getMano();
+    if(!array.empty()){
+        for(unsigned int i = 0; i < array.size(); i++){
+            
+            //Se calcula su posición en el mapa
+            float calculox =(i*100)+150;
+            float calculoy = array[i]->getY()*480;
+              
+            //Se coloca y escala
+            array[i]->setPosition(calculox,calculoy);
+            array[i]->setScale(spriteSize,spriteSize);
+            
+            //Se pinta la carta correspondiente a cada id
+            RenderManager::Instance(1)->getMotor()->dibujar(array[i]->getIdCarta(),calculox,480,spriteSize,*window);
         }
-        i++;
     }
     /*
     vector<Invocacion*>::iterator it3;

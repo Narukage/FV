@@ -98,7 +98,7 @@ class Tablero{
         void drawMana(int commander);
         void drawRetrato(int commander);
         
-        void Mostrar_mano(sf::RenderWindow& window);
+        void Mostrar_mano();
         bool isFree(int posx, int posy);
         
         ///////////////////////////////

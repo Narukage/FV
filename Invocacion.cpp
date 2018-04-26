@@ -48,37 +48,25 @@ bool Invocacion:: soyManoT(string nombretext,int i){
     if(mano==true){
         std::cout << "mano true" << std::endl;
         if(nombretext=="Zoogx"){
-            if(!textcarta.loadFromFile("assets/Sprites/Zoogxredim.png")){
-                std::cout<<"Textura en mano aplicada"<<std::endl;
-            }
+            idcarta = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/Zoogxredim.png");
             devolver=true;
         }
         if(nombretext=="Yigx"){
-            if(!textcarta.loadFromFile("assets/Sprites/Yigxredim.png")){
-                std::cout<<"Textura en mano aplicada"<<std::endl;
-            }
-           devolver=true;
+            idcarta = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/Yigxredim.png");
+            devolver=true;
         }
         if(nombretext=="Cthughax"){
-            if(!textcarta.loadFromFile("assets/Sprites/Cthughaxredim.png")){
-                std::cout<<"Textura en mano aplicada"<<std::endl;
-            }
+            idcarta = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/Cthughax.png");
             devolver=true;
         }
         if(nombretext=="Gugox"){
-            if(!textcarta.loadFromFile("assets/Sprites/Gugoxredim.png")){
-                std::cout<<"Textura en mano aplicada"<<std::endl;
-            }
-           devolver=true;
-        }
-        if(nombretext=="Bokrugs"){
-            if(!textcarta.loadFromFile("assets/Sprites/Bokrugsredim.png")){
-                std::cout<<"Textura en mano aplicada"<<std::endl;
-            }
+            idcarta = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/Gugoxredim.png");
             devolver=true;
         }
-        cartamano.setTexture(textcarta);
-        cartamano.setPosition((i*100)+150,480);
+        if(nombretext=="Bokrugs"){
+            idcarta = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/Bokrugsredim.png");
+            devolver=true;
+        }
     }
     return devolver;
 }
