@@ -13,8 +13,8 @@
 class Game{
     
 private:
-     //Estado* state=Menu::Instance();   <- descomentar esta linea cuando el menu este terminado
     bool isPlay;
+    //Estado* state=Menu::Instance();   <- descomentar esta linea cuando el menu este terminado
     sf::RenderWindow window;
     RenderManager* motor;
     Tablero* tablero;
