@@ -54,7 +54,7 @@ void Game::update(){
         
         else if(cartaseleccionada ){ //queremos invocar en tablero
             if((coord.x>100 && coord.x<700)&&(coord.y>80 && coord.y<475)){
-                    
+                cartaseleccionada=false;
                     if(Tablero::Instance()->addUnit(campo.x,campo.y,inv,1)){
                         
                         cartaseleccionada=false;

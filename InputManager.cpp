@@ -41,7 +41,7 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                         if(evento.key.code==sf::Keyboard::Q){
                             isPlay = false;
                         }
-                        if(evento.key.code==sf::Keyboard::Space){
+                        if(evento.key.code==sf::Keyboard::Space && !Game::Instance()->getSeleccionada()){
                           
                             nexTurn(turno);
                             cambioTurno(meToca);
