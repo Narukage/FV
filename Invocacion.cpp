@@ -52,7 +52,7 @@ bool Invocacion:: soyManoT(string nombretext,int i){
             devolver=true;
         }
         if(nombretext=="Yigx"){
-            idcarta = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/Yigxredim.png");
+            idcarta = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/cartayigx.png");
             devolver=true;
         }
         if(nombretext=="Cthughax"){
@@ -60,7 +60,7 @@ bool Invocacion:: soyManoT(string nombretext,int i){
             devolver=true;
         }
         if(nombretext=="Gugox"){
-            idcarta = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/Gugoxredim.png");
+            idcarta = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/gugoxcarta.png");
             devolver=true;
         }
         if(nombretext=="Bokrugs"){
@@ -98,7 +98,7 @@ bool Invocacion:: soyJugada(string nombretext){
             devolver=true;
         }
         if(nombretext=="Gugox"){
-            id = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/gugoxiddle.png",14,1,0.001f,14,1);
+            id = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/GUGOXITO.png",12,1,0.001f,12,1);
             idcartasel = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/gugoxcartaanimacion.png",10,1,0.001f,10,1);
             devolver=true;
         }

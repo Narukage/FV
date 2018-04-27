@@ -1,5 +1,6 @@
 #include "InputManager.h"
 #include "Tablero.h"
+#include "Game.h"
 
 ////SINGLETON
 
@@ -32,6 +33,7 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                if(evento.type==sf::Event::Closed){
                             isPlay = false;
                   }   
+                              
           switch(evento.type){
            
                     case sf::Event::KeyPressed:
