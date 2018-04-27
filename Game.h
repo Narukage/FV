@@ -38,7 +38,7 @@ private:
     bool generalmuerto2=false;
     bool tieneadyacentes=false;
     bool meToca = true;
-   
+    int id = -1;
        
     static Game* pinstance;
 private:

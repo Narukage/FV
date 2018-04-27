@@ -301,21 +301,23 @@ bool Tablero::isFree(int posx, int posy){
 }
 
 //ADAPTAR ESTE METODO PARA QUE DIBUJE CON RENDERMANAGER POR FAVOR
-void Tablero::Mostrar_mano(){
+void Tablero::Mostrar_mano(int id){
     std::vector<Invocacion*> array = player1->getMano();
     if(!array.empty()){
         for(unsigned int i = 0; i < array.size(); i++){
+            if(array[i]->getIdCarta()!=id){
             
-            //Se calcula su posición en el mapa
-            float calculox =(i*100)+150;
-            float calculoy = array[i]->getY()*480;
-              
-            //Se coloca y escala
-            array[i]->setPosition(calculox,calculoy);
-            array[i]->setScale(spriteSize,spriteSize);
-            
-            //Se pinta la carta correspondiente a cada id
-            RenderManager::Instance(1)->getMotor()->dibujar(array[i]->getIdCarta(),calculox,480,spriteSize,*window);
+                //Se calcula su posición en el mapa
+                float calculox =(i*100)+150;
+                float calculoy = array[i]->getY()*480;
+
+                //Se coloca y escala
+                array[i]->setPosition(calculox,calculoy);
+                array[i]->setScale(spriteSize,spriteSize);
+
+                //Se pinta la carta correspondiente a cada id
+                RenderManager::Instance(1)->getMotor()->dibujar(array[i]->getIdCarta(),calculox,480,spriteSize,*window);
+            }
         }
     }
     /*

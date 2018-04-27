@@ -56,7 +56,7 @@ bool Invocacion:: soyManoT(string nombretext,int i){
             devolver=true;
         }
         if(nombretext=="Cthughax"){
-            idcarta = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/Cthughax.png");
+            idcarta = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/Cthughaxredim.png");
             devolver=true;
         }
         if(nombretext=="Gugox"){
@@ -76,6 +76,7 @@ bool Invocacion:: soyJugada(string nombretext){
     if(mano==false){
         if(nombretext=="Zoogx"){
             id = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/zoogxiddle.png",11,1,0.001f,11,1);
+            idcartasel = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/zoogxcartaanimacion.png",10,1,0.001f,10,1);
             devolver=true;
         }
          if(nombretext=="comandante1"){
@@ -88,18 +89,22 @@ bool Invocacion:: soyJugada(string nombretext){
         }
         if(nombretext=="Yigx"){
             id = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/yigxiddle.png",14,1,0.001f,14,1);
+            idcartasel = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/yigxcartaanimacion.png",10,1,0.001f,10,1);
             devolver=true;
         }
         if(nombretext=="Cthughax"){
             id = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/cthughaxiddle.png",10,1,0.001f,10,1);
+            idcartasel = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/cthughaxcartaanimacion.png",10,1,0.001f,10,1);
             devolver=true;
         }
         if(nombretext=="Gugox"){
             id = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/gugoxiddle.png",14,1,0.001f,14,1);
+            idcartasel = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/gugoxcartaanimacion.png",10,1,0.001f,10,1);
             devolver=true;
         }
         if(nombretext=="Bokrugs"){
             id = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/dolorArterial.png",14,1,0.001f,14,1);
+            idcartasel = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/cartaanimacion.png",10,1,0.001f,10,1);
             devolver=true;
         }
     }

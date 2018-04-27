@@ -34,6 +34,7 @@ void Game::inicializar(){
 
 void Game::update(){
     //Una vez este el StateManager hay que mover el update
+    id = -1;
     RenderManager::Instance(1)->getMotor()->crearClock();
     presionado = InputManager::Instance(1)->getInput()->getPresionado();
     if(presionado){
@@ -45,13 +46,15 @@ void Game::update(){
             inv=Tablero::Instance()->esCarta(mano.x,mano.y);
             if(inv!=NULL){
                 std::cout<<"esCarta es distinto de null"<<std::endl;
+                id = inv->getIdCartaSel();
                 cartaseleccionada=true;
+                
             }
         }
         
         else if(cartaseleccionada ){ //queremos invocar en tablero
             if((coord.x>100 && coord.x<700)&&(coord.y>80 && coord.y<475)){
-              
+                    
                     if(Tablero::Instance()->addUnit(campo.x,campo.y,inv,1)){
                         
                         cartaseleccionada=false;
@@ -131,11 +134,14 @@ void Game:: updateIA(){
 
 void Game::render(){
     window.clear(sf::Color::Black);
+    
     Tablero::Instance()->drawMap();
     Tablero::Instance()->drawUnit();
+    
     if(tieneadyacentes){
         Tablero::Instance()->drawAdyacentes();
     }
+    
     Tablero::Instance()->drawLife(1);
     Tablero::Instance()->drawLifeNumb(1);
     Tablero::Instance()->drawLife(2);
@@ -149,7 +155,13 @@ void Game::render(){
     Tablero::Instance()->drawManaRest(2);
     Tablero::Instance()->drawRetrato(1);
     Tablero::Instance()->drawRetrato(2); //same
-    Tablero::Instance()->Mostrar_mano();
+    Tablero::Instance()->Mostrar_mano(id);
+
+    if(cartaseleccionada){
+        RenderManager::Instance(1)->getMotor()->updateAnimacion(id,0,0.1f);
+        RenderManager::Instance(1)->getMotor()->dibujarAnimacion(id,inv->getJugar()*100+110,450,1,&window);
+    }
+           
     window.display();
 }
 
