@@ -730,7 +730,7 @@ int Tablero::atackToPosIA(Invocacion* ia, Invocacion* humano){
         }
     }
     else if(ia->getVida()<=0){
-        setFree(ia->getX(),ia->getY(), true);
+        setFree(ia->getX(),ia->getY(),true);
         player2->eliminarJugadas(ia);
         retorno=7;//muerte bicho
     }
