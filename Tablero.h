@@ -83,6 +83,7 @@ class Tablero{
         int getAlcanzable(int posx, int posy);
         Invocacion* esCarta(int posx, int posy);
         void resetMap();
+        bool isFree(int posx, int posy);
         
         ///////////////////////////////
         // DIBUJADO
@@ -99,9 +100,7 @@ class Tablero{
         void drawBarra(int commander);
         void drawMana(int commander);
         void drawRetrato(int commander);
-        
-        void Mostrar_mano();
-        bool isFree(int posx, int posy);
+        void Mostrar_mano(int id);
         
         ///////////////////////////////
         // GETTERS Y SETTERS
@@ -109,6 +108,5 @@ class Tablero{
         void setWindow(sf::RenderWindow* w) { window = w;    };
         void setTurno(bool metoca)          { turno=metoca;  };
         Player* getPlayer()                 { return player1;};
-        
         void setFree(int posx,int posy,bool set);
 };

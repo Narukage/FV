@@ -323,7 +323,6 @@ bool Player:: eliminarJugadas(Invocacion* invo2){// get unico creo que no sirve 
             jugadas.erase(jugadas.begin()+i); 
             delete apoyo;
             return true;
-            
         }
     }
     return false;

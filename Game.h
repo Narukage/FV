@@ -27,7 +27,6 @@ private:
     bool presionado;
     bool cartaseleccionada = false;
     bool actuainvocacion =false;
-    bool seleccionado=false;
     Invocacion* inv;
     int posXinvocacion=-1;
     int posYinvocacion=-1;
@@ -39,7 +38,7 @@ private:
     bool generalmuerto2=false;
     bool tieneadyacentes=false;
     bool meToca = true;
-   
+    int id = -1;
        
     static Game* pinstance;
 private:
@@ -56,5 +55,5 @@ public:
     static Game* Instance();
     ~Game();
     void run();
-    bool getSeleccionada(){return cartaseleccionada;}
+    bool getSeleccionada()      { return cartaseleccionada; };
 };

@@ -24,7 +24,7 @@ class Invocacion{
         int idsprite;
         int id;
         int idcarta;
-        
+        int idcartasel;
         
     public:
         ///////////////////////////////
@@ -70,4 +70,5 @@ class Invocacion{
         int getCoste()                                      { return coste;         };
         int getId()                                         { return id;            };
         int getIdCarta()                                    { return idcarta;       };
+        int getIdCartaSel()                                 { return idcartasel;    };
 };

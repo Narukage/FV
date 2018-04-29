@@ -1,5 +1,6 @@
 #include "InputManager.h"
 #include "Tablero.h"
+#include "Game.h"
 
 ////SINGLETON
 
@@ -32,6 +33,7 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                if(evento.type==sf::Event::Closed){
                             isPlay = false;
                   }   
+                              
           switch(evento.type){
            
                     case sf::Event::KeyPressed:
@@ -39,7 +41,7 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                         if(evento.key.code==sf::Keyboard::Q){
                             isPlay = false;
                         }
-                        //if(evento.key.code==sf::Keyboard::Space && Game::Instance()->getSeleccionada()==false){
+                        if(evento.key.code==sf::Keyboard::Space && !Game::Instance()->getSeleccionada()){
                           
                             nexTurn(turno);
                             cambioTurno(meToca);
@@ -50,7 +52,6 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                              if(meToca==true){
                                  int mana_aux = Tablero::Instance()->getPlayer()->getMana();
                                  mana_aux++;
-                                 Tablero::Instance()->getPlayer()->ResetStats();
                                  Tablero::Instance()->getPlayer()->setMana(mana_aux);
                                  Tablero::Instance()->getPlayer()->setManaRest(mana_aux);
                                  cout<< "Mana total:"<<Tablero::Instance()->getPlayer()->getMana()<<endl;
@@ -59,7 +60,7 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                              }
                              /*if(meToca==false){
                                  srand(time(NULL));
-                                 //preguntar naru tama�os
+                                 //preguntar naru tamaños
                                  int eX = rand()% 600 + 800;
                                  int eY = rand()% 100 + 500;
                                  //eX=1;
@@ -85,7 +86,7 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                             
                             }*/
                         
-                        //}
+                        }
 
                     case sf::Event::MouseButtonPressed:
                         if(meToca==true){
@@ -101,8 +102,6 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                             
                             campo.x = (coord.x-100)/50;
                             campo.y = (coord.y-80)/50;
-                            cout<<"Campo x : "<<campo.x<<endl;
-                            cout<<"Campo y : "<<campo.y<<endl;
                         }
                        }
                 }

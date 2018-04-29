@@ -441,22 +441,23 @@ bool Tablero::isFree(int posx, int posy){
     return board[posx][posy].free;
 }
 
-//ADAPTAR ESTE METODO PARA QUE DIBUJE CON RENDERMANAGER POR FAVOR
-void Tablero::Mostrar_mano(){
+void Tablero::Mostrar_mano(int id){
     std::vector<Invocacion*> array = player1->getMano();
     if(!array.empty()){
         for(unsigned int i = 0; i < array.size(); i++){
+            if(array[i]->getIdCarta()!=id){
             
-            //Se calcula su posición en el mapa
-            float calculox =(i*100)+150;
-            float calculoy = array[i]->getY()*480;
-              
-            //Se coloca y escala
-            array[i]->setPosition(calculox,calculoy);
-            array[i]->setScale(spriteSize,spriteSize);
-            
-            //Se pinta la carta correspondiente a cada id
-            RenderManager::Instance(1)->getMotor()->dibujar(array[i]->getIdCarta(),calculox,480,spriteSize,*window);
+                //Se calcula su posición en el mapa
+                float calculox =(i*100)+150;
+                float calculoy = array[i]->getY()*480;
+
+                //Se coloca y escala
+                array[i]->setPosition(calculox,calculoy);
+                array[i]->setScale(spriteSize,spriteSize);
+
+                //Se pinta la carta correspondiente a cada id
+                RenderManager::Instance(1)->getMotor()->dibujar(array[i]->getIdCarta(),calculox,480,spriteSize,*window);
+            }
         }
     }
     /*
@@ -729,7 +730,7 @@ int Tablero::atackToPosIA(Invocacion* ia, Invocacion* humano){
         }
     }
     else if(ia->getVida()<=0){
-        setFree(ia->getX(),ia->getY());
+        setFree(ia->getX(),ia->getY(), true);
         player2->eliminarJugadas(ia);
         retorno=7;//muerte bicho
     }
@@ -741,7 +742,7 @@ int Tablero::atackToPosIA(Invocacion* ia, Invocacion* humano){
         
     }
     else if(humano->getVida()<=0){
-        setFree(humano->getX(),humano->getY());
+        setFree(humano->getX(),humano->getY(), true);
         player1->eliminarJugadas(humano);       
     }
     if(iaB==true&&hum==true){
@@ -800,6 +801,6 @@ int Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
          if((unidad2->getCom()==true&&unidad->getCom()==true) && (unidad2->getVida()<=0 && unidad->getVida()<=0)){
              retorno=-3; //EMPATE
         }
-      player1->JugadaEn(fromx,fromy)->setMovimiento(player1->JugadaEn(fromx,fromy)->getMovimiento()-1);
+     player1->JugadaEn(fromx,fromy)->setMovimiento(player1->JugadaEn(fromx,fromy)->getMovimiento()-1);
      return retorno;
 }

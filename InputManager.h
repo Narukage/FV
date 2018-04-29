@@ -59,4 +59,3 @@ class FachadaInput : public InputFachada {
 };    
 
 #endif
-
