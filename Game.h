@@ -6,15 +6,16 @@
 #include "Player.h"
 #include "RenderManager.h"
 #include "InputManager.h"
-#include "Menu.h"
+#include "Estado.h"
+
 
 
 
 class Game{
     
 private:
+    Estado* state;  // <- descomentar esta linea cuando el menu este terminado
     bool isPlay;
-    //Estado* state=Menu::Instance();   <- descomentar esta linea cuando el menu este terminado
     sf::RenderWindow window;
     RenderManager* motor;
     Tablero* tablero;
@@ -55,4 +56,6 @@ public:
     static Game* Instance();
     ~Game();
     void run();
+    void cambiarApartida();
+    void cambiarApausa();
 };

@@ -105,3 +105,16 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                 }
     }
 }
+    bool InputManager::PulsaPartida() {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){
+            return true;
+        }
+        return false;
+    }
+    bool InputManager::PulsaEscape() {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+            return true;
+        }
+        return false;
+    }
+
