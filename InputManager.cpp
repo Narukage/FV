@@ -39,7 +39,7 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                         if(evento.key.code==sf::Keyboard::Q){
                             isPlay = false;
                         }
-                        if(evento.key.code==sf::Keyboard::Space){
+                        //if(evento.key.code==sf::Keyboard::Space && Game::Instance()->getSeleccionada()==false){
                           
                             nexTurn(turno);
                             cambioTurno(meToca);
@@ -48,11 +48,18 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                              cout<<"he entrado"<<turno<<std::endl;
                              
                              if(meToca==true){
+                                 int mana_aux = Tablero::Instance()->getPlayer()->getMana();
+                                 mana_aux++;
+                                 Tablero::Instance()->getPlayer()->ResetStats();
+                                 Tablero::Instance()->getPlayer()->setMana(mana_aux);
+                                 Tablero::Instance()->getPlayer()->setManaRest(mana_aux);
+                                 cout<< "Mana total:"<<Tablero::Instance()->getPlayer()->getMana()<<endl;
+                                 cout<<"Mana restante:"<<Tablero::Instance()->getPlayer()->getManaRest()<<endl;
                                  Tablero::Instance()->getPlayer()->Robar();
                              }
                              /*if(meToca==false){
                                  srand(time(NULL));
-                                 //preguntar naru tamaños
+                                 //preguntar naru tama�os
                                  int eX = rand()% 600 + 800;
                                  int eY = rand()% 100 + 500;
                                  //eX=1;
@@ -78,7 +85,7 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                             
                             }*/
                         
-                        }
+                        //}
 
                     case sf::Event::MouseButtonPressed:
                         if(meToca==true){
@@ -94,6 +101,8 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                             
                             campo.x = (coord.x-100)/50;
                             campo.y = (coord.y-80)/50;
+                            cout<<"Campo x : "<<campo.x<<endl;
+                            cout<<"Campo y : "<<campo.y<<endl;
                         }
                        }
                 }

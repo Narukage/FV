@@ -2,7 +2,6 @@
 #define RENDERMANAGER_H
 #include "IFachada.h"
 
-
 //SINGLETON
 
 class RenderManager {
@@ -30,8 +29,7 @@ private:
         sf::Texture* textura;
         sf::Sprite *sprite;
     };
-        
-    Sprite s;
+       
     std::vector<Sprite> sprites;
    
     struct Animacion{
@@ -46,7 +44,6 @@ private:
         sf::Sprite* sprite;
     };
     
-    Animacion a;
     std::vector<Animacion> animaciones;
     int cont = 0;
     int cont2 = 0;
@@ -59,7 +56,6 @@ private:
         sf::Sound* sound;
     };
     
-    Audio m;
     std::vector<Audio> sonidos;
     
     struct Texto{
@@ -68,7 +64,6 @@ private:
         sf::Text* text;
     };
     
-    Texto t;
     std::vector<Texto> textos;
     
 public:
@@ -86,7 +81,7 @@ public:
     //=================================
     int crearAnimacion(std::string url, float imageCountx, float imageCounty, float switchTime, int filas, int columnas);
     void updateAnimacion(int id, int row,float deltaTime);
-    void dibujarAnimacion(int id, float positionx, float positiony, float scale, sf::RenderWindow& window);
+    void dibujarAnimacion(int id, float positionx, float positiony, float scale, sf::RenderWindow* window);
     bool borrarAnimacion(int id);
     
     //=================================

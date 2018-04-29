@@ -35,10 +35,11 @@ void FachadaMotor2D::cerrarVentana(sf::RenderWindow& window){
 }
 
 void FachadaMotor2D::crearClock(){
-    clock.restart();
+    clock.restart().asSeconds();
 }
 
 int FachadaMotor2D::crearAnimacion(std::string url, float imageCountx, float imageCounty, float switchTime, int filas, int columnas){
+    Animacion a;
     a.textura = new sf::Texture;
     if(!a.textura->loadFromFile(url)){
         std::cout << "Error al cargar la textura." << std::endl;
@@ -50,82 +51,83 @@ int FachadaMotor2D::crearAnimacion(std::string url, float imageCountx, float ima
     a.sprite->setTexture(*(a.textura));
     
     a.textureSize = (*a.textura).getSize();
-    a.textureSize.x /= columnas;
-    a.textureSize.y /= filas;
+    a.textureSize.x = (a.textureSize.x / a.textureSize.x) * columnas;
+    a.textureSize.y = (a.textureSize.y / a.textureSize.y) * filas;
     
-    this->a.imageCount.x = imageCountx;
-    this->a.imageCount.y = imageCounty;
-    this->a.switchTime = switchTime;
+    a.imageCount.x = imageCountx;
+    a.imageCount.y = imageCounty;
+    a.switchTime = switchTime;
     a.totalTime = 0.0f;
     a.currentImage.x = 0;
     
     a.uvRect.width = a.textura->getSize().x / float(a.imageCount.x);
     a.uvRect.height = a.textura->getSize().y / float(a.imageCount.y);
     
-    animaciones.push_back(a);
-    
     a.id = cont2;
     cont2++;
+    
+    animaciones.push_back(a);
     
     return a.id;
 }
 
 void FachadaMotor2D::updateAnimacion(int id, int row,float deltaTime){
-    int i=0;
-    for(auto it=animaciones.begin();it!=animaciones.end();++it){
-        if(animaciones.at(i).id==id){
-            animaciones.at(i).currentImage.y = row;
-            animaciones.at(i).totalTime += deltaTime;
+    for(unsigned int i = 0; i < animaciones.size(); i++){
+        if(animaciones[i].id==id){
+            animaciones[i].currentImage.y = row;
+            animaciones[i].totalTime += deltaTime;
 
-            if(animaciones.at(i).totalTime >= animaciones.at(i).switchTime){
-                animaciones.at(i).totalTime -= animaciones.at(i).switchTime;
-                animaciones.at(i).currentImage.x++;
-
-                if(animaciones.at(i).currentImage.x >= animaciones.at(i).imageCount.x){
-                    animaciones.at(i).currentImage.x = 0;
+            //Si se ha sobrepasado el tiempo de un frame, se pasa al siguiente
+            if(animaciones[i].totalTime >= animaciones[i].switchTime){
+            animaciones[i].totalTime -= animaciones[i].switchTime;
+                animaciones[i].currentImage.x++;
+                
+                //Si llega al final del array de sprites de la animación, vuelve al principio
+                if(animaciones[i].currentImage.x >= animaciones[i].imageCount.x){
+                    animaciones[i].currentImage.x = 0;
                 }
             }
+            
+            //Se coloca el recuadro sobre el sprite indicado
+            animaciones[i].uvRect.left = animaciones[i].currentImage.x * animaciones[i].uvRect.width;
+            animaciones[i].uvRect.top = animaciones[i].currentImage.y * animaciones[i].uvRect.height;
 
-            animaciones.at(i).uvRect.left = animaciones.at(i).currentImage.x * animaciones.at(i).uvRect.width;
-            animaciones.at(i).uvRect.top = animaciones.at(i).currentImage.y * animaciones.at(i).uvRect.height;
-
-            animaciones.at(i).sprite->setTextureRect(animaciones.at(i).uvRect);
+            //Se coloca sobre el sprite de la animación la textura del nuevo recuadro
+            animaciones[i].sprite->setTextureRect(animaciones[i].uvRect);
         }
     }
-    i++;
 }
 
-void FachadaMotor2D::dibujarAnimacion(int id, float positionx, float positiony, float scale, sf::RenderWindow& window){
-    int i=0;
-    for(auto it=animaciones.begin();it!=animaciones.end();++it){
-        if(animaciones.at(i).id==id){
-            animaciones.at(i).sprite->setPosition(positionx, positiony);
-            animaciones.at(i).sprite->setScale(scale, scale);
-            window.draw(*(animaciones.at(i).sprite));
+void FachadaMotor2D::dibujarAnimacion(int id, float positionx, float positiony, float scale, sf::RenderWindow* window){
+    for(unsigned int i = 0; i < animaciones.size(); i++){
+        if(animaciones[i].id==id){
+            //Posicionar y escalar
+            animaciones[i].sprite->setPosition(positionx, positiony);
+            animaciones[i].sprite->setScale(scale, scale);
+            
+            //Dibujar sprite indicado
+            window->draw(*(animaciones[i].sprite));
        }
-        i++;
     }
 }
 
 bool FachadaMotor2D::borrarAnimacion(int id){
-    bool borrado = false;
-    int i=0;
-    for(auto it=animaciones.begin();it!=animaciones.end();++it){
-        if(animaciones.at(i).id==id){
-            Animacion aux = animaciones.at(i);
-            animaciones.erase(it);
+    for(unsigned int i = 0; i < animaciones.size(); i++){
+        if(animaciones[i].id==id){
+            Animacion aux = animaciones[i];
+            animaciones.erase(animaciones.begin()+i);
             delete aux.sprite;
             delete aux.textura;
             delete &aux;
-            borrado=true;
+            return true;
         }
-        i++;
     }
-    return borrado;
+    return false;
 }
 
 //Crea un sprite, le paso la url de la textura para cargarla en memoria
 int FachadaMotor2D::crearSprite(std::string url){
+    Sprite s;
     //Cargamos la textura
     s.textura = new sf::Texture;
     if(!s.textura->loadFromFile(url)){
@@ -148,35 +150,32 @@ int FachadaMotor2D::crearSprite(std::string url){
 
 bool FachadaMotor2D::borrarSprite(int id){
     //Busco el sprite en el array de sprites que contenga esa id y lo borro
-    bool borrado = false;
-    int i=0;
-    for(auto it=sprites.begin();it!=sprites.end();++it){
-        if(sprites.at(i).id==id){
-            Sprite aux = sprites.at(i);
-            sprites.erase(it);
+    for(unsigned int i = 0; i < sprites.size(); i++){
+        if(sprites[i].id==id){
+            Sprite aux = sprites[i];
+            sprites.erase(sprites.begin()+i);
             delete aux.sprite;
             delete aux.textura;
             delete &aux;
-            borrado=true;
+            return true;
         }
-        i++;
     }
-    return borrado;
+    return false;
 }
 //Dibuja en la ventana del juego
 void FachadaMotor2D::dibujar(int id, float positionx, float positiony, float scale, sf::RenderWindow& window){
-    int i=0;
-    for(auto it=sprites.begin();it!=sprites.end();++it){
-        if(sprites.at(i).id==id){
-            sprites.at(i).sprite->setPosition(positionx, positiony);
-            sprites.at(i).sprite->setScale(scale, scale);
-            window.draw(*(sprites.at(i).sprite));
+    for(unsigned int i = 0; i < sprites.size(); i++){
+        if(sprites[i].id==id){
+            sprites[i].sprite->setPosition(positionx, positiony);
+            sprites[i].sprite->setScale(scale, scale);
+            window.draw(*(sprites[i].sprite));
        }
-        i++;
     }
 }
 
 int FachadaMotor2D::crearAudio(std::string url, int volumen){
+    Audio m;
+    m.buffer = new sf::SoundBuffer;
     if (!m.buffer->loadFromFile(url)){
         std::cout << "No pudo abrir el archivo de audio" << "\n";
     }
@@ -193,32 +192,29 @@ int FachadaMotor2D::crearAudio(std::string url, int volumen){
 }
 
 bool FachadaMotor2D::borrarAudio(int id){
-    bool borrado = false;
-    int i=0;
-    for(auto it=sonidos.begin();it!=sonidos.end();++it){
-        if(sonidos.at(i).id==id){
-            Audio aux = sonidos.at(i);
-            sonidos.erase(it);
+    for(unsigned int i = 0; i < sonidos.size(); i++){
+        if(sonidos[i].id==id){
+            Audio aux = sonidos[i];
+            sonidos.erase(sonidos.begin()+i);
             delete aux.sound;
+            delete aux.buffer;
             delete &aux;
-            borrado=true;
+            return true;
         }
-        i++;
     }
-    return borrado;
+    return false;
 }
 
 void FachadaMotor2D::play(int id){
-    int i=0;
-    for(auto it=sonidos.begin();it!=sonidos.end();++it){
-        if(sonidos.at(i).id==id){
-            sonidos.at(i).sound->play();
+    for(unsigned int i = 0; i < sonidos.size(); i++){
+        if(sonidos[i].id==id){
+            sonidos[i].sound->play();
         }
-        i++;
     }
 }
 
 int FachadaMotor2D::crearTexto(std::string url){
+    Texto t;
     t.font = new sf::Font;
     if(!t.font->loadFromFile(url)){
         std::cout << "Fuente no aplicada" <<std::endl;
@@ -235,31 +231,26 @@ int FachadaMotor2D::crearTexto(std::string url){
 }
 
 bool FachadaMotor2D::borrarTexto(int id){
-    bool borrado = false;
-    int i=0;
-    for(auto it=textos.begin();it!=textos.end();++it){
-        if(textos.at(i).id==id){
-            Texto aux = textos.at(i);
-            textos.erase(it);
+    for(unsigned int i = 0; i < textos.size(); i++){
+        if(textos[i].id==id){
+            Texto aux = textos[i];
+            textos.erase(textos.begin()+i);
             delete aux.text;
             delete aux.font;
             delete &aux;
-            borrado=true;
+            return true;
         }
-        i++;
     }
-    return borrado;
+    return false;
 }
 
 void FachadaMotor2D::escribir(std::string s, int id, float positionx, float positiony, float scale, sf::RenderWindow& window){
-    int i=0;
-    for(auto it=textos.begin();it!=textos.end();++it){
-        if(textos.at(i).id==id){
-            textos.at(i).text->setString(s);
-            textos.at(i).text->setPosition(positionx, positiony);
-            textos.at(i).text->setScale(scale, scale);
-            window.draw(*(textos.at(i).text));
+    for(unsigned int i = 0; i < textos.size(); i++){
+        if(textos[i].id==id){
+            textos[i].text->setString(s);
+            textos[i].text->setPosition(positionx, positiony);
+            textos[i].text->setScale(scale, scale);
+            window.draw(*(textos[i].text));
         }
-        i++;
     }
 }

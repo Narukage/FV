@@ -12,48 +12,62 @@ class Invocacion{
         int coste;
         int vida;
         int ataque;
-        int jugarla=0; //posicion en la mano
+        int jugarla=0;//posicion en la mano
+        int movimiento=0;
+        int movfijo = 0;
         string nombre;
         bool existo=false;
         int comandante=1;
-        sf::Texture textura;
-        sf::Texture textcarta;
-        sf::Sprite monstruo;
-        sf::Sprite cartamano;
-        bool com=false;
-        bool mano=false;
+        bool com;  //???????????????'
+        bool mano; //????
         int unico;// -1 Es el jugador -2 es el rival
+        int idsprite;
+        int id;
+        int idcarta;
+        
         
     public:
+        ///////////////////////////////
+        // CONSTRUCTO / DESTRUCTOR
+        ///////////////////////////////
         Invocacion();
-        Invocacion(string nombre,int coste,int vida,int ataque,int comandante,int unico);
+        Invocacion(string nombre,int coste,int vida,int ataque,int movimiento,int comandante,int unico);
         ~Invocacion();
         
+        ///////////////////////////////
+        // FUNCIONES PRINCIPALES
+        ///////////////////////////////
         void moveToPos(int posx, int posy/*Tablero& tablero*/);
-        void setPosicion(int x, int y);
-       // void setCarta(sf::Sprite carta){this->monstruo=monstruo;};
-        int getX(){ return pos_x; };
-        int getY(){ return pos_y; };
-        sf::Sprite getSprite(){ return monstruo; };
-        void setJugar(int jugar){this->jugarla=jugar;};
-        int getJugar(){return jugarla;};
-        void setExisto(){existo=true;};
-        bool getExisto(){return existo;};
-        int GetUnico(){return unico;};
         bool esAliado(int comandante);
-        int getComandante();
-        void setVida(int vida){this->vida = vida;};
-        int getVida(){return vida;};
-        int getAtaque(){return ataque;};
-        string getNombre(){return nombre;};
-        bool getMano(){return mano;};
-        void setMano(bool man){mano=man;};
-        sf::Sprite getSpriteM(){ return cartamano; };
         bool soyManoT(string nombretext,int i);
         bool soyJugada(string nombretext);
+        
+        ///////////////////////////////
+        // GETTERS Y SETTERS
+        ///////////////////////////////
+        void setPosicion(int x, int y);
+        void setJugar(int jugar)                            { this->jugarla=jugar;  };
+        void setExisto()                                    { existo=true;          };
+        void setVida(int vida)                              { this->vida = vida;    };
+        void setMano(bool man)                              { mano=man;             };
+        void setMovimiento(int mov)                         { movimiento=mov;       };
         void setPosition(float positionX,float positionY);
         void setScale(float scaleX,float scaleY);
-        bool getCom(){return com;};
-        void setCom(bool coman){com=coman;};
-        
+        void setCom(bool coman)                             { com=coman;            };
+        int getX()                                          { return pos_x;         };
+        int getY()                                          { return pos_y;         };
+        int getJugar()                                      { return jugarla;       };
+        bool getExisto()                                    { return existo;        };
+        int GetUnico()                                      { return unico;         };
+        int getComandante();
+        int getVida()                                       { return vida;          };
+        int getAtaque()                                     { return ataque;        };
+        string getNombre()                                  { return nombre;        };
+        bool getMano()                                      { return mano;          };
+        int getMovimiento()                                 { return movimiento;    };
+        int getMovimientoF()                                 { return movfijo;    };
+        bool getCom()                                       { return com;           };
+        int getCoste()                                      { return coste;         };
+        int getId()                                         { return id;            };
+        int getIdCarta()                                    { return idcarta;       };
 };

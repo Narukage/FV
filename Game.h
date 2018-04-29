@@ -13,8 +13,8 @@
 class Game{
     
 private:
-     //Estado* state=Menu::Instance();   <- descomentar esta linea cuando el menu este terminado
     bool isPlay;
+    //Estado* state=Menu::Instance();   <- descomentar esta linea cuando el menu este terminado
     sf::RenderWindow window;
     RenderManager* motor;
     Tablero* tablero;
@@ -27,6 +27,7 @@ private:
     bool presionado;
     bool cartaseleccionada = false;
     bool actuainvocacion =false;
+    bool seleccionado=false;
     Invocacion* inv;
     int posXinvocacion=-1;
     int posYinvocacion=-1;
@@ -55,4 +56,5 @@ public:
     static Game* Instance();
     ~Game();
     void run();
+    bool getSeleccionada(){return cartaseleccionada;}
 };

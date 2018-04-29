@@ -23,8 +23,18 @@ Tablero::Tablero(){
         }
     }
     
+    //Variables del mapa
+    offsetX = 100;
+    offsetY = 80;
+    sizeX   = 50;
+    sizeY   = 50;
+    
+    //Instanciando jugadores
     player1 = new Player(1);
     player2 = new Player(2);
+    
+    //Variables de sprite
+    spriteSize = 0.9;
     
    /*0*/ idrojo = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/bloque2.png"); //bloque rojo
    /*1*/ idverde = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/bloque3.png"); //bloque verde
@@ -40,8 +50,7 @@ Tablero::Tablero(){
     retrato1 = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/retrato1.png");
     retrato2 = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/retrato2.png");
     
-    idle = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/idle.png",3.5,4,0.1f,11,2);
-
+    idle = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/dolorArterial.png",14,1,0.001f,14,1);
  
     addUnit(player1->getUnit()->getX(),player1->getUnit()->getY(),player1->getUnit(),player1->getUnit()->getComandante());
     cout<<"X del 2: "<<player2->getUnit()->getX()<<"Y del 2: "<<player1->getUnit()->getY()<<endl;
@@ -132,7 +141,11 @@ if((posx>0 && posx<11)&& (posy>0 && posy<7) && !entrado){
 }
 
 bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
-
+   if(player1->getManaRest()>=unit->getCoste()){
+         int mana1 = player1->getManaRest();
+         int rest = mana1-unit->getCoste();
+         player1->setManaRest(rest);
+         cout<<"Me queda este mana:"<<player1->getManaRest()<<endl;
     
     if(spawn==1){
         //unidad2=player1->getMonstruo(unit,2);
@@ -170,6 +183,7 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
           }
           return true;  
         }
+   }
     return false;
     }
     
@@ -178,10 +192,18 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
 bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){                                                              
    if(turno){
         if(((gox<12 && gox>=0) && (goy<8 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
+          if(unit->getMovimiento()>0){
+              cout<<"entro con mov: "<<unit->getMovimiento()<<endl;
             unit->setPosicion(gox,goy);
-            //board[gox][goy].unit=unit;
+           // cout<<"calculico o no x : "<<gox<<endl;
+           // cout<<"calculico o no y : "<<goy<<endl;
+           // board[gox][goy].unit=unit;
+            unit->setMovimiento(unit->getMovimiento()-1);
+             cout<<"he restado mi mov: "<<unit->getMovimiento()<<endl;
+
             setFree(fromx,fromy,true);
             return true;
+            }
         }else{
              return false;
             }  
@@ -199,6 +221,139 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
    }
 }
 }
+bool Tablero::moveToPosIA(){
+    vector<Invocacion*>::iterator it3;
+    int i = 0;
+    int hamuerto=0;
+    bool atacado = false;
+    bool retorno = false;
+    int randomx=-1;
+    int randomy=-1;
+    int xcom=player1->getUnit()->getX();
+    int ycom=player1->getUnit()->getY();
+    int controlx;//Para saber la diferencia entre la x de la ia y la x del comandante
+                 //si es negativo la diferencia sumaremos a la de la ia si es positivo restaremos DAAAAMN
+    int controly;
+    int xia;
+    int yia;
+    if(player2->getJugadas().size()>0){
+        for(it3=player2->getJugadas().begin();it3!=player2->getJugadas().end();++it3){
+            if(player2->getJugadas().at(i)!=NULL&&player2->getJugadas().at(i)->getCom()==true){
+                while(player2->getJugadas().at(i)->getMovimientoF()>0){
+                    srand (time(NULL));
+                    randomx= rand() % 3 -1;
+                    randomy= rand() % 3 -1;
+                    if(player2->getJugadas().at(i)->getMovimientoF()>0&&!isFree(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY())){
+                        //ataque
+                       hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY()));
+                        player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimientoF()-1);
+                        atacado=true;
+                        retorno = true;
+                    }
+                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimientoF()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)){
+                        //ataque
+                        hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1));
+                        player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimientoF()-1);
+                        atacado=true;
+                        retorno = true;
+                    }
+                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimientoF()>0&&!isFree(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())){
+                        //ataque
+                        hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY()));
+                        player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimientoF()-1);
+                        atacado=true;
+                        retorno = true;
+                    }
+                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimientoF()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)){
+                        //ataque
+                        hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1));
+                        player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimientoF()-1);
+                        atacado=true;
+                        retorno = true;
+                    }
+                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimientoF()>0&&atacado==false){
+                        //movimiento
+                        setFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY(),true);
+                        player2->getJugadas().at(i)->setPosicion(player2->getJugadas().at(i)->getX()+randomx,player2->getJugadas().at(i)->getY()+randomy);
+                        setFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY(),false);
+                        player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimientoF()-1);
+                        retorno = true;
+                    }
+                    atacado=false;
+                }
+            }
+            else if(hamuerto==0&&player2->getJugadas().at(i)!=NULL){
+                
+                while(hamuerto==0&&player2->getJugadas().at(i)->getMovimientoF()>0){
+                    int xia=player2->getJugadas().at(i)->getX();
+                    int yia=player2->getJugadas().at(i)->getY();
+                    //SI HAY ALGUN BICHO LE ATACO TO GUAY
+                     if(hamuerto==0&&player2->getJugadas().at(i)->getMovimientoF()>0&&!isFree(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY())){
+                        //ataque
+                         hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY()));
+                        player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimientoF()-1);
+                        atacado=true;
+                        retorno = true;
+                    }
+                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimientoF()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)){
+                        //ataque
+                        hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1));
+                        player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimientoF()-1);
+                        atacado=true;
+                        retorno = true;
+                    }
+                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimientoF()>0&&!isFree(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())){
+                        //ataque
+                        hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY()));
+                        player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimientoF()-1);
+                        atacado=true;
+                        retorno = true;
+                    }
+                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimientoF()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)){
+                        //ataque
+                        hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1));
+                        player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimientoF()-1);
+                        atacado=true;
+                        retorno = true;
+                    }
+                     //ME MUEVO TO CHUNGOTE
+                      if(hamuerto==0&&player2->getJugadas().at(i)->getMovimientoF()>0&&atacado==false){
+                          controlx=player2->getJugadas().at(i)->getX()-xcom;
+                          controly=player2->getJugadas().at(i)->getY()-ycom;
+                          if(controlx>0){
+                              xia=xia-1;
+                              controlx=controlx-1;
+                          }
+                          if(controlx<0){
+                              xia=xia+1;
+                              controlx=controlx+1;
+                          }
+                          if(controly>0){
+                              yia=yia-1;
+                              controly=controly-1;
+                          }
+                          if(controly<0){
+                              yia=yia+1;
+                              controly=controly+1;
+                          }
+                          
+                          setFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY(),true);
+                          player2->getJugadas().at(i)->setPosicion(xia,yia);
+                          setFree(xia,yia,false);
+                          player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimientoF()-1);
+                          retorno = true;
+                      }
+                    atacado=false;
+                     
+                }//cierre while
+                
+            }
+            hamuerto=0;
+            i++;
+        }//cierre for
+    }
+    return retorno;
+}
 bool Tablero::removeUnit(int posx, int posy, Invocacion* unit){
     //board[posx][posy].unit=NULL;
     setFree(posx,posy,true);
@@ -213,15 +368,15 @@ void Tablero::resetMap(){
     }         
 }
 
-void Tablero::drawAdyacentes(sf::RenderWindow& window){
+void Tablero::drawAdyacentes(){
     for(int i=0;i<WIDTH;i++){//estos for habra que cambiarlo por unidad.movimiento y dos contadores x,y que sumados sean <= que su movimiento
         for(int j=0;j<HEIGHT;j++){
             if(board[i][j].alcanzable==1){;
                 if(board[i][j].free){
-                    RenderManager::Instance(1)->getMotor()->dibujar(idverde,(i*50)+100,(j*50)+80,0.3,window);
+                    RenderManager::Instance(1)->getMotor()->dibujar(idverde,(i*50)+100,(j*50)+80,0.3,*window);
                 }
                 else{
-                    RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,window);   
+                    RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,*window);   
                 }
               }
             }
@@ -229,21 +384,21 @@ void Tablero::drawAdyacentes(sf::RenderWindow& window){
     }
 
 
-void Tablero::drawMap(sf::RenderWindow& window){
+void Tablero::drawMap(){
     
    for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
             if(i<WIDTH/2){
                 if(board[i][j].free){
-                  /*2*/  RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,window);
+                  /*2*/  RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,*window);
                 }else{
-                    RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,window);  
+                    RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,*window);  
                 }
             }else{
                 if(board[i][j].free){
-                /*0*/ RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,window);
+                /*0*/ RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,*window);
                 }else{
-                 RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,window);   
+                 RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,*window);   
                 }
             }
         }
@@ -286,20 +441,23 @@ bool Tablero::isFree(int posx, int posy){
     return board[posx][posy].free;
 }
 
-/*DIBUJADO DE PLAYER*/
-void Tablero::Mostrar_mano(sf::RenderWindow& window){
-    int i=0;
-    vector<Invocacion*>::iterator it3;
-    for(it3=player1->getMano().begin();it3!=player1->getMano().end();++it3){
-        if(i<player1->getMano().size()){
-                   // std::cout<< "entro posicion: "<<((i*100)+150)<<std::endl;
-
-        //player1->getMano().at(i)->getSpriteM().setPosition((i*100)+150,480);
-            //player1->getMano().at(i)->soyManoT()
-            //player1->getMano().at(i)->soyManoT(player1->getMano().at(i)->getNombre(),player1->getMano().at(i)->getJugar());
-        window.draw( player1->getMano().at(i)->getSpriteM());
+//ADAPTAR ESTE METODO PARA QUE DIBUJE CON RENDERMANAGER POR FAVOR
+void Tablero::Mostrar_mano(){
+    std::vector<Invocacion*> array = player1->getMano();
+    if(!array.empty()){
+        for(unsigned int i = 0; i < array.size(); i++){
+            
+            //Se calcula su posición en el mapa
+            float calculox =(i*100)+150;
+            float calculoy = array[i]->getY()*480;
+              
+            //Se coloca y escala
+            array[i]->setPosition(calculox,calculoy);
+            array[i]->setScale(spriteSize,spriteSize);
+            
+            //Se pinta la carta correspondiente a cada id
+            RenderManager::Instance(1)->getMotor()->dibujar(array[i]->getIdCarta(),calculox,480,spriteSize,*window);
         }
-        i++;
     }
     /*
     vector<Invocacion*>::iterator it3;
@@ -364,71 +522,40 @@ void Tablero::Mostrar_mano(sf::RenderWindow& window){
     
         */
 }
-void Tablero::drawUnit(sf::RenderWindow& window){
-     vector<Invocacion*>::iterator it3;
-     int i=0;
-     float vectrx= 0.3;
-     if(player1->getJugadas().empty()==false){
-     for(it3=player1->getJugadas().begin();it3!=player1->getJugadas().end();++it3){
-         if(player1->getJugadas().empty()==false&&i<player1->getJugadas().size() && player1->getJugadas().at(i)->getNombre()!=""){
-             if(!player1->getJugadas().at(i)->getCom()){
-             float calculox =(player1->getJugadas().at(i)->getX()*50)+100;
-             float calculoy = (player1->getJugadas().at(i)->getY()*50)+80;
-             /*std::cout<<"entrox : "<<player1->getJugadas().at(i)->getX()<<std::endl;
-             std::cout<<"entroy : "<<player1->getJugadas().at(i)->getY()<<std::endl;*/
-             player1->getJugadas().at(i)->setPosition(calculox,calculoy);
-             player1->getJugadas().at(i)->setScale(vectrx,vectrx);
-             window.draw(player1->getJugadas().at(i)->getSprite());
-             }
-             else{
-                 //cout<<"x vale: "<<player1->getJugadas().at(i)->getX()<<endl;
-                 //cout<<"Y vale: "<<player1->getJugadas().at(i)->getY()<<endl;
-             float calculox =(player1->getJugadas().at(i)->getX()*50)+100;
-             float calculoy = (player1->getJugadas().at(i)->getY()*50)+80;
-             /*std::cout<<"entrox : "<<player1->getJugadas().at(i)->getX()<<std::endl;
-             std::cout<<"entroy : "<<player1->getJugadas().at(i)->getY()<<std::endl;*/
-             player1->getJugadas().at(i)->setPosition(calculox,calculoy);
-             player1->getJugadas().at(i)->setScale(vectrx,vectrx);
-             //window.draw(player1->getJugadas().at(i)->getSprite());
-             RenderManager::Instance(1)->getMotor()->updateAnimacion(idle,0,RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime().asSeconds());
-             RenderManager::Instance(1)->getMotor()->dibujarAnimacion(idle,calculox,calculoy,vectrx,window);
-             }
-         }
-         i++;
-     }
+
+void Tablero::drawUnit(){
+    //Variables a usar
+    vector<Invocacion*> jugadas1 = player1->getJugadas();
+    vector<Invocacion*> jugadas2 = player2->getJugadas();
+     
+    drawInvocaciones(jugadas1);
+    drawInvocaciones(jugadas2);
 }
-     if(player2->getJugadas().empty()==false){
-         i=0;
-     for(it3=player2->getJugadas().begin();it3!=player2->getJugadas().end();++it3){
-       //  cout<<"entro en drawunit para el 2 comandante: "<<player2->getJugadas().at(i)->getNombre()<<endl;
-         if(player2->getJugadas().empty()==false&&i<player2->getJugadas().size() && player2->getJugadas().at(i)->getNombre()!=""){
-           
-             if(!player2->getJugadas().at(i)->getCom()){
-             float calculox =(player2->getJugadas().at(i)->getX()*50)+100;
-             float calculoy = (player2->getJugadas().at(i)->getY()*50)+80;
-             /*std::cout<<"entrox : "<<player1->getJugadas().at(i)->getX()<<std::endl;
-             std::cout<<"entroy : "<<player1->getJugadas().at(i)->getY()<<std::endl;*/
-             player2->getJugadas().at(i)->setPosition(calculox,calculoy);
-             player2->getJugadas().at(i)->setScale(vectrx,vectrx);
-             window.draw(player2->getJugadas().at(i)->getSprite());
-             }
-             else{
-                 
-                 //cout<<"x vale: "<<player1->getJugadas().at(i)->getX()<<endl;
-                 //cout<<"Y vale: "<<player1->getJugadas().at(i)->getY()<<endl;
-                 // cout<<"entro en drawunit para el 2 comandante: "<<player2->getJugadas().at(i)->getX()<<endl;
-             float calculox =(player2->getJugadas().at(i)->getX()*50)+100;
-             float calculoy = (player2->getJugadas().at(i)->getY()*50)+80;
-             /*std::cout<<"entrox : "<<player1->getJugadas().at(i)->getX()<<std::endl;
-             std::cout<<"entroy : "<<player1->getJugadas().at(i)->getY()<<std::endl;*/
-             player2->getJugadas().at(i)->setPosition(calculox,calculoy);
-             player2->getJugadas().at(i)->setScale(vectrx,vectrx);
-             window.draw(player2->getJugadas().at(i)->getSprite()); 
-             }
-         }
-         i++;
-     }
+
+void Tablero::drawInvocaciones(vector<Invocacion*> array)
+{
+    //Recorremos el array si no está vacío
+    if(!array.empty()){
+        for(unsigned int i = 0; i < array.size(); i++){
+            if(array[i]->getNombre()!=""){
+                
+                //Se calcula su posición en el mapa
+                float calculox = array[i]->getX()*sizeX+68;
+                float calculoy = array[i]->getY()*sizeY+20;
+                
+                //Se coloca y escala
+                array[i]->setPosition(calculox,calculoy);
+                array[i]->setScale(spriteSize,spriteSize);
+                
+                //Se pinta la animación correspondiente a cada id
+                RenderManager::Instance(1)->getMotor()->updateAnimacion(array[i]->getId(),0,0.002f/*RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime().asSeconds()*/);
+                RenderManager::Instance(1)->getMotor()->dibujarAnimacion(array[i]->getId(),calculox,calculoy,spriteSize,window); 
+            }
+        }
+    }
 }
+     
+    //TESTEO
     /*int pos=-1;
     for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
@@ -484,80 +611,80 @@ void Tablero::drawUnit(sf::RenderWindow& window){
                 }
         }
     }*/
-}
-void Tablero::drawLife(int commander, sf::RenderWindow& window){
+
+void Tablero::drawLife(int commander){
     if(commander==1){
-        RenderManager::Instance(1)->getMotor()->dibujar(idvidacu,100,5,0.5,window);
+        RenderManager::Instance(1)->getMotor()->dibujar(idvidacu,100,5,0.5,*window);
                 
         for(int i=0;i<player1->getLife();i++){
-            RenderManager::Instance(1)->getMotor()->dibujar(idvidaco,(i*2)+135,10,2,window);
+            RenderManager::Instance(1)->getMotor()->dibujar(idvidaco,(i*2)+135,10,2,*window);
         }
     }else{
-        RenderManager::Instance(1)->getMotor()->dibujar(idvidacu,670,5,0.5,window);
+        RenderManager::Instance(1)->getMotor()->dibujar(idvidacu,670,5,0.5,*window);
         
         for(int i=0;i<player2->getLife();i++){
-            RenderManager::Instance(1)->getMotor()->dibujar(idvidaco,(i*2)+455,10,2,window);
+            RenderManager::Instance(1)->getMotor()->dibujar(idvidaco,(i*2)+455,10,2,*window);
         }
     }
 }
 
-void Tablero::drawLifeNumb(int commander, sf::RenderWindow& window){
+void Tablero::drawLifeNumb(int commander){
     if(commander==1){
         
         int life = player1->getLife();
             std::stringstream ss;
             ss << life;
-            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuente,350,1,0.7, window);
+            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuente,350,1,0.7, *window);
     }else{
 
         int life = player2->getLife();
             std::stringstream ss;
             ss << life;
-            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuente,412,1,0.7, window);
+            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuente,412,1,0.7, *window);
     }
 }
 
-void Tablero::drawManaNumb(int commander, sf::RenderWindow& window){
+void Tablero::drawManaNumb(int commander){
     if(commander==1){
 
         int mana = player1->getMana();
             std::stringstream ss;
             ss << mana;
-            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuentemana,193,37,0.8, window);
+            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuentemana,193,37,0.8, *window);
     }else{
 
         int mana = player2->getMana();
             std::stringstream ss;
             ss << mana;
-            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuentemana,620,37,0.8, window);
+            RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuentemana,620,37,0.8, *window);
     }
 }
 
-void Tablero::drawManaRest(int commander, sf::RenderWindow& window){
+void Tablero::drawManaRest(int commander){
     if(commander==1){
  
         int manarest = player1->getManaRest();
                 std::stringstream ss;
                 ss << manarest;
-                RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),manarest,158,37,0.8,window);
+                RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),manarest,158,37,0.8,*window);
     }else{
   
         int manarest = player2->getManaRest();
                 std::stringstream ss;
                 ss << manarest;
-                RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),manarest,585,37,0.8,window);
+                RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),manarest,585,37,0.8,*window);
     }
 }
 
-void Tablero::drawBarra(int commander, sf::RenderWindow& window){
+void Tablero::drawBarra(int commander){
     if(commander==1){
-       RenderManager::Instance(1)->getMotor()->escribir("/",barra,182,37,0.8,window);
+       RenderManager::Instance(1)->getMotor()->escribir("/",barra,182,37,0.8,*window);
     }else{
 }
-       RenderManager::Instance(1)->getMotor()->escribir("/",manarest,609,37,0.8,window);
+       RenderManager::Instance(1)->getMotor()->escribir("/",manarest,609,37,0.8,*window);
     }
 
-void Tablero::drawMana(int commander, sf::RenderWindow& window){
+void Tablero::drawMana(int commander){
     /*if(commander==1){
         int mana = player1->getMana();
         coco.setFillColor(sf::Color::Blue);
@@ -575,11 +702,11 @@ void Tablero::drawMana(int commander, sf::RenderWindow& window){
     }*/
 }
 
-void Tablero::drawRetrato(int commander, sf::RenderWindow& window){
+void Tablero::drawRetrato(int commander){
     if(commander==1){
-        RenderManager::Instance(1)->getMotor()->dibujar(retrato1,0,0,1,window);
+        RenderManager::Instance(1)->getMotor()->dibujar(retrato1,0,0,1,*window);
     }else{
-        RenderManager::Instance(1)->getMotor()->dibujar(retrato2,700,0,1,window);
+        RenderManager::Instance(1)->getMotor()->dibujar(retrato2,700,0,1,*window);
     }
 }
 
@@ -588,6 +715,45 @@ int Tablero::getAlcanzable(int posx, int posy){
 }
 void Tablero::setFree(int posx,int posy,bool set){
     board[posx][posy].free=set;
+}
+int Tablero::atackToPosIA(Invocacion* ia, Invocacion* humano){
+    int retorno=0;
+    bool hum=false;
+    bool iaB=false;
+    ia->setVida(ia->getVida()-humano->getAtaque());
+    humano->setVida(humano->getVida()-ia->getAtaque());
+    if(ia->getCom()==true){
+        player2->setLife(ia->getVida());
+        if(player2->getLife()<=0){
+            iaB=true;
+        }
+    }
+    else if(ia->getVida()<=0){
+        setFree(ia->getX(),ia->getY());
+        player2->eliminarJugadas(ia);
+        retorno=7;//muerte bicho
+    }
+    if(humano->getCom()==true){
+        player1->setLife(ia->getVida());
+        if(player1->getLife()<=0){
+            hum=true;
+        }
+        
+    }
+    else if(humano->getVida()<=0){
+        setFree(humano->getX(),humano->getY());
+        player1->eliminarJugadas(humano);       
+    }
+    if(iaB==true&&hum==true){
+        retorno=-3;
+    }
+    if(iaB==true&&hum==false){
+        retorno=-1;
+    }
+    if(iaB==false&&hum==true){
+        retorno=-2;
+    }
+    return retorno;
 }
 int Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     int retorno=0;
@@ -626,13 +792,14 @@ int Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     }
    
          if(unidad2->getCom()==true && unidad2->getVida()<=0){
-             retorno=-1; 
+             retorno=-1; //GANADA
         }
          if(unidad->getCom()==true && unidad->getVida()<=0){
-             retorno=-2;
+             retorno=-2; //PERDIDA
          }
          if((unidad2->getCom()==true&&unidad->getCom()==true) && (unidad2->getVida()<=0 && unidad->getVida()<=0)){
-             retorno=-3;
+             retorno=-3; //EMPATE
         }
-    return retorno;
+      player1->JugadaEn(fromx,fromy)->setMovimiento(player1->JugadaEn(fromx,fromy)->getMovimiento()-1);
+     return retorno;
 }
