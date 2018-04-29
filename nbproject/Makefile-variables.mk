@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=summoners-reestructurando
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/summoners-reestructurando
+CND_ARTIFACT_NAME_Debug=summoners
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/summoners
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=summoners-reestructurando.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/summoners-reestructurando.tar
+CND_PACKAGE_NAME_Debug=summoners.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/summoners.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=summoners-reestructurando
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/summoners-reestructurando
+CND_ARTIFACT_NAME_Release=summoners
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/summoners
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=summoners-reestructurando.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/summoners-reestructurando.tar
+CND_PACKAGE_NAME_Release=summoners.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/summoners.tar
 #
 # include compiler specific variables
 #
