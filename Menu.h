@@ -15,8 +15,6 @@
     ///////////////////////////////
     // GETTERS Y SETTERS
     ///////////////////////////////
-    void setWindow(sf::RenderWindow* w) { window = w;    };
-    //sf::RenderWindow* getWindow()       { return window; };
 protected:
     Menu();
     Menu(const Menu &);
@@ -26,6 +24,11 @@ private:
     sf::RenderWindow* window;  //Ventana del juego
     sf::Texture texture;
     sf::Sprite sprite;
+    float width=400;
+    float height;
+    int idspriteEmpezar;
+    int idspriteOpciones;
+    int idspriteSalir;
     int selectedItemIndex=0;
 	sf::Font font;
 	sf::Text menu[MAX_NUMBER_OF_ITEMS];

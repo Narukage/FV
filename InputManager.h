@@ -15,7 +15,7 @@ public:
     static InputManager* Instance(int libreria);
     ~InputManager();
     InputFachada* getInput(){ return input; }
-    bool PulsaPartida();
+    int PulsaTecla();
     bool PulsaEscape();
 protected:
     InputManager(int libreria);

@@ -58,4 +58,5 @@ public:
     void run();
     void cambiarApartida();
     void cambiarApausa();
+    sf::RenderWindow* getWindow(){ return &window; };
 };

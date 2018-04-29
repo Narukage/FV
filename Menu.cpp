@@ -15,13 +15,13 @@ Menu::Menu(){
 
 void Menu::update(){
 
-    if( sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+    if(InputManager::Instance(1)->PulsaTecla()==2){
         Menu::MoveUp();
     }
-    if( sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+    if(InputManager::Instance(1)->PulsaTecla()==3){
         Menu::MoveDown();
     }
-    if(InputManager::Instance(1)->PulsaPartida() && selectedItemIndex==0){
+    if(InputManager::Instance(1)->PulsaTecla()==1 && selectedItemIndex==0){
             Game::Instance()->cambiarApartida();
     }
 }
@@ -32,58 +32,61 @@ void Menu::render(){
     }
         //window->draw(sprite);
 
-    for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++)
+    /*for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++)
 	{
 		window->draw(menu[i]);
 	}
-        sprite.setTexture(texture);
+        sprite.setTexture(texture);*/
     window->display();
 }
     void Menu::inicializar(){
-           if (!font.loadFromFile("Fonts/FreeMono.ttf"))
-	{
-		        std::cout<<"ENTRAMOS EN EL BUCLE"<<std::endl;
-
-	}
-
-	menu[0].setFont(font);
-	menu[0].setColor(sf::Color::Red);
-	menu[0].setString("Play");
-	menu[0].setPosition(sf::Vector2f(800 / 2, 600 / (MAX_NUMBER_OF_ITEMS + 1) * 1));
-
-	menu[1].setFont(font);
-	menu[1].setColor(sf::Color::White);
-	menu[1].setString("Options");
-	menu[1].setPosition(sf::Vector2f(800 / 2, 600 / (MAX_NUMBER_OF_ITEMS + 1) * 2));
-
-	menu[2].setFont(font);
-	menu[2].setColor(sf::Color::White);
-	menu[2].setString("Exit");
-	menu[2].setPosition(sf::Vector2f(800 / 2, 600 / (MAX_NUMBER_OF_ITEMS + 1) * 3));
-
+           idspriteEmpezar=RenderManager::Instance(1)->getMotor()->crearTexto("Fonts/FreeMono.ttf");
+           idspriteOpciones=RenderManager::Instance(1)->getMotor()->crearTexto("Fonts/FreeMono.ttf");
+           idspriteSalir=RenderManager::Instance(1)->getMotor()->crearTexto("Fonts/FreeMono.ttf");
+           height=(600/(MAX_NUMBER_OF_ITEMS + 1) * 1);
+           RenderManager::Instance(1)->getMotor()->escribir("Empezar",idspriteEmpezar,width,height,1,*Game::Instance()->getWindow());
+           height=(600/(MAX_NUMBER_OF_ITEMS + 1) * 2);
+           RenderManager::Instance(1)->getMotor()->escribir("Opciones",idspriteOpciones,width,height,1,*Game::Instance()->getWindow());
+           height=(600/(MAX_NUMBER_OF_ITEMS + 1) * 3);
+           RenderManager::Instance(1)->getMotor()->escribir("Salir",idspriteSalir,width,height,1,*Game::Instance()->getWindow());
     }
 
 void Menu::MoveUp()
 {
-    if (selectedItemIndex - 1 >= 0)
-	{
-            std::cout<<"entro up"<<std::endl;
-
-		menu[selectedItemIndex].setColor(sf::Color::White);
-		selectedItemIndex--;
-		menu[selectedItemIndex].setColor(sf::Color::Red);
+    if (selectedItemIndex - 1 >= 0){
+        {
+           if(selectedItemIndex==0){
+               RenderManager::Instance(1)->getMotor()->updateTextoRojo(idspriteEmpezar);
+               RenderManager::Instance(1)->getMotor()->updateTextoBlanco(idspriteOpciones);
+           }
+           if(selectedItemIndex==1){
+               RenderManager::Instance(1)->getMotor()->updateTextoRojo(idspriteOpciones);
+               RenderManager::Instance(1)->getMotor()->updateTextoBlanco(idspriteSalir);
+           }
+           if(selectedItemIndex==2){
+               RenderManager::Instance(1)->getMotor()->updateTextoRojo(idspriteSalir);
+           }
+           selectedItemIndex--;
 	}
+    }
 }
 
 void Menu::MoveDown()
 {
-	if (selectedItemIndex + 1 < MAX_NUMBER_OF_ITEMS)
+    if (selectedItemIndex < MAX_NUMBER_OF_ITEMS)
 	{
-                std::cout<<"entro down"<<std::endl;
-
-		menu[selectedItemIndex].setColor(sf::Color::White);
-		selectedItemIndex++;
-		menu[selectedItemIndex].setColor(sf::Color::Red);
+           if(selectedItemIndex==0){
+               RenderManager::Instance(1)->getMotor()->updateTextoRojo(idspriteEmpezar);
+           }
+           if(selectedItemIndex==1){
+               RenderManager::Instance(1)->getMotor()->updateTextoBlanco(idspriteEmpezar);
+               RenderManager::Instance(1)->getMotor()->updateTextoRojo(idspriteOpciones);
+           }
+           if(selectedItemIndex==2){
+               RenderManager::Instance(1)->getMotor()->updateTextoBlanco(idspriteOpciones);
+               RenderManager::Instance(1)->getMotor()->updateTextoRojo(idspriteSalir);
+           }
+           selectedItemIndex++;
 	}
 }
 Menu *m1=Menu::Instance();

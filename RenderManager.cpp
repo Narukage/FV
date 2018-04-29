@@ -229,7 +229,6 @@ int FachadaMotor2D::crearTexto(std::string url){
     textos.push_back(t);
     return t.id;
 }
-
 bool FachadaMotor2D::borrarTexto(int id){
     for(unsigned int i = 0; i < textos.size(); i++){
         if(textos[i].id==id){
@@ -251,6 +250,22 @@ void FachadaMotor2D::escribir(std::string s, int id, float positionx, float posi
             textos[i].text->setPosition(positionx, positiony);
             textos[i].text->setScale(scale, scale);
             window.draw(*(textos[i].text));
+        }
+    }
+}
+void FachadaMotor2D::updateTextoRojo(int id){
+    for(unsigned int i = 0; i < textos.size(); i++){
+        if(textos[i].id==id){
+            textos[i].text->setColor(sf::Color::Red);
+
+        }
+    }
+}
+void FachadaMotor2D::updateTextoBlanco(int id){
+    for(unsigned int i = 0; i < textos.size(); i++){
+        if(textos[i].id==id){
+            textos[i].text->setColor(sf::Color::Red);   
+
         }
     }
 }

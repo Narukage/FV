@@ -27,6 +27,8 @@ public:
     virtual bool borrarAudio(int id) = 0;
     virtual void play(int id) = 0;
     virtual int crearTexto(std::string url) = 0;
+    virtual void updateTextoRojo(int id) = 0;
+    virtual void updateTextoBlanco(int id) = 0;
     virtual bool borrarTexto(int id) = 0;
     virtual void escribir(std::string s, int id, float positionx, float positiony, float scale, sf::RenderWindow& window) = 0;
     virtual sf::Clock getClock() = 0;
