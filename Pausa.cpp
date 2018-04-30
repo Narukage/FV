@@ -11,10 +11,6 @@ Pausa* Pausa::Instance(){
 Pausa::Pausa(){
     
 }
-void Pausa::update(){
-    std::cout<<"Guantata de Thanos"<<std::endl;
-}
-
 Pausa *ps1=Pausa::Instance();
 Pausa *ps2=ps1->Instance();
 Pausa &refps=*Pausa::Instance();

@@ -104,8 +104,7 @@ public:
     int crearTexto(std::string url);
     bool borrarTexto(int id);
     void escribir(std::string s, int id, float positionx, float positiony, float scale, sf::RenderWindow& window);
-    void updateTextoRojo(int id);
-    void updateTextoBlanco(int id);
+    
     //=================================
     // GETTERS Y SETTERS
     //=================================

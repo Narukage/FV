@@ -6,16 +6,15 @@
 #include "Player.h"
 #include "RenderManager.h"
 #include "InputManager.h"
-#include "Estado.h"
-
+#include "Menu.h"
 
 
 
 class Game{
     
 private:
-    Estado* state;  // <- descomentar esta linea cuando el menu este terminado
     bool isPlay;
+    //Estado* state=Menu::Instance();   <- descomentar esta linea cuando el menu este terminado
     sf::RenderWindow window;
     RenderManager* motor;
     Tablero* tablero;
@@ -28,6 +27,9 @@ private:
     bool presionado;
     bool cartaseleccionada = false;
     bool actuainvocacion =false;
+    bool IaCartas=false;
+    bool IaMover=false;
+    
     Invocacion* inv;
     int posXinvocacion=-1;
     int posYinvocacion=-1;
@@ -39,7 +41,7 @@ private:
     bool generalmuerto2=false;
     bool tieneadyacentes=false;
     bool meToca = true;
-   
+    int id = -1;
        
     static Game* pinstance;
 private:
@@ -56,7 +58,5 @@ public:
     static Game* Instance();
     ~Game();
     void run();
-    void cambiarApartida();
-    void cambiarApausa();
-    sf::RenderWindow* getWindow(){ return &window; };
+    bool getSeleccionada()      { return cartaseleccionada; };
 };

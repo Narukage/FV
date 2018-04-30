@@ -3,7 +3,6 @@
     class Pausa : public Estado {
     public:
     static Pausa* Instance();
-    void update();
 protected:
     Pausa();
     Pausa(const Pausa &);
