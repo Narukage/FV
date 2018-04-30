@@ -15,7 +15,7 @@ Menu::Menu(){
 
 void Menu::update(){
 
-    if(InputManager::Instance(1)->PulsaTecla()==2){
+    /*if(InputManager::Instance(1)->PulsaTecla()==2){
         Menu::MoveUp();
     }
     if(InputManager::Instance(1)->PulsaTecla()==3){
@@ -24,13 +24,13 @@ void Menu::update(){
     std::cout<<selectedItemIndex<<std::endl;
     if(InputManager::Instance(1)->PulsaTecla()==1 && selectedItemIndex==0){
             Game::Instance()->cambiarApartida();
-    }
+    }*/
 }
 
   void Menu::inicializar(){
-           idspriteEmpezar=RenderManager::Instance(1)->getMotor()->crearTexto("Fonts/FreeMono.ttf");
-           idspriteOpciones=RenderManager::Instance(1)->getMotor()->crearTexto("Fonts/FreeMono.ttf");
-           idspriteSalir=RenderManager::Instance(1)->getMotor()->crearTexto("Fonts/FreeMono.ttf");
+           idspriteEmpezar=RenderManager::Instance(1)->getMotor()->crearSprite("Fonts/FreeMono.ttf");
+           idspriteOpciones=RenderManager::Instance(1)->getMotor()->crearSprite("Fonts/FreeMono.ttf");
+           idspriteSalir=RenderManager::Instance(1)->getMotor()->crearSprite("Fonts/FreeMono.ttf");
            height=(600/(MAX_NUMBER_OF_ITEMS + 1) * 1);
            RenderManager::Instance(1)->getMotor()->escribir("Empezar",idspriteEmpezar,width,height,1,*window);
            height=(600/(MAX_NUMBER_OF_ITEMS + 1) * 2);
