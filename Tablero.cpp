@@ -46,7 +46,8 @@ Tablero::Tablero(){
     manarest = RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf");
     barra = RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf");
     mana = RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf");
-
+    int idCancion = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/main.wav", 50);
+    RenderManager::Instance(1)->getMotor()->play(idCancion);
     retrato1 = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/retrato1.png");
     retrato2 = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/retrato2.png");
     
@@ -148,6 +149,8 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
          cout<<"Me queda este mana:"<<player1->getManaRest()<<endl;
     
     if(spawn==1){
+         int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/here.wav", 50);
+    RenderManager::Instance(1)->getMotor()->play(idSonidito);
         //unidad2=player1->getMonstruo(unit,2);
         if(((posx>=0 && posx<3)&& (posy>=0 && posy<10))&& isFree(posx,posy)){
             board[posx][posy].free=false;
@@ -195,6 +198,8 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
           if(unit->getMovimiento()>0){
               cout<<"entro con mov: "<<unit->getMovimiento()<<endl;
             unit->setPosicion(gox,goy);
+            int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/walk.wav", 40);
+            RenderManager::Instance(1)->getMotor()->play(idSonidito);
            // cout<<"calculico o no x : "<<gox<<endl;
            // cout<<"calculico o no y : "<<goy<<endl;
            // board[gox][goy].unit=unit;
@@ -356,6 +361,7 @@ bool Tablero::moveToPosIA(){
 }
 bool Tablero::removeUnit(int posx, int posy, Invocacion* unit){
     //board[posx][posy].unit=NULL;
+    
     setFree(posx,posy,true);
     return true;
 }
@@ -765,7 +771,9 @@ int Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     unidad2->setVida(unidad2->getVida()-unidad->getAtaque());
     unidad->setVida(unidad->getVida()-unidad2->getAtaque());
     cout<<"Me llamo: "<<unidad2->getNombre()<<"vida al que atacan: "<<unidad2->getVida()<<endl;
-     cout<<"Me llamo: "<<unidad->getNombre()<<"vida del que ataca : "<<unidad->getVida()<<endl;
+    cout<<"Me llamo: "<<unidad->getNombre()<<"vida del que ataca : "<<unidad->getVida()<<endl;
+    int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/explosion.wav", 40);
+    RenderManager::Instance(1)->getMotor()->play(idSonidito);
     //hacia los dos lados
      if(unidad2->getCom()==true||unidad->getCom()==false){
          if(unidad2->getCom()==true){
@@ -778,6 +786,7 @@ int Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     if(unidad2->getCom()==false&&unidad2->getVida()<=0){
         // cout<<"me voy a morir: "<<unidad2->getVida()<<endl;
         setFree(gox,goy,true);
+        
         player1->eliminarJugadas(unidad2);
         
        //removeUnit(gox,goy,unidad2);

@@ -27,7 +27,8 @@ void Game::inicializar(){
     generalmuerto2=false;
     empate=false;
     isPlay=true;
-    
+    int idCancion = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/main.mp3", 20);
+    RenderManager::Instance(1)->getMotor()->play(idCancion);
     //Pasamos la ventana
     Tablero::Instance()->setWindow(&window);
 }
