@@ -42,7 +42,8 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                             isPlay = false;
                         }
                         if(evento.key.code==sf::Keyboard::Space && !Game::Instance()->getSeleccionada()){
-                          
+                           int idCancion = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/end.wav", 70);
+                           RenderManager::Instance(1)->getMotor()->play(idCancion);
                             nexTurn(turno);
                             cambioTurno(meToca);
                             Tablero::Instance()->setTurno(meToca);

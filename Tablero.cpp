@@ -149,8 +149,35 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
          cout<<"Me queda este mana:"<<player1->getManaRest()<<endl;
     
     if(spawn==1){
-         int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/here.wav", 50);
-    RenderManager::Instance(1)->getMotor()->play(idSonidito);
+        if(unit->getNombre()=="Gugox"){
+            int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/gugoxgutural.wav", 100);
+            RenderManager::Instance(1)->getMotor()->play(idSonidito);
+        }
+         else if(unit->getNombre()=="Cthughax"){
+            int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/cthugaxgutu.wav", 100);
+            RenderManager::Instance(1)->getMotor()->play(idSonidito);
+        }
+         else if(unit->getNombre()=="Yigx"){
+            int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/yigxgutural.wav", 100);
+            RenderManager::Instance(1)->getMotor()->play(idSonidito);
+        }
+         else if(unit->getNombre()=="Zoogx"){
+            int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/zoogxgurutal.wav", 100);
+            RenderManager::Instance(1)->getMotor()->play(idSonidito);
+        }
+         else if (unit->getNombre()=="Bokrugs"){
+            int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/bokruxgutural.wav", 120);
+            RenderManager::Instance(1)->getMotor()->play(idSonidito);
+        }
+         else if(unit->getNombre()=="Orrys"){
+            int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/orrysgutural.wav", 100);
+            RenderManager::Instance(1)->getMotor()->play(idSonidito);
+        }
+        else{
+            int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/hereg.wav", 50);
+            RenderManager::Instance(1)->getMotor()->play(idSonidito);
+        }
+         
         //unidad2=player1->getMonstruo(unit,2);
         if(((posx>=0 && posx<3)&& (posy>=0 && posy<10))&& isFree(posx,posy)){
             board[posx][posy].free=false;
