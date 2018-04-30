@@ -27,6 +27,9 @@ private:
     bool presionado;
     bool cartaseleccionada = false;
     bool actuainvocacion =false;
+    bool IaCartas=false;
+    bool IaMover=false;
+    
     Invocacion* inv;
     int posXinvocacion=-1;
     int posYinvocacion=-1;

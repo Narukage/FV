@@ -74,6 +74,7 @@ class Tablero{
         ~Tablero();
         void clear();
         bool addUnit(int posx, int posy, Invocacion* unit, int spawn); //return true if adds a unit at the location succesfully
+        bool addUnitIA();
         bool moveToPos(int fromx, int fromy,int gox, int goy, Invocacion* unit); //returns true if unit is moved succesfully
         bool moveToPosIA();
         int atackToPos(int fromx, int fromy,int gox, int goy);
@@ -108,5 +109,6 @@ class Tablero{
         void setWindow(sf::RenderWindow* w) { window = w;    };
         void setTurno(bool metoca)          { turno=metoca;  };
         Player* getPlayer()                 { return player1;};
+        Player* getPlayer2()                { return player2;};
         void setFree(int posx,int posy,bool set);
 };

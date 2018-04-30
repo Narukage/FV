@@ -15,6 +15,7 @@ class InputFachada {
 public:
     InputFachada(){};
     virtual ~InputFachada(){};
+    virtual void turnoIA(bool cambio) = 0;
     virtual void Eventos(bool isPlay, sf::RenderWindow& window) = 0;
     virtual void nexTurn(int num) = 0;
     virtual void cambioTurno(bool meTo) = 0;

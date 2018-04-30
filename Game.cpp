@@ -37,24 +37,27 @@ void Game::update(){
     id = -1;
     RenderManager::Instance(1)->getMotor()->crearClock();
     presionado = InputManager::Instance(1)->getInput()->getPresionado();
-    if(presionado){
+    if(presionado && meToca){
         coord = InputManager::Instance(1)->getInput()->getCoord();
         campo = InputManager::Instance(1)->getInput()->getCampo();
         mano = InputManager::Instance(1)->getInput()->getMano();
         if((coord.x>150 && coord.x<650)&&(coord.y>480 && coord.y<600)){
+            //aqu� controlar mano
+           
             std::cout<<"Entramos dentro del la mano"<<std::endl;
             inv=Tablero::Instance()->esCarta(mano.x,mano.y);
+            
             if(inv!=NULL){
                 std::cout<<"esCarta es distinto de null"<<std::endl;
-                id = inv->getIdCartaSel();
                 cartaseleccionada=true;
-                
+                 
             }
         }
         
         else if(cartaseleccionada ){ //queremos invocar en tablero
+            cartaseleccionada=false;
             if((coord.x>100 && coord.x<700)&&(coord.y>80 && coord.y<475)){
-                cartaseleccionada=false;
+              
                     if(Tablero::Instance()->addUnit(campo.x,campo.y,inv,1)){
                         
                         cartaseleccionada=false;
@@ -63,14 +66,14 @@ void Game::update(){
 
                     }
                 
-                else{
+                /*else{
                     if(Tablero::Instance()->addUnit(campo.x,campo.y,inv,2)){
                         cartaseleccionada=false;
-                         /*vector<Invocacion*>::iterator it3;
-                        int i=0;*/
+                         vector<Invocacion*>::iterator it3;
+                        int i=0;
 
                     }
-                }
+                }*/
             }
         }else{ //queremos mover unidad en tablero
             if(!Tablero::Instance()->isFree(campo.x,campo.y) && actuainvocacion==false){ //si la posicion que clickamos contiene una unidad
@@ -81,14 +84,17 @@ void Game::update(){
                 posYinvocacion=campo.y;
             } //unidad seleccionada, preparada para hacer alguna accion
             else if(actuainvocacion==true && Tablero::Instance()->isFree(campo.x,campo.y) && Tablero::Instance()->getAlcanzable(campo.x,campo.y)==1){
+                if(Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->getMovimiento()>0){
                 Tablero::Instance()->moveToPos(posXinvocacion, posYinvocacion,campo.x,campo.y,Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion));
                 Tablero::Instance()->setFree(campo.x,campo.y,false);
                 actuainvocacion=false;
                 posXinvocacion=-1;
                 posYinvocacion=-1;
                 Tablero::Instance()->ReiniciarAdy();
+                }
             }//ataque
             else if(actuainvocacion==true && !Tablero::Instance()->isFree(campo.x,campo.y)&&Tablero::Instance()->getAlcanzable(campo.x,campo.y)==1){
+                if(Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->getMovimiento()>0){
                 if(Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->esAliado(Tablero::Instance()->getPlayer()->JugadaEn(coord.x,coord.y)->getComandante())){
                     ganador=Tablero::Instance()->atackToPos(posXinvocacion,posYinvocacion,campo.x,campo.y);
                        //tablero->setFree(campox,campoy,true);
@@ -107,6 +113,7 @@ void Game::update(){
                 posYinvocacion=-1;
                 Tablero::Instance()->ReiniciarAdy();
                 }
+                }
             }
             else{
                actuainvocacion=false;
@@ -120,6 +127,22 @@ void Game::update(){
         presionado=false;
     //}
     //finalizado();
+    }
+    if(!meToca){
+        
+        IaCartas=Tablero::Instance()->addUnitIA();
+        IaMover=Tablero::Instance()->moveToPosIA();
+        cout<<"salgo bien "<<endl;
+        if(IaCartas==true && IaMover==true){
+            cout<<"fallo en el cambio de turno "<<endl;
+            InputManager::Instance(1)->getInput()->turnoIA(true);
+            cout<<"fallo en el cambio de turno pero soy: "<<meToca<<endl;
+            
+        }
+        /*int randomx;
+       srand (time(NULL));
+                    randomx= rand() % 3 +9;
+                    cout<<"random "<<randomx<<endl;*/
     }
 }
 void Game:: updateIA(){

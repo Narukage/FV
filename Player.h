@@ -54,6 +54,7 @@ class Player{
         bool RellenarJugadas(Invocacion* jugada);
         bool eliminarMazo(Invocacion* invo);
         bool eliminarMano(Invocacion* invo);
+        //bool eliminarManoIa(Invocacion* inv);
         bool eliminarJugadas(Invocacion* invo);
         bool RellenarMano(Invocacion* invo, int jugar);
         Invocacion* JugadaEn(int posx, int posy);
