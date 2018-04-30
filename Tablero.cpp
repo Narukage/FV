@@ -50,7 +50,8 @@ Tablero::Tablero(){
 
     retrato1 = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/retrato1.png");
     retrato2 = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/retrato2.png");
-    
+    int idCancion = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/main.wav", 50);
+    RenderManager::Instance(1)->getMotor()->play(idCancion);
     idle = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/dolorArterial.png",14,1,0.001f,14,1);
  
     addUnit(player1->getUnit()->getX(),player1->getUnit()->getY(),player1->getUnit(),player1->getUnit()->getComandante());
@@ -174,6 +175,34 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
          cout<<"Me queda este mana:"<<player1->getManaRest()<<endl;
     
     if(spawn==1){
+        if(unit->getNombre()=="Gugox"){
+            int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/gugoxgutural.wav", 100);
+            RenderManager::Instance(1)->getMotor()->play(idSonidito);
+        }
+         else if(unit->getNombre()=="Cthughax"){
+            int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/cthugaxgutu.wav", 100);
+            RenderManager::Instance(1)->getMotor()->play(idSonidito);
+        }
+         else if(unit->getNombre()=="Yigx"){
+            int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/yigxgutural.wav", 100);
+            RenderManager::Instance(1)->getMotor()->play(idSonidito);
+        }
+         else if(unit->getNombre()=="Zoogx"){
+            int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/zoogxgurutal.wav", 100);
+            RenderManager::Instance(1)->getMotor()->play(idSonidito);
+        }
+         else if (unit->getNombre()=="Bokrugs"){
+            int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/bokruxgutural.wav", 120);
+            RenderManager::Instance(1)->getMotor()->play(idSonidito);
+        }
+         else if(unit->getNombre()=="Orrys"){
+            int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/orrysgutural.wav", 100);
+            RenderManager::Instance(1)->getMotor()->play(idSonidito);
+        }
+        else{
+            int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/hereg.wav", 50);
+            RenderManager::Instance(1)->getMotor()->play(idSonidito);
+        }
         //unidad2=player1->getMonstruo(unit,2);
         if(((posx>=0 && posx<3)&& (posy>=0 && posy<10))&& isFree(posx,posy)){
             board[posx][posy].free=false;
@@ -221,10 +250,13 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
           if(unit->getMovimiento()>0){
               cout<<"entro con mov: "<<unit->getMovimiento()<<endl;
             unit->setPosicion(gox,goy);
+            int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/walk.wav", 40);
+            RenderManager::Instance(1)->getMotor()->play(idSonidito);
            // cout<<"calculico o no x : "<<gox<<endl;
            // cout<<"calculico o no y : "<<goy<<endl;
            // board[gox][goy].unit=unit;
             unit->setMovimiento(unit->getMovimiento()-1);
+            
              cout<<"he restado mi mov: "<<unit->getMovimiento()<<endl;
 
             setFree(fromx,fromy,true);
@@ -797,7 +829,9 @@ int Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     unidad2->setVida(unidad2->getVida()-unidad->getAtaque());
     unidad->setVida(unidad->getVida()-unidad2->getAtaque());
     cout<<"Me llamo: "<<unidad2->getNombre()<<"vida al que atacan: "<<unidad2->getVida()<<endl;
-     cout<<"Me llamo: "<<unidad->getNombre()<<"vida del que ataca : "<<unidad->getVida()<<endl;
+    cout<<"Me llamo: "<<unidad->getNombre()<<"vida del que ataca : "<<unidad->getVida()<<endl;
+    int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/explosion.wav", 40);
+    RenderManager::Instance(1)->getMotor()->play(idSonidito);
     //hacia los dos lados
      if(unidad2->getCom()==true||unidad->getCom()==false){
          if(unidad2->getCom()==true){
