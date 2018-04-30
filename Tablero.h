@@ -23,6 +23,7 @@ class Tablero{
             bool spawn1;      // spawn permitted commander1
             bool spawn2;      // spawn permitted commander2
             int alcanzable=0; // Nùmero casillas adyacentes accesibles
+            int id;           //0 azul, 1 verde, 2 rojo
         };
         
         //Variables de tablero

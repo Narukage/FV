@@ -55,5 +55,6 @@ public:
     static Game* Instance();
     ~Game();
     void run();
+    
     bool getSeleccionada()      { return cartaseleccionada; };
 };

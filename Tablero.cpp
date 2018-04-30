@@ -17,9 +17,10 @@ Tablero::Tablero(){
     //filling board matrix with free positions
     for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
-            board[i][j].free=true;
-            board[i][j].coordX=i;
-            board[i][j].coordY=j;
+            board[i][j].free    =true;
+            board[i][j].coordX  =i;
+            board[i][j].coordY  =j;
+            board[i][j].id      =0;
         }
     }
     
@@ -68,6 +69,7 @@ void Tablero::ReiniciarAdy(){
         for(int j=0;j<HEIGHT;j++){
             if(board[i][j].alcanzable==1){
                 board[i][j].alcanzable=0;
+                board[i][j].id=0;
             }
         }
     }
@@ -82,24 +84,32 @@ bool entrado=false;
 if(posx==0 && posy==9 && !entrado){
     board[posx+1][posy].alcanzable=1;
     board[posx][posy+1].alcanzable=1;
+    board[posx+1][posy].id=1;
+    board[posx][posy+1].id=1;
     entrado=true;
 }
 //esquina superior dcha -- iluminar
 if(posy==0 && posx==11 && !entrado){
     board[posx-1][posy].alcanzable=1;
     board[posx][posy+1].alcanzable=1;
+    board[posx-1][posy].id=1;
+    board[posx][posy+1].id=1;
     entrado=true;
 }
 //esquina inferior izq -- iluminar
 if(posx==0 && posy==7 && !entrado){
     board[posx+1][posy].alcanzable=1;
     board[posx][posy-1].alcanzable=1;
+    board[posx+1][posy].id=1;
+    board[posx][posy-1].id=1;
     entrado=true;
 }
 //esquina inferior dcha -- iluminar
 if(posx==11 && posy==7 && !entrado){
     board[posx-1][posy].alcanzable=1;
     board[posx][posy-1].alcanzable=1;
+    board[posx-1][posy].id=1;
+    board[posx][posy-1].id=1;
     entrado=true;
 }
 //arriba -- iluminar
@@ -107,6 +117,9 @@ if(posy==0 && (posx>=0 && posx<12) && !entrado){
     board[posx-1][posy].alcanzable=1;
     board[posx+1][posy].alcanzable=1;
     board[posx][posy+1].alcanzable=1;
+    board[posx-1][posy].id=1;
+    board[posx+1][posy].id=1;
+    board[posx][posy+1].id=1;
     entrado=true;
 }
 //abajo -- iluminar
@@ -114,6 +127,9 @@ if((posx>=0 && posx<12) && posy==7 && !entrado){
     board[posx-1][posy].alcanzable=1;
     board[posx+1][posy].alcanzable=1;
     board[posx][posy-1].alcanzable=1;
+    board[posx-1][posy].id=1;
+    board[posx+1][posy].id=1;
+    board[posx][posy-1].id=1;
     entrado=true;
 }
 //izq -- iluminar
@@ -121,6 +137,9 @@ if(posx==0 && (posy>=0 && posy<8) && !entrado){
     board[posx+1][posy].alcanzable=1;
     board[posx][posy+1].alcanzable=1;
     board[posx][posy-1].alcanzable=1;
+    board[posx+1][posy].id=1;
+    board[posx][posy+1].id=1;
+    board[posx][posy-1].id=1;
     entrado=true;
 }
 //dcha -- iluminar
@@ -128,6 +147,9 @@ if(posx==11 && (posy>=0 && posy<8) && !entrado){
     board[posx-1][posy].alcanzable=1;
     board[posx][posy+1].alcanzable=1;
     board[posx][posy-1].alcanzable=1;
+    board[posx-1][posy].id=1;
+    board[posx][posy+1].id=1;
+    board[posx][posy-1].id=1;
     entrado=true;
 }
 //centro -- iluminar
@@ -136,6 +158,10 @@ if((posx>0 && posx<11)&& (posy>0 && posy<7) && !entrado){
     board[posx+1][posy].alcanzable=1;
     board[posx][posy-1].alcanzable=1;
     board[posx][posy+1].alcanzable=1;
+    board[posx-1][posy].id=1;
+    board[posx+1][posy].id=1;
+    board[posx][posy-1].id=1;
+    board[posx][posy+1].id=1;
     entrado=true;
 }
 }
@@ -368,20 +394,22 @@ void Tablero::resetMap(){
     }         
 }
 
-void Tablero::drawAdyacentes(){
+/*void Tablero::drawAdyacentes(){
     for(int i=0;i<WIDTH;i++){//estos for habra que cambiarlo por unidad.movimiento y dos contadores x,y que sumados sean <= que su movimiento
         for(int j=0;j<HEIGHT;j++){
             if(board[i][j].alcanzable==1){;
                 if(board[i][j].free){
                     RenderManager::Instance(1)->getMotor()->dibujar(idverde,(i*50)+100,(j*50)+80,0.3,*window);
+                    //RenderManager::Instance(1)->getMotor()->setTextura(idazul,"assets/Sprites/bloque3.png");
                 }
                 else{
-                    RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,*window);   
+                    RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,*window);
+                    //RenderManager::Instance(1)->getMotor()->setTextura(idazul, "assets/Sprites/bloque3.png");
                 }
               }
             }
         }
-    }
+    }*/
 
 
 void Tablero::drawMap(){
@@ -390,7 +418,11 @@ void Tablero::drawMap(){
         for(int j=0;j<HEIGHT;j++){
             if(i<WIDTH/2){
                 if(board[i][j].free){
-                  /*2*/  RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,*window);
+                    if(board[i][j].id==0){
+                  /*2*/RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,*window);
+                    }else if(board[i][j].id==1){
+                       RenderManager::Instance(1)->getMotor()->dibujar(idverde,(i*50)+100,(j*50)+80,0.3,*window); 
+                    }
                 }else{
                     RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,*window);  
                 }

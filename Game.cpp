@@ -73,6 +73,7 @@ void Game::update(){
                 }
             }
         }else{ //queremos mover unidad en tablero
+            
             if(!Tablero::Instance()->isFree(campo.x,campo.y) && actuainvocacion==false){ //si la posicion que clickamos contiene una unidad
                 actuainvocacion=true;
                 Tablero::Instance()->Adyacentes(campo.x,campo.y);
@@ -86,6 +87,7 @@ void Game::update(){
                 actuainvocacion=false;
                 posXinvocacion=-1;
                 posYinvocacion=-1;
+                cout << "me reinicio" << endl;
                 Tablero::Instance()->ReiniciarAdy();
             }//ataque
             else if(actuainvocacion==true && !Tablero::Instance()->isFree(campo.x,campo.y)&&Tablero::Instance()->getAlcanzable(campo.x,campo.y)==1){
@@ -105,6 +107,7 @@ void Game::update(){
                 actuainvocacion=false;
                 posXinvocacion=-1;
                 posYinvocacion=-1;
+                cout << "me reinicio2" << endl;
                 Tablero::Instance()->ReiniciarAdy();
                 }
             }
@@ -112,7 +115,7 @@ void Game::update(){
                actuainvocacion=false;
                posXinvocacion=-1;
                posYinvocacion=-1;
-               Tablero::Instance()->ReiniciarAdy();
+               //cout << "me reinicio3" << endl;
                Tablero::Instance()->ReiniciarAdy();
             }
             
@@ -138,9 +141,9 @@ void Game::render(){
     Tablero::Instance()->drawMap();
     Tablero::Instance()->drawUnit();
     
-    if(tieneadyacentes){
+    /*if(tieneadyacentes){
         Tablero::Instance()->drawAdyacentes();
-    }
+    }*/
     
     Tablero::Instance()->drawLife(1);
     Tablero::Instance()->drawLifeNumb(1);

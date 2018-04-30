@@ -102,6 +102,7 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                             
                             campo.x = (coord.x-100)/50;
                             campo.y = (coord.y-80)/50;
+                            
                         }
                        }
                 }
