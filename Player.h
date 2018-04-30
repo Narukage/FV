@@ -50,11 +50,8 @@ class Player{
         ///////////////////////////////
         Invocacion* getMonstruo(Invocacion* montruito, int donde);
         void Mostrar_mano(sf::RenderWindow& window);
-        void ResetStats();
         bool RellenarJugadas(Invocacion* jugada);
-        bool eliminarMazo(Invocacion* invo);
         bool eliminarMano(Invocacion* invo);
-        //bool eliminarManoIa(Invocacion* inv);
         bool eliminarJugadas(Invocacion* invo);
         bool RellenarMano(Invocacion* invo, int jugar);
         Invocacion* JugadaEn(int posx, int posy);

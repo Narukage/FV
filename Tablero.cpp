@@ -139,44 +139,7 @@ if((posx>0 && posx<11)&& (posy>0 && posy<7) && !entrado){
     entrado=true;
 }
 }
-bool Tablero::addUnitIA(){
-    vector<Invocacion*>::iterator it3;
-    bool metida=false;
-    int i = 0;
-    int use = player2->getMano().size()-1;
-    int manaTotal=player2->getMana();
-    int randomx;
-    int randomy;
- 
-    if(player2->getMano().size()>0&&player2->getMano().size()!=NULL){
-        for(it3=player2->getMano().begin();it3!=player2->getMano().end()&&use<player2->getMano().size();++it3){
-            cout<<"Mana toooootal: "<< manaTotal << endl;
-            use=(use-i);
-             if(manaTotal>0){
-                 while(metida==false){
-                if(use<player2->getMano().size()&&player2->getMano().at(use)->getCoste()<=manaTotal){
-                    manaTotal=manaTotal-player2->getMano().at(use)->getCoste();
-                    srand (time(NULL));
-                    randomx= rand() % 3 +9;
-                    randomy= rand() % 8;
-                    if(isFree(randomx,randomy)){
-                    setFree(randomx,randomy,false);
-                    player2->getMano().at(use)->setPosicion(randomx,randomy); 
-                    
-                    player2->RellenarJugadas(player2->getMano().at(use));
-                    
-                    player2->eliminarMano(player2->getMano().at(use));
-                    metida=true;
-                    }
-                }
-             }
-            }
-            metida=false;
-            i++;
-        }
-    }
-    return true;
-}
+
 bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
    if(player1->getManaRest()>=unit->getCoste()){
          int mana1 = player1->getManaRest();
@@ -229,18 +192,10 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
 bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){                                                              
    if(turno){
         if(((gox<12 && gox>=0) && (goy<8 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
-          if(unit->getMovimiento()>0){
-              cout<<"entro con mov: "<<unit->getMovimiento()<<endl;
             unit->setPosicion(gox,goy);
-           // cout<<"calculico o no x : "<<gox<<endl;
-           // cout<<"calculico o no y : "<<goy<<endl;
-           // board[gox][goy].unit=unit;
-            unit->setMovimiento(unit->getMovimiento()-1);
-             cout<<"he restado mi mov: "<<unit->getMovimiento()<<endl;
-
+            //board[gox][goy].unit=unit;
             setFree(fromx,fromy,true);
             return true;
-            }
         }else{
              return false;
             }  
@@ -257,182 +212,6 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
        }         
    }
 }
-}
-bool Tablero::moveToPosIA(){
-    vector<Invocacion*>::iterator it3;
-    int i = 0;
-    int hamuerto=0;
-    bool atacado = false;
-    bool retorno = false;
-    int randomx=-1;
-    int randomy=-1;
-    int xcom=player1->getUnit()->getX();
-    int ycom=player1->getUnit()->getY();
-    int controlx;//Para saber la diferencia entre la x de la ia y la x del comandante
-                 //si es negativo la diferencia sumaremos a la de la ia si es positivo restaremos DAAAAMN
-    int controly;
-    int xia;
-    int yia;
-    if(player2->getJugadas().size()>0){
-        for(it3=player2->getJugadas().begin();it3!=player2->getJugadas().end()&&i<player2->getJugadas().size();++it3){
-            cout<<"Llego aqui - "<<i<<endl;
-            if(i<player2->getJugadas().size()&&player2->getJugadas().at(i)!=NULL&&player2->getJugadas().at(i)->getCom()==true){
-                while(player2->getJugadas().at(i)->getMovimiento()>0){
-                    srand (time(NULL));
-                    randomx= rand() % 3 -1;
-                    randomy= rand() % 3 -1;
-                    if(player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY())){
-                         cout<<"Llego aqui 2 - "<<i<<endl;
-                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY())!=NULL){  
-                            //ataque
-                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY()));
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            atacado=true;
-                            retorno = true;
-                        }
-                    }
-                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)){
-                         cout<<"Llego aqui 3 - "<<i<<endl;
-                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)!=NULL){
-                            //ataque
-                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1));
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            atacado=true;
-                            retorno = true;
-                        }
-                    }
-                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())){
-                         cout<<"Llego aqui 4 - "<<i<<endl;
-                         cout<<"movimiento F"<<player2->getJugadas().at(i)->getMovimiento()<<endl;
-                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())!=NULL){
-                            //ataque
-                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY()));
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            atacado=true;
-                            retorno = true;
-                        }
-                    }
-                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)){
-                         cout<<"Llego aqui 5 - "<<i<<endl;
-                         
-                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)!=NULL){
-                            //ataque
-                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1));
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            atacado=true;
-                            retorno = true;
-                        }
-                    }
-                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&atacado==false){
-                         cout<<"Llego aqui 6 - "<<i<<endl;
-                         cout<<"movimiento F del 6 - "<<player2->getJugadas().at(i)->getMovimiento()<<endl;
-                        //movimiento
-                         xia=player2->getJugadas().at(i)->getX();
-                         yia=player2->getJugadas().at(i)->getY();
-                         if(xia+randomx<12 && yia+randomy<8){
-                             if(isFree(xia+randomx,yia+randomy)){
-                                setFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY(),true);
-                                player2->getJugadas().at(i)->setPosicion(player2->getJugadas().at(i)->getX()+randomx,player2->getJugadas().at(i)->getY()+randomy);
-                                setFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY(),false);
-                                player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                                retorno = true;
-                            }
-                        }
-                    }
-                    atacado=false;
-                }
-            }
-            else if(hamuerto==0&&player2->getJugadas().at(i)!=NULL){
-                
-                while(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0){
-                     cout<<"Llego aqui 7 - "<<i<<endl;
-                    int xia=player2->getJugadas().at(i)->getX();
-                    int yia=player2->getJugadas().at(i)->getY();
-                    //SI HAY ALGUN BICHO LE ATACO TO GUAY
-                     if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY())){
-                         cout<<"Llego aqui 8 - "<<i<<endl;
-                         if(player1->JugadaEn(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY()!=NULL)){
-                            //ataque
-                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY()));
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            atacado=true;
-                            retorno = true;
-                        }
-                    }
-                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)){
-                         cout<<"Llego aqui 9 - "<<i<<endl;
-                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)!=NULL){
-                            //ataque
-                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1));
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            atacado=true;
-                            retorno = true;
-                        }
-                    }
-                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())){
-                         cout<<"Llego aqui 10 - "<<i<<endl;
-                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())!=NULL){
-                            //ataque
-                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY()));
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            atacado=true;
-                            retorno = true;
-                        }
-                    }
-                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)){
-                         cout<<"Llego aqui 11 - "<<i<<endl;
-                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)!=NULL){
-                            //ataque
-                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1));
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            atacado=true;
-                            retorno = true;
-                        }
-                    }
-                     //ME MUEVO TO CHUNGOTE
-                      if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&atacado==false){
-                          xia=player2->getJugadas().at(i)->getX();
-                          yia=player2->getJugadas().at(i)->getY();
-                           cout<<"Llego aqui 12 - "<<i<<endl;
-                          controlx=player2->getJugadas().at(i)->getX()-xcom;
-                          controly=player2->getJugadas().at(i)->getY()-ycom;
-                          if(controlx>0){
-                              xia=xia-1;
-                              controlx=controlx-1;
-                          }
-                          if(controlx<0){
-                              xia=xia+1;
-                              controlx=controlx+1;
-                          }
-                          if(controly>0){
-                              yia=yia-1;
-                              controly=controly-1;
-                          }
-                          if(controly<0){
-                              yia=yia+1;
-                              controly=controly+1;
-                          }
-                          if(isFree(xia,yia)){
-                          setFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY(),true);
-                            player2->getJugadas().at(i)->setPosicion(xia,yia);
-                            setFree(xia,yia,false);
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            retorno = true;
-                          }
-                          else{
-                               player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                          }
-                      }
-                    atacado=false;
-                     
-                }//cierre while
-                
-            }
-            hamuerto=0;
-            i++;
-        }//cierre for
-    }
-    return true;
 }
 bool Tablero::removeUnit(int posx, int posy, Invocacion* unit){
     //board[posx][posy].unit=NULL;
@@ -521,23 +300,22 @@ bool Tablero::isFree(int posx, int posy){
     return board[posx][posy].free;
 }
 
-void Tablero::Mostrar_mano(int id){
+//ADAPTAR ESTE METODO PARA QUE DIBUJE CON RENDERMANAGER POR FAVOR
+void Tablero::Mostrar_mano(){
     std::vector<Invocacion*> array = player1->getMano();
     if(!array.empty()){
         for(unsigned int i = 0; i < array.size(); i++){
-            if(array[i]->getIdCarta()!=id){
             
-                //Se calcula su posición en el mapa
-                float calculox =(i*100)+150;
-                float calculoy = array[i]->getY()*480;
-
-                //Se coloca y escala
-                array[i]->setPosition(calculox,calculoy);
-                array[i]->setScale(spriteSize,spriteSize);
-
-                //Se pinta la carta correspondiente a cada id
-                RenderManager::Instance(1)->getMotor()->dibujar(array[i]->getIdCarta(),calculox,480,spriteSize,*window);
-            }
+            //Se calcula su posición en el mapa
+            float calculox =(i*100)+150;
+            float calculoy = array[i]->getY()*480;
+              
+            //Se coloca y escala
+            array[i]->setPosition(calculox,calculoy);
+            array[i]->setScale(spriteSize,spriteSize);
+            
+            //Se pinta la carta correspondiente a cada id
+            RenderManager::Instance(1)->getMotor()->dibujar(array[i]->getIdCarta(),calculox,480,spriteSize,*window);
         }
     }
     /*
@@ -797,45 +575,6 @@ int Tablero::getAlcanzable(int posx, int posy){
 void Tablero::setFree(int posx,int posy,bool set){
     board[posx][posy].free=set;
 }
-int Tablero::atackToPosIA(Invocacion* ia, Invocacion* humano){
-    int retorno=0;
-    bool hum=false;
-    bool iaB=false;
-    ia->setVida(ia->getVida()-humano->getAtaque());
-    humano->setVida(humano->getVida()-ia->getAtaque());
-    if(ia->getCom()==true){
-        player2->setLife(ia->getVida());
-        if(player2->getLife()<=0){
-            iaB=true;
-        }
-    }
-    else if(ia->getVida()<=0){
-        setFree(ia->getX(),ia->getY(),true);
-        player2->eliminarJugadas(ia);
-        retorno=7;//muerte bicho
-    }
-    if(humano->getCom()==true){
-        player1->setLife(ia->getVida());
-        if(player1->getLife()<=0){
-            hum=true;
-        }
-        
-    }
-    else if(humano->getVida()<=0){
-        setFree(humano->getX(),humano->getY(), true);
-        player1->eliminarJugadas(humano);       
-    }
-    if(iaB==true&&hum==true){
-        retorno=-3;
-    }
-    if(iaB==true&&hum==false){
-        retorno=-1;
-    }
-    if(iaB==false&&hum==true){
-        retorno=-2;
-    }
-    return retorno;
-}
 int Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     int retorno=0;
     Invocacion* unidad = new Invocacion();
@@ -873,14 +612,13 @@ int Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     }
    
          if(unidad2->getCom()==true && unidad2->getVida()<=0){
-             retorno=-1; //GANADA
+             retorno=-1; 
         }
          if(unidad->getCom()==true && unidad->getVida()<=0){
-             retorno=-2; //PERDIDA
+             retorno=-2;
          }
          if((unidad2->getCom()==true&&unidad->getCom()==true) && (unidad2->getVida()<=0 && unidad->getVida()<=0)){
-             retorno=-3; //EMPATE
+             retorno=-3;
         }
-     player1->JugadaEn(fromx,fromy)->setMovimiento(player1->JugadaEn(fromx,fromy)->getMovimiento()-1);
-     return retorno;
+    return retorno;
 }

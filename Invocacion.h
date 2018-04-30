@@ -12,9 +12,7 @@ class Invocacion{
         int coste;
         int vida;
         int ataque;
-        int jugarla=0;//posicion en la mano
-        int movimiento=0;
-        int movfijo = 0;
+        int jugarla=0; //posicion en la mano
         string nombre;
         bool existo=false;
         int comandante=1;
@@ -24,14 +22,13 @@ class Invocacion{
         int idsprite;
         int id;
         int idcarta;
-        int idcartasel;
         
     public:
         ///////////////////////////////
         // CONSTRUCTO / DESTRUCTOR
         ///////////////////////////////
         Invocacion();
-        Invocacion(string nombre,int coste,int vida,int ataque,int movimiento,int comandante,int unico);
+        Invocacion(string nombre,int coste,int vida,int ataque,int comandante,int unico);
         ~Invocacion();
         
         ///////////////////////////////
@@ -50,7 +47,6 @@ class Invocacion{
         void setExisto()                                    { existo=true;          };
         void setVida(int vida)                              { this->vida = vida;    };
         void setMano(bool man)                              { mano=man;             };
-        void setMovimiento(int mov)                         { movimiento=mov;       };
         void setPosition(float positionX,float positionY);
         void setScale(float scaleX,float scaleY);
         void setCom(bool coman)                             { com=coman;            };
@@ -64,11 +60,8 @@ class Invocacion{
         int getAtaque()                                     { return ataque;        };
         string getNombre()                                  { return nombre;        };
         bool getMano()                                      { return mano;          };
-        int getMovimiento()                                 { return movimiento;    };
-        int getMovimientoF()                                 { return movfijo;    };
         bool getCom()                                       { return com;           };
         int getCoste()                                      { return coste;         };
         int getId()                                         { return id;            };
         int getIdCarta()                                    { return idcarta;       };
-        int getIdCartaSel()                                 { return idcartasel;    };
 };

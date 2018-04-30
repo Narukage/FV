@@ -74,17 +74,13 @@ class Tablero{
         ~Tablero();
         void clear();
         bool addUnit(int posx, int posy, Invocacion* unit, int spawn); //return true if adds a unit at the location succesfully
-        bool addUnitIA();
         bool moveToPos(int fromx, int fromy,int gox, int goy, Invocacion* unit); //returns true if unit is moved succesfully
-        bool moveToPosIA();
         int atackToPos(int fromx, int fromy,int gox, int goy);
-        int atackToPosIA(Invocacion* ia, Invocacion* humano);
         bool removeUnit(int posx, int posy, Invocacion* unit); //returns true if unit is removed succesfully
         void Adyacentes(int posx, int posy);
         int getAlcanzable(int posx, int posy);
         Invocacion* esCarta(int posx, int posy);
         void resetMap();
-        bool isFree(int posx, int posy);
         
         ///////////////////////////////
         // DIBUJADO
@@ -101,7 +97,9 @@ class Tablero{
         void drawBarra(int commander);
         void drawMana(int commander);
         void drawRetrato(int commander);
-        void Mostrar_mano(int id);
+        
+        void Mostrar_mano();
+        bool isFree(int posx, int posy);
         
         ///////////////////////////////
         // GETTERS Y SETTERS
@@ -109,6 +107,6 @@ class Tablero{
         void setWindow(sf::RenderWindow* w) { window = w;    };
         void setTurno(bool metoca)          { turno=metoca;  };
         Player* getPlayer()                 { return player1;};
-        Player* getPlayer2()                { return player2;};
+        
         void setFree(int posx,int posy,bool set);
 };
