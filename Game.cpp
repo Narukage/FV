@@ -31,7 +31,7 @@ void Game::inicializar(){
     generalmuerto2=false;
     empate=false;
     isPlay=true;
-    state=Menu::Instance();
+    //state=Game::Instance();
     //Pasamos la ventana
     Tablero::Instance()->setWindow(&window);
     Menu::Instance()->setWindow(&window);
@@ -146,11 +146,6 @@ void Game::render(){
     
     Tablero::Instance()->drawMap();
     Tablero::Instance()->drawUnit();
-    
-    /*if(tieneadyacentes){
-        Tablero::Instance()->drawAdyacentes();
-    }*/
-    
     Tablero::Instance()->drawLife(1);
     Tablero::Instance()->drawLifeNumb(1);
     Tablero::Instance()->drawLife(2);
@@ -181,14 +176,14 @@ void Game::cleared(){
 
 void Game::run(){
     inicializar();
-    state->inicializar();
+    //state->inicializar();
       sf::Time timeStartUpdate = RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime();
         while(isPlay){
             InputManager::Instance(1)->getInput()->Eventos(isPlay, window);
            if(RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime().asMilliseconds()-timeStartUpdate.asMilliseconds()>kUpdateTimePS){
-            state->update();
-            state->updateIA();
-            state->render();
+            /*state->*/update();
+            /*state->*/updateIA();
+            /*state->*/render();
             
             timeStartUpdate = RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime();
           }
@@ -219,8 +214,8 @@ void Game::finalizado(){
 }
 void Game::cambiarApartida(){
     
-        state=Partida::Instance();
+        //state=Partida::Instance();
 }
 void Game::cambiarApausa(){
-        state=Pausa::Instance();
+        //state=Pausa::Instance();
 }

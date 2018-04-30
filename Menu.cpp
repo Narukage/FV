@@ -26,7 +26,20 @@ void Menu::update(){
             Game::Instance()->cambiarApartida();
     }
 }
-void Menu::render(){
+
+  void Menu::inicializar(){
+           idspriteEmpezar=RenderManager::Instance(1)->getMotor()->crearTexto("Fonts/FreeMono.ttf");
+           idspriteOpciones=RenderManager::Instance(1)->getMotor()->crearTexto("Fonts/FreeMono.ttf");
+           idspriteSalir=RenderManager::Instance(1)->getMotor()->crearTexto("Fonts/FreeMono.ttf");
+           height=(600/(MAX_NUMBER_OF_ITEMS + 1) * 1);
+           RenderManager::Instance(1)->getMotor()->escribir("Empezar",idspriteEmpezar,width,height,1,*window);
+           height=(600/(MAX_NUMBER_OF_ITEMS + 1) * 2);
+           RenderManager::Instance(1)->getMotor()->escribir("Opciones",idspriteOpciones,width,height,1,*window);
+           height=(600/(MAX_NUMBER_OF_ITEMS + 1) * 3);
+           RenderManager::Instance(1)->getMotor()->escribir("Salir",idspriteSalir,width,height,1,*window);
+ }
+    
+ void Menu::render(){
     //window->clear(sf::Color::Black);
     if (!texture.loadFromFile("HUD/fondoMenu.jpg"))
     {
@@ -40,17 +53,6 @@ void Menu::render(){
         sprite.setTexture(texture);*/
     window->display();
 }
-    void Menu::inicializar(){
-           idspriteEmpezar=RenderManager::Instance(1)->getMotor()->crearTexto("Fonts/FreeMono.ttf");
-           idspriteOpciones=RenderManager::Instance(1)->getMotor()->crearTexto("Fonts/FreeMono.ttf");
-           idspriteSalir=RenderManager::Instance(1)->getMotor()->crearTexto("Fonts/FreeMono.ttf");
-           height=(600/(MAX_NUMBER_OF_ITEMS + 1) * 1);
-           RenderManager::Instance(1)->getMotor()->escribir("Empezar",idspriteEmpezar,width,height,1,*window);
-           height=(600/(MAX_NUMBER_OF_ITEMS + 1) * 2);
-           RenderManager::Instance(1)->getMotor()->escribir("Opciones",idspriteOpciones,width,height,1,*window);
-           height=(600/(MAX_NUMBER_OF_ITEMS + 1) * 3);
-           RenderManager::Instance(1)->getMotor()->escribir("Salir",idspriteSalir,width,height,1,*window);
-    }
 
 void Menu::MoveUp()
 {
