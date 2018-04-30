@@ -681,13 +681,13 @@ void Tablero::drawLife(int commander){
     if(commander==1){
         RenderManager::Instance(1)->getMotor()->dibujar(idvidacu,100,5,0.5,*window);
                 
-        for(int i=0;i<player1->getLife();i++){
+        for(int i=0;i<player1->getUnit()->getVida();i++){
             RenderManager::Instance(1)->getMotor()->dibujar(idvidaco,(i*2)+135,10,2,*window);
         }
     }else{
         RenderManager::Instance(1)->getMotor()->dibujar(idvidacu,670,5,0.5,*window);
         
-        for(int i=0;i<player2->getLife();i++){
+        for(int i=0;i<player2->getUnit()->getVida();i++){
             RenderManager::Instance(1)->getMotor()->dibujar(idvidaco,(i*2)+455,10,2,*window);
         }
     }
@@ -696,13 +696,13 @@ void Tablero::drawLife(int commander){
 void Tablero::drawLifeNumb(int commander){
     if(commander==1){
         
-        int life = player1->getLife();
+        int life = player1->getUnit()->getVida();
             std::stringstream ss;
             ss << life;
             RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuente,350,1,0.7, *window);
     }else{
 
-        int life = player2->getLife();
+        int life = player2->getUnit()->getVida();
             std::stringstream ss;
             ss << life;
             RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuente,412,1,0.7, *window);
@@ -835,10 +835,10 @@ int Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     //hacia los dos lados
      if(unidad2->getCom()==true||unidad->getCom()==false){
          if(unidad2->getCom()==true){
-             player1->setLife(unidad2->getVida());
+             player1->setLife(player1->getLife()-unidad2->getVida());
          }
          if(unidad->getCom()==true){
-             player1->setLife(unidad->getVida());
+             player1->setLife(player1->getLife()-unidad->getVida());
          }
      }
     if(unidad2->getCom()==false&&unidad2->getVida()<=0){
