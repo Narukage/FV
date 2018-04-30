@@ -1,6 +1,10 @@
 #include <valarray>
 #include "Game.h"
+#include "Menu.h"
+#include "Partida.h"
+#include "Pausa.h"
 #define kUpdateTimePS 1000/15
+
 
 Game* Game::pinstance = 0;
     
@@ -27,9 +31,11 @@ void Game::inicializar(){
     generalmuerto2=false;
     empate=false;
     isPlay=true;
-    
+    state=Menu::Instance();
     //Pasamos la ventana
     Tablero::Instance()->setWindow(&window);
+    Menu::Instance()->setWindow(&window);
+
 }
 
 void Game::update(){
@@ -175,18 +181,15 @@ void Game::cleared(){
 
 void Game::run(){
     inicializar();
-    
+    state->inicializar();
       sf::Time timeStartUpdate = RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime();
         while(isPlay){
             InputManager::Instance(1)->getInput()->Eventos(isPlay, window);
            if(RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime().asMilliseconds()-timeStartUpdate.asMilliseconds()>kUpdateTimePS){
-            update();
-            updateIA();
-            render();
-            /*
-             state.update();
-             state.updateIA();
-             state.render();*/
+            state->update();
+            state->updateIA();
+            state->render();
+            
             timeStartUpdate = RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime();
           }
 
@@ -213,4 +216,11 @@ void Game::finalizado(){
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::P)){
         isPlay=false;
     }
+}
+void Game::cambiarApartida(){
+    
+        state=Partida::Instance();
+}
+void Game::cambiarApausa(){
+        state=Pausa::Instance();
 }

@@ -108,3 +108,23 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                 }
     }
 }
+    int InputManager::PulsaTecla() {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){
+            std::cout<<"entra"<<std::endl;
+            return 1;
+        }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+            return 2;
+        }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+            return 3;
+        }
+        return -1;
+    }
+    bool InputManager::PulsaEscape() {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+            return true;
+        }
+        return false;
+    }
+
