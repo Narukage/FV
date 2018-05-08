@@ -166,7 +166,7 @@ Player::Player(int commander){
     /*if(!textura3.loadFromFile("assets/Sprites/carta.png")){
            std::cout<<"Textura no aplicada"<<std::endl;
         } */
-    if(commander==1){
+    
         vector<Invocacion*>::iterator it7;
      int x = 0;
     //0 = a mazo
@@ -188,7 +188,8 @@ Player::Player(int commander){
              
            // mano.at(j)->setJugar(j);
         }*/
-    }
+    
+   
    retrato.setTexture(textura);
    
 }
@@ -285,7 +286,7 @@ bool Player:: eliminarMano(Invocacion* invo2){
     int i=0;
     for(it2=mano.begin();it2!=mano.end()&&i<5;++it2){
         cout<<"entro "<<endl;
-        if(i<mano.size()&&mano.at(i)->GetUnico()==invo2->GetUnico()){
+        if(i<mano.size()&&!mano.empty()&&mano.at(i)->GetUnico()==invo2->GetUnico()){
          cout<<"hasta el fondo "<<endl;
        
                     mano.erase(it2); 
@@ -328,7 +329,8 @@ bool Player:: eliminarJugadas(Invocacion* invo2){// get unico creo que no sirve 
     return false;
 }
  Invocacion* Player::  JugadaEn(int posx, int posy){
-     Invocacion* retorno = new Invocacion();
+     Invocacion* retorno = NULL;
+     
      if((posx>100 && posx<700)&&(posy>80 && posy<475)){
         posx = (posx-100)/50;
         posy = (posy-80)/50;
@@ -392,7 +394,7 @@ bool Player:: eliminarJugadas(Invocacion* invo2){// get unico creo que no sirve 
      }
                  j=j+1;
                  RellenarMano(invo2.at(posmano),i);
-                 eliminarJugadas(invo2.at(posmano));
+                 //NO SE POR QUE ESTABA ESTO XDeliminarJugadas(invo2.at(posmano));
  }
  void Player::ResetStats(){
      vector<Invocacion*>::iterator it6;
