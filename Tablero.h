@@ -37,16 +37,16 @@ class Tablero{
         int sizeY;   //Tamaño de la casilla en Y
         
         //Motor
-        *IFachada motor = RenderManager::Instance(1)->getMotor();
+        IFachada* motor = RenderManager::Instance(1)->getMotor();
         
         //Tilemap
         int _width;
-        int _tileWidth;
+        int _tilewidth;
         
         int ***_tilemap;
-        int _numLayers;
+        int _numlayers;
         int _height;
-        int _tileHeigth;
+        int _tileheigth;
     
         sf::Sprite ****_tilemapSprite;
         sf::Sprite *_tilesetSprite;
@@ -96,6 +96,7 @@ class Tablero{
         static Tablero* Instance();
         ~Tablero();
         void clear();
+        void cargarMapa();
         bool addUnit(int posx, int posy, Invocacion* unit, int spawn); //return true if adds a unit at the location succesfully
         bool addUnitIA();
         bool moveToPos(int fromx, int fromy,int gox, int goy, Invocacion* unit); //returns true if unit is moved succesfully

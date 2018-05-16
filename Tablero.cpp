@@ -66,6 +66,34 @@ Tablero *p1 = Tablero::Instance();
 Tablero *p2 = p1->Instance();
 Tablero &ref = * Tablero::Instance();
 
+void Tablero::cargarMapa(){
+    TiXmlDocument doc;
+    
+    doc.LoadFile("assets/Sprites/map.tmx");
+    
+    TiXmlElement* map = doc.FirstChildElement("map");
+    
+    //Tamanio del mapa y de los tiles
+    map->QueryIntAttribute("width", &_width);
+    map->QueryIntAttribute("height", &_height);
+    map->QueryIntAttribute("tilewidth", &_tilewidth);
+    map->QueryIntAttribute("tileheight", &_tileheigth);
+    
+    //Imagen del tileset
+    TiXmlElement* img = map->FirstChildElement("tileset")->FirstChildElement("img");
+    const char* filename = img->Attribute("source");
+    
+    TiXmlElement* layer = map->FirstChildElement("layer");
+    
+    //Capas del .tmx
+    while(layer){
+        _numlayers++;
+        layer = layer->NextSiblingElement("layer");
+    }
+    
+    
+}
+
 void Tablero::ReiniciarAdy(){
     for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
