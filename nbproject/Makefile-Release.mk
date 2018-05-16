@@ -48,7 +48,11 @@ OBJECTFILES= \
 	${OBJECTDIR}/RenderManager.o \
 	${OBJECTDIR}/Tablero.o \
 	${OBJECTDIR}/TurnoIA.o \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/tinystr.o \
+	${OBJECTDIR}/tinyxml.o \
+	${OBJECTDIR}/tinyxmlerror.o \
+	${OBJECTDIR}/tinyxmlparser.o
 
 
 # C Compiler Flags
@@ -144,6 +148,26 @@ ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/tinystr.o: tinystr.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/tinystr.o tinystr.cpp
+
+${OBJECTDIR}/tinyxml.o: tinyxml.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/tinyxml.o tinyxml.cpp
+
+${OBJECTDIR}/tinyxmlerror.o: tinyxmlerror.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/tinyxmlerror.o tinyxmlerror.cpp
+
+${OBJECTDIR}/tinyxmlparser.o: tinyxmlparser.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/tinyxmlparser.o tinyxmlparser.cpp
 
 # Subprojects
 .build-subprojects:

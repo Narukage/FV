@@ -37,22 +37,23 @@ Tablero::Tablero(){
     //Variables de sprite
     spriteSize = 0.9;
     
-   /*0*/ idrojo = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/bloque2.png"); //bloque rojo
-   /*1*/ idverde = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/bloque3.png"); //bloque verde
-   /*2*/idazul = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/150px-SokobanWallDepictionDrawing.png"); //bloque azul
-    idvidaco = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/vida.png"); //vida corazon
-    idvidacu = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/life.png"); //vida cuadradito
-    fuente = RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf"); //fuente
-    fuentemana = RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf"); //fuente
-    manarest = RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf");
-    barra = RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf");
-    mana = RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf");
+   /*0*/ //idrojo = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/bloque2.png"); //bloque rojo
+   /*1*/ idverde = motor->crearSprite("assets/Sprites/bloque3.png"); //bloque verde
+   /*2*///idazul = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/150px-SokobanWallDepictionDrawing.png"); //bloque azul
+    idvidaco = motor->crearSprite("assets/HUD/vida.png"); //vida corazon
+    idvidacu = motor->crearSprite("assets/HUD/life.png"); //vida cuadradito
+    fuente = motor->crearTexto("assets/Fonts/FreeMono.ttf"); //fuente
+    fuentemana = motor->crearTexto("assets/Fonts/FreeMono.ttf"); //fuente
+    manarest = motor->crearTexto("assets/Fonts/FreeMono.ttf");
+    barra = motor->crearTexto("assets/Fonts/FreeMono.ttf");
+    mana = motor->crearTexto("assets/Fonts/FreeMono.ttf");
 
-    retrato1 = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/retrato1.png");
-    retrato2 = RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/retrato2.png");
-    int idCancion = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/main.wav", 30);
-    RenderManager::Instance(1)->getMotor()->play(idCancion);
-    idle = RenderManager::Instance(1)->getMotor()->crearAnimacion("assets/Sprites/dolorArterial.png",14,1,0.001f,14,1);
+    retrato1 = motor->crearSprite("assets/HUD/retrato1.png");
+    retrato2 = motor->crearSprite("assets/HUD/retrato2.png");
+    //fondo = motor->crearSprite("assets/Sprites/Fondo.png");
+    int idCancion = motor->crearAudio("assets/Music/main.wav", 30);
+    idle = motor->crearAnimacion("assets/Sprites/dolorArterial.png",14,1,0.001f,14,1);
+    motor->play(idCancion);
  
     addUnit(player1->getUnit()->getX(),player1->getUnit()->getY(),player1->getUnit(),player1->getUnit()->getComandante());
     cout<<"X del 2: "<<player2->getUnit()->getX()<<"Y del 2: "<<player1->getUnit()->getY()<<endl;
@@ -333,14 +334,14 @@ bool Tablero::moveToPosIA(){
     int yia;
     if(player2->getJugadas().size()>0){
         for(it3=player2->getJugadas().begin();it3!=player2->getJugadas().end()&&i<player2->getJugadas().size();++it3){
-            cout<<"Llego aqui - "<<i<<endl;
+            //cout<<"Llego aqui - "<<i<<endl;
             if(i<player2->getJugadas().size()&&player2->getJugadas().at(i)!=NULL&&player2->getJugadas().at(i)->getCom()==true){
                 while(player2->getJugadas().at(i)->getMovimiento()>0){
                     srand (time(NULL));
                     randomx= rand() % 3 -1;
                     randomy= rand() % 3 -1;
                     if(player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY())){
-                         cout<<"Llego aqui 2 - "<<i<<endl;
+                         //cout<<"Llego aqui 2 - "<<i<<endl;
                         if(player1->JugadaEn(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY())!=NULL){  
                             //ataque
                             hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY()));
@@ -350,7 +351,7 @@ bool Tablero::moveToPosIA(){
                         }
                     }
                     if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)){
-                         cout<<"Llego aqui 3 - "<<i<<endl;
+                         //cout<<"Llego aqui 3 - "<<i<<endl;
                         if(player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)!=NULL){
                             //ataque
                             hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1));
@@ -360,8 +361,8 @@ bool Tablero::moveToPosIA(){
                         }
                     }
                     if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())){
-                         cout<<"Llego aqui 4 - "<<i<<endl;
-                         cout<<"movimiento F"<<player2->getJugadas().at(i)->getMovimiento()<<endl;
+                         //cout<<"Llego aqui 4 - "<<i<<endl;
+                         //cout<<"movimiento F"<<player2->getJugadas().at(i)->getMovimiento()<<endl;
                         if(player1->JugadaEn(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())!=NULL){
                             //ataque
                             hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY()));
@@ -371,7 +372,7 @@ bool Tablero::moveToPosIA(){
                         }
                     }
                     if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)){
-                         cout<<"Llego aqui 5 - "<<i<<endl;
+                         //cout<<"Llego aqui 5 - "<<i<<endl;
                          
                         if(player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)!=NULL){
                             //ataque
@@ -382,8 +383,8 @@ bool Tablero::moveToPosIA(){
                         }
                     }
                     if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&atacado==false){
-                         cout<<"Llego aqui 6 - "<<i<<endl;
-                         cout<<"movimiento F del 6 - "<<player2->getJugadas().at(i)->getMovimiento()<<endl;
+                         //cout<<"Llego aqui 6 - "<<i<<endl;
+                         //cout<<"movimiento F del 6 - "<<player2->getJugadas().at(i)->getMovimiento()<<endl;
                         //movimiento
                          xia=player2->getJugadas().at(i)->getX();
                          yia=player2->getJugadas().at(i)->getY();
@@ -403,12 +404,12 @@ bool Tablero::moveToPosIA(){
             else if(hamuerto==0&&player2->getJugadas().at(i)!=NULL){
                 
                 while(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0){
-                     cout<<"Llego aqui 7 - "<<i<<endl;
+                     //cout<<"Llego aqui 7 - "<<i<<endl;
                     int xia=player2->getJugadas().at(i)->getX();
                     int yia=player2->getJugadas().at(i)->getY();
                     //SI HAY ALGUN BICHO LE ATACO TO GUAY
                      if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY())){
-                         cout<<"Llego aqui 8 - "<<i<<endl;
+                         //cout<<"Llego aqui 8 - "<<i<<endl;
                          if(player1->JugadaEn(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY()!=NULL)){
                             //ataque
                             hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY()));
@@ -418,7 +419,7 @@ bool Tablero::moveToPosIA(){
                         }
                     }
                     if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)){
-                         cout<<"Llego aqui 9 - "<<i<<endl;
+                         //cout<<"Llego aqui 9 - "<<i<<endl;
                         if(player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)!=NULL){
                             //ataque
                             hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1));
@@ -428,7 +429,7 @@ bool Tablero::moveToPosIA(){
                         }
                     }
                     if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())){
-                         cout<<"Llego aqui 10 - "<<i<<endl;
+                         //cout<<"Llego aqui 10 - "<<i<<endl;
                         if(player1->JugadaEn(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())!=NULL){
                             //ataque
                             hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY()));
@@ -438,7 +439,7 @@ bool Tablero::moveToPosIA(){
                         }
                     }
                     if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)){
-                         cout<<"Llego aqui 11 - "<<i<<endl;
+                         //cout<<"Llego aqui 11 - "<<i<<endl;
                         if(player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)!=NULL){
                             //ataque
                             hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1));
@@ -451,7 +452,7 @@ bool Tablero::moveToPosIA(){
                       if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&atacado==false){
                           xia=player2->getJugadas().at(i)->getX();
                           yia=player2->getJugadas().at(i)->getY();
-                           cout<<"Llego aqui 12 - "<<i<<endl;
+                           //cout<<"Llego aqui 12 - "<<i<<endl;
                           controlx=player2->getJugadas().at(i)->getX()-xcom;
                           controly=player2->getJugadas().at(i)->getY()-ycom;
                           if(controlx>0){

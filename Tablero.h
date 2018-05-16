@@ -5,6 +5,9 @@
 #include <sstream>
 #include "Player.h"
 #include "RenderManager.h"
+#include "IFachada.h"
+#include "tinystr.h"
+#include "tinyxml.h"
 #define WIDTH 12
 #define HEIGHT 8
 
@@ -33,6 +36,23 @@ class Tablero{
         int sizeX;   //Tamaño de la casilla en X
         int sizeY;   //Tamaño de la casilla en Y
         
+        //Motor
+        *IFachada motor = RenderManager::Instance(1)->getMotor();
+        
+        //Tilemap
+        int _width;
+        int _tileWidth;
+        
+        int ***_tilemap;
+        int _numLayers;
+        int _height;
+        int _tileHeigth;
+    
+        sf::Sprite ****_tilemapSprite;
+        sf::Sprite *_tilesetSprite;
+    
+        sf::Texture _tilesetTexture;
+        
         //Jugadores
         Player* player1;
         Player* player2;
@@ -43,6 +63,7 @@ class Tablero{
         //Variables de sprites
         float spriteSize; //Resolución de los sprites
         
+        //id's Sprites
         int idverde;
         int idrojo;
         int idazul;
@@ -56,6 +77,7 @@ class Tablero{
         int retrato1;
         int retrato2;
         int idle;
+        int fondo;
       
        sf::Texture texturacarta;
        
