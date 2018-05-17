@@ -31,6 +31,7 @@ void Game::inicializar(){
     generalmuerto2=false;
     empate=false;
     isPlay=true;
+    Tablero::Instance()->cargarMapa();
     //state=Game::Instance();
     //Pasamos la ventana
     Tablero::Instance()->setWindow(&window);
@@ -168,8 +169,7 @@ void Game:: updateIA(){
 void Game::render(){
     window.clear(sf::Color::Black);
     
-    //Tablero::Instance()->drawMap();
-    Tablero::Instance()->cargarMapa();
+    Tablero::Instance()->drawMap();
     Tablero::Instance()->drawUnit();
     Tablero::Instance()->drawLife(1);
     Tablero::Instance()->drawLifeNumb(1);
