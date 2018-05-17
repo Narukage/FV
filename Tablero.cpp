@@ -73,7 +73,7 @@ void Tablero::cargarMapa(){
         cout << "No se ha podido cargar el .tmx" << endl;
     }
 
-    TiXmlElement* map = doc.FirstChildElement("map");
+     TiXmlElement* map = doc.FirstChildElement("map");
 
     
     //Tamanio del mapa y de los tiles
@@ -83,17 +83,15 @@ void Tablero::cargarMapa(){
     map->QueryIntAttribute("tileheight",&_tileheigth);
     
     //Leemos los tilesets
-    TiXmlElement *img = map->FirstChildElement("tileset");  
-    string filename;
-
-    img = map->FirstChildElement("tileset");
-
-    while(img){
-        filename=(string)img->FirstChildElement("image")->Attribute("source");
-        img=img->NextSiblingElement("tileset");
-    } 
+    TiXmlElement *img = map->FirstChildElement("tileset")->FirstChildElement("image");  
+    const char* filename = img->Attribute("source");
     
-    _tilesetTexture.loadFromFile(filename);
+    cout << "filename: " <<filename << endl;
+
+    if(!_tilesetTexture.loadFromFile("assets/Sprites/TILESET.png")){
+        cout << "No se ha podido cargar la textura del tilemap" << endl;
+        
+    }
     
     //Leemos diferentes capas
     TiXmlElement *layer = map->FirstChildElement("layer");
@@ -103,7 +101,8 @@ void Tablero::cargarMapa(){
         layer= layer->NextSiblingElement("layer");
     } 
     
-    //Reserva de memoria 
+    //Reserva de memoria
+    cout << "numlayers: " << _numlayers;
     _tilemap=new int**[_numlayers];
     for(int i=0; i<_numlayers; i++){
         _tilemap[i]=new int*[_height];
@@ -115,18 +114,15 @@ void Tablero::cargarMapa(){
         }
     }
 
-    TiXmlElement *data;
-
     layer = map->FirstChildElement("layer");
     string *name=new string[_numlayers];
     int j=0;
     int l=0;
     
     //Leo los tiles
-    while(layer){
-        data= layer->FirstChildElement("data")->FirstChildElement("tile");
+        TiXmlElement *data= layer->FirstChildElement("data")->FirstChildElement("tile");
         name[j]= (string)layer->Attribute("name");
-            while(data){
+            for(int l=0;l<_numlayers;l++){
                 for(int y=0; y<_height; y++){
                     for(int x=0; x<_width;x++){
                         data->QueryIntAttribute("gid",&_tilemap[l][y][x]);
@@ -134,10 +130,7 @@ void Tablero::cargarMapa(){
                     }
                 }
             }
-        l++;
-        layer= layer->NextSiblingElement("layer");
         j++;
-    }
       
     //Reserva de memoria para los sprites
     _tilemapSprite=new sf::Sprite***[_numlayers];
@@ -145,6 +138,7 @@ void Tablero::cargarMapa(){
     for(int l=0; l<_numlayers; l++){
         _tilemapSprite[l]=new sf::Sprite**[_height];
     }
+    
       
     for(int l=0; l<_numlayers; l++){
         for(int y=0; y<_height; y++){
@@ -157,6 +151,7 @@ void Tablero::cargarMapa(){
     
     int columns = _tilesetTexture.getSize().x / _tilewidth;
     int rows = _tilesetTexture.getSize().y / _tileheigth;
+    
     
     _tilesetSprite =new sf::Sprite[columns*rows];     
     int t=0;
@@ -173,13 +168,13 @@ void Tablero::cargarMapa(){
         for(int y=0; y<_height; y++){
             for(int x=0; x<_width;x++){
                 int gid=_tilemap[l][y][x]-1;
-                if(gid>=rows*columns){
+                if(gid>=rows*columns){ //Si entra, no lo está haciendo bien
                     cout<<gid<<endl;
                     cout<<rows<<endl;
                     cout<<columns<<endl;
                     cout<<"Error"<<endl;
                 }
-                else if(gid>0){   
+                else if(gid>0){ //Todo correcto
                     _tilemapSprite[l][y][x]=new sf::Sprite(_tilesetTexture,_tilesetSprite[gid].getTextureRect());
                     _tilemapSprite[l][y][x]->setPosition(x*_tilewidth,y*_tileheigth);
                 }
