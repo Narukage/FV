@@ -168,7 +168,8 @@ void Game:: updateIA(){
 void Game::render(){
     window.clear(sf::Color::Black);
     
-    Tablero::Instance()->drawMap();
+    //Tablero::Instance()->drawMap();
+    Tablero::Instance()->cargarMapa();
     Tablero::Instance()->drawUnit();
     Tablero::Instance()->drawLife(1);
     Tablero::Instance()->drawLifeNumb(1);

@@ -39,7 +39,7 @@ Tablero::Tablero(){
     
    /*0*/ //idrojo = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/bloque2.png"); //bloque rojo
    /*1*/ idverde = motor->crearSprite("assets/Sprites/bloque3.png"); //bloque verde
-   /*2*///idazul = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/150px-SokobanWallDepictionDrawing.png"); //bloque azul
+   /*2*/ //idazul = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/150px-SokobanWallDepictionDrawing.png"); //bloque azul
     idvidaco = motor->crearSprite("assets/HUD/vida.png"); //vida corazon
     idvidacu = motor->crearSprite("assets/HUD/life.png"); //vida cuadradito
     fuente = motor->crearTexto("assets/Fonts/FreeMono.ttf"); //fuente
@@ -66,31 +66,139 @@ Tablero *p1 = Tablero::Instance();
 Tablero *p2 = p1->Instance();
 Tablero &ref = * Tablero::Instance();
 
-void Tablero::cargarMapa(){
+void Tablero::cargarMapa(){   
     TiXmlDocument doc;
-    
-    doc.LoadFile("assets/Sprites/map.tmx");
-    
+
+    if(!doc.LoadFile("assets/Sprites/map.tmx")){
+        cout << "No se ha podido cargar el .tmx" << endl;
+    }
+
     TiXmlElement* map = doc.FirstChildElement("map");
+
     
     //Tamanio del mapa y de los tiles
-    map->QueryIntAttribute("width", &_width);
-    map->QueryIntAttribute("height", &_height);
-    map->QueryIntAttribute("tilewidth", &_tilewidth);
-    map->QueryIntAttribute("tileheight", &_tileheigth);
+    map->QueryIntAttribute("width",&_width);
+    map->QueryIntAttribute("height",&_height);
+    map->QueryIntAttribute("tilewidth",&_tilewidth);
+    map->QueryIntAttribute("tileheight",&_tileheigth);
     
-    //Imagen del tileset
-    TiXmlElement* img = map->FirstChildElement("tileset")->FirstChildElement("img");
-    const char* filename = img->Attribute("source");
+    //Leemos los tilesets
+    TiXmlElement *img = map->FirstChildElement("tileset");  
+    string filename;
+
+    img = map->FirstChildElement("tileset");
+
+    while(img){
+        filename=(string)img->FirstChildElement("image")->Attribute("source");
+        img=img->NextSiblingElement("tileset");
+    } 
     
-    TiXmlElement* layer = map->FirstChildElement("layer");
+    _tilesetTexture.loadFromFile(filename);
     
-    //Capas del .tmx
+    //Leemos diferentes capas
+    TiXmlElement *layer = map->FirstChildElement("layer");
+    _numlayers=0;
     while(layer){
         _numlayers++;
-        layer = layer->NextSiblingElement("layer");
+        layer= layer->NextSiblingElement("layer");
+    } 
+    
+    //Reserva de memoria 
+    _tilemap=new int**[_numlayers];
+    for(int i=0; i<_numlayers; i++){
+        _tilemap[i]=new int*[_height];
     }
     
+    for(int l=0; l<_numlayers; l++){
+        for(int y=0; y<_height; y++){
+            _tilemap[l][y]=new int[_width];
+        }
+    }
+
+    TiXmlElement *data;
+
+    layer = map->FirstChildElement("layer");
+    string *name=new string[_numlayers];
+    int j=0;
+    int l=0;
+    
+    //Leo los tiles
+    while(layer){
+        data= layer->FirstChildElement("data")->FirstChildElement("tile");
+        name[j]= (string)layer->Attribute("name");
+            while(data){
+                for(int y=0; y<_height; y++){
+                    for(int x=0; x<_width;x++){
+                        data->QueryIntAttribute("gid",&_tilemap[l][y][x]);
+                        data=data->NextSiblingElement("tile");
+                    }
+                }
+            }
+        l++;
+        layer= layer->NextSiblingElement("layer");
+        j++;
+    }
+      
+    //Reserva de memoria para los sprites
+    _tilemapSprite=new sf::Sprite***[_numlayers];
+      
+    for(int l=0; l<_numlayers; l++){
+        _tilemapSprite[l]=new sf::Sprite**[_height];
+    }
+      
+    for(int l=0; l<_numlayers; l++){
+        for(int y=0; y<_height; y++){
+            _tilemapSprite[l][y]= new sf::Sprite*[_width];
+            for(int x=0; x<_width; x++){
+                _tilemapSprite[l][y][x]=new sf::Sprite();
+            }
+        }
+    } 
+    
+    int columns = _tilesetTexture.getSize().x / _tilewidth;
+    int rows = _tilesetTexture.getSize().y / _tileheigth;
+    
+    _tilesetSprite =new sf::Sprite[columns*rows];     
+    int t=0;
+    for(int y=0; y<rows; y++){
+        for(int x=0; x<columns;x++){
+              _tilesetSprite[t].setTexture(_tilesetTexture);
+              _tilesetSprite[t].setTextureRect(sf::IntRect(x*_tilewidth,y*_tileheigth,_tilewidth,_tileheigth));
+              t++;
+        }
+    }
+    
+    //Carga de Sprites 
+    for(int l=0; l<_numlayers; l++){
+        for(int y=0; y<_height; y++){
+            for(int x=0; x<_width;x++){
+                int gid=_tilemap[l][y][x]-1;
+                if(gid>=rows*columns){
+                    cout<<gid<<endl;
+                    cout<<rows<<endl;
+                    cout<<columns<<endl;
+                    cout<<"Error"<<endl;
+                }
+                else if(gid>0){   
+                    _tilemapSprite[l][y][x]=new sf::Sprite(_tilesetTexture,_tilesetSprite[gid].getTextureRect());
+                    _tilemapSprite[l][y][x]->setPosition(x*_tilewidth,y*_tileheigth);
+                }
+                else{
+                    _tilemapSprite[l][y][x]=NULL;
+                }
+            }
+        }
+    }
+        
+    cout<<endl;
+    cout<<"Datos del mapa:"<<endl;
+    cout<<"Heigth= "<<_height<<endl;
+    cout<<"Width= "<<_width<<endl;
+    cout<<"TileWidth= "<<_tilewidth<<endl;
+    cout<<"TileHeigth= "<<_tileheigth<<endl;
+    cout<<"Numero de capas= "<<_numlayers<<endl;
+    cout<<"Nombre del tileset= "<<filename<<endl;
+    cout<<endl;
     
 }
 
@@ -104,8 +212,6 @@ void Tablero::ReiniciarAdy(){
         }
     }
 }
-
-
 
 void Tablero::Adyacentes(int posx, int posy){
 bool entrado=false;

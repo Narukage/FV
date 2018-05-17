@@ -3,6 +3,9 @@
  <tileset firstgid="1" name="TILESET" tilewidth="32" tileheight="32" tilecount="900">
   <image source="TILESET.png" trans="ff00ff" width="960" height="960"/>
  </tileset>
+ <tileset firstgid="901" name="TILESET" tilewidth="32" tileheight="32" tilecount="900">
+  <image source="TILESET.png" trans="ff00ff" width="960" height="960"/>
+ </tileset>
  <layer name="Capa de Patrones 1" width="20" height="20">
   <data encoding="base64" compression="zlib">
    eJzbysTAsI1KeDsQXwbiyQwMDFOA+AoTZfgq1DxKzRk1b9Q8ZDwBmDYnEpE+iTVvHdCs9VQ0b7CH36h5Q8+8KAaIeR+B+BOV8GcgBgDmH0yV
