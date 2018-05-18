@@ -37,9 +37,9 @@ Tablero::Tablero(){
     //Variables de sprite
     spriteSize = 0.9;
     
-   /*0*/ //idrojo = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/bloque2.png"); //bloque rojo
+   /*0*/ idrojo = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/bloque2.png"); //bloque rojo
    /*1*/ idverde = motor->crearSprite("assets/Sprites/bloque3.png"); //bloque verde
-   /*2*/ //idazul = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/150px-SokobanWallDepictionDrawing.png"); //bloque azul
+   /*2*/ idazul = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/150px-SokobanWallDepictionDrawing.png"); //bloque azul
     idvidaco = motor->crearSprite("assets/HUD/vida.png"); //vida corazon
     idvidacu = motor->crearSprite("assets/HUD/life.png"); //vida cuadradito
     fuente = motor->crearTexto("assets/Fonts/FreeMono.ttf"); //fuente
@@ -50,7 +50,7 @@ Tablero::Tablero(){
 
     retrato1 = motor->crearSprite("assets/HUD/retrato1.png");
     retrato2 = motor->crearSprite("assets/HUD/retrato2.png");
-    //fondo = motor->crearSprite("assets/Sprites/Fondo.png");
+    fondo = motor->crearSprite("assets/Sprites/fondo.jpeg");
     int idCancion = motor->crearAudio("assets/Music/main.wav", 30);
     idle = motor->crearAnimacion("assets/Sprites/dolorArterial.png",14,1,0.001f,14,1);
     motor->play(idCancion);
@@ -119,18 +119,22 @@ void Tablero::cargarMapa(){
     int j=0;
     int l=0;
     
+    cout << "numlayers:" << _numlayers << endl;
+    
     //Leo los tiles
-        TiXmlElement *data= layer->FirstChildElement("data")->FirstChildElement("tile");
-        name[j]= (string)layer->Attribute("name");
             for(int l=0;l<_numlayers;l++){
+                TiXmlElement *data= layer->FirstChildElement("data")->FirstChildElement("tile");
+                name[j]= (string)layer->Attribute("name");
                 for(int y=0; y<_height; y++){
                     for(int x=0; x<_width;x++){
                         data->QueryIntAttribute("gid",&_tilemap[l][y][x]);
                         data=data->NextSiblingElement("tile");
                     }
                 }
+            layer= layer->NextSiblingElement("layer");    
+            j++;
+
             }
-        j++;
       
     //Reserva de memoria para los sprites
     _tilemapSprite=new sf::Sprite***[_numlayers];
@@ -658,6 +662,8 @@ void Tablero::resetMap(){
 
 void Tablero::drawMap(){
     
+    motor->dibujar(fondo,0,50,1.5,*window);
+    
     for(int t=0; t<_numlayers; t++){
         for(int y=0; y<_height; y++){
             for(int x=0; x<_width; x++){
@@ -669,12 +675,12 @@ void Tablero::drawMap(){
     }
     
     
-   /*for(int i=0;i<WIDTH;i++){
+   for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
             if(i<WIDTH/2){
                 if(board[i][j].free){
                     if(board[i][j].id==0){
-                  /*2*//*RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,*window);
+                  /*2*/RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,*window);
                     }else if(board[i][j].id==1){
                        RenderManager::Instance(1)->getMotor()->dibujar(idverde,(i*50)+100,(j*50)+80,0.3,*window); 
                     }
@@ -683,13 +689,13 @@ void Tablero::drawMap(){
                 }
             }else{
                 if(board[i][j].free){
-                /*0*/ /*RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,*window);
+                /*0*/ RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,*window);
                 }else{
                  RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,*window);   
                 }
             }
         }
-    }*/
+    }
 }
 
 Invocacion* Tablero::esCarta(int posx, int posy){
