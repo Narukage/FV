@@ -218,12 +218,13 @@ void Tablero::Adyacentes(int posx, int posy){
 bool entrado=false;
 
 //esquina superior izq -- iluminar
-if(posx==0 && posy==9 && !entrado){
+if(posx==0 && posy==9 && !entrado ){
     board[posx+1][posy].alcanzable=1;
     board[posx][posy+1].alcanzable=1;
     board[posx+1][posy].id=1;
     board[posx][posy+1].id=1;
     entrado=true;
+    click=1;
 }
 //esquina superior dcha -- iluminar
 if(posy==0 && posx==11 && !entrado){
@@ -232,6 +233,7 @@ if(posy==0 && posx==11 && !entrado){
     board[posx-1][posy].id=1;
     board[posx][posy+1].id=1;
     entrado=true;
+    click=1;
 }
 //esquina inferior izq -- iluminar
 if(posx==0 && posy==7 && !entrado){
@@ -240,6 +242,7 @@ if(posx==0 && posy==7 && !entrado){
     board[posx+1][posy].id=1;
     board[posx][posy-1].id=1;
     entrado=true;
+    click=1;
 }
 //esquina inferior dcha -- iluminar
 if(posx==11 && posy==7 && !entrado){
@@ -248,6 +251,7 @@ if(posx==11 && posy==7 && !entrado){
     board[posx-1][posy].id=1;
     board[posx][posy-1].id=1;
     entrado=true;
+    click=1;
 }
 //arriba -- iluminar
 if(posy==0 && (posx>=0 && posx<12) && !entrado){
@@ -258,6 +262,7 @@ if(posy==0 && (posx>=0 && posx<12) && !entrado){
     board[posx+1][posy].id=1;
     board[posx][posy+1].id=1;
     entrado=true;
+    click=1;
 }
 //abajo -- iluminar
 if((posx>=0 && posx<12) && posy==7 && !entrado){
@@ -268,6 +273,7 @@ if((posx>=0 && posx<12) && posy==7 && !entrado){
     board[posx+1][posy].id=1;
     board[posx][posy-1].id=1;
     entrado=true;
+    click=1;
 }
 //izq -- iluminar
 if(posx==0 && (posy>=0 && posy<8) && !entrado){
@@ -278,6 +284,7 @@ if(posx==0 && (posy>=0 && posy<8) && !entrado){
     board[posx][posy+1].id=1;
     board[posx][posy-1].id=1;
     entrado=true;
+    click=1;
 }
 //dcha -- iluminar
 if(posx==11 && (posy>=0 && posy<8) && !entrado){
@@ -288,6 +295,7 @@ if(posx==11 && (posy>=0 && posy<8) && !entrado){
     board[posx][posy+1].id=1;
     board[posx][posy-1].id=1;
     entrado=true;
+    click=1;
 }
 //centro -- iluminar
 if((posx>0 && posx<11)&& (posy>0 && posy<7) && !entrado){
@@ -300,6 +308,7 @@ if((posx>0 && posx<11)&& (posy>0 && posy<7) && !entrado){
     board[posx][posy-1].id=1;
     board[posx][posy+1].id=1;
     entrado=true;
+    click=1;
 }
 }
 bool Tablero::addUnitIA(){
@@ -419,6 +428,7 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
                                                               
 bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){                                                              
    if(turno){
+       
         if(((gox<12 && gox>=0) && (goy<8 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
           if(unit->getMovimiento()>0){
               cout<<"entro con mov: "<<unit->getMovimiento()<<endl;
@@ -433,6 +443,7 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
              cout<<"he restado mi mov: "<<unit->getMovimiento()<<endl;
 
             setFree(fromx,fromy,true);
+            click=0;
             return true;
             }
         }else{

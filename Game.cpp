@@ -15,7 +15,7 @@ Game* Game::Instance(){
     return pinstance;
 }
 
-Game::Game(): window(sf::VideoMode(800,600),"Ventana de SFML"){
+Game::Game(): window(sf::VideoMode(800,600),"Summoners"){
 }
 
 Game *g1 = Game::Instance();
@@ -86,6 +86,7 @@ void Game::update(){
         }else{ //queremos mover unidad en tablero
             
             if(!Tablero::Instance()->isFree(campo.x,campo.y) && actuainvocacion==false){ //si la posicion que clickamos contiene una unidad
+                
                 actuainvocacion=true;
                 Tablero::Instance()->Adyacentes(campo.x,campo.y);
                 tieneadyacentes=true;
@@ -100,7 +101,11 @@ void Game::update(){
                 posXinvocacion=-1;
                 posYinvocacion=-1;
                 cout << "me reinicio" << endl;
+                
                 Tablero::Instance()->ReiniciarAdy();
+                }
+                else{
+                //Tablero::Instance()->setClick(0);
                 }
             }//ataque
             else if(actuainvocacion==true && !Tablero::Instance()->isFree(campo.x,campo.y)&&Tablero::Instance()->getAlcanzable(campo.x,campo.y)==1){
@@ -122,6 +127,7 @@ void Game::update(){
                 posXinvocacion=-1;
                 posYinvocacion=-1;
                 cout << "me reinicio2" << endl;
+                 if(Tablero::Instance()->getClick()==0)
                 Tablero::Instance()->ReiniciarAdy();
                 }
                 }
@@ -131,6 +137,7 @@ void Game::update(){
                posXinvocacion=-1;
                posYinvocacion=-1;
                //cout << "me reinicio3" << endl;
+                if(Tablero::Instance()->getClick()==0)
                Tablero::Instance()->ReiniciarAdy();
             }
             
