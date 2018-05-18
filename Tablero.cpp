@@ -664,15 +664,13 @@ void Tablero::drawMap(){
     
     motor->dibujar(fondo,0,50,1.5,*window);
     
-    for(int t=0; t<_numlayers; t++){
         for(int y=0; y<_height; y++){
             for(int x=0; x<_width; x++){
-                if(_tilemapSprite[t][y][x]!=NULL){
-                    window->draw(*(_tilemapSprite[t][y][x]));
+                if(_tilemapSprite[0][y][x]!=NULL){
+                    window->draw(*(_tilemapSprite[0][y][x]));
                 }
             }
         }
-    }
     
     
    for(int i=0;i<WIDTH;i++){
@@ -696,6 +694,14 @@ void Tablero::drawMap(){
             }
         }
     }
+    
+    for(int y=0; y<_height; y++){
+            for(int x=0; x<_width; x++){
+                if(_tilemapSprite[1][y][x]!=NULL){
+                    window->draw(*(_tilemapSprite[1][y][x]));
+                }
+            }
+        }
 }
 
 Invocacion* Tablero::esCarta(int posx, int posy){
