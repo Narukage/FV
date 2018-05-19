@@ -1,6 +1,6 @@
 build/Debug/GNU-Linux/InputManager.o: InputManager.cpp InputManager.h \
  InputFachada.h Tablero.h Player.h Invocacion.h RenderManager.h \
- IFachada.h
+ IFachada.h tinystr.h tinyxml.h Game.h Estado.h
 
 InputManager.h:
 
@@ -15,3 +15,11 @@ Invocacion.h:
 RenderManager.h:
 
 IFachada.h:
+
+tinystr.h:
+
+tinyxml.h:
+
+Game.h:
+
+Estado.h:

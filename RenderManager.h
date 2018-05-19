@@ -110,6 +110,7 @@ public:
     // GETTERS Y SETTERS
     //=================================
     sf::Clock getClock(){ return clock; };
+    void setTextura(int id, std::string url);
     
 };
 

@@ -173,6 +173,24 @@ void FachadaMotor2D::dibujar(int id, float positionx, float positiony, float sca
     }
 }
 
+void FachadaMotor2D::setTextura(int id, std::string url){
+    //Utilizo una textura auxiliar que borrare al terminar el metodo
+    sf::Texture* texturaaux = new sf::Texture;
+    //Cargo la nueva textura en la textura auxiliar
+    if(!texturaaux->loadFromFile(url)){
+        std::cout << "Error al cargar la textura." << std::endl;
+        exit(-1);
+    }
+    //Busco el sprite al que le quiero cambiar la textura
+    for(unsigned int i = 0; i < sprites.size(); i++){
+        if(sprites[i].id==id){
+            sprites[i].textura = texturaaux;
+            sprites[i].sprite->setTexture(*texturaaux);
+        }
+    }
+    delete texturaaux;
+}
+
 int FachadaMotor2D::crearAudio(std::string url, int volumen){
     Audio m;
     m.buffer = new sf::SoundBuffer;

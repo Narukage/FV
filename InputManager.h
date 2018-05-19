@@ -12,6 +12,7 @@ private:
     static InputManager* pinstance;
     
 public:
+    void apagar();
     static InputManager* Instance(int libreria);
     ~InputManager();
     InputFachada* getInput(){ return input; }
@@ -42,6 +43,7 @@ class FachadaInput : public InputFachada {
         ///////////////////////////////
         // FUNCIONES PRINCIPALES
         ///////////////////////////////
+        void turnoIA(bool cambio);
         void Eventos(bool isPlay, sf::RenderWindow& window);
         void nexTurn(int num){ turno=num+1; };
         void cambioTurno(bool meTo){if(meTo==true){meToca=false;}else{meToca=true;}};
@@ -59,4 +61,3 @@ class FachadaInput : public InputFachada {
         void setTurno(int num)          { turno=num;         };
 };    
 #endif
-

@@ -5,6 +5,9 @@
 #include <sstream>
 #include "Player.h"
 #include "RenderManager.h"
+#include "IFachada.h"
+#include "tinystr.h"
+#include "tinyxml.h"
 #define WIDTH 12
 #define HEIGHT 8
 
@@ -23,6 +26,7 @@ class Tablero{
             bool spawn1;      // spawn permitted commander1
             bool spawn2;      // spawn permitted commander2
             int alcanzable=0; // Nùmero casillas adyacentes accesibles
+            int id;           //0 azul, 1 verde, 2 rojo
         };
         
         //Variables de tablero
@@ -31,6 +35,23 @@ class Tablero{
         int offsetY; //Espacio por arriba
         int sizeX;   //Tamaño de la casilla en X
         int sizeY;   //Tamaño de la casilla en Y
+        
+        //Motor
+        IFachada* motor = RenderManager::Instance(1)->getMotor();
+        
+        //Tilemap
+        int _width;
+        int _tilewidth;
+        
+        int ***_tilemap;
+        int _numlayers;
+        int _height;
+        int _tileheigth;
+    
+        sf::Sprite ****_tilemapSprite;
+        sf::Sprite *_tilesetSprite;
+    
+        sf::Texture _tilesetTexture;
         
         //Jugadores
         Player* player1;
@@ -42,6 +63,9 @@ class Tablero{
         //Variables de sprites
         float spriteSize; //Resolución de los sprites
         
+        int click = 0;
+        
+        //id's Sprites
         int idverde;
         int idrojo;
         int idazul;
@@ -55,6 +79,8 @@ class Tablero{
         int retrato1;
         int retrato2;
         int idle;
+        int fondo;
+        //int turno;
       
        sf::Texture texturacarta;
        
@@ -73,14 +99,19 @@ class Tablero{
         static Tablero* Instance();
         ~Tablero();
         void clear();
+        void cargarMapa();
         bool addUnit(int posx, int posy, Invocacion* unit, int spawn); //return true if adds a unit at the location succesfully
+        bool addUnitIA();
         bool moveToPos(int fromx, int fromy,int gox, int goy, Invocacion* unit); //returns true if unit is moved succesfully
+        bool moveToPosIA();
         int atackToPos(int fromx, int fromy,int gox, int goy);
+        int atackToPosIA(Invocacion* ia, Invocacion* humano);
         bool removeUnit(int posx, int posy, Invocacion* unit); //returns true if unit is removed succesfully
         void Adyacentes(int posx, int posy);
         int getAlcanzable(int posx, int posy);
         Invocacion* esCarta(int posx, int posy);
         void resetMap();
+        bool isFree(int posx, int posy);
         
         ///////////////////////////////
         // DIBUJADO
@@ -97,16 +128,17 @@ class Tablero{
         void drawBarra(int commander);
         void drawMana(int commander);
         void drawRetrato(int commander);
-        
-        void Mostrar_mano();
-        bool isFree(int posx, int posy);
+        void Mostrar_mano(int id);
         
         ///////////////////////////////
         // GETTERS Y SETTERS
         ///////////////////////////////
-        void setWindow(sf::RenderWindow* w) { window = w;    };
-        void setTurno(bool metoca)          { turno=metoca;  };
-        Player* getPlayer()                 { return player1;};
-        
+        void setWindow(sf::RenderWindow* w)     { window = w;    };
+        void setTurno(bool metoca)              { turno=metoca;  };
+        Player* getPlayer()                     { return player1;};
+        Player* getPlayer2()                    { return player2;};
+        int getClick()                          { return click;  };
+        void setClick(int i)                    { click=1;       };
         void setFree(int posx,int posy,bool set);
+        
 };

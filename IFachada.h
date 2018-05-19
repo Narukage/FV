@@ -32,6 +32,7 @@ public:
     virtual bool borrarTexto(int id) = 0;
     virtual void escribir(std::string s, int id, float positionx, float positiony, float scale, sf::RenderWindow& window) = 0;
     virtual sf::Clock getClock() = 0;
+    virtual void setTextura(int id, std::string url) = 0;
 private:
 
 };

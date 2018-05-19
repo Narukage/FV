@@ -9,8 +9,6 @@
     void update();
     void render();
     void inicializar();
-    void MoveUp();
-    void MoveDown();
     int GetPressedItem() { return selectedItemIndex; }
     void setWindow(sf::RenderWindow* w) { window = w;    };
 
@@ -24,10 +22,12 @@ protected:
 private:
     static Menu* pinstance;
     sf::RenderWindow* window;  //Ventana del juego
-    sf::Texture texture;
+    int texture;
     sf::Sprite sprite;
-    float width=400;
+    float width=300;
     float height;
+    bool presionado;
+    sf::Vector2i coord;
     int idspriteEmpezar;
     int idspriteOpciones;
     int idspriteSalir;

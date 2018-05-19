@@ -15,7 +15,6 @@ class Game{
     
 private:
     Estado* state;  // <- descomentar esta linea cuando el menu este terminado
-    bool isPlay;
     sf::RenderWindow window;
     RenderManager* motor;
     Tablero* tablero;
@@ -28,6 +27,9 @@ private:
     bool presionado;
     bool cartaseleccionada = false;
     bool actuainvocacion =false;
+    bool IaCartas=false;
+    bool IaMover=false;
+    
     Invocacion* inv;
     int posXinvocacion=-1;
     int posYinvocacion=-1;
@@ -39,7 +41,7 @@ private:
     bool generalmuerto2=false;
     bool tieneadyacentes=false;
     bool meToca = true;
-   
+    int id = -1;
        
     static Game* pinstance;
 private:
@@ -53,10 +55,13 @@ private:
 protected:
     Game();
 public:
+    bool isPlay;
     static Game* Instance();
     ~Game();
     void run();
+    bool getSeleccionada()      { return cartaseleccionada; };
     void cambiarApartida();
     void cambiarApausa();
+        Estado* getState();
     sf::RenderWindow* getWindow(){ return &window; };
 };
