@@ -19,6 +19,7 @@ void Menu::update(){
     if(presionado){
         coord = InputManager::Instance(1)->getInput()->getCoord();
         if((coord.x>300 && coord.x<539)&&(coord.y>150 && coord.y<250)){
+            
             Game::Instance()->cambiarApartida();
         }
         if((coord.x>300 && coord.x<539)&&(coord.y>310 && coord.y<410)){

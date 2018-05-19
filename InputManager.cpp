@@ -1,7 +1,7 @@
+
 #include "InputManager.h"
 #include "Tablero.h"
-#include "Game.h"
-
+#include "Partida.h"
 ////SINGLETON
 
 InputManager* InputManager::pinstance = 0;
@@ -41,7 +41,7 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                         if(evento.key.code==sf::Keyboard::Q){
                             isPlay = false;
                         }
-                        if(evento.key.code==sf::Keyboard::Space && !Game::Instance()->getSeleccionada()){
+                        if(evento.key.code==sf::Keyboard::Space && !Partida::Instance()->getSeleccionada()){
                              int idCancion = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/end.wav", 100);
     RenderManager::Instance(1)->getMotor()->play(idCancion);
                             nexTurn(turno);
