@@ -19,9 +19,11 @@
             <file>file:/home/naru/Escritorio/Summoners/Player.cpp</file>
             <file>file:/home/naru/Escritorio/Summoners/Tablero.cpp</file>
             <file>file:/home/naru/Escritorio/Summoners/Tablero.h</file>
+            <file>file:/home/naru/Escritorio/Summoners/RenderManager.cpp</file>
             <file>file:/home/naru/Escritorio/Summoners/main.cpp</file>
             <file>file:/home/naru/Escritorio/Summoners/Game.cpp</file>
             <file>file:/home/naru/Escritorio/Summoners/Invocacion.cpp</file>
+            <file>file:/home/naru/Escritorio/Summoners/InputManager.cpp</file>
         </group>
     </open-files>
 </project-private>
