@@ -63,6 +63,8 @@ class Tablero{
         //Variables de sprites
         float spriteSize; //Resolución de los sprites
         
+        int click = 0;
+        
         //id's Sprites
         int idverde;
         int idrojo;
@@ -78,6 +80,7 @@ class Tablero{
         int retrato2;
         int idle;
         int fondo;
+        int turno;
       
        sf::Texture texturacarta;
        
@@ -130,9 +133,12 @@ class Tablero{
         ///////////////////////////////
         // GETTERS Y SETTERS
         ///////////////////////////////
-        void setWindow(sf::RenderWindow* w) { window = w;    };
-        void setTurno(bool metoca)          { turno=metoca;  };
-        Player* getPlayer()                 { return player1;};
-        Player* getPlayer2()                { return player2;};
+        void setWindow(sf::RenderWindow* w)     { window = w;    };
+        void setTurno(bool metoca)              { turno=metoca;  };
+        Player* getPlayer()                     { return player1;};
+        Player* getPlayer2()                    { return player2;};
+        int getClick()                          { return click;  };
+        void setClick(int i)                    { click=1;       };
         void setFree(int posx,int posy,bool set);
+        
 };

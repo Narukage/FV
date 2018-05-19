@@ -37,9 +37,9 @@ Tablero::Tablero(){
     //Variables de sprite
     spriteSize = 0.9;
     
-   /*0*/ idrojo = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/bloque2.png"); //bloque rojo
+   /*0*/ idrojo = motor->crearSprite("assets/Sprites/bloque2.png"); //bloque rojo
    /*1*/ idverde = motor->crearSprite("assets/Sprites/bloque3.png"); //bloque verde
-   /*2*/ idazul = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/150px-SokobanWallDepictionDrawing.png"); //bloque azul
+   /*2*/ idazul = motor->crearSprite("assets/Sprites/150px-SokobanWallDepictionDrawing.png"); //bloque azul
     idvidaco = motor->crearSprite("assets/HUD/vida.png"); //vida corazon
     idvidacu = motor->crearSprite("assets/HUD/life.png"); //vida cuadradito
     fuente = motor->crearTexto("assets/Fonts/FreeMono.ttf"); //fuente
@@ -48,6 +48,7 @@ Tablero::Tablero(){
     barra = motor->crearTexto("assets/Fonts/FreeMono.ttf");
     mana = motor->crearTexto("assets/Fonts/FreeMono.ttf");
 
+    turno = motor->crearSprite("assets/HUD/turno.png");
     retrato1 = motor->crearSprite("assets/HUD/retrato1.png");
     retrato2 = motor->crearSprite("assets/HUD/retrato2.png");
     fondo = motor->crearSprite("assets/Sprites/fondo.jpeg");

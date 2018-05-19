@@ -68,6 +68,10 @@ bool Invocacion:: soyManoT(string nombretext,int i){
             idcarta = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/Bokrugsredim.png");
             devolver=true;
         }
+        if(nombretext=="Orrys"){
+            idcarta = RenderManager::Instance(1)->getMotor()->crearSprite("assets/Sprites/Orriscarta.png");
+            devolver=true;
+        }
     }
     return devolver;
 }
