@@ -42,13 +42,13 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                             isPlay = false;
                         }
                         if(evento.key.code==sf::Keyboard::Space && !Game::Instance()->getSeleccionada()){
-                             int idCancion = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/end.wav", 100);
-    RenderManager::Instance(1)->getMotor()->play(idCancion);
+                            int idCancion = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/end.wav", 100);
+                            RenderManager::Instance(1)->getMotor()->play(idCancion);
                             nexTurn(turno);
                             cambioTurno(meToca);
                             Tablero::Instance()->setTurno(meToca);
-                            cout<<"he entrado"<<meToca<<std::endl;
-                             cout<<"he entrado"<<turno<<std::endl;
+                            /*cout<<"he entrado"<<meToca<<std::endl;
+                             cout<<"he entrado"<<turno<<std::endl;*/
                              
                              if(meToca==true){
                                  int mana_aux = Tablero::Instance()->getPlayer2()->getMana();
@@ -94,6 +94,29 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                     case sf::Event::MouseButtonPressed:
                         if(meToca==true){
                         if(evento.mouseButton.button==sf::Mouse::Left){
+                            
+                            if((coord.x>50 && coord.x <140) && (coord.y>530 && coord.y<570)){
+                                if(!Game::Instance()->getSeleccionada()){
+                                    int idCancion = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/end.wav", 100);
+                                    RenderManager::Instance(1)->getMotor()->play(idCancion);
+                                    nexTurn(turno);
+                                    cambioTurno(meToca);
+                                    Tablero::Instance()->setTurno(meToca);
+                                    /*cout<<"he entrado"<<meToca<<std::endl;
+                                     cout<<"he entrado"<<turno<<std::endl;*/
+
+                                     if(meToca==true){
+                                         int mana_aux = Tablero::Instance()->getPlayer2()->getMana();
+                                         mana_aux++;
+                                         Tablero::Instance()->getPlayer2()->ResetStats();
+                                         Tablero::Instance()->getPlayer2()->setMana(mana_aux);
+                                         Tablero::Instance()->getPlayer2()->setManaRest(mana_aux);
+                                         cout<< "Mana total:"<<Tablero::Instance()->getPlayer2()->getMana()<<endl;
+                                         cout<<"Mana restante:"<<Tablero::Instance()->getPlayer2()->getManaRest()<<endl;
+                                         Tablero::Instance()->getPlayer2()->Robar();
+                                     }
+                                }
+                            }
                             coord = sf::Mouse::getPosition(window);
                             
                             presionado=true;

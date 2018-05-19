@@ -80,7 +80,7 @@ class Tablero{
         int retrato2;
         int idle;
         int fondo;
-        int turno;
+        int idturno;
       
        sf::Texture texturacarta;
        

@@ -48,7 +48,7 @@ Tablero::Tablero(){
     barra = motor->crearTexto("assets/Fonts/FreeMono.ttf");
     mana = motor->crearTexto("assets/Fonts/FreeMono.ttf");
 
-    turno = motor->crearSprite("assets/HUD/turno.png");
+    idturno = motor->crearSprite("assets/HUD/turno.png");
     retrato1 = motor->crearSprite("assets/HUD/retrato1.png");
     retrato2 = motor->crearSprite("assets/HUD/retrato2.png");
     fondo = motor->crearSprite("assets/Sprites/fondo.jpeg");
@@ -690,18 +690,18 @@ void Tablero::drawMap(){
             if(i<WIDTH/2){
                 if(board[i][j].free){
                     if(board[i][j].id==0){
-                  /*2*/RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,*window);
+                  /*2*/motor->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,*window);
                     }else if(board[i][j].id==1){
-                       RenderManager::Instance(1)->getMotor()->dibujar(idverde,(i*50)+100,(j*50)+80,0.3,*window); 
+                       motor->dibujar(idverde,(i*50)+100,(j*50)+80,0.3,*window); 
                     }
                 }else{
-                    RenderManager::Instance(1)->getMotor()->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,*window);  
+                    motor->dibujar(idazul,(i*50)+100,(j*50)+80,0.3,*window);  
                 }
             }else{
                 if(board[i][j].free){
-                /*0*/ RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,*window);
+                /*0*/ motor->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,*window);
                 }else{
-                 RenderManager::Instance(1)->getMotor()->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,*window);   
+                 motor->dibujar(idrojo,(i*50)+100,(j*50)+80,0.3,*window);   
                 }
             }
         }
@@ -714,6 +714,8 @@ void Tablero::drawMap(){
                 }
             }
         }
+    
+    motor->dibujar(idturno, 40, 520, 0.4, *window);
 }
 
 Invocacion* Tablero::esCarta(int posx, int posy){
