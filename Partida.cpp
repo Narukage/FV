@@ -10,50 +10,17 @@ Partida* Partida::Instance(){
     return pinstance;
 }
 Partida::Partida(){
-   
+    inv = new Invocacion();
     generalmuerto1=false;
     generalmuerto2=false;
     empate=false;
-    inv = new Invocacion();
     Tablero::Instance()->cargarMapa();
+    //state=Game::Instance();
+    //Pasamos la ventana
     Tablero::Instance()->setWindow(window);
 }
-void Partida::render(){
-    window->clear(sf::Color::Black);
-    
-    Tablero::Instance()->drawMap();
-    Tablero::Instance()->drawUnit();
-    Tablero::Instance()->drawLife(1);
-    Tablero::Instance()->drawLifeNumb(1);
-    Tablero::Instance()->drawLife(2);
-    Tablero::Instance()->drawLifeNumb(2);
-    Tablero::Instance()->drawMana(1);
-    Tablero::Instance()->drawManaNumb(1);
-    Tablero::Instance()->drawManaRest(1);
-    Tablero::Instance()->drawBarra(1);
-    Tablero::Instance()->drawMana(2);
-    Tablero::Instance()->drawManaNumb(2);
-    Tablero::Instance()->drawManaRest(2);
-    Tablero::Instance()->drawRetrato(1);
-    Tablero::Instance()->drawRetrato(2); //same
-    Tablero::Instance()->Mostrar_mano(id);
 
-    if(cartaseleccionada){
-        cout << "animo carta" << endl;
-        RenderManager::Instance(1)->getMotor()->updateAnimacion(id,0,0.1f);
-        RenderManager::Instance(1)->getMotor()->dibujarAnimacion(id,inv->getJugar()*100+110,450,1,window);
-    }
-           
-    window->display();
-}
-void Partida::inicializar(){
-            std::cout<<"PAQUI PATXI"<<std::endl;
-
-}
 void Partida::update(){
-    if(InputManager::Instance(1)->PulsaEscape()){
-            Partida::Instance()->cambiarApausa();
-    }
     //Una vez este el StateManager hay que mover el update
     id = -1;
     RenderManager::Instance(1)->getMotor()->crearClock();
@@ -108,7 +75,9 @@ void Partida::update(){
                 posYinvocacion=campo.y;
             } //unidad seleccionada, preparada para hacer alguna accion
             else if(actuainvocacion==true && Tablero::Instance()->isFree(campo.x,campo.y) && Tablero::Instance()->getAlcanzable(campo.x,campo.y)==1){
+                 cout<< "ESTOY ATACANDO 3" << endl;
                 if(Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->getMovimiento()>0){
+                    cout<<"Posicion x : " <<posXinvocacion << "Posicion y :" <<posYinvocacion << endl;
                 Tablero::Instance()->moveToPos(posXinvocacion, posYinvocacion,campo.x,campo.y,Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion));
                 Tablero::Instance()->setFree(campo.x,campo.y,false);
                 actuainvocacion=false;
@@ -124,7 +93,9 @@ void Partida::update(){
             }//ataque
             else if(actuainvocacion==true && !Tablero::Instance()->isFree(campo.x,campo.y)&&Tablero::Instance()->getAlcanzable(campo.x,campo.y)==1){
                 if(Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->getMovimiento()>0){
-                if(Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->esAliado(Tablero::Instance()->getPlayer()->JugadaEn(coord.x,coord.y)->getComandante())){
+                cout<< "coordx :"<<coord.x << "coordy :"<< coord.y << endl;
+                    if(Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)!=NULL&&!Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->esAliado(Tablero::Instance()->getPlayer()->JugadaEn(campo.x,campo.y)->getComandante())){
+                    cout<< "ESTOY ATACANDO" << endl;
                     ganador=Tablero::Instance()->atackToPos(posXinvocacion,posYinvocacion,campo.x,campo.y);
                        //tablero->setFree(campox,campoy,true);
                     if(ganador==-1){
@@ -141,12 +112,20 @@ void Partida::update(){
                 posXinvocacion=-1;
                 posYinvocacion=-1;
                 cout << "me reinicio2" << endl;
-                 if(Tablero::Instance()->getClick()==0)
-                Tablero::Instance()->ReiniciarAdy();
+                 if(Tablero::Instance()->getClick()==0){
+                    Tablero::Instance()->ReiniciarAdy();
+                 }
                 }
+                else{
+                        cout<< "ESTOY ATACANDO 10" << endl;
+                        actuainvocacion =false;
+                        
+                    }
                 }
-            }
+            } 
+            
             else{
+                 
                actuainvocacion=false;
                posXinvocacion=-1;
                posYinvocacion=-1;
@@ -161,11 +140,13 @@ void Partida::update(){
     //finalizado();
     }
     if(!meToca){
-        
+       /* int randomx= rand() % 3 -1;
+        cout<<"Random : "<< randomx << endl;*/
         IaCartas=Tablero::Instance()->addUnitIA();
         IaMover=Tablero::Instance()->moveToPosIA();
+        IaMoverU=Tablero::Instance()->moveToPosIAU();
         cout<<"salgo bien "<<endl;
-        if(IaCartas==true && IaMover==true){
+        if(IaCartas==true && IaMover==true && IaMoverU==true){
             cout<<"fallo en el cambio de turno "<<endl;
             InputManager::Instance(1)->getInput()->turnoIA(true);
             cout<<"fallo en el cambio de turno pero soy: "<<meToca<<endl;
@@ -186,6 +167,7 @@ void Partida:: updateIA(){
         }
     }
 }
+
 void Partida::finalizado(){
     if(generalmuerto1){
         std::cout << "Has perdido" << std::endl;
@@ -205,8 +187,33 @@ void Partida::finalizado(){
         Game::Instance()->isPlay=false;
     }
 }
-void Partida::cambiarApausa(){
-        Game::Instance()->state=Pausa::Instance();
+void Partida::render(){
+    window->clear(sf::Color::Black);
+    
+    Tablero::Instance()->drawMap();
+    Tablero::Instance()->drawUnit();
+    Tablero::Instance()->drawLife(1);
+    Tablero::Instance()->drawLifeNumb(1);
+    Tablero::Instance()->drawLife(2);
+    Tablero::Instance()->drawLifeNumb(2);
+    Tablero::Instance()->drawMana(1);
+    Tablero::Instance()->drawManaNumb(1);
+    Tablero::Instance()->drawManaRest(1);
+    Tablero::Instance()->drawBarra(1);
+    Tablero::Instance()->drawMana(2);
+    Tablero::Instance()->drawManaNumb(2);
+    Tablero::Instance()->drawManaRest(2);
+    Tablero::Instance()->drawRetrato(1);
+    Tablero::Instance()->drawRetrato(2); //same
+    Tablero::Instance()->Mostrar_mano(id);
+
+    if(cartaseleccionada){
+        cout << "animo carta" << endl;
+        RenderManager::Instance(1)->getMotor()->updateAnimacion(id,0,0.1f);
+        RenderManager::Instance(1)->getMotor()->dibujarAnimacion(id,inv->getJugar()*100+110,450,1,window);
+    }
+           
+    window->display();
 }
 Partida *pt1=Partida::Instance();
 Partida *pt2=pt1->Instance();

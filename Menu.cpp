@@ -14,28 +14,25 @@ Menu::Menu(){
 }
 
 void Menu::update(){
-
-    presionado = InputManager::Instance(1)->getInput()->getPresionado();
-    if(presionado){
-        coord = InputManager::Instance(1)->getInput()->getCoord();
-        if((coord.x>300 && coord.x<539)&&(coord.y>150 && coord.y<250)){
-            
+        coordenada = InputManager::Instance(1)->getInput()->getCoord();
+        if((coordenada.x>300 && coordenada.x<539)&&(coordenada.y>150 && coordenada.y<250)){
+            std::cout<<"pos aqui estamos"<<std::endl;
             Game::Instance()->cambiarApartida();
         }
-        if((coord.x>300 && coord.x<539)&&(coord.y>310 && coord.y<410)){
+        if((coordenada.x>300 && coordenada.x<539)&&(coordenada.y>310 && coordenada.y<410)){
             std::cout<<"settings"<<std::endl;
         }
-        if((coord.x>300 && coord.x<539)&&(coord.y>470 && coord.y<570)){
+        if((coordenada.x>300 && coordenada.x<539)&&(coordenada.y>470 && coordenada.y<570)){
             InputManager::Instance(1)->apagar();
         }
     }
-}
 void Menu::render(){
     //window->clear(sf::Color::Black);
    
     window->display();
 }
     void Menu::inicializar(){
+    
          texture=RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/fondoMenu.jpg");
     RenderManager::Instance(1)->getMotor()->dibujar(texture,0,0,1,*Game::Instance()->getWindow());
            idspriteEmpezar=RenderManager::Instance(1)->getMotor()->crearSprite("assets/HUD/BOTONSTART.png");

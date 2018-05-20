@@ -23,12 +23,11 @@ Game *g2 = g1->Instance();
 Game &refg = * Game::Instance();
 
 void Game::inicializar(){
-    
     //No se si usar InputManager pasandole la ventana y creandola aqui o todo en RenderManager
-    RenderManager::Instance(1)->getMotor()->crearVentana(60,false, window);
+    
     isPlay=true;
     state=Menu::Instance();
-    //Pasamos la ventana
+    RenderManager::Instance(1)->getMotor()->crearVentana(60,false, window);
     Menu::Instance()->setWindow(&window);
 
 }
@@ -57,11 +56,10 @@ void Game::run(){
         cleared();
     }
 
-
 void Game::cambiarApartida(){
+    
         state=Partida::Instance();
 }
-
-Estado* Game::getState(){
-    return state;
+void Game::cambiarApausa(){
+        state=Pausa::Instance();
 }

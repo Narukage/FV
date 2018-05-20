@@ -1,7 +1,7 @@
-
 #include "InputManager.h"
 #include "Tablero.h"
 #include "Partida.h"
+
 ////SINGLETON
 
 InputManager* InputManager::pinstance = 0;
@@ -115,7 +115,6 @@ void InputManager::apagar(){
     Game::Instance()->isPlay = false;
 
 }
-
     int InputManager::PulsaTecla() {
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){
             std::cout<<"entra"<<std::endl;
@@ -139,9 +138,9 @@ void FachadaInput::turnoIA(bool cambio){
                             
                              if(meToca==false){
                                  int mana_aux = Tablero::Instance()->getPlayer2()->getMana();
-                                 mana_aux++;
+                                 //mana_aux++;
                                  Tablero::Instance()->getPlayer2()->ResetStats();
-                                 Tablero::Instance()->getPlayer2()->setMana(mana_aux);
+                                 Tablero::Instance()->getPlayer2()->setMana(500);
                                  Tablero::Instance()->getPlayer2()->setManaRest(mana_aux);
                                  cout<< "Mana total:"<<Tablero::Instance()->getPlayer2()->getMana()<<endl;
                                  cout<<"Mana restante:"<<Tablero::Instance()->getPlayer2()->getManaRest()<<endl;
@@ -155,3 +154,4 @@ void FachadaInput::turnoIA(bool cambio){
                              
                             
 }
+

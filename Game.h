@@ -14,6 +14,7 @@
 class Game{
     
 private:
+    Estado* state;  // <- descomentar esta linea cuando el menu este terminado
     sf::RenderWindow window;
     RenderManager* motor;
     Tablero* tablero;
@@ -23,22 +24,23 @@ private:
     Player* player2;
     Player* current = player;  
 
-       
     static Game* pinstance;
 private:
     void inicializar();
     void eventos();
     void update();
+    void updateIA();
+    void render();
     void cleared();
+    void finalizado();
 protected:
     Game();
 public:
     bool isPlay;
-    Estado* state;  // <- descomentar esta linea cuando el menu este terminado
     static Game* Instance();
     ~Game();
     void run();
     void cambiarApartida();
-    Estado* getState();
+    void cambiarApausa();
     sf::RenderWindow* getWindow(){ return &window; };
 };

@@ -8,6 +8,8 @@
 #include "IFachada.h"
 #include "tinystr.h"
 #include "tinyxml.h"
+#include  <SFML/System.hpp>
+
 #define WIDTH 12
 #define HEIGHT 8
 
@@ -42,6 +44,7 @@ class Tablero{
         //Tilemap
         int _width;
         int _tilewidth;
+        sf::Clock reloj;
         
         int ***_tilemap;
         int _numlayers;
@@ -59,6 +62,11 @@ class Tablero{
         
         //orden del turno
         bool turno=true;
+        
+        //fin partida
+        bool victoria=false;
+        bool derrota=false;
+        bool empate=false;
         
         //Variables de sprites
         float spriteSize; //Resolución de los sprites
@@ -104,6 +112,7 @@ class Tablero{
         bool addUnitIA();
         bool moveToPos(int fromx, int fromy,int gox, int goy, Invocacion* unit); //returns true if unit is moved succesfully
         bool moveToPosIA();
+        bool moveToPosIAU();
         int atackToPos(int fromx, int fromy,int gox, int goy);
         int atackToPosIA(Invocacion* ia, Invocacion* humano);
         bool removeUnit(int posx, int posy, Invocacion* unit); //returns true if unit is removed succesfully

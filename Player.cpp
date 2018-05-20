@@ -321,6 +321,8 @@ bool Player:: eliminarJugadas(Invocacion* invo2){// get unico creo que no sirve 
         if(jugadas.at(i)->GetUnico()==invo2->GetUnico()){  
             cout<<"me van a matar: "<<invo2->getNombre()<<endl;
             apoyo=invo2;
+            
+            
             jugadas.erase(jugadas.begin()+i); 
             delete apoyo;
             return true;
@@ -331,10 +333,10 @@ bool Player:: eliminarJugadas(Invocacion* invo2){// get unico creo que no sirve 
  Invocacion* Player::  JugadaEn(int posx, int posy){
      Invocacion* retorno = NULL;
      
-     if((posx>100 && posx<700)&&(posy>80 && posy<475)){
+     /*if((posx>100 && posx<700)&&(posy>80 && posy<475)){
         posx = (posx-100)/50;
         posy = (posy-80)/50;
-    }
+    }*/
     vector<Invocacion*>::iterator it6;
                  int i=0;
      for(it6=jugadas.begin();it6!=jugadas.end();++it6){
