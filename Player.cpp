@@ -9,7 +9,7 @@ Player::Player(int commander){
     Invocacion* prueba = new Invocacion();
     
     if(commander==1){
-         vida=100;
+         vida=1;
         comandante=new Invocacion("comandante1",0,vida,5,2,1,-1);
         comandante->setCom(true);
         comandante->setPosicion(0,3);

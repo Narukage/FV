@@ -11,7 +11,7 @@
     void cambiarApausa();
     void setWindow(sf::RenderWindow* w) { window = w;    };
     bool getSeleccionada()      { return cartaseleccionada; };
-
+    int getAcab() { return ganador;};
 protected:
     Partida();
     Partida(const Partida &);
@@ -28,6 +28,8 @@ private:
     bool empate=false;
     int id = -1;
     bool presionado;
+    bool primero = false;
+    bool esperando = false;
     bool meToca = true;
     sf::Vector2i coord;
     sf::Vector2i campo;
@@ -37,7 +39,7 @@ private:
     bool IaCartas=false;
     bool IaMover=false;
     bool IaMoverU=false;
-    float cont = 0;
+    float cont = 0.0;
     
     int posXinvocacion=-1;
     int posYinvocacion=-1;

@@ -52,7 +52,9 @@ Tablero::Tablero(){
     retrato1 = motor->crearSprite("assets/HUD/retrato1.png");
     retrato2 = motor->crearSprite("assets/HUD/retrato2.png");
     idbaraja = motor->crearSprite("assets/HUD/baraja.png");
+    int idCancion = motor->crearAudio("assets/Music/main.wav", 30);
     idle = motor->crearAnimacion("assets/Sprites/dolorArterial.png",14,1,0.001f,14,1);
+    motor->play(idCancion);
 
     addUnit(player1->getUnit()->getX(),player1->getUnit()->getY(),player1->getUnit(),player1->getUnit()->getComandante());
     cout<<"X del 2: "<<player2->getUnit()->getX()<<"Y del 2: "<<player1->getUnit()->getY()<<endl;
@@ -205,10 +207,8 @@ void Tablero::cargarMapa(){
 void Tablero::ReiniciarAdy(){
     for(int i=0;i<WIDTH;i++){
         for(int j=0;j<HEIGHT;j++){
-            if(board[i][j].alcanzable==1){
                 board[i][j].alcanzable=0;
-                board[i][j].id=0;
-            }
+                board[i][j].id=0;     
         }
     }
 }
@@ -329,19 +329,22 @@ int Tablero::addUnitIAB(){
                         devolver=player2->getMano().at(i+1)->getCoste();
                     }
                 }
-            else{
-                devolver = player2->getMano().at(i)->getCoste();
-            }
+            if((i+1)>=player2->getMano().size()){
+                    if(devolver>player2->getMano().at(i)->getCoste()){
+                        devolver=player2->getMano().at(i)->getCoste();
+                    }
+                }
         }
+        i=0;
         for(itM=player2->getMano().begin();itM!=player2->getMano().end();++itM){
-          
+            cout <<"Carta : "<<player2->getMano().at(i)->getNombre() << "Id : "<<player2->getMano().at(i)->getId()<<endl;
             if(player2->getMano().at(i)!=NULL&&player2->getManaRest()>=player2->getMano().at(i)->getCoste()){
                 player2->setManaRest((player2->getManaRest()-player2->getMano().at(i)->getCoste()));
                 while(mano==false){
                    srand (time(NULL));
                     randomx= rand() % 3 +9;
                     randomy= rand() % 8;
-                    
+                    cout <<"Random x :"<<randomx<<"Random y :"<<randomy<<endl;
                     if(isFree(randomx,randomy)){
                         setFree(randomx,randomy,false);
                         player2->getMano().at(i)->setPosicion(randomx,randomy); 
@@ -357,6 +360,7 @@ int Tablero::addUnitIAB(){
             if(player2->getMano().at(i)==NULL){
                 ojo = true;
             }
+            i++;
         }
     }
     if(player2->getMano().empty()){
@@ -425,31 +429,14 @@ bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
             return true; 
         }
     }
-    if(spawn==2){
-        //Ponerlo para la IA
-        if(((posx>WIDTH-4 && posx<WIDTH-1)&& (posy>=0 && posy<HEIGHT-1))&& isFree(posx,posy)){
-          board[posx][posy].free=false;
-          //board[posx][posy].unit=unit;
-          board[posx][posy].coordX=posx;
-          board[posx][posy].coordY=posy;
-          unit->setPosicion(posx,posy);
-          player2->RellenarJugadas(unit);
-            player2->eliminarMano(unit);
-         // if(player1->RellenarJugadas(invoc)){
-              /*Borrar unidad de la mano
-               y setear antes su posicion*/
-          }
-          return true;  
-        }
+    
    }
     return false;
     }
     
 
                                                               
-bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){                                                              
-   if(turno){
-       
+bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){                                                               
         if(((gox<12 && gox>=0) && (goy<8 && goy>=0)) && board[gox][goy].free==true && board[gox][goy].alcanzable==1){
           if(unit->getMovimiento()>0){
               cout<<"entro con mov: "<<unit->getMovimiento()<<endl;
@@ -464,25 +451,12 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
              cout<<"he restado mi mov: "<<unit->getMovimiento()<<endl;
 
             setFree(fromx,fromy,true);
+            setFree(gox,goy,false);
             click=0;
             return true;
             }
-        }else{
-             return false;
-            }  
-    }
-   else{
-       vector<Invocacion*>::iterator it3;
-       vector<Invocacion*>::iterator it2;
-       int i=0;
-       int j=0;
-       for(it3=player2->getJugadas().begin();it3!=player2->getJugadas().end();++it3){
-           for(it2=player1->getJugadas().begin();it3!=player1->getJugadas().end();++it3){
-               
-           
-       }         
-   }
-}
+        }
+        return false;
 }
 int Tablero::moveToPosIAU(){
        vector<Invocacion*>::iterator it3;
@@ -1075,7 +1049,6 @@ void Tablero::drawManaNumb(int commander){
     if(commander==1){
 
         int mana = player1->getMana();
-        cout << "mana que tengo" << mana << endl;
             std::stringstream ss;
             ss << mana;
             RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuentemana,193,37,0.8, *window);
@@ -1092,14 +1065,14 @@ void Tablero::drawManaRest(int commander){
     if(commander==1){
  
         int manarest = player1->getManaRest();
-        cout << "mana: " << manarest << endl;
+       
                 std::stringstream ss;
                 ss << manarest;
                 motor->escribir(ss.str().c_str(),manarest,158,37,0.8,*window);
     }else{
   
         int manarest = player2->getManaRest();
-        cout << "mana: " << manarest << endl;
+   
                 std::stringstream ss;
                 ss << manarest;
                 motor->escribir(ss.str().c_str(),manarest,585,37,0.8,*window);
@@ -1189,11 +1162,14 @@ int Tablero::atackToPosIA(Invocacion* ia, Invocacion* humano){
     return retorno;
 }
 int Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
-    int retorno=0;
+ int retorno=0;
+ bool hum=false;
+ bool iaB=false;
+ bool muerto=false;
     Invocacion* unidad = new Invocacion();
     Invocacion* unidad2 =new  Invocacion();
     unidad=player1->JugadaEn(fromx,fromy);//el que pega
-    unidad2=player1->JugadaEn(gox,goy);
+    unidad2=player2->JugadaEn(gox,goy);
     unidad2->setVida(unidad2->getVida()-unidad->getAtaque());
     unidad->setVida(unidad->getVida()-unidad2->getAtaque());
     cout<<"Me llamo: "<<unidad2->getNombre()<<"vida al que atacan: "<<unidad2->getVida()<<endl;
@@ -1201,40 +1177,44 @@ int Tablero::atackToPos(int fromx, int fromy,int gox, int goy){
     int idSonidito = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/explosion.wav", 40);
     RenderManager::Instance(1)->getMotor()->play(idSonidito);
     //hacia los dos lados
-     if(unidad2->getCom()==true||unidad->getCom()==false){
-         if(unidad2->getCom()==true){
-             player1->setLife(player1->getLife()-unidad2->getVida());
-         }
-         if(unidad->getCom()==true){
-             player1->setLife(player1->getLife()-unidad->getVida());
-         }
-     }
-    if(unidad2->getCom()==false&&unidad2->getVida()<=0){
-        // cout<<"me voy a morir: "<<unidad2->getVida()<<endl;
-        setFree(gox,goy,true);
-        player1->eliminarJugadas(unidad2);
-        
-       //removeUnit(gox,goy,unidad2);
-       retorno=1;
+    if(unidad->getCom()==true){
+        player1->setLife(unidad->getVida());
+        if(unidad->getVida()<=0){
+            hum=true;
+        }
     }
-    if(unidad->getCom()==false&&unidad->getVida()<=0){ 
-        // cout<<"me voy a morir 2: "<<unidad->getVida()<<endl;
-        setFree(fromx,fromy,true);
+    else if(unidad->getVida()<=0){
+        muerto=true;
+        setFree(unidad->getX(),unidad->getY(),true);
         player1->eliminarJugadas(unidad);
-       
-        //removeUnit(fromx,fromy,unidad);
-        retorno =1;
+        retorno=7;
     }
-   
-         if(unidad2->getCom()==true && unidad2->getVida()<=0){
-             retorno=-1; //GANADA
+    if(unidad2->getCom()==true){
+        player2->setLife(unidad2->getVida());
+        if(unidad2->getVida()<=0){
+            iaB=true;
         }
-         if(unidad->getCom()==true && unidad->getVida()<=0){
-             retorno=-2; //PERDIDA
-         }
-         if((unidad2->getCom()==true&&unidad->getCom()==true) && (unidad2->getVida()<=0 && unidad->getVida()<=0)){
-             retorno=-3; //EMPATE
-        }
-     player1->JugadaEn(fromx,fromy)->setMovimiento(player1->JugadaEn(fromx,fromy)->getMovimiento()-1);
-     return retorno;
+    }
+    else if(unidad2->getVida()<=0){
+        setFree(unidad2->getX(),unidad2->getY(),true);
+        player2->eliminarJugadas(unidad2);
+        retorno=7;
+    }
+    if(iaB==true&&hum==true){
+        retorno=-3;
+        empate=true;
+    }
+    if(iaB==true&&hum==false){
+        retorno=-1;
+        victoria=true;
+    }
+    if(iaB==false&&hum==true){
+        retorno=-2;
+        derrota=true;
+    }
+    if(muerto==false){
+        player1->JugadaEn(fromx,fromy)->setMovimiento(player1->JugadaEn(fromx,fromy)->getMovimiento()-1);
+    }
+    return retorno;
+     
 }

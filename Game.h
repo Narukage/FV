@@ -23,7 +23,6 @@ private:
     Player* player;
     Player* player2;
     Player* current = player;  
-    int idCancion;
 
     static Game* pinstance;
 private:
@@ -43,7 +42,7 @@ public:
     void run();
     void cambiarApartida();
     void cambiarApausa();
-
+    void cambiarAfinalizado();
     void cambiarAmenu();
     sf::RenderWindow* getWindow(){ return &window; };
 

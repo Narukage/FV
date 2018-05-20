@@ -3,7 +3,9 @@
 #include "Menu.h"
 #include "Partida.h"
 #include "Pausa.h"
+#include "PartidaFinalizada.h"
 #define kUpdateTimePS 1000/15
+
 
 
 Game* Game::pinstance = 0;
@@ -29,9 +31,6 @@ void Game::inicializar(){
     state=Menu::Instance();
     RenderManager::Instance(1)->getMotor()->crearVentana(60,false, window);
     Menu::Instance()->setWindow(&window);
-    idCancion = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/main.wav", 30);
-    RenderManager::Instance(1)->getMotor()->play(idCancion);
-    
 
 }
 
@@ -48,7 +47,6 @@ void Game::run(){
             InputManager::Instance(1)->getInput()->Eventos(isPlay, window);
            if(RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime().asMilliseconds()-timeStartUpdate.asMilliseconds()>kUpdateTimePS){
             state->update();
-            state->updateIA();
             state->render();
             
             timeStartUpdate = RenderManager::Instance(1)->getMotor()->getClock().getElapsedTime();
@@ -60,6 +58,7 @@ void Game::run(){
     }
 
 void Game::cambiarApartida(){
+    
         state=Partida::Instance();
 }
 void Game::cambiarApausa(){
@@ -67,4 +66,7 @@ void Game::cambiarApausa(){
 }
 void Game::cambiarAmenu(){
     state=Menu::Instance();
+}
+void Game::cambiarAfinalizado(){
+    state=PartidaFinalizada::Instance();
 }
