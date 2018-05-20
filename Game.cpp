@@ -29,6 +29,9 @@ void Game::inicializar(){
     state=Menu::Instance();
     RenderManager::Instance(1)->getMotor()->crearVentana(60,false, window);
     Menu::Instance()->setWindow(&window);
+    idCancion = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/main.wav", 30);
+    RenderManager::Instance(1)->getMotor()->play(idCancion);
+    
 
 }
 
@@ -57,7 +60,6 @@ void Game::run(){
     }
 
 void Game::cambiarApartida(){
-    
         state=Partida::Instance();
 }
 void Game::cambiarApausa(){

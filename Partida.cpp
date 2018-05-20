@@ -41,7 +41,7 @@ void Partida::update(){
             
             if(inv!=NULL){
                 std::cout<<"esCarta es distinto de null"<<std::endl;
-                id = inv->getIdCartaSel();
+                id = inv->getIdCarta();
                 cartaseleccionada=true;
                  
             }
@@ -253,9 +253,15 @@ void Partida::render(){
     Tablero::Instance()->Mostrar_mano(id);
 
     if(cartaseleccionada){
+        
         cout << "animo carta" << endl;
-        RenderManager::Instance(1)->getMotor()->updateAnimacion(id,0,0.1f);
-        RenderManager::Instance(1)->getMotor()->dibujarAnimacion(id,inv->getJugar()*100+110,450,1,window);
+        sf::Sprite carta = RenderManager::Instance(1)->getMotor()->buscar(id);
+        sf::Vector2f pos = carta.getPosition();
+        carta.setPosition(pos.x,480+10*std::sin(cont));
+        window->draw(carta);
+        cont++;
+        /*RenderManager::Instance(1)->getMotor()->updateAnimacion(id,0,0.1f);
+        RenderManager::Instance(1)->getMotor()->dibujarAnimacion(id,inv->getJugar()*100+110,450,1,window);*/
     }
            
     window->display();
