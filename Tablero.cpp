@@ -312,44 +312,66 @@ if((posx>0 && posx<11)&& (posy>0 && posy<7) && !entrado){
     click=1;
 }
 }
-bool Tablero::addUnitIA(){
-    vector<Invocacion*>::iterator it3;
-    bool metida=false;
+int Tablero::addUnitIAB(){
+    vector<Invocacion*>::iterator itM;
     int i = 0;
-    int use = player2->getMano().size()-1;
-    int manaTotal=player2->getMana();
     int randomx;
     int randomy;
- 
-    if(player2->getMano().size()>0&&player2->getMano().size()!=NULL){
-        for(it3=player2->getMano().begin();it3!=player2->getMano().end()&&use<player2->getMano().size();++it3){
-            cout<<"Mana toooootal: "<< manaTotal << endl;
-            use=(use-i);
-             if(manaTotal>0){
-                 while(metida==false){
-                if(use<player2->getMano().size()&&player2->getMano().at(use)->getCoste()<=manaTotal){
-                    manaTotal=manaTotal-player2->getMano().at(use)->getCoste();
-                    srand (time(NULL));
-                    randomx= rand() % 3 +9;
-                    randomy= rand() % 8;
-                    if(isFree(randomx,randomy)){
-                    setFree(randomx,randomy,false);
-                    player2->getMano().at(use)->setPosicion(randomx,randomy); 
-                    
-                    player2->RellenarJugadas(player2->getMano().at(use));
-                    
-                    player2->eliminarMano(player2->getMano().at(use));
-                    metida=true;
+    bool mano = false;
+    bool ojo = false;
+    int devolver = -1; //es el menor coste de carta en mano
+    
+    if(!player2->getMano().empty()&&player2->getMano().size()>0&&player2->getMano().at(0)!=NULL){
+        for(itM=player2->getMano().begin();itM!=player2->getMano().end();++itM){
+            if(devolver == -1){
+                devolver = player2->getMano().at(i)->getCoste();
+            }
+            if((i+1)<player2->getMano().size()){
+                    if(devolver>player2->getMano().at(i+1)->getCoste()){
+                        devolver=player2->getMano().at(i+1)->getCoste();
                     }
                 }
-             }
+            else{
+                devolver = player2->getMano().at(i)->getCoste();
             }
-            metida=false;
-            i++;
+        }
+        for(itM=player2->getMano().begin();itM!=player2->getMano().end();++itM){
+          
+            if(player2->getMano().at(i)!=NULL&&player2->getManaRest()>=player2->getMano().at(i)->getCoste()){
+                player2->setManaRest((player2->getManaRest()-player2->getMano().at(i)->getCoste()));
+                while(mano==false){
+                   srand (time(NULL));
+                    randomx= rand() % 3 +9;
+                    randomy= rand() % 8;
+                    
+                    if(isFree(randomx,randomy)){
+                        setFree(randomx,randomy,false);
+                        player2->getMano().at(i)->setPosicion(randomx,randomy); 
+                        cout<< "Posicion bicho x : "<<randomx <<"Posicion bicho y : "<<randomy <<endl;
+                        player2->RellenarJugadas(player2->getMano().at(i));
+                        player2->eliminarMano(player2->getMano().at(i));
+                        mano = true;
+                        cout<<"tamaño mano :  "<<player2->getMano().size()<<endl;
+                        return devolver;
+                    }
+                }
+            }
+            if(player2->getMano().at(i)==NULL){
+                ojo = true;
+            }
         }
     }
-    return true;
+    if(player2->getMano().empty()){
+                ojo = true;
+    }
+    if(ojo){
+        devolver=player2->getManaRest()+1;
+    }
+    cout<<"tamaño mano :  "<<player2->getMano().size()<<endl;
+    cout<<"que mana tiene los bichos en la mano : "<<devolver<<endl;
+    return devolver;
 }
+
 bool Tablero::addUnit(int posx, int posy, Invocacion* unit, int spawn){
    if(player1->getManaRest()>=unit->getCoste()){
          int mana1 = player1->getManaRest();
@@ -464,10 +486,206 @@ bool Tablero::moveToPos(int fromx,int fromy,int gox, int goy, Invocacion* unit){
    }
 }
 }
-bool Tablero::moveToPosIA(){
-    vector<Invocacion*>::iterator it3;
-    int i = 0;
+int Tablero::moveToPosIAU(){
+       vector<Invocacion*>::iterator it3;
+    int i = 1;
+    bool atacado = false;
+    bool retorno = false;
+    int xcom=player1->getUnit()->getX();
+    int ycom=player1->getUnit()->getY();
+    int controlx;//Para saber la diferencia entre la x de la ia y la x del comandante
+                 //si es negativo la diferencia sumaremos a la de la ia si es positivo restaremos DAAAAMN
+    int controly;
+    int xia;
+    int yia;
+    if(player2->getJugadas().size()>0){
+        for(it3=player2->getJugadas().begin();it3!=player2->getJugadas().end()&&i<player2->getJugadas().size();++it3){
+            
+            if(i<player2->getJugadas().size()&&player2->getJugadas().at(i)!=NULL&&player2->getJugadas().at(i)->getCom()==false){
+                     //cout<<"Llego aqui 7 - "<<i<<endl;
+                    //SI HAY ALGUN BICHO LE ATACO TO GUAY
+                     if(player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY())){
+                         //cout<<"Llego aqui 8 - "<<i<<endl;
+                         if(player1->JugadaEn(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY()!=NULL)){
+                            //ataque
+                             posAtaque = i;
+                             return -1;
+                        }
+                    }
+                    if(player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)){
+                         //cout<<"Llego aqui 9 - "<<i<<endl;
+                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)!=NULL){
+                            //ataque
+                            posAtaque = i;
+                            return -1;
+                        }
+                        
+                    }
+                    if(player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())){
+                         //cout<<"Llego aqui 10 - "<<i<<endl;
+                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())!=NULL){
+                            //ataque
+                            posAtaque = i;
+                            return -1;
+                        }
+                    }
+                    if(player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)){
+                         //cout<<"Llego aqui 11 - "<<i<<endl;
+                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)!=NULL){
+                            //ataque
+                            posAtaque = i;
+                            return -1;
+                        }
+                    }
+                     //ME MUEVO TO CHUNGOTE
+                      if(player2->getJugadas().at(i)->getMovimiento()>0){
+                          xia=player2->getJugadas().at(i)->getX();
+                          yia=player2->getJugadas().at(i)->getY();
+                           //cout<<"Llego aqui 12 - "<<i<<endl;
+                          controlx=player2->getJugadas().at(i)->getX()-xcom;
+                          controly=player2->getJugadas().at(i)->getY()-ycom;
+                          if(controlx>0){
+                              xia=xia-1; //delay aqui
+                              
+                          }
+                          if(controlx<0){
+                              xia=xia+1;
+                            
+                          }
+                          if(controly>0){
+                              yia=yia-1;
+                             
+                          }
+                          if(controly<0){
+                              yia=yia+1;
+                             
+                          }
+                          if(xia<12 && yia<8){
+                    
+                            if(isFree(xia,yia)){
+                                setFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY(),true);
+                                player2->getJugadas().at(i)->setPosicion(xia,yia);
+                                setFree(xia,yia,false);
+                                player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
+                                return 1;
+                                }
+                           }
+                          else{
+                              player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
+                              return 1;
+                          }
+                          /*else{
+                               player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
+                          }*/
+                      }
+            }
+
+            i++;
+        }//cierre for
+    }
+    return 2;
+}
+int Tablero::attackIA(){
     int hamuerto=0;
+    bool atacado = false;
+    bool retorno = false;
+   
+   
+                    if(player2->getJugadas().at(0)->getMovimiento()>0&&!isFree(player2->getJugadas().at(0)->getX()+1,player2->getJugadas().at(0)->getY())){
+                         //cout<<"Llego aqui 2 - "<<i<<endl;
+                        if(player1->JugadaEn(player2->getJugadas().at(0)->getX()+1,player2->getJugadas().at(0)->getY())!=NULL){  
+                            //ataque
+                            hamuerto= atackToPosIA(player2->getJugadas().at(0), player1->JugadaEn(player2->getJugadas().at(0)->getX()+1,player2->getJugadas().at(0)->getY()));
+                            player2->getJugadas().at(0)->setMovimiento(player2->getJugadas().at(0)->getMovimiento()-1);
+                            atacado=true;
+                            retorno = true;
+                        }
+                    }
+                    if(hamuerto==0&&player2->getJugadas().at(0)->getMovimiento()>0&&!isFree(player2->getJugadas().at(0)->getX(),player2->getJugadas().at(0)->getY()+1)){
+                         //cout<<"Llego aqui 3 - "<<i<<endl;
+                        if(player1->JugadaEn(player2->getJugadas().at(0)->getX(),player2->getJugadas().at(0)->getY()+1)!=NULL){
+                            //ataque
+                            hamuerto= atackToPosIA(player2->getJugadas().at(0), player1->JugadaEn(player2->getJugadas().at(0)->getX(),player2->getJugadas().at(0)->getY()+1));
+                            player2->getJugadas().at(0)->setMovimiento(player2->getJugadas().at(0)->getMovimiento()-1);
+                            atacado=true;
+                            retorno = true;
+                        }
+                    }
+                    if(hamuerto==0&&player2->getJugadas().at(0)->getMovimiento()>0&&!isFree(player2->getJugadas().at(0)->getX()-1,player2->getJugadas().at(0)->getY())){
+                         //cout<<"Llego aqui 4 - "<<i<<endl;
+                         //cout<<"movimiento F"<<player2->getJugadas().at(i)->getMovimiento()<<endl;
+                        if(player1->JugadaEn(player2->getJugadas().at(0)->getX()-1,player2->getJugadas().at(0)->getY())!=NULL){
+                            //ataque
+                            hamuerto= atackToPosIA(player2->getJugadas().at(0), player1->JugadaEn(player2->getJugadas().at(0)->getX()-1,player2->getJugadas().at(0)->getY()));
+                            player2->getJugadas().at(0)->setMovimiento(player2->getJugadas().at(0)->getMovimiento()-1);
+                            atacado=true;
+                            retorno = true;
+                        }
+                    }
+                    if(hamuerto==0&&player2->getJugadas().at(0)->getMovimiento()>0&&!isFree(player2->getJugadas().at(0)->getX(),player2->getJugadas().at(0)->getY()-1)){
+                         //cout<<"Llego aqui 5 - "<<i<<endl;
+                         
+                        if(player1->JugadaEn(player2->getJugadas().at(0)->getX(),player2->getJugadas().at(0)->getY()-1)!=NULL){
+                            //ataque
+                            hamuerto= atackToPosIA(player2->getJugadas().at(0), player1->JugadaEn(player2->getJugadas().at(0)->getX(),player2->getJugadas().at(0)->getY()-1));
+                            player2->getJugadas().at(0)->setMovimiento(player2->getJugadas().at(0)->getMovimiento()-1);
+                            atacado=true;
+                            retorno = true;
+                        }
+                    }
+    return hamuerto;
+}
+int Tablero::attackIAU(){
+    vector<Invocacion*>::iterator it3;
+    int hamuerto=0;
+    int i = posAtaque;
+    if(!player2->getJugadas().empty()&&player2->getJugadas().at(i)!=NULL&&player2->getJugadas().size()>0){
+            if(player2->getJugadas().at(i)->getCom()==false){
+                     
+                     if(player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY())){
+                     
+                         if(player1->JugadaEn(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY()!=NULL)){
+                            //ataque
+                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY()));
+                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
+                            return hamuerto;
+                        }
+                    }
+                    if(player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)){
+                         //cout<<"Llego aqui 9 - "<<i<<endl;
+                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)!=NULL){
+                            //ataque
+                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1));
+                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
+                            return hamuerto;
+                        }
+                        
+                    }
+                    if(player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())){
+                         //cout<<"Llego aqui 10 - "<<i<<endl;
+                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())!=NULL){
+                            //ataque
+                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY()));
+                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
+                            return hamuerto;
+                        }
+                    }
+                    if(player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)){
+                         //cout<<"Llego aqui 11 - "<<i<<endl;
+                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)!=NULL){
+                            //ataque
+                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1));
+                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
+                            return hamuerto;
+                        }
+                    }
+                
+            }
+    }
+    return hamuerto;
+}
+int Tablero::moveToPosIA(){
+    vector<Invocacion*>::iterator it3;
     bool atacado = false;
     bool retorno = false;
     int randomx=-1;
@@ -479,166 +697,63 @@ bool Tablero::moveToPosIA(){
     int controly;
     int xia;
     int yia;
-    if(player2->getJugadas().size()>0){
-        for(it3=player2->getJugadas().begin();it3!=player2->getJugadas().end()&&i<player2->getJugadas().size();++it3){
-            //cout<<"Llego aqui - "<<i<<endl;
-            if(i<player2->getJugadas().size()&&player2->getJugadas().at(i)!=NULL&&player2->getJugadas().at(i)->getCom()==true){
-                while(player2->getJugadas().at(i)->getMovimiento()>0){
+
+    if(player2->getJugadas().at(0)!=NULL && player2->getJugadas().at(0)->getCom()==true){
+        while(player2->getJugadas().at(0)->getMovimiento()!=0){
+
                     srand (time(NULL));
                     randomx= rand() % 3 -1;
                     randomy= rand() % 3 -1;
-                    if(player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY())){
-                         //cout<<"Llego aqui 2 - "<<i<<endl;
-                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY())!=NULL){  
+                    if(player2->getJugadas().at(0)->getMovimiento()>0&&!isFree(player2->getJugadas().at(0)->getX()+1,player2->getJugadas().at(0)->getY())){
+                        if(player1->JugadaEn(player2->getJugadas().at(0)->getX()+1,player2->getJugadas().at(0)->getY())!=NULL){  
                             //ataque
-                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY()));
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            atacado=true;
-                            retorno = true;
+                            return -1;
                         }
                     }
-                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)){
+                    if(player2->getJugadas().at(0)->getMovimiento()>0&&!isFree(player2->getJugadas().at(0)->getX(),player2->getJugadas().at(0)->getY()+1)){
                          //cout<<"Llego aqui 3 - "<<i<<endl;
-                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)!=NULL){
+                        if(player1->JugadaEn(player2->getJugadas().at(0)->getX(),player2->getJugadas().at(0)->getY()+1)!=NULL){
                             //ataque
-                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1));
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            atacado=true;
-                            retorno = true;
+                            return -1;
                         }
                     }
-                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())){
+                    if(player2->getJugadas().at(0)->getMovimiento()>0&&!isFree(player2->getJugadas().at(0)->getX()-1,player2->getJugadas().at(0)->getY())){
                          //cout<<"Llego aqui 4 - "<<i<<endl;
                          //cout<<"movimiento F"<<player2->getJugadas().at(i)->getMovimiento()<<endl;
-                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())!=NULL){
+                        if(player1->JugadaEn(player2->getJugadas().at(0)->getX()-1,player2->getJugadas().at(0)->getY())!=NULL){
                             //ataque
-                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY()));
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            atacado=true;
-                            retorno = true;
+                            return -1;
                         }
                     }
-                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)){
+                    if(player2->getJugadas().at(0)->getMovimiento()>0&&!isFree(player2->getJugadas().at(0)->getX(),player2->getJugadas().at(0)->getY()-1)){
                          //cout<<"Llego aqui 5 - "<<i<<endl;
                          
-                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)!=NULL){
+                        if(player1->JugadaEn(player2->getJugadas().at(0)->getX(),player2->getJugadas().at(0)->getY()-1)!=NULL){
                             //ataque
-                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1));
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            atacado=true;
-                            retorno = true;
+                            return-1;
                         }
                     }
-                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&atacado==false){
+                    if(player2->getJugadas().at(0)->getMovimiento()>0&&atacado==false){
                          //cout<<"Llego aqui 6 - "<<i<<endl;
                          //cout<<"movimiento F del 6 - "<<player2->getJugadas().at(i)->getMovimiento()<<endl;
                         //movimiento
-                         xia=player2->getJugadas().at(i)->getX();
-                         yia=player2->getJugadas().at(i)->getY();
-                         if(xia+randomx<12 && yia+randomy<8){
+                         xia=player2->getJugadas().at(0)->getX();
+                         yia=player2->getJugadas().at(0)->getY();
+                         if((xia+randomx<12 && xia+randomx>=0) && (yia+randomy<8 && yia+randomy>=0)){
                              if(isFree(xia+randomx,yia+randomy)){
-                                setFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY(),true);
-                                player2->getJugadas().at(i)->setPosicion(player2->getJugadas().at(i)->getX()+randomx,player2->getJugadas().at(i)->getY()+randomy);
-                                setFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY(),false);
-                                player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                                retorno = true;
+                                setFree(player2->getJugadas().at(0)->getX(),player2->getJugadas().at(0)->getY(),true);
+                                player2->getJugadas().at(0)->setPosicion(player2->getJugadas().at(0)->getX()+randomx,player2->getJugadas().at(0)->getY()+randomy);
+                                setFree(player2->getJugadas().at(0)->getX(),player2->getJugadas().at(0)->getY(),false);
+                                player2->getJugadas().at(0)->setMovimiento(player2->getJugadas().at(0)->getMovimiento()-1);
+                                return  1;
                             }
                         }
+                         
                     }
                     atacado=false;
-                }
-            }
-            else if(hamuerto==0&&player2->getJugadas().at(i)!=NULL){
-                
-                while(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0){
-                     //cout<<"Llego aqui 7 - "<<i<<endl;
-                    int xia=player2->getJugadas().at(i)->getX();
-                    int yia=player2->getJugadas().at(i)->getY();
-                    //SI HAY ALGUN BICHO LE ATACO TO GUAY
-                     if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY())){
-                         //cout<<"Llego aqui 8 - "<<i<<endl;
-                         if(player1->JugadaEn(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY()!=NULL)){
-                            //ataque
-                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()+1,player2->getJugadas().at(i)->getY()));
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            atacado=true;
-                            retorno = true;
-                        }
-                    }
-                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)){
-                         //cout<<"Llego aqui 9 - "<<i<<endl;
-                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1)!=NULL){
-                            //ataque
-                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()+1));
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            atacado=true;
-                            retorno = true;
-                        }
-                    }
-                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())){
-                         //cout<<"Llego aqui 10 - "<<i<<endl;
-                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY())!=NULL){
-                            //ataque
-                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX()-1,player2->getJugadas().at(i)->getY()));
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            atacado=true;
-                            retorno = true;
-                        }
-                    }
-                    if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&!isFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)){
-                         //cout<<"Llego aqui 11 - "<<i<<endl;
-                        if(player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1)!=NULL){
-                            //ataque
-                            hamuerto= atackToPosIA(player2->getJugadas().at(i), player1->JugadaEn(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY()-1));
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            atacado=true;
-                            retorno = true;
-                        }
-                    }
-                     //ME MUEVO TO CHUNGOTE
-                      if(hamuerto==0&&player2->getJugadas().at(i)->getMovimiento()>0&&atacado==false){
-                          xia=player2->getJugadas().at(i)->getX();
-                          yia=player2->getJugadas().at(i)->getY();
-                           //cout<<"Llego aqui 12 - "<<i<<endl;
-                          controlx=player2->getJugadas().at(i)->getX()-xcom;
-                          controly=player2->getJugadas().at(i)->getY()-ycom;
-                          if(controlx>0){
-                              xia=xia-1;
-                              controlx=controlx-1;
-                          }
-                          if(controlx<0){
-                              xia=xia+1;
-                              controlx=controlx+1;
-                          }
-                          if(controly>0){
-                              yia=yia-1;
-                              controly=controly-1;
-                          }
-                          if(controly<0){
-                              yia=yia+1;
-                              controly=controly+1;
-                          }
-                          if(isFree(xia,yia)){
-                          setFree(player2->getJugadas().at(i)->getX(),player2->getJugadas().at(i)->getY(),true);
-                            player2->getJugadas().at(i)->setPosicion(xia,yia);
-                            setFree(xia,yia,false);
-                            player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                            retorno = true;
-                          }
-                          else{
-                               player2->getJugadas().at(i)->setMovimiento(player2->getJugadas().at(i)->getMovimiento()-1);
-                          }
-                      }
-                    atacado=false;
-                     
-                }//cierre while
-                
-            }
-            hamuerto=0;
-            i++;
-        }//cierre for
+        }//cierre while
     }
-    return true;
+    return 2;
 }
 bool Tablero::removeUnit(int posx, int posy, Invocacion* unit){
     //board[posx][posy].unit=NULL;
@@ -1062,12 +1177,15 @@ int Tablero::atackToPosIA(Invocacion* ia, Invocacion* humano){
     }
     if(iaB==true&&hum==true){
         retorno=-3;
+        empate=true;
     }
     if(iaB==true&&hum==false){
         retorno=-1;
+        victoria=true;
     }
     if(iaB==false&&hum==true){
         retorno=-2;
+        derrota=true;
     }
     return retorno;
 }

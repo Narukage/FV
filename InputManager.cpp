@@ -1,6 +1,6 @@
 #include "InputManager.h"
 #include "Tablero.h"
-#include "Game.h"
+#include "Partida.h"
 
 ////SINGLETON
 
@@ -41,10 +41,10 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                         if(evento.key.code==sf::Keyboard::Q){
                             isPlay = false;
                         }
-                        if(evento.key.code==sf::Keyboard::Space && !Game::Instance()->getSeleccionada()){
-                            int idCancion = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/end.wav", 100);
+
+                        if(evento.key.code==sf::Keyboard::Space && !Partida::Instance()->getSeleccionada()){
+                             int idCancion = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/end.wav", 100);
                             RenderManager::Instance(1)->getMotor()->play(idCancion);
-                            
                             nexTurn(turno);
                             cambioTurno(meToca);
                             Tablero::Instance()->setTurno(meToca);
@@ -52,8 +52,9 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                              cout<<"he entrado"<<turno<<std::endl;*/
                              
                              if(meToca==true){
-                                 int mana_aux = Tablero::Instance()->getPlayer2()->getMana();
+                                 int mana_aux = Tablero::Instance()->getPlayer()->getMana();
                                  mana_aux++;
+
                                  Tablero::Instance()->getPlayer2()->ResetStats();
                                  Tablero::Instance()->getPlayer2()->setMana(mana_aux);
                                  Tablero::Instance()->getPlayer2()->setManaRest(mana_aux);
@@ -64,6 +65,7 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                                  int mana_aux1 = Tablero::Instance()->getPlayer()->getMana();
                                  mana_aux++;
                                  Tablero::Instance()->getPlayer()->setManaRest(mana_aux);
+
                                  Tablero::Instance()->getPlayer()->ResetStats();
                                  Tablero::Instance()->getPlayer()->setMana(mana_aux);
                                  Tablero::Instance()->getPlayer()->setManaRest(mana_aux);
@@ -107,7 +109,7 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                         if(evento.mouseButton.button==sf::Mouse::Left){
                             
                             if((coord.x>50 && coord.x <140) && (coord.y>530 && coord.y<570)){
-                                if(!Game::Instance()->getSeleccionada()){
+                                if(!Partida::Instance()->getSeleccionada()){
                                     int idCancion = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/end.wav", 100);
                                     RenderManager::Instance(1)->getMotor()->play(idCancion);
                                     nexTurn(turno);
@@ -149,7 +151,6 @@ void InputManager::apagar(){
     Game::Instance()->isPlay = false;
 
 }
-
     int InputManager::PulsaTecla() {
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){
             std::cout<<"entra"<<std::endl;
@@ -173,13 +174,13 @@ void FachadaInput::turnoIA(bool cambio){
                             
                              if(meToca==false){
                                  int mana_aux = Tablero::Instance()->getPlayer2()->getMana();
-                                 mana_aux++;
+                                 //mana_aux++;
                                  Tablero::Instance()->getPlayer2()->ResetStats();
                                  Tablero::Instance()->getPlayer2()->setMana(mana_aux);
                                  Tablero::Instance()->getPlayer2()->setManaRest(mana_aux);
                                  cout<< "Mana total:"<<Tablero::Instance()->getPlayer2()->getMana()<<endl;
                                  cout<<"Mana restante:"<<Tablero::Instance()->getPlayer2()->getManaRest()<<endl;
-                                 Tablero::Instance()->getPlayer2()->Robar();
+                                 Tablero::Instance()->getPlayer2()->Robar2();
                              }
                              nexTurn(turno);
                             cambioTurno(meToca);

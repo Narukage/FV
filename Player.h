@@ -19,6 +19,7 @@ class Player{
         int vida;            //Vida
         int mana;            //Mana máximo
         int manarest;        //Mana restante, nunca tenemos 4,5 de mana.
+        int minmana=3000000; //es el menor coste de carta en mano
         sf::Texture textura; //?
         sf::Texture textura2;//?
         sf::Texture textura3;//?
@@ -61,6 +62,7 @@ class Player{
         int damePosicion(int posx,int posy);
         bool estaJugadaEn(int posx, int posy);
         void Robar();
+        void Robar2();
         
         ///////////////////////////////
         // GETTERS Y SETTERS
@@ -69,6 +71,7 @@ class Player{
         void setMana(int x)                 { mana=x;           };
         void setManaRest(int x)             { manarest=x;       };
         void setPosMano(int pos)            { posmano=pos;      };
+        int getminmana()                    { return minmana;   };
         int getLife()                       { return vida;      };
         int getMana()                       { return mana;      };
         int getManaRest()                   { return manarest;  };

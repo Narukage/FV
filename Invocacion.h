@@ -18,8 +18,8 @@ class Invocacion{
         string nombre;
         bool existo=false;
         int comandante=1;
-        bool com;  //???????????????'
-        bool mano; //????
+        bool com = false;  //soy comandante
+        bool mano; //estoy en la mano
         int unico;// -1 Es el jugador -2 es el rival
         int idsprite;
         int id;

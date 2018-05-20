@@ -26,8 +26,8 @@ private:
     sf::Sprite sprite;
     float width=300;
     float height;
-    bool presionado;
-    sf::Vector2i coord;
+    bool press;
+    sf::Vector2i coordenada;
     int idspriteEmpezar;
     int idspriteOpciones;
     int idspriteSalir;
