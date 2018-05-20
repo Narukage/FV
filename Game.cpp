@@ -44,6 +44,8 @@ void Game::inicializar(){
 void Game::update(){
     //Una vez este el StateManager hay que mover el update
     id = -1;
+    if(actuainvocacion==false)
+                Tablero::Instance()->ReiniciarAdy();
     RenderManager::Instance(1)->getMotor()->crearClock();
     presionado = InputManager::Instance(1)->getInput()->getPresionado();
     if(presionado && meToca){
@@ -58,7 +60,7 @@ void Game::update(){
             
             if(inv!=NULL){
                 std::cout<<"esCarta es distinto de null"<<std::endl;
-                id = inv->getIdCarta();
+                id = inv->getIdCartaSel();
                 cartaseleccionada=true;
                  
             }
@@ -96,7 +98,10 @@ void Game::update(){
                 posYinvocacion=campo.y;
             } //unidad seleccionada, preparada para hacer alguna accion
             else if(actuainvocacion==true && Tablero::Instance()->isFree(campo.x,campo.y) && Tablero::Instance()->getAlcanzable(campo.x,campo.y)==1){
+                 cout<< "ESTOY ATACANDO 3" << endl;
                 if(Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->getMovimiento()>0){
+                    cout<<"Posicion x : " <<posXinvocacion << "Posicion y :" <<posYinvocacion << endl;
+                    cout<<"entré papi"<<endl;
                 Tablero::Instance()->moveToPos(posXinvocacion, posYinvocacion,campo.x,campo.y,Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion));
                 Tablero::Instance()->setFree(campo.x,campo.y,false);
                 actuainvocacion=false;
@@ -112,7 +117,9 @@ void Game::update(){
             }//ataque
             else if(actuainvocacion==true && !Tablero::Instance()->isFree(campo.x,campo.y)&&Tablero::Instance()->getAlcanzable(campo.x,campo.y)==1){
                 if(Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->getMovimiento()>0){
-                if(Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->esAliado(Tablero::Instance()->getPlayer()->JugadaEn(coord.x,coord.y)->getComandante())){
+                cout<< "coordx :"<<coord.x << "coordy :"<< coord.y << endl;
+                    if(Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)!=NULL&&!Tablero::Instance()->getPlayer()->JugadaEn(posXinvocacion,posYinvocacion)->esAliado(Tablero::Instance()->getPlayer()->JugadaEn(campo.x,campo.y)->getComandante())){
+                    cout<< "ESTOY ATACANDO" << endl;
                     ganador=Tablero::Instance()->atackToPos(posXinvocacion,posYinvocacion,campo.x,campo.y);
                        //tablero->setFree(campox,campoy,true);
                     if(ganador==-1){
@@ -129,19 +136,30 @@ void Game::update(){
                 posXinvocacion=-1;
                 posYinvocacion=-1;
                 cout << "me reinicio2" << endl;
-                 if(Tablero::Instance()->getClick()==0)
-                Tablero::Instance()->ReiniciarAdy();
+                 //if(Tablero::Instance()->getClick()==0){
+                    Tablero::Instance()->ReiniciarAdy();
+                 //}
                 }
+                else{
+                        cout<< "ESTOY ATACANDO 10" << endl;
+                        actuainvocacion =false;
+                        
+                    }
                 }
-            }
+            } 
+            
             else{
+                 
                actuainvocacion=false;
                posXinvocacion=-1;
                posYinvocacion=-1;
                //cout << "me reinicio3" << endl;
-                if(Tablero::Instance()->getClick()==0)
+                
+               if(Tablero::Instance()->isFree(campo.x,campo.y)&& actuainvocacion==false )
                Tablero::Instance()->ReiniciarAdy();
+               
             }
+          
             
         }
         presionado=false;
@@ -149,16 +167,19 @@ void Game::update(){
     //finalizado();
     }
     if(!meToca){
-        
+       //Tablero::Instance()->setClick(0);
+       /* int randomx= rand() % 3 -1;
+        cout<<"Random : "<< randomx << endl;*/
         IaCartas=Tablero::Instance()->addUnitIA();
         IaMover=Tablero::Instance()->moveToPosIA();
+        //IaMoverU=Tablero::Instance()->moveToPosIAU();
         cout<<"salgo bien "<<endl;
-        if(IaCartas==true && IaMover==true){
+        /*if(IaCartas==true && IaMover==true && IaMoverU==true){
             cout<<"fallo en el cambio de turno "<<endl;
             InputManager::Instance(1)->getInput()->turnoIA(true);
             cout<<"fallo en el cambio de turno pero soy: "<<meToca<<endl;
             
-        }
+        }*/
         /*int randomx;
        srand (time(NULL));
                     randomx= rand() % 3 +9;
