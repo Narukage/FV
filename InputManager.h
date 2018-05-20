@@ -57,6 +57,7 @@ class FachadaInput : public InputFachada {
         int getTurno()                  { return turno;      };
         bool getMeToca()                { return meToca;     };
         bool getPresionado()            { return presionado; };
+        bool setPresionado()            { presionado=false; };
         void setMeToca(bool meTo)       { meToca = meTo;     };
         void setTurno(int num)          { turno=num;         };
 };    

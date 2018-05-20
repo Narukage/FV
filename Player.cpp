@@ -196,6 +196,9 @@ Player::Player(int commander){
 bool Player:: RellenarMano(Invocacion* invo2,int jugar){
    
     if(mano.size()<5){
+        if(minmana>invo2->getCoste()){
+            minmana=invo2->getCoste();
+        }
         cout<<"manica: "<<invo2->getNombre()<<endl;
         invo2->setMano(true);
         invo2->soyManoT(invo2->getNombre(),jugar);
@@ -318,12 +321,16 @@ bool Player:: eliminarJugadas(Invocacion* invo2){// get unico creo que no sirve 
     Invocacion* apoyo;
     for(unsigned int i = 0; i < jugadas.size(); i++){
         //cout<<"estoy apunto de morir: "<<i<<endl;
-        if(jugadas.at(i)->GetUnico()==invo2->GetUnico()){  
+        if(!jugadas.empty()&&jugadas.at(i)!=NULL&&jugadas.at(i)->getCom()!=true&&jugadas.at(i)->GetUnico()==invo2->GetUnico()){  
             cout<<"me van a matar: "<<invo2->getNombre()<<endl;
             apoyo=invo2;
             
-            
-            jugadas.erase(jugadas.begin()+i); 
+            if(i+1<jugadas.size()&&jugadas.at(i+1)!=NULL){
+                jugadas.erase(jugadas.begin()+i);
+            }
+            else{
+                jugadas.erase(jugadas.begin()+1);
+            }
             delete apoyo;
             return true;
         }
@@ -386,6 +393,15 @@ bool Player:: eliminarJugadas(Invocacion* invo2){// get unico creo que no sirve 
                
      return false;
  }
+ void Player:: Robar2(){
+   vector<Invocacion*>::iterator itM;
+ 
+       if(mano.size()<5){
+           RellenarMano(invo2.at(0),2);
+           
+       }
+   
+ }
  void Player:: Robar(){
      vector<Invocacion*>::iterator it5;
                  int i=0;
@@ -395,7 +411,9 @@ bool Player:: eliminarJugadas(Invocacion* invo2){// get unico creo que no sirve 
          i++;
      }
                  j=j+1;
-                 RellenarMano(invo2.at(posmano),i);
+                 if(posmano<invo2.size()){
+                    RellenarMano(invo2.at(posmano),i);
+                 }
                  //NO SE POR QUE ESTABA ESTO XDeliminarJugadas(invo2.at(posmano));
  }
  void Player::ResetStats(){

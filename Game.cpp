@@ -63,3 +63,6 @@ void Game::cambiarApartida(){
 void Game::cambiarApausa(){
         state=Pausa::Instance();
 }
+void Game::cambiarAmenu(){
+    state=Menu::Instance();
+}

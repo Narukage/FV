@@ -25,6 +25,10 @@ void Partida::update(){
     id = -1;
     RenderManager::Instance(1)->getMotor()->crearClock();
     presionado = InputManager::Instance(1)->getInput()->getPresionado();
+    meToca = Tablero::Instance()->getTurno();
+        if(InputManager::Instance(1)->PulsaEscape()){
+            Partida::Instance()->cambiarApausa();
+    }
     if(presionado && meToca){
         coord = InputManager::Instance(1)->getInput()->getCoord();
         campo = InputManager::Instance(1)->getInput()->getCampo();
@@ -139,19 +143,60 @@ void Partida::update(){
     //}
     //finalizado();
     }
-    if(!meToca){
+    if(!meToca){ //IA
        /* int randomx= rand() % 3 -1;
         cout<<"Random : "<< randomx << endl;*/
-        IaCartas=Tablero::Instance()->addUnitIA();
-        IaMover=Tablero::Instance()->moveToPosIA();
-        IaMoverU=Tablero::Instance()->moveToPosIAU();
-        cout<<"salgo bien "<<endl;
+        cout <<"MANA RESTANTE ES : "<< Tablero::Instance()->getPlayer2()->getManaRest()<< endl;
+        if(Tablero::Instance()->addUnitIAB()>Tablero::Instance()->getPlayer2()->getManaRest()){
+            cout << "Va bien muyayo: "<< endl; //AQUI PONES RELOJ PARA QUE HAYA TRANSICCIÓN
+            if(control!=2){
+                control = Tablero::Instance()->moveToPosIA();
+                if(control == -1){
+                    Tablero::Instance()->attackIA(); // AQUI SE SABE SI SE ACABA PARTIDA, EL ENTERO QUE DEVUELVA
+                }
+                if(control == 1){
+                    cout<<"Movido comandante: "<<Tablero::Instance()->getPlayer2()->getJugadas().at(0)->getMovimiento()<<endl;
+                }
+                if(control == 2){
+                    cout<<"No le quedan movimientos al comandante: "<<Tablero::Instance()->getPlayer2()->getJugadas().at(0)->getMovimiento()<<endl;
+                }
+             /*if(controlAtaque==false){
+                
+                }*/
+            }
+            if(control == 2){
+                cout<<"ENTRO PARA MOVER UNIDADES primero : "<<endl;
+                if(controlU !=2){
+                    cout<<"ENTRO PARA MOVER UNIDADES : "<<endl;
+                    controlU = Tablero::Instance()->moveToPosIAU();
+                    if(controlU == -1){
+                        Tablero::Instance()->attackIAU();
+                    }
+                    if(controlU == 1){
+                         cout<<"Movido UNIDAD: "<<endl;
+                    }
+                    if(controlU == 2){
+                         cout<<"UNIDAD NO VA A MOVERSE: "<<endl;
+                    }
+                }
+                if(control == 2 && controlU == 2){
+                    cout<<"Cambio turno"<< endl;
+                    control=0;
+                    controlU=0;
+                     InputManager::Instance(1)->getInput()->turnoIA(true);
+                }
+            }
+        }
+        //IaCartas=Tablero::Instance()->addUnitIA();
+        //IaMover=Tablero::Instance()->moveToPosIA();
+        //IaMoverU=Tablero::Instance()->moveToPosIAU();
+        /*cout<<"salgo bien "<<endl;
         if(IaCartas==true && IaMover==true && IaMoverU==true){
             cout<<"fallo en el cambio de turno "<<endl;
             InputManager::Instance(1)->getInput()->turnoIA(true);
             cout<<"fallo en el cambio de turno pero soy: "<<meToca<<endl;
             
-        }
+        }*/
         /*int randomx;
        srand (time(NULL));
                     randomx= rand() % 3 +9;
@@ -214,6 +259,12 @@ void Partida::render(){
     }
            
     window->display();
+}
+void Partida::cambiarApausa(){
+    window->clear(sf::Color::Black);
+    Pausa::Instance()->inicializar();
+   Game::Instance()->cambiarApausa();
+    //Game::Instance();
 }
 Partida *pt1=Partida::Instance();
 Partida *pt2=pt1->Instance();

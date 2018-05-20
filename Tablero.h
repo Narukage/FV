@@ -88,6 +88,7 @@ class Tablero{
         int retrato2;
         int idle;
         int fondo;
+        int posAtaque=-1;
         //int turno;
       
        sf::Texture texturacarta;
@@ -109,10 +110,12 @@ class Tablero{
         void clear();
         void cargarMapa();
         bool addUnit(int posx, int posy, Invocacion* unit, int spawn); //return true if adds a unit at the location succesfully
-        bool addUnitIA();
+        int addUnitIAB();
         bool moveToPos(int fromx, int fromy,int gox, int goy, Invocacion* unit); //returns true if unit is moved succesfully
-        bool moveToPosIA();
-        bool moveToPosIAU();
+        int attackIA();
+        int attackIAU();
+        int moveToPosIA();
+        int moveToPosIAU();
         int atackToPos(int fromx, int fromy,int gox, int goy);
         int atackToPosIA(Invocacion* ia, Invocacion* humano);
         bool removeUnit(int posx, int posy, Invocacion* unit); //returns true if unit is removed succesfully
@@ -144,6 +147,7 @@ class Tablero{
         ///////////////////////////////
         void setWindow(sf::RenderWindow* w)     { window = w;    };
         void setTurno(bool metoca)              { turno=metoca;  };
+        bool getTurno()                         { return turno; };
         Player* getPlayer()                     { return player1;};
         Player* getPlayer2()                    { return player2;};
         int getClick()                          { return click;  };

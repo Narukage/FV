@@ -22,6 +22,9 @@ private:
     bool generalmuerto1=false;
     bool generalmuerto2=false;
     Invocacion* inv;
+    bool controlAtaque = false;
+    int control = 0;
+    int controlU = 0;
     bool empate=false;
     int id = -1;
     bool presionado;

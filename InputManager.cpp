@@ -51,14 +51,14 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                              cout<<"he entrado"<<turno<<std::endl;
                              
                              if(meToca==true){
-                                 int mana_aux = Tablero::Instance()->getPlayer2()->getMana();
+                                 int mana_aux = Tablero::Instance()->getPlayer()->getMana();
                                  mana_aux++;
-                                 Tablero::Instance()->getPlayer2()->ResetStats();
-                                 Tablero::Instance()->getPlayer2()->setMana(mana_aux);
-                                 Tablero::Instance()->getPlayer2()->setManaRest(mana_aux);
-                                 cout<< "Mana total:"<<Tablero::Instance()->getPlayer2()->getMana()<<endl;
-                                 cout<<"Mana restante:"<<Tablero::Instance()->getPlayer2()->getManaRest()<<endl;
-                                 Tablero::Instance()->getPlayer2()->Robar();
+                                 Tablero::Instance()->getPlayer()->ResetStats();
+                                 Tablero::Instance()->getPlayer()->setMana(mana_aux);
+                                 Tablero::Instance()->getPlayer()->setManaRest(mana_aux);
+                                 cout<< "Mana total:"<<Tablero::Instance()->getPlayer()->getMana()<<endl;
+                                 cout<<"Mana restante:"<<Tablero::Instance()->getPlayer()->getManaRest()<<endl;
+                                 Tablero::Instance()->getPlayer()->Robar();
                              }
                             
                              /*if(meToca==false){
@@ -140,11 +140,11 @@ void FachadaInput::turnoIA(bool cambio){
                                  int mana_aux = Tablero::Instance()->getPlayer2()->getMana();
                                  //mana_aux++;
                                  Tablero::Instance()->getPlayer2()->ResetStats();
-                                 Tablero::Instance()->getPlayer2()->setMana(500);
+                                 Tablero::Instance()->getPlayer2()->setMana(mana_aux);
                                  Tablero::Instance()->getPlayer2()->setManaRest(mana_aux);
                                  cout<< "Mana total:"<<Tablero::Instance()->getPlayer2()->getMana()<<endl;
                                  cout<<"Mana restante:"<<Tablero::Instance()->getPlayer2()->getManaRest()<<endl;
-                                 Tablero::Instance()->getPlayer2()->Robar();
+                                 Tablero::Instance()->getPlayer2()->Robar2();
                              }
                              nexTurn(turno);
                             cambioTurno(meToca);
