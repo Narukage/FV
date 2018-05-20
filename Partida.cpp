@@ -128,14 +128,16 @@ void Partida::update(){
                 }
             } 
             
-            else{
+                else{
                  
                actuainvocacion=false;
                posXinvocacion=-1;
                posYinvocacion=-1;
                //cout << "me reinicio3" << endl;
-                if(Tablero::Instance()->getClick()==0)
+                
+               if(Tablero::Instance()->isFree(campo.x,campo.y)&& actuainvocacion==false )
                Tablero::Instance()->ReiniciarAdy();
+               
             }
             
         }
@@ -181,8 +183,10 @@ void Partida::update(){
                 }
                 if(control == 2 && controlU == 2){
                     cout<<"Cambio turno"<< endl;
+                    InputManager::Instance(1)->getInput()->cambioTurno( InputManager::Instance(1)->getInput()->getMeToca());
                     control=0;
                     controlU=0;
+                    
                      InputManager::Instance(1)->getInput()->turnoIA(true);
                 }
             }
