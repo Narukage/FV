@@ -52,9 +52,7 @@ Tablero::Tablero(){
     retrato1 = motor->crearSprite("assets/HUD/retrato1.png");
     retrato2 = motor->crearSprite("assets/HUD/retrato2.png");
     idbaraja = motor->crearSprite("assets/HUD/baraja.png");
-    int idCancion = motor->crearAudio("assets/Music/main.wav", 30);
     idle = motor->crearAnimacion("assets/Sprites/dolorArterial.png",14,1,0.001f,14,1);
-    motor->play(idCancion);
 
     addUnit(player1->getUnit()->getX(),player1->getUnit()->getY(),player1->getUnit(),player1->getUnit()->getComandante());
     cout<<"X del 2: "<<player2->getUnit()->getX()<<"Y del 2: "<<player1->getUnit()->getY()<<endl;
@@ -1077,6 +1075,7 @@ void Tablero::drawManaNumb(int commander){
     if(commander==1){
 
         int mana = player1->getMana();
+        cout << "mana que tengo" << mana << endl;
             std::stringstream ss;
             ss << mana;
             RenderManager::Instance(1)->getMotor()->escribir(ss.str().c_str(),fuentemana,193,37,0.8, *window);

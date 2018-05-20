@@ -37,6 +37,7 @@ private:
     bool IaCartas=false;
     bool IaMover=false;
     bool IaMoverU=false;
+    float cont = 0;
     
     int posXinvocacion=-1;
     int posYinvocacion=-1;

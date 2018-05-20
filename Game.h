@@ -23,6 +23,7 @@ private:
     Player* player;
     Player* player2;
     Player* current = player;  
+    int idCancion;
 
     static Game* pinstance;
 private:
