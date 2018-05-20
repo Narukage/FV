@@ -12,6 +12,7 @@ private:
     static InputManager* pinstance;
     
 public:
+    void apagar();
     static InputManager* Instance(int libreria);
     ~InputManager();
     InputFachada* getInput(){ return input; }

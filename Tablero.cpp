@@ -47,7 +47,7 @@ Tablero::Tablero(){
     manarest = motor->crearTexto("assets/Fonts/FreeMono.ttf");
     barra = motor->crearTexto("assets/Fonts/FreeMono.ttf");
     mana = motor->crearTexto("assets/Fonts/FreeMono.ttf");
-    
+
     idturno = motor->crearSprite("assets/HUD/turno.png");
     retrato1 = motor->crearSprite("assets/HUD/retrato1.png");
     retrato2 = motor->crearSprite("assets/HUD/retrato2.png");
@@ -55,7 +55,7 @@ Tablero::Tablero(){
     int idCancion = motor->crearAudio("assets/Music/main.wav", 30);
     idle = motor->crearAnimacion("assets/Sprites/dolorArterial.png",14,1,0.001f,14,1);
     motor->play(idCancion);
-    
+
     addUnit(player1->getUnit()->getX(),player1->getUnit()->getY(),player1->getUnit(),player1->getUnit()->getComandante());
     cout<<"X del 2: "<<player2->getUnit()->getX()<<"Y del 2: "<<player1->getUnit()->getY()<<endl;
     addUnit(player2->getUnit()->getX(),player2->getUnit()->getY(),player2->getUnit(),player2->getUnit()->getComandante());
@@ -673,7 +673,7 @@ void Tablero::resetMap(){
 
 
 void Tablero::drawMap(){
-    
+        
         for(int y=0; y<_height; y++){
             for(int x=0; x<_width; x++){
                 if(_tilemapSprite[0][y][x]!=NULL){
@@ -715,6 +715,7 @@ void Tablero::drawMap(){
     
     motor->dibujar(idturno, 40, 520, 0.4, *window);
     motor->dibujar(idbaraja,658,450,1,*window);
+
 }
 
 Invocacion* Tablero::esCarta(int posx, int posy){

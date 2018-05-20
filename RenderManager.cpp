@@ -173,6 +173,14 @@ void FachadaMotor2D::dibujar(int id, float positionx, float positiony, float sca
     }
 }
 
+sf::Sprite FachadaMotor2D::buscar(int id){
+    for(unsigned int i = 0; i < sprites.size(); i++){
+        if(sprites[i].id==id){
+            return *sprites[i].sprite;
+       }
+    }
+}
+
 void FachadaMotor2D::setTextura(int id, std::string url){
     //Utilizo una textura auxiliar que borrare al terminar el metodo
     sf::Texture* texturaaux = new sf::Texture;

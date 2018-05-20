@@ -90,6 +90,7 @@ public:
     int crearSprite(std::string url);
     bool borrarSprite(int id);
     void dibujar(int id, float positionx, float positiony, float scale, sf::RenderWindow& window);
+    sf::Sprite buscar(int id);
     
     //=================================
     // AUDIO

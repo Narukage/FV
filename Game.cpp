@@ -1,4 +1,5 @@
 #include <valarray>
+#include <cmath>
 #include "Game.h"
 #include "Menu.h"
 #include "Partida.h"
@@ -32,10 +33,11 @@ void Game::inicializar(){
     empate=false;
     isPlay=true;
     Tablero::Instance()->cargarMapa();
-    //state=Game::Instance();
+    state=Menu::Instance();
     //Pasamos la ventana
     Tablero::Instance()->setWindow(&window);
     Menu::Instance()->setWindow(&window);
+    cont = 0;
 
 }
 
@@ -56,7 +58,7 @@ void Game::update(){
             
             if(inv!=NULL){
                 std::cout<<"esCarta es distinto de null"<<std::endl;
-                id = inv->getIdCartaSel();
+                id = inv->getIdCarta();
                 cartaseleccionada=true;
                  
             }
@@ -195,8 +197,12 @@ void Game::render(){
 
     if(cartaseleccionada){
         cout << "animo carta" << endl;
-        RenderManager::Instance(1)->getMotor()->updateAnimacion(id,0,0.1f);
-        RenderManager::Instance(1)->getMotor()->dibujarAnimacion(id,inv->getJugar()*100+110,450,1,&window);
+        sf::Sprite carta = RenderManager::Instance(1)->getMotor()->buscar(id);
+        sf::Vector2f pos = carta.getPosition();
+        carta.setPosition(pos.x,480+10*std::sin(cont));
+        cont++;
+        /*RenderManager::Instance(1)->getMotor()->updateAnimacion(id,0,0.1f);
+        RenderManager::Instance(1)->getMotor()->dibujarAnimacion(id,inv->getJugar()*100+110,450,1,&window);*/
     }
            
     window.display();
@@ -251,4 +257,7 @@ void Game::cambiarApartida(){
 }
 void Game::cambiarApausa(){
         //state=Pausa::Instance();
+}
+Estado* Game::getState(){
+    return state;
 }

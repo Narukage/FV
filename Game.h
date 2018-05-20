@@ -15,7 +15,6 @@ class Game{
     
 private:
     Estado* state;  // <- descomentar esta linea cuando el menu este terminado
-    bool isPlay;
     sf::RenderWindow window;
     RenderManager* motor;
     Tablero* tablero;
@@ -43,6 +42,7 @@ private:
     bool tieneadyacentes=false;
     bool meToca = true;
     int id = -1;
+    float cont;
        
     static Game* pinstance;
 private:
@@ -56,10 +56,14 @@ private:
 protected:
     Game();
 public:
+    bool isPlay;
     static Game* Instance();
     ~Game();
     void run();
     bool getSeleccionada()      { return cartaseleccionada; };
     void cambiarApartida();
     void cambiarApausa();
+    Estado* getState();
+    sf::RenderWindow* getWindow(){ return &window; };
+
 };

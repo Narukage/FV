@@ -22,6 +22,7 @@ public:
     virtual bool borrarAnimacion(int id) = 0;
     virtual int crearSprite(std::string url) = 0;
     virtual bool borrarSprite(int id) = 0;
+    virtual sf::Sprite buscar(int id) = 0;
     virtual void dibujar(int id, float positionx, float positiony, float scale, sf::RenderWindow& window) = 0;
     virtual int crearAudio(std::string url, int volumen) = 0;
     virtual bool borrarAudio(int id) = 0;

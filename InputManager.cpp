@@ -44,6 +44,7 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                         if(evento.key.code==sf::Keyboard::Space && !Game::Instance()->getSeleccionada()){
                             int idCancion = RenderManager::Instance(1)->getMotor()->crearAudio("assets/Music/end.wav", 100);
                             RenderManager::Instance(1)->getMotor()->play(idCancion);
+                            
                             nexTurn(turno);
                             cambioTurno(meToca);
                             Tablero::Instance()->setTurno(meToca);
@@ -59,6 +60,16 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                                  cout<< "Mana total:"<<Tablero::Instance()->getPlayer2()->getMana()<<endl;
                                  cout<<"Mana restante:"<<Tablero::Instance()->getPlayer2()->getManaRest()<<endl;
                                  Tablero::Instance()->getPlayer2()->Robar();
+                                 
+                                 int mana_aux1 = Tablero::Instance()->getPlayer()->getMana();
+                                 mana_aux++;
+                                 Tablero::Instance()->getPlayer()->setManaRest(mana_aux);
+                                 Tablero::Instance()->getPlayer()->ResetStats();
+                                 Tablero::Instance()->getPlayer()->setMana(mana_aux);
+                                 Tablero::Instance()->getPlayer()->setManaRest(mana_aux);
+                                 cout<< "Mana total:"<<Tablero::Instance()->getPlayer()->getMana()<<endl;
+                                 cout<<"Mana restante:"<<Tablero::Instance()->getPlayer()->getManaRest()<<endl;
+                                 Tablero::Instance()->getPlayer()->Robar();
                              }
                             
                              /*if(meToca==false){
@@ -134,6 +145,11 @@ void FachadaInput::Eventos(bool isPlay, sf::RenderWindow& window){
                 }
     }
 }
+void InputManager::apagar(){
+    Game::Instance()->isPlay = false;
+
+}
+
     int InputManager::PulsaTecla() {
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){
             std::cout<<"entra"<<std::endl;

@@ -135,7 +135,7 @@ class Tablero{
         ///////////////////////////////
         void setWindow(sf::RenderWindow* w)     { window = w;    };
         void setTurno(bool metoca)              { turno=metoca;  };
-        Player* getPlayer()                     { return player1;};
+        Player* getPlayer()                    { return player1;};
         Player* getPlayer2()                    { return player2;};
         int getClick()                          { return click;  };
         void setClick(int i)                    { click=1;       };
