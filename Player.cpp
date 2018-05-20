@@ -4,8 +4,8 @@
 
 Player::Player(int commander){
     vida=100;
-    mana=10;
-    manarest=10;
+    mana=1;
+    manarest=mana;
     Invocacion* prueba = new Invocacion();
     
     if(commander==1){
