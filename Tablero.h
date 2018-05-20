@@ -143,7 +143,7 @@ class Tablero{
         void drawMana(int commander);
         void drawRetrato(int commander);
         void Mostrar_mano(int id);
-        
+        void drawNextTurn();
         ///////////////////////////////
         // GETTERS Y SETTERS
         ///////////////////////////////

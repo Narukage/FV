@@ -1078,6 +1078,12 @@ void Tablero::drawManaRest(int commander){
                 motor->escribir(ss.str().c_str(),manarest,585,37,0.8,*window);
     }
 }
+void Tablero::drawNextTurn(){
+string ss="Pulsa espacio para cambiar de turno";
+                    int idtexto=RenderManager::Instance(1)->getMotor()->crearTexto("assets/Fonts/FreeMono.ttf");               
+                    RenderManager::Instance(1)->getMotor()->escribir(ss,idtexto,300,100,0.8,*window);
+                    cout<<"deberia dibujarme"<<endl;
+}
 
 void Tablero::drawBarra(int commander){
     if(commander==1){

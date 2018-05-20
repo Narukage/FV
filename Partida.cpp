@@ -196,7 +196,7 @@ void Partida::update(){
                     InputManager::Instance(1)->getInput()->cambioTurno( InputManager::Instance(1)->getInput()->getMeToca());
                     control=0;
                     controlU=0;
-                    
+                    Tablero::Instance()->drawNextTurn();
                      InputManager::Instance(1)->getInput()->turnoIA(true);
                 }
             }
