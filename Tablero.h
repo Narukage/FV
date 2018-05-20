@@ -8,6 +8,8 @@
 #include "IFachada.h"
 #include "tinystr.h"
 #include "tinyxml.h"
+#include  <SFML/System.hpp>
+
 #define WIDTH 12
 #define HEIGHT 8
 
@@ -42,6 +44,7 @@ class Tablero{
         //Tilemap
         int _width;
         int _tilewidth;
+        sf::Clock reloj;
         
         int ***_tilemap;
         int _numlayers;
@@ -59,6 +62,11 @@ class Tablero{
         
         //orden del turno
         bool turno=true;
+        
+        //fin partida
+        bool victoria=false;
+        bool derrota=false;
+        bool empate=false;
         
         //Variables de sprites
         float spriteSize; //Resolución de los sprites
@@ -81,6 +89,9 @@ class Tablero{
         int idle;
         int idbaraja;
         int idturno;
+
+        int fondo;
+        int posAtaque=-1;
       
        sf::Texture texturacarta;
        
@@ -101,9 +112,12 @@ class Tablero{
         void clear();
         void cargarMapa();
         bool addUnit(int posx, int posy, Invocacion* unit, int spawn); //return true if adds a unit at the location succesfully
-        bool addUnitIA();
+        int addUnitIAB();
         bool moveToPos(int fromx, int fromy,int gox, int goy, Invocacion* unit); //returns true if unit is moved succesfully
-        bool moveToPosIA();
+        int attackIA();
+        int attackIAU();
+        int moveToPosIA();
+        int moveToPosIAU();
         int atackToPos(int fromx, int fromy,int gox, int goy);
         int atackToPosIA(Invocacion* ia, Invocacion* humano);
         bool removeUnit(int posx, int posy, Invocacion* unit); //returns true if unit is removed succesfully
@@ -135,7 +149,8 @@ class Tablero{
         ///////////////////////////////
         void setWindow(sf::RenderWindow* w)     { window = w;    };
         void setTurno(bool metoca)              { turno=metoca;  };
-        Player* getPlayer()                    { return player1;};
+        bool getTurno()                         { return turno; };
+        Player* getPlayer()                     { return player1;};
         Player* getPlayer2()                    { return player2;};
         int getClick()                          { return click;  };
         void setClick(int i)                    { click=1;       };

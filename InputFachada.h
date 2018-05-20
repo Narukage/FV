@@ -20,6 +20,7 @@ public:
     virtual void nexTurn(int num) = 0;
     virtual void cambioTurno(bool meTo) = 0;
     virtual bool getPresionado() = 0;
+    virtual bool setPresionado() = 0;
     virtual sf::Vector2i getCoord() = 0;
     virtual sf::Vector2i getCampo() = 0;
     virtual sf::Vector2i getMano() = 0;

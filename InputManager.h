@@ -12,11 +12,11 @@ private:
     static InputManager* pinstance;
     
 public:
-    void apagar();
     static InputManager* Instance(int libreria);
     ~InputManager();
     InputFachada* getInput(){ return input; }
     int PulsaTecla();
+    void apagar();
     bool PulsaEscape();
 protected:
     InputManager(int libreria);
@@ -57,6 +57,7 @@ class FachadaInput : public InputFachada {
         int getTurno()                  { return turno;      };
         bool getMeToca()                { return meToca;     };
         bool getPresionado()            { return presionado; };
+        bool setPresionado()            { presionado=false; };
         void setMeToca(bool meTo)       { meToca = meTo;     };
         void setTurno(int num)          { turno=num;         };
 };    

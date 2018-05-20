@@ -4,35 +4,4 @@
         <activeConfTypeElem>1</activeConfTypeElem>
         <activeConfIndexElem>0</activeConfIndexElem>
     </data>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
-        <file>
-            <url>Menu.cpp</url>
-            <bookmark id="1">
-                <name/>
-                <line>0</line>
-                <key/>
-            </bookmark>
-        </file>
-    </editor-bookmarks>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/naru/Escritorio/Summoners/Player.cpp</file>
-            <file>file:/home/naru/Escritorio/Summoners/Game.h</file>
-            <file>file:/home/naru/Escritorio/Summoners/IFachada.h</file>
-            <file>file:/home/naru/Escritorio/Summoners/InputManager.h</file>
-            <file>file:/home/naru/Escritorio/Summoners/InputManager.cpp</file>
-            <file>file:/home/naru/Escritorio/Summoners/Menu.h</file>
-            <file>file:/home/naru/Escritorio/Summoners/Partida.h</file>
-            <file>file:/home/naru/Escritorio/Summoners/Tablero.cpp</file>
-            <file>file:/home/naru/Escritorio/Summoners/Tablero.h</file>
-            <file>file:/home/naru/Escritorio/Summoners/Player.h</file>
-            <file>file:/home/naru/Escritorio/Summoners/RenderManager.cpp</file>
-            <file>file:/home/naru/Escritorio/Summoners/Invocacion.h</file>
-            <file>file:/home/naru/Escritorio/Summoners/main.cpp</file>
-            <file>file:/home/naru/Escritorio/Summoners/Menu.cpp</file>
-            <file>file:/home/naru/Escritorio/Summoners/Game.cpp</file>
-            <file>file:/home/naru/Escritorio/Summoners/RenderManager.h</file>
-            <file>file:/home/naru/Escritorio/Summoners/Invocacion.cpp</file>
-        </group>
-    </open-files>
 </project-private>
